@@ -4,5 +4,5 @@ Mobile Android application for lovers of reading books. Users will be able to wr
 # Project Team
 * Молчанова Анастасия Алексеевна - 3530904/000101
 * Пашков Данил Алексеевич - 3530904/000101
-* 
+* Рыжова Алена Алексеевна - 3530904/000101
 * 
