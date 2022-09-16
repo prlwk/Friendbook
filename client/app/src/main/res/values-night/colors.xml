@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="icon_nav_not_selected">#E1DDDD</color>
+    <color name="nav_bar_stroke">#2C2C2C</color>
+    <color name="main_background">#000000</color>
+</resources>
