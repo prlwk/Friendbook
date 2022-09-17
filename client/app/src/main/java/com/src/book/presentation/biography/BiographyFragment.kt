@@ -13,6 +13,6 @@ class BiographyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_description, container, false)
+        return inflater.inflate(R.layout.fragment_biography, container, false)
     }
 }
