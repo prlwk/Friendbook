@@ -1,0 +1,8 @@
+server:
+  port: 8085
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone: ${EUREKA_HOST:http://localhost:8085/eureka/}

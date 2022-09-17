@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: book
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/book
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: 28012003Nastia
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: create-drop
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST:http://localhost:8085/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    instance-id: book-instance
+server:
+  port: 8081
