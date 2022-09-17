@@ -1,9 +1,7 @@
 spring:
-  application:
-    name: author
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/author
+    url: jdbc:mysql://localhost:3306/book
     driverClassName: com.mysql.cj.jdbc.Driver
     password: 28012003Nastia
   jpa:
@@ -12,7 +10,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: 'true'
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
 eureka:
   client:
     serviceUrl:
@@ -20,4 +18,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    instance-id: author-instance
+    instance-id: book-instance
+server:
+  port: 8081

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: eureka-service
+    name: author-service
   profiles:
     active: dev
   cloud:
