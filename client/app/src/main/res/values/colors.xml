@@ -8,9 +8,18 @@
     <color name="basic_color">#5D94E7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="positive_rating">#4DD15A</color>
+    <color name="negative_rating">#FF5454</color>
+    <color name="neural_rating">#7A7A7A</color>
 
     <color name="main_background">#FFFFFF</color>
     <color name="icon_nav_not_selected">#948F8F</color>
     <color name="nav_bar_stroke">#C1BFBF</color>
     <color name="color_accent">#000000</color>
+    <color name="pull_button">#66AFB1B8</color>
+    <color name="block">#EFEAEA</color>
+
+<!--    only dark theme-->
+    <color name="card_background">#3A3D46</color>
+    <color name="light_grey">#AEAEAE</color>
 </resources>

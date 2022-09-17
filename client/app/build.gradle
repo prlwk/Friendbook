@@ -32,6 +32,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    android.sourceSets {
+        main.res.srcDirs = [
+                'src/main/res',
+                'src/main/res-author',
+                'src/main/res-book'
+        ]
+    }
 }
 
 dependencies {

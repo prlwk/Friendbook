@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="space_05x">2sp</dimen>
+    <dimen name="space_1x">4sp</dimen>
+    <dimen name="space_2x">8sp</dimen>
+    <dimen name="space_3x">12sp</dimen>
+    <dimen name="space_4x">16sp</dimen>
     <dimen name="space_5x">20dp</dimen>
     <dimen name="space_10x">40dp</dimen>
-    <dimen name="title_size">16sp</dimen>
 </resources>

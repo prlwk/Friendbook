@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="base_text">
+    <style name="basic_text">
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="more_button">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="ShapeAppearance.App.CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

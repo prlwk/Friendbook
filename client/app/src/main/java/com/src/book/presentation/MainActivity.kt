@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.src.book.R
 import com.src.book.databinding.ActivityMainBinding
+import com.src.book.presentation.book.main_page.BookFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-//        replaceFragment(HomeFragment())
+        replaceFragment(BookFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/basic_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tag_background"
+    android:paddingStart="@dimen/space_3x"
+    android:paddingTop="@dimen/space_1x"
+    android:paddingEnd="@dimen/space_3x"
+    android:paddingBottom="@dimen/space_1x"
+    android:text="@string/tag"
+    app:autoSizeMaxTextSize="18sp"
+    app:autoSizeMinTextSize="14sp"
+    app:autoSizeStepGranularity="1sp"
+    android:layout_marginEnd="@dimen/space_3x">
+
+</TextView>

@@ -4,4 +4,17 @@
     <string name="home">Главная</string>
     <string name="profile">Профиль</string>
     <string name="title">title</string>
+    <string name="genre">Жанр</string>
+    <string name="tag">tag</string>
+    <string name="description">Описание</string>
+    <string name="biography">Биография</string>
+    <string name="more_details">Подробее</string>
+    <string name="tags">Тэги</string>
+    <string name="reviews">Рецензии</string>
+    <string name="view_all">Посмотреть все</string>
+    <string name="user">user</string>
+    <string name="temp_string">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce felis nulla, malesuada a mollis et, placerat vel velit. Aenean velit orci, varius nec faucibus lobortis, vehicula eu mauris. Phasellus non risus luctus, congue ligula sed, blandit tortor. Aenean pellentesque ante ullamcorper risus congue, et lobortis leo malesuada. Quisque aliquam enim at tellus ullamcorper tempus. Mauris a tincidunt risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur mollis nibh ut mi tempus pellentesque. Maecenas eget luctus lorem. Maecenas vehicula sed dui quis placerat. Etiam laoreet, purus non cursus dapibus, turpis nisi accumsan dui, non tincidunt purus elit ac justo. Aliquam at tempus augue. Cras interdum malesuada congue. </string>
+    <string name="friends_ratings">Оценки друзей</string>
+    <string name="rating">Oценка</string>
+    <string name="average">Средняя</string>
 </resources>
