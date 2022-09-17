@@ -12,4 +12,5 @@
     <color name="main_background">#FFFFFF</color>
     <color name="icon_nav_not_selected">#948F8F</color>
     <color name="nav_bar_stroke">#C1BFBF</color>
+    <color name="color_accent">#000000</color>
 </resources>

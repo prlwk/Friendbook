@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">book</string>
+    <string name="friends">Друзья</string>
+    <string name="home">Главная</string>
+    <string name="profile">Профиль</string>
+    <string name="title">title</string>
 </resources>

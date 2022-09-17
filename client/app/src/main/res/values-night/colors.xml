@@ -3,4 +3,5 @@
     <color name="icon_nav_not_selected">#E1DDDD</color>
     <color name="nav_bar_stroke">#2C2C2C</color>
     <color name="main_background">#000000</color>
+    <color name="color_accent">#FFFFFF</color>
 </resources>
