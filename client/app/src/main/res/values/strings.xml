@@ -17,4 +17,7 @@
     <string name="friends_ratings">Оценки друзей</string>
     <string name="rating">Oценка</string>
     <string name="average">Средняя</string>
+    <string name="author">author</string>
+    <string name="estimate">Оценить</string>
+    <string name="will_read">Буду читать</string>
 </resources>

@@ -2,6 +2,7 @@ package com.src.book.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.src.book.R
 import com.src.book.databinding.ActivityMainBinding
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(BookFragment())
+        //replaceFragment(BookFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 //                R.id.personal_account ->
 //            }
         }
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     private fun replaceFragment(fragment: Fragment) {

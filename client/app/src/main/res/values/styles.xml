@@ -5,9 +5,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="more_button">
+    <style name="translucent_text">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="ShapeAppearance.App.CircleImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
