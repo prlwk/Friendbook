@@ -5,4 +5,4 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://serverconfig:8088
+      uri: http://configserver:8088
