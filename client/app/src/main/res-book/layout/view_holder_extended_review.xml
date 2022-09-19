@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/review_item_background"
+    android:layout_marginVertical="10dp"
+    android:paddingBottom="20dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
@@ -28,6 +31,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_user_photo"
+        android:background="@color/negative_rating"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintStart_toEndOf="@id/gl_start"
