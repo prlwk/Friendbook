@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/review_item_background"
+    android:layout_marginVertical="10dp"
+    android:paddingBottom="20dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/space_5x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/space_4x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/space_4x" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_user_photo"
+        android:background="@color/negative_rating"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/gl_top"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        style="@style/basic_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="Пользователь"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_photo"
+        app:layout_constraintStart_toEndOf="@id/iv_user_photo"
+        app:layout_constraintTop_toTopOf="@id/iv_user_photo" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_user_name">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/positive_rating_extended_review"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp">
+
+            <TextView
+                style="@style/basic_white_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="9"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/space_3x"
+                android:layout_height="@dimen/space_3x"
+                android:layout_gravity="center"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/star" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        style="@style/basic_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="4"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce felis nulla, malesuada a mollis et, placerat vel velit. Aenean velit orci, varius nec faucibus lobortis, vehicula eu mauris. Phasellus non risus luctus, congue ligula sed, blandit tortor. Aenean pellentesque ante ullamcorper risus congue, et lobortis leo malesuada. Quisque aliquam enim at tellus ullamcorper tempus. Mauris a tincidunt risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur mollis nibh ut mi tempus pellentesque. Maecenas eget luctus lorem. Maecenas vehicula sed dui quis placerat. Etiam laoreet, purus non cursus dapibus, turpis nisi accumsan dui, non tincidunt purus elit ac justo. Aliquam at tempus augue. Cras interdum malesuada congue. "
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/iv_user_photo" />
+
+    <TextView
+        style="@style/basic_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15.05.2002"
+        android:textSize="10sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/iv_user_photo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
