@@ -1,0 +1,145 @@
+version: '2.1'
+services:
+  database_author:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: strongrootpassword
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  database_book:
+    image: mysql:latest
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: strongrootpassword
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  database_review:
+    image: mysql:latest
+    ports:
+      - "3308:3308"
+    environment:
+      MYSQL_ROOT_PASSWORD: strongrootpassword
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  database_user:
+    image: mysql:latest
+    ports:
+      - "3309:3309"
+    environment:
+      MYSQL_ROOT_PASSWORD: strongrootpassword
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  serverconfig:
+    image: prlwk/serverconfig:0.0.1-SNAPSHOT
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_CLOUD_CONFIG_URL: http://serverconfig:8088
+    networks:
+      backend:
+        aliases:
+          - "configserver"
+  bookservice:
+    image: prlwk/book-service:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT:   "8088"
+      DATABASESERVER_PORT: "3307"
+    depends_on:
+      database_book:
+        condition: service_healthy
+      serverconfig:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+  authorservice:
+    image: prlwk/author-service:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT: "8088"
+      DATABASESERVER_PORT: "3306"
+    depends_on:
+      database_author:
+        condition: service_healthy
+      serverconfig:
+        condition: service_started
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+  reviewservice:
+    image: prlwk/review-service:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT: "8088"
+      DATABASESERVER_PORT: "3308"
+    depends_on:
+      database_review:
+        condition: service_healthy
+      serverconfig:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    networks:
+      - backend
+  userservice:
+    image: prlwk/user-service:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT: "8088"
+      DATABASESERVER_PORT: "3309"
+    depends_on:
+      database_user:
+        condition: service_healthy
+      serverconfig:
+        condition: service_started
+    ports:
+      - "8083:8083"
+    networks:
+      - backend
+  eurekaserver:
+    image: prlwk/eurekaserver:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT: "8088"
+    ports:
+      - "8076:8076"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
