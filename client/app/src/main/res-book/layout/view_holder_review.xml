@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="250dp"
     android:layout_height="150dp"
+    android:background="@drawable/card_background"
     android:layout_marginEnd="@dimen/space_4x">
 
     <androidx.constraintlayout.widget.Guideline
@@ -30,7 +31,6 @@
         android:id="@+id/iv_user_photo"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@color/black"
         app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/gl_top"
         app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
@@ -42,10 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_3x"
         android:text="@string/user"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:autoSizeMaxTextSize="18sp"
-        app:autoSizeMinTextSize="14sp"
-        app:autoSizeStepGranularity="1sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_user_photo"
         app:layout_constraintStart_toEndOf="@id/iv_user_photo"
         app:layout_constraintTop_toTopOf="@id/iv_user_photo" />
@@ -67,9 +65,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/temp_string"
-        app:autoSizeMaxTextSize="18sp"
-        app:autoSizeMinTextSize="14sp"
-        app:autoSizeStepGranularity="1sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/barrier_title" />

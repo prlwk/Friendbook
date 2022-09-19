@@ -33,27 +33,31 @@
         app:flow_horizontalBias="0.0"
         app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/gl_top"
-        app:tint="@color/color_accent" />
+        app:tint="@color/color_accent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_book"
         android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintDimensionRatio="3:2"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/gl_top"
         tools:ignore="ContentDescription" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/tv_book_name"
         style="@style/basic_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/app_name"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_book_author"
         app:layout_constraintEnd_toEndOf="@id/iv_book"
         app:layout_constraintStart_toStartOf="@id/iv_book"
         app:layout_constraintTop_toBottomOf="@id/iv_book" />
@@ -67,9 +71,23 @@
         android:gravity="center"
         android:text="@string/author"
         android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_book_genre"
         app:layout_constraintEnd_toEndOf="@id/iv_book"
         app:layout_constraintStart_toStartOf="@id/iv_book"
         app:layout_constraintTop_toBottomOf="@id/tv_book_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_book_genre"
+        style="@style/translucent_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_2x"
+        android:gravity="center"
+        android:text="@string/year"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/iv_book"
+        app:layout_constraintStart_toStartOf="@id/iv_book"
+        app:layout_constraintTop_toBottomOf="@id/tv_book_author" />
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -82,7 +100,7 @@
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintStart_toEndOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_author">
+        app:layout_constraintTop_toBottomOf="@id/tv_book_genre">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_star"
@@ -98,7 +116,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/basic_color" />
+                app:tint="@color/basic_color"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 style="@style/translucent_text"
@@ -132,7 +151,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_1x"
-                    android:text="9"
+                    android:text="@string/ten_rating"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:autoSizeMaxTextSize="18sp"
@@ -161,7 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="10.0"
+                android:text="@string/ten_global_rating"
                 android:textColor="@color/positive_rating"
                 android:textSize="16sp"
                 android:textStyle="bold"
