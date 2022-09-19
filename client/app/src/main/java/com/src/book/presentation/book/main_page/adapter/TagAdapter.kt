@@ -1,19 +1,18 @@
 package com.src.book.presentation.book.main_page.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.src.book.R
+import com.src.book.databinding.ViewHolderTagBinding
 
-class TagAdapter() :
+class TagAdapter :
     ListAdapter<String, TagAdapter.DataViewHolder>(StringDiffCallback()) {
+    private lateinit var binding: ViewHolderTagBinding
 
-    class DataViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        private val tag = itemView.findViewById<TextView>(R.id.tv_tag)
+    class DataViewHolder(binding: ViewHolderTagBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private val tag = binding.tvTag
         fun onBind(tag: String) {
             this.tag.text = tag
         }
@@ -23,10 +22,12 @@ class TagAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        return DataViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.view_holder_tag, parent, false)
+        binding = ViewHolderTagBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
+        return DataViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {

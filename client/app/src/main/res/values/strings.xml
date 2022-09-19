@@ -20,4 +20,7 @@
     <string name="author">author</string>
     <string name="estimate">Оценить</string>
     <string name="will_read">Буду читать</string>
+    <string name="year">year</string>
+    <string name="ten_global_rating">10.0</string>
+    <string name="ten_rating">10</string>
 </resources>
