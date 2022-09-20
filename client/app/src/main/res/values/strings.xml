@@ -23,4 +23,6 @@
     <string name="year">year</string>
     <string name="ten_global_rating">10.0</string>
     <string name="ten_rating">10</string>
+    <string name="review">Рецензия</string>
+    <string name="date">date</string>
 </resources>
