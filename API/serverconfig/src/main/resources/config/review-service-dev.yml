@@ -1,9 +1,9 @@
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/review
+    url: jdbc:mysql://database:3306/review
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: 28012003Nastia
+    password: strongpassword
   jpa:
     properties:
       hibernate:
@@ -14,7 +14,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_HOST:http://localhost:8085/eureka/}
+      defaultZone: ${EUREKA_HOST:http://eurekaserver:8076/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:
