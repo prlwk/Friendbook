@@ -18,6 +18,7 @@
     <color name="color_accent">#000000</color>
     <color name="pull_button">#66AFB1B8</color>
     <color name="block">#EFEAEA</color>
+    <color name="light_color_text">#B8000000</color>
 
 <!--    only dark theme-->
     <color name="card_background">#3A3D46</color>

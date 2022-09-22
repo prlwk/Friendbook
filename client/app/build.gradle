@@ -36,7 +36,8 @@ android {
         main.res.srcDirs = [
                 'src/main/res',
                 'src/main/res-author',
-                'src/main/res-book'
+                'src/main/res-book',
+                'src/main/res-search'
         ]
     }
 }

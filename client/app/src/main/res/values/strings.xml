@@ -25,4 +25,5 @@
     <string name="ten_rating">10</string>
     <string name="review">Рецензия</string>
     <string name="date">date</string>
+    <string name="search">Поиск:</string>
 </resources>

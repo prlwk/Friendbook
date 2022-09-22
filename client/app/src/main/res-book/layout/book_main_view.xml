@@ -153,10 +153,8 @@
                     android:layout_marginStart="@dimen/space_1x"
                     android:text="@string/ten_rating"
                     android:textColor="@color/white"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:autoSizeMaxTextSize="18sp"
-                    app:autoSizeMinTextSize="14sp"
-                    app:autoSizeStepGranularity="1sp"
                     app:flow_firstHorizontalBias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
