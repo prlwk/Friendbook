@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_background"
     tools:context=".presentation.book.review.ReviewListFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp">
         <TextView
+            android:id="@+id/tv_all_reviews"
             android:layout_width="wrap_content"
             android:textStyle="bold"
             android:text="Все, 230"
@@ -75,7 +77,7 @@
             android:layout_gravity="center"
             android:ellipsize="end"
             android:textSize="11sp"
-            style="@style/basic_text"
+            android:textColor="@color/black"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
