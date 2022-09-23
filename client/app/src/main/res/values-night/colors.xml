@@ -9,4 +9,5 @@
     <color name="light_gray">#AEAEAE</color>
     <color name="card_background">#3A3D46</color>
     <color name="light_color_text">#E6FFFFFF</color>
+    <color name="search_error_number">#2C334F</color>
 </resources>
