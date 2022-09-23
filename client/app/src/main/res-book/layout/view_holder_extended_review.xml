@@ -61,7 +61,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/positive_rating_extended_review"
+            android:background="@drawable/positive_rating_background"
             android:paddingHorizontal="5dp"
             android:paddingVertical="2dp">
 
