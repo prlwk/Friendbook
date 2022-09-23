@@ -6,7 +6,7 @@
     <color name="color_accent">#FFFFFF</color>
     <color name="pull_button">#662C334F</color>
     <color name="block">#0A0D15</color>
-    <color name="light_grey">#AEAEAE</color>
+    <color name="light_gray">#AEAEAE</color>
     <color name="card_background">#3A3D46</color>
     <color name="light_color_text">#E6FFFFFF</color>
 </resources>

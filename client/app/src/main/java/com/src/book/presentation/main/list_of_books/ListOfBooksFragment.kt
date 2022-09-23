@@ -1,14 +1,19 @@
 package com.src.book.presentation.main.list_of_books
 
+import android.app.Dialog
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.core.content.ContextCompat
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
@@ -64,5 +69,22 @@ class ListOfBooksFragment : Fragment() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.tvTitle.append(searchText)
+    }
+
+    //TODO по нажатию у книги кнопки "3 точки" вызвать эту функцию
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.book_dialog)
+        dialog.show()
+        with(dialog.window!!) {
+            setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            attributes.windowAnimations = R.style.BookDialogAnimation
+            setGravity(Gravity.BOTTOM)
+        }
     }
 }

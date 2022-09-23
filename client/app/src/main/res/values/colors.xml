@@ -20,7 +20,10 @@
     <color name="block">#EFEAEA</color>
     <color name="light_color_text">#B8000000</color>
 
-<!--    only dark theme-->
+    <!--    only dark theme-->
     <color name="card_background">#3A3D46</color>
-    <color name="light_grey">#AEAEAE</color>
+    <color name="light_gray">#AEAEAE</color>
+
+    <!--    only light theme-->
+    <color name="light_stroke_button">#C8C8C8</color>
 </resources>

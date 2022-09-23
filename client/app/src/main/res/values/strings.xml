@@ -26,4 +26,5 @@
     <string name="review">Рецензия</string>
     <string name="date">date</string>
     <string name="search">Поиск:</string>
+    <string name="name">name</string>
 </resources>

@@ -6,6 +6,6 @@
     </style>
 
     <style name="translucent_text">
-        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textColor">@color/light_gray</item>
     </style>
 </resources>
