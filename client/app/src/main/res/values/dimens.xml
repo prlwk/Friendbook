@@ -6,6 +6,7 @@
     <dimen name="space_3x">12sp</dimen>
     <dimen name="space_4x">16sp</dimen>
     <dimen name="space_5x">20dp</dimen>
+    <dimen name="space_8x">32dp</dimen>
     <dimen name="space_9x">36dp</dimen>
     <dimen name="space_10x">40dp</dimen>
     <dimen name="title_size">16sp</dimen>

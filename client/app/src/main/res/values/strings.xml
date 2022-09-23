@@ -27,4 +27,5 @@
     <string name="date">date</string>
     <string name="search">Поиск:</string>
     <string name="name">name</string>
+    <string name="not_found">Ничего не найдено</string>
 </resources>

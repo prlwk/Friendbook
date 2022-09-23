@@ -22,6 +22,7 @@
     <color name="light_color_text">#B8000000</color>
     <color name="card_background">#FFFFFF</color>
 
+    <color name="search_error_number">#E2ECFB</color>
 
     <!--    only dark theme-->
     <color name="light_gray">#AEAEAE</color>
