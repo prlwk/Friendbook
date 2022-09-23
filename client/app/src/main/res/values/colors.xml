@@ -8,6 +8,7 @@
     <color name="basic_color">#5D94E7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tv_hint">#CC505050</color>
     <color name="positive_rating">#4DD15A</color>
     <color name="negative_rating">#FF5454</color>
     <color name="neural_rating">#7A7A7A</color>
@@ -23,10 +24,13 @@
     <color name="card_background">#FFFFFF</color>
 
     <color name="search_error_number">#E2ECFB</color>
+    <color name="light_gray">#706F6F</color>
+    <color name="stroke_button">#C8C8C8</color>
+    <color name="button_background">#E9E9E9</color>
 
     <!--    only dark theme-->
-    <color name="light_gray">#AEAEAE</color>
+
 
     <!--    only light theme-->
-    <color name="light_stroke_button">#C8C8C8</color>
+
 </resources>

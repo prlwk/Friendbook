@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:ignore="MissingConstraints"
+    tools:context=".presentation.main.main_page.MainPageFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/space_5x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/space_5x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/space_5x" />
+
+    <LinearLayout
+        android:id="@+id/ll_search_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_2x"
+        android:background="@drawable/search_bar_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_2x"
+        app:layout_constraintEnd_toStartOf="@id/iv_filter_button"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toTopOf="@id/gl_top">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_search_24"
+            app:tint="@color/light_gray" />
+
+        <EditText
+            android:layout_marginStart="@dimen/space_1x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_accent"
+            android:textColorHint="@color/tv_hint"
+            android:background="#00000000"
+            android:hint="Название книги, автор"
+            android:lines="1"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_filter_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_filter_24"
+        app:layout_constraintBottom_toBottomOf="@id/ll_search_bar"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/gl_top"
+        app:tint="@color/light_gray" />
+
+    <TextView
+        android:id="@+id/tv_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Популярные"
+        android:textColor="@color/color_accent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/ll_search_bar" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_popular"
+        app:tint="@color/basic_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_popular_books"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:isScrollContainer="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_popular"
+        tools:itemCount="1"
+        tools:listitem="@layout/view_holder_simple_book" />
+
+    <TextView
+        android:id="@+id/tv_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Категории"
+        android:textColor="@color/color_accent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/rv_popular_books" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_categories"
+        app:tint="@color/basic_color" />
+
+    <LinearLayout
+        android:id="@+id/ll_category_1"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Антиутопия"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_2"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Фантастика"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_3"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Повесть"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_4"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Роман"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_5"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Детектив"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_6"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ужасы"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_7"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сказка"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_8"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Научная"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_category_9"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_button_background"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Психология"
+            android:textColor="@color/light_color_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_5x"
+        app:constraint_referenced_ids="ll_category_1, ll_category_2, ll_category_3, ll_category_4, ll_category_5, ll_category_6, ll_category_7, ll_category_8, ll_category_9"
+        app:flow_horizontalGap="30dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_verticalGap="@dimen/space_5x"
+        app:flow_wrapMode="chain"
+        app:flow_maxElementsWrap="3"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_categories" />
+
+    <TextView
+        android:id="@+id/tv_recommendations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Рекомендации для Вас"
+        android:textColor="@color/color_accent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/flow_category" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_recommendations"
+        app:tint="@color/basic_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recommended_books"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:isScrollContainer="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_recommendations"
+        tools:itemCount="1"
+        tools:listitem="@layout/view_holder_simple_book" />
+
+    <TextView
+        android:id="@+id/tv_best_authors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Лучшие авторы"
+        android:textColor="@color/color_accent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/rv_recommended_books" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_best_authors"
+        app:tint="@color/basic_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_best_authors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:isScrollContainer="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_best_authors"
+        tools:itemCount="1"
+        tools:listitem="@layout/view_holder_simple_book" />
+</androidx.constraintlayout.widget.ConstraintLayout>

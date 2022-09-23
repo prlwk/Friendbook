@@ -28,4 +28,6 @@
     <string name="search">Поиск:</string>
     <string name="name">name</string>
     <string name="not_found">Ничего не найдено</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
