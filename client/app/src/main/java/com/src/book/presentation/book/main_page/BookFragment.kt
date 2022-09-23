@@ -65,7 +65,7 @@ class BookFragment : Fragment() {
 
     private fun setPeekHeight() {
         val linearLayout = mainBinding.ivBookmark
-        val observer = mainBinding.buttons.viewTreeObserver
+        val observer = mainBinding.clRating.viewTreeObserver
         var coordinates = IntArray(2)
         observer.addOnGlobalLayoutListener {
             linearLayout.getLocationInWindow(coordinates)

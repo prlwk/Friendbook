@@ -37,7 +37,7 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/iv_book"
+        android:id="@+id/iv_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -49,36 +49,22 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/tv_book_name"
+        android:id="@+id/tv_author_name"
         style="@style/basic_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="@string/app_name"
+        android:text="@string/author"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tv_book_author"
-        app:layout_constraintEnd_toEndOf="@id/iv_book"
-        app:layout_constraintStart_toStartOf="@id/iv_book"
-        app:layout_constraintTop_toBottomOf="@id/iv_book" />
+        app:layout_constraintBottom_toTopOf="@id/tv_year"
+        app:layout_constraintEnd_toEndOf="@id/iv_author"
+        app:layout_constraintStart_toStartOf="@id/iv_author"
+        app:layout_constraintTop_toBottomOf="@id/iv_author" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_book_author"
-        style="@style/translucent_text"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_2x"
-        android:gravity="center"
-        android:text="@string/author"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_book_genre"
-        app:layout_constraintEnd_toEndOf="@id/iv_book"
-        app:layout_constraintStart_toStartOf="@id/iv_book"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_name" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_book_genre"
+        android:id="@+id/tv_year"
         style="@style/translucent_text"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -86,43 +72,21 @@
         android:gravity="center"
         android:text="@string/year"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@id/iv_book"
-        app:layout_constraintStart_toStartOf="@id/iv_book"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_author" />
+        app:layout_constraintEnd_toEndOf="@id/iv_author"
+        app:layout_constraintStart_toStartOf="@id/iv_author"
+        app:layout_constraintTop_toBottomOf="@id/tv_author_name" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_star"
+    <View
+        android:id="@+id/view_1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/space_10x"
         android:layout_marginTop="@dimen/space_3x"
         app:layout_constraintEnd_toStartOf="@id/cl_rating"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_genre">
+        app:layout_constraintTop_toBottomOf="@id/tv_year" />
 
-        <ImageView
-            android:id="@+id/iv_star"
-            android:layout_width="@dimen/space_5x"
-            android:layout_height="@dimen/space_5x"
-            android:src="@drawable/star"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/basic_color"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            style="@style/translucent_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/estimate"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_star" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_rating"
@@ -130,10 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_3x"
         android:layout_weight="1"
-        app:layout_constraintEnd_toStartOf="@+id/cl_saving"
+        app:layout_constraintEnd_toStartOf="@+id/view_2"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/cl_star"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_genre">
+        app:layout_constraintStart_toEndOf="@id/view_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_year">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_rating"
@@ -196,37 +160,14 @@
             app:layout_constraintTop_toBottomOf="@id/tv_global_rating" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_saving"
+    <View
+        android:id="@+id/view_2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_3x"
         android:layout_marginEnd="@dimen/space_10x"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/cl_rating"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_genre">
-
-        <ImageView
-            android:id="@+id/iv_bookmark"
-            android:layout_width="@dimen/space_5x"
-            android:layout_height="@dimen/space_5x"
-            android:src="@drawable/bookmark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/basic_color"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            style="@style/translucent_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/will_read"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_bookmark" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/tv_year" />
 </androidx.constraintlayout.widget.ConstraintLayout>
