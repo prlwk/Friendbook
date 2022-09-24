@@ -1,10 +1,13 @@
 package com.friendbook.bookservice.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,4 +29,6 @@ public class Genre {
 
     private String name;
 
+    @ManyToMany(mappedBy = "genres")
+    private Set<Book> books;
 }

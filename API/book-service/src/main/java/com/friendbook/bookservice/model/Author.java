@@ -24,7 +24,7 @@ public class Author {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany
-    private Set<Book> book;
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
 
 }

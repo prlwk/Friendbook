@@ -2,6 +2,7 @@ package com.friendbook.reviewservice.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
 }

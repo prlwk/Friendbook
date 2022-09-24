@@ -24,7 +24,7 @@ public class BookWantToRead {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "books_want_to_read")
     private Set<User> users;
 
 }
