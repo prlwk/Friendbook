@@ -1,5 +1,6 @@
 package com.friendbook.userservice.model;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,7 +28,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -49,9 +50,9 @@ public class User {
     private Set<User> friends;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_rbook",
+    @JoinTable(name = "user_books_rate",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "rbook_id")
+            inverseJoinColumns = @JoinColumn(name = "book_rate_id")
     )
     private Set<BookRate> booksRate;
 
@@ -65,4 +66,25 @@ public class User {
     )
     private Set<BookWantToRead> booksWantToRead;
 
+    @ManyToMany
+    private Collection<BookRate> bookRates;
+
+    public Collection<BookRate> getBookRates() {
+        return bookRates;
+    }
+
+    public void setBookRates(Collection<BookRate> bookRates) {
+        this.bookRates = bookRates;
+    }
+
+    @ManyToMany
+    private Collection<BookWantToRead> bookWantToReads;
+
+    public Collection<BookWantToRead> getBookWantToReads() {
+        return bookWantToReads;
+    }
+
+    public void setBookWantToReads(Collection<BookWantToRead> bookWantToReads) {
+        this.bookWantToReads = bookWantToReads;
+    }
 }

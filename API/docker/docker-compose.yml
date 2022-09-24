@@ -6,7 +6,7 @@ services:
       - "3306:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
-      - ./database:/var/lib/mysql/data
+      - ./database:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: strongpassword
     networks:
@@ -27,6 +27,18 @@ services:
       backend:
         aliases:
           - "configserver"
+  eurekaserver:
+    image: prlwk/eurekaserver:0.0.1-SNAPSHOT
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8088"
+      CONFIGSERVER_PORT: "8088"
+    ports:
+      - "8076:8761"
+    networks:
+       backend:
+         aliases:
+          - "eurekaserver"
   bookservice:
     image: prlwk/book-service:0.0.1-SNAPSHOT
     environment:
@@ -89,16 +101,6 @@ services:
         condition: service_started
     ports:
       - "8083:8080"
-    networks:
-      - backend
-  eurekaserver:
-    image: prlwk/eurekaserver:0.0.1-SNAPSHOT
-    environment:
-      PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8088"
-      CONFIGSERVER_PORT: "8088"
-    ports:
-      - "8076:8080"
     networks:
       - backend
 networks:

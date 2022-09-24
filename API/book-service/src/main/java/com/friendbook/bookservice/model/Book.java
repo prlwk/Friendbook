@@ -55,7 +55,7 @@ public class Book {
     )
     private Set<Genre> genres;
 
-    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
     @ManyToMany(cascade = CascadeType.ALL)

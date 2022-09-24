@@ -7,14 +7,14 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: 'true'
     hibernate:
       ddl-auto: create
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_HOST:http://eurekaserver:8076/eureka/}
+      defaultZone: ${EUREKA_HOST:http://eurekaserver:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:

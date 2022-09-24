@@ -28,4 +28,14 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @ManyToOne(optional = false)
+    private User users;
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
 }

@@ -1,16 +1,16 @@
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/user
+    url: jdbc:mysql://localhost:3306/users
     driverClassName: com.mysql.cj.jdbc.Driver
     password: 28012003Nastia
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: 'true'
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
 eureka:
   client:
     serviceUrl:
