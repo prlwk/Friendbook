@@ -28,6 +28,8 @@
     <color name="stroke_button">#C8C8C8</color>
     <color name="button_background">#E9E9E9</color>
 
+    <color name="light_button_not_selected">#66C8C8C8</color>
+
     <!--    only dark theme-->
 
 

@@ -14,4 +14,5 @@
     <color name="stroke_button">#26262A</color>
     <color name="button_background">#00E9E9E9</color>
     <color name="tv_hint">#E6FFFFFF</color>
+    <color name="light_button_not_selected">#26262A</color>
 </resources>

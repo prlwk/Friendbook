@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="space_05x">2sp</dimen>
-    <dimen name="space_1x">4sp</dimen>
-    <dimen name="space_2x">8sp</dimen>
-    <dimen name="space_3x">12sp</dimen>
-    <dimen name="space_4x">16sp</dimen>
+    <dimen name="space_05x">2dp</dimen>
+    <dimen name="space_1x">4dp</dimen>
+    <dimen name="space_2x">8dp</dimen>
+    <dimen name="space_3x">12dp</dimen>
+    <dimen name="space_4x">16dp</dimen>
     <dimen name="space_5x">20dp</dimen>
+    <dimen name="space_7x">28dp</dimen>
+    <dimen name="space_7.5x">30dp</dimen>
     <dimen name="space_8x">32dp</dimen>
     <dimen name="space_9x">36dp</dimen>
     <dimen name="space_10x">40dp</dimen>
     <dimen name="title_size">16sp</dimen>
+    <dimen name="description_addFriends_size">11sp</dimen>
+    <dimen name="send_request_button_text_size">13sp</dimen>
 </resources>
