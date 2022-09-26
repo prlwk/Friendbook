@@ -31,10 +31,8 @@ services:
     image: prlwk/eurekaserver:0.0.1-SNAPSHOT
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8088"
-      CONFIGSERVER_PORT: "8088"
     ports:
-      - "8085:8761"
+      - "8085:8080"
     networks:
        backend:
          aliases:
@@ -43,8 +41,6 @@ services:
     image: prlwk/book-service:0.0.1-SNAPSHOT
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8088"
-      CONFIGSERVER_PORT:   "8080"
       DATABASESERVER_PORT: "3306"
     depends_on:
       database:
@@ -52,7 +48,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8080:8080"
+      - "8080:8081"
     networks:
       - backend
   authorservice:
@@ -75,8 +71,6 @@ services:
     image: prlwk/review-service:0.0.1-SNAPSHOT
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://configserver:8088"
-      CONFIGSERVER_PORT: "8088"
       DATABASESERVER_PORT: "3306"
     depends_on:
       database:

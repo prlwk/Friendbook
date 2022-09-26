@@ -2,10 +2,10 @@ spring:
   application:
     name: eureka-service
   profiles:
-    active: dev
+    active: default
   cloud:
     config:
-      uri: http://configserver:8088
+      uri: http://configserver:8080
 
 eureka:
   client:
