@@ -6,3 +6,10 @@ spring:
   cloud:
     config:
       uri: http://configserver:8080
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+      maxThreadsForPeerReplication: 0

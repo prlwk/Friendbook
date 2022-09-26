@@ -33,8 +33,6 @@ public class Book {
 
     private String name;
 
-    private String originalName;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),

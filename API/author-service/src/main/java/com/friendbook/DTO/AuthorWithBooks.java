@@ -1,34 +1,28 @@
-package com.friendbook.model;
+package com.friendbook.DTO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "authors")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Author {
-    @Id
-    @Column(name = "id", nullable = false)
+@NoArgsConstructor
+public class AuthorWithBooks {
     private Long id;
 
     private String name;
 
     private String yearsLife;
 
+    private Set<Book> books;
+
     private double rating;
 
     private String photoSrc;
 
     private String biography;
-
 }
