@@ -34,7 +34,7 @@ services:
       CONFIGSERVER_URI: "http://configserver:8088"
       CONFIGSERVER_PORT: "8088"
     ports:
-      - "8076:8761"
+      - "8085:8761"
     networks:
        backend:
          aliases:

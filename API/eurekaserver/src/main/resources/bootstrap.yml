@@ -5,7 +5,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://configserver:8080
+      uri: http://configserver:8088
 
 eureka:
   client:
