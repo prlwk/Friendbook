@@ -29,6 +29,6 @@ public class Author {
 
     private String photoSrc;
 
+    @Column(columnDefinition = "text")
     private String biography;
-
 }

@@ -46,6 +46,9 @@ public class Book {
 
     private String linkCover;
 
+    @Column(columnDefinition = "text")
+    private String description;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_genre",
             joinColumns = @JoinColumn(name = "book_id"),

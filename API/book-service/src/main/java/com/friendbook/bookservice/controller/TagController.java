@@ -9,25 +9,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.friendbook.bookservice.service.GenreService;
+import com.friendbook.bookservice.service.TagService;
 import com.friendbook.bookservice.utils.AppError;
 
 @RestController
-@RequestMapping("/genre")
-public class GenreController {
+@RequestMapping("/tag")
+public class TagController {
 
-    private GenreService genreService;
+    private TagService tagService;
 
     @Autowired
-    public GenreController(GenreService genreService) {
-        this.genreService = genreService;
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
     }
 
-
     @GetMapping("/all")
-    public ResponseEntity<?> getAllGenres() {
+    public ResponseEntity<?> getAllTags() {
         try {
-            return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.OK);
+            return new ResponseEntity<>(tagService.getAllTags(), HttpStatus.OK);
         } catch (EntityNotFoundException entityNotFoundException) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
