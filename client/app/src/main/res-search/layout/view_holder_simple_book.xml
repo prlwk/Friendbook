@@ -7,14 +7,16 @@
     <ImageView
         android:id="@+id/iv_book"
         android:layout_width="90dp"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:layout_marginStart="10dp"
+        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/book_example"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/ll_global_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-10dp"
@@ -26,6 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/iv_book">
 
         <TextView
+            android:id="@+id/tv_global_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10.0"

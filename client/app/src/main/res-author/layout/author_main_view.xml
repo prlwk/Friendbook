@@ -27,6 +27,7 @@
         app:layout_constraintGuide_end="@dimen/space_5x" />
 
     <ImageView
+        android:id="@+id/iv_back"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/arrow"
@@ -51,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitStart"
         android:src="@drawable/book_example"
         app:layout_constraintEnd_toStartOf="@id/view_author_2"
         app:layout_constraintHorizontal_weight="1.5"
@@ -86,7 +88,7 @@
         android:id="@+id/tv_year"
         style="@style/translucent_text"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_2x"
         android:gravity="center"
         android:text="@string/year"
@@ -95,98 +97,17 @@
         app:layout_constraintStart_toStartOf="@id/iv_author"
         app:layout_constraintTop_toBottomOf="@id/tv_author_name" />
 
-    <View
-        android:id="@+id/view_1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/space_10x"
-        android:layout_marginTop="@dimen/space_3x"
-        app:layout_constraintEnd_toStartOf="@id/cl_rating"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_year" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_rating"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_global_rating"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_3x"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toStartOf="@+id/view_2"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/view_1"
-        app:layout_constraintTop_toBottomOf="@id/tv_year">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/user_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/positive_rating_background"
-            app:layout_constraintBottom_toBottomOf="@id/tv_global_rating"
-            app:layout_constraintEnd_toStartOf="@id/tv_global_rating"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_rating"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_1x"
-                android:text="@string/ten_rating"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:flow_firstHorizontalBias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginStart="@dimen/space_05x"
-                android:layout_marginEnd="@dimen/space_1x"
-                android:src="@drawable/star"
-                app:layout_constraintBottom_toBottomOf="@id/tv_rating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_rating"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white"
-                tools:ignore="ContentDescription" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_global_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="@string/ten_global_rating"
-            android:textColor="@color/positive_rating"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/user_rating"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            style="@style/translucent_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/estimate"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_global_rating" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/view_2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_3x"
-        android:layout_marginEnd="@dimen/space_10x"
+        android:gravity="end"
+        android:text="@string/ten_global_rating"
+        android:textColor="@color/positive_rating"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/cl_rating"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_year" />
 </androidx.constraintlayout.widget.ConstraintLayout>

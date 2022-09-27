@@ -64,6 +64,7 @@
                 style="@style/basic_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="@dimen/space_2x"
                 android:text="@string/books"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -75,6 +76,7 @@
                 style="@style/translucent_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="@dimen/space_2x"
                 android:text="@string/view_all"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +108,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_book" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_description_more"
+                android:id="@+id/tv_biography_more"
                 style="@style/translucent_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -120,12 +122,14 @@
                 android:id="@+id/tv_biography"
                 style="@style/basic_text"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_4x"
+                android:layout_marginBottom="@dimen/space_4x"
                 android:ellipsize="end"
                 android:maxLines="5"
                 android:text="@string/biography"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_biography_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>

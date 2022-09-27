@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'kotlin-kapt'
 }
 
@@ -31,6 +32,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs = ['-Xjvm-default=all']
     }
     android.sourceSets {
         main.res.srcDirs = [
@@ -74,4 +76,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 }

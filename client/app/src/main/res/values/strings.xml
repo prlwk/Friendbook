@@ -38,4 +38,6 @@
         formatted="false">#inastianice</string>
     <string name="send_friend_request">Отправить запрос для дружбы</string>
     <string name="your_name">Ваше имя пользователя -</string>
+
+    <string name="no_rating">- - -</string>
 </resources>

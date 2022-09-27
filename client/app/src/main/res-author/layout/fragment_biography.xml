@@ -28,6 +28,7 @@
         app:layout_constraintGuide_end="@dimen/space_5x" />
 
     <ImageView
+        android:id="@+id/iv_back"
         android:layout_width="20dp"
         android:layout_height="0dp"
         android:src="@drawable/arrow"
@@ -52,7 +53,7 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_10x"
         android:orientation="vertical"
         android:overScrollMode="never"
@@ -71,11 +72,16 @@
                 android:id="@+id/tv_biography"
                 style="@style/basic_text"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:textSize="16sp"
-                app:autoSizeStepGranularity="1sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_4x"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_biography" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

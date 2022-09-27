@@ -5,7 +5,7 @@ import com.src.book.di.AppComponent
 import com.src.book.di.AppModule
 import com.src.book.di.DaggerAppComponent
 
-class App:Application() {
+class App : Application() {
     lateinit var appComponent: AppComponent
     override fun onCreate() {
         super.onCreate()
