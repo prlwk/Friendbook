@@ -1,6 +1,5 @@
 package com.src.book.data.repository
 
-import android.util.Log
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.domain.model.Author
 import com.src.book.domain.repository.AuthorRepository

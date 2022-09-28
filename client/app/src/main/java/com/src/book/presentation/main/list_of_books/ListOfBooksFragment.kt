@@ -1,6 +1,5 @@
 package com.src.book.presentation.main.list_of_books
 
-import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,38 +13,80 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
+import com.src.book.domain.model.Book
+import com.src.book.presentation.MainActivity
+import com.src.book.presentation.book.BookState
+import com.src.book.presentation.main.list_of_books.adapter.ListOfBooksAdapter
+import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
+import com.src.book.utlis.AUTHOR_ID
 import com.src.book.presentation.utils.MarginItemDecoration
+import com.src.book.utlis.TITLE
+import com.src.book.utlis.TITLE_SECTION_NAME
 
 class ListOfBooksFragment : Fragment() {
     private lateinit var binding: FragmentListOfBooksBinding
+    private lateinit var viewModel: ListOfBooksViewModel
+    private var authorId: Long = 0
+    private var title: String = ""
+    private var titleBasic: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = (activity as MainActivity).getListOfBooksViewModel()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_of_books, container, false)
+        val args = this.arguments
+        authorId = args?.getLong(AUTHOR_ID) as Long
+        title = args.getString(TITLE_SECTION_NAME) as String
+        titleBasic = args.getString(TITLE) as String
+        binding = FragmentListOfBooksBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentListOfBooksBinding.bind(view)
+        viewModel.liveDataBooks.observe(
+            this.viewLifecycleOwner, this::setState
+        )
+        viewModel.loadBooksByAuthorId(authorId)
+
         setTitle()
-        //TODO  после создания адаптера проверить, что работает
         binding.rvBooks.addItemDecoration(
             MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.space_5x))
         )
+        binding.ivBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    //TODO обработка ошибки загрузки книг
+    private fun setState(state: BookState) {
+        when (state) {
+            is BookState.DefaultState -> state.books?.let { loadData(it) }
+            is BookState.ErrorState -> Toast.makeText(
+                requireContext(),
+                "Books loading error",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun loadData(books: List<Book>) {
+        setAdapterForRecyclerView(books)
     }
 
     private fun setTitle() {
-        val title = SpannableString("Поиск: ")
+        val title = SpannableString("${title}: ")
         title.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.basic_color)),
             0,
@@ -53,8 +94,7 @@ class ListOfBooksFragment : Fragment() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.tvTitle.text = title
-        //TODO
-        val searchText = SpannableString(" Результат поиска")
+        val searchText = SpannableString(titleBasic)
 
         var textColor = 0
         when (requireContext().resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
@@ -71,9 +111,8 @@ class ListOfBooksFragment : Fragment() {
         binding.tvTitle.append(searchText)
     }
 
-    //TODO по нажатию у книги кнопки "3 точки" вызвать эту функцию
-    private fun showDialog() {
-        val dialog = Dialog(requireContext())
+    private fun showDialog(book: Book) {
+        val dialog = BookDialog(requireContext(), book)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.book_dialog)
         dialog.show()
@@ -86,5 +125,17 @@ class ListOfBooksFragment : Fragment() {
             attributes.windowAnimations = R.style.BookDialogAnimation
             setGravity(Gravity.BOTTOM)
         }
+    }
+
+    private fun setAdapterForRecyclerView(books: List<Book>) {
+        val listOfBooksAdapter = ListOfBooksAdapter { item -> onClickMore(item) }
+        listOfBooksAdapter.submitList(books)
+        val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
+        binding.rvBooks.layoutManager = layoutManager
+        binding.rvBooks.adapter = listOfBooksAdapter
+    }
+
+    private fun onClickMore(book: Book) {
+        showDialog(book = book)
     }
 }

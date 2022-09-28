@@ -24,20 +24,19 @@ import com.src.book.presentation.MainActivity
 import com.src.book.presentation.author.AuthorState
 import com.src.book.presentation.author.biography.BiographyFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
-import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
+import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
-import com.src.book.presentation.utils.BIOGRAPHY
-import com.src.book.presentation.utils.RatingColor
-import javax.inject.Inject
+import com.src.book.presentation.utils.*
+import com.src.book.utlis.AUTHOR_ID
+import com.src.book.utlis.BIOGRAPHY
+import com.src.book.utlis.TITLE
+import com.src.book.utlis.TITLE_SECTION_NAME
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
     private lateinit var mainBinding: AuthorMainViewBinding
     private lateinit var bottomSheetBinding: AuthorBottomSheetBinding
     private lateinit var viewModel: AuthorViewModel
-
-    @Inject
-    lateinit var authorViewModelFactory: AuthorViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,29 +106,34 @@ class AuthorFragment : Fragment() {
         setPeekHeight()
         setAuthorShadow()
         setOnClickListenerForBiography(author)
+        setOnClickListenerForBooks(author)
     }
 
     private fun setAdapterForBookRecyclerView(listBookAuthor: List<BookAuthor>) {
         val listBookAdapter = BookListAdapter()
         listBookAdapter.submitList(listBookAuthor)
-
+        println("BOOOK")
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
         bottomSheetBinding.rvBook.layoutManager = layoutManager
         bottomSheetBinding.rvBook.adapter = listBookAdapter
 //        bottomSheetBinding.rvBook.isNestedScrollingEnabled=false
     }
 
-    //TODO придумать что-то получше
     private fun setPeekHeight() {
-        val linearLayout = mainBinding.ivAuthor
         val observer = mainBinding.tvGlobalRating.viewTreeObserver
         var coordinates = IntArray(2)
         observer.addOnGlobalLayoutListener {
-            linearLayout.getLocationInWindow(coordinates)
+            mainBinding.tvGlobalRating.getLocationInWindow(coordinates)
             val heightScreen = Resources.getSystem().displayMetrics.heightPixels
             val density = Resources.getSystem().displayMetrics.density
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetBinding.bottomSheet)
-            bottomSheetBehavior.peekHeight = (heightScreen / 3.5).toInt()
+            val y = (heightScreen - coordinates[1] - 100 * density).toInt()
+            if (y > 0) {
+                bottomSheetBehavior.peekHeight =
+                    (heightScreen - coordinates[1] - 100 * density).toInt()
+            } else {
+                bottomSheetBehavior.peekHeight = 100 * density.toInt()
+            }
         }
     }
 
@@ -156,6 +160,21 @@ class AuthorFragment : Fragment() {
             val bundle = Bundle()
             bundle.putString(BIOGRAPHY, author.biography)
             val fragment = BiographyFragment()
+            fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun setOnClickListenerForBooks(author: Author) {
+        bottomSheetBinding.tvBookMore.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putLong(AUTHOR_ID, author.id)
+            bundle.putString(TITLE_SECTION_NAME, "Автор")
+            bundle.putString(TITLE, author.name)
+            val fragment = ListOfBooksFragment()
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)

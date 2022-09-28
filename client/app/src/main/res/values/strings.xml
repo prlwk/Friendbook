@@ -17,10 +17,10 @@
     <string name="friends_ratings">Оценки друзей</string>
     <string name="rating">Oценка</string>
     <string name="average">Средняя</string>
-    <string name="author">author</string>
+    <string name="author">Автор</string>
     <string name="estimate">Оценить</string>
     <string name="will_read">Буду читать</string>
-    <string name="year">year</string>
+    <string name="year">Год</string>
     <string name="ten_global_rating">10.0</string>
     <string name="ten_rating">10</string>
     <string name="review">Рецензия</string>
