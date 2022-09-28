@@ -86,14 +86,13 @@
         app:layout_constraintTop_toTopOf="@id/cv_book" />
 
     <ImageView
-        android:layout_width="0dp"
+        android:id="@+id/iv_more"
+        android:layout_width="18dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_2x"
         android:adjustViewBounds="true"
         android:src="@drawable/more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tv_global_rating"
         app:tint="@color/icon_nav_not_selected"
         tools:ignore="ContentDescription" />
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.src.book.databinding.FragmentBiographyBinding
-import com.src.book.presentation.utils.BIOGRAPHY
+import com.src.book.utlis.BIOGRAPHY
 
 class BiographyFragment : Fragment() {
     private lateinit var binding: FragmentBiographyBinding

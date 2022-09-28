@@ -10,12 +10,20 @@ import com.src.book.databinding.ActivityMainBinding
 import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
+import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
+import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     @Inject
     lateinit var authorViewModelFactory: AuthorViewModelFactory
-    private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var listOfBooksViewModelFactory: ListOfBooksViewModelFactory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,4 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getAuthorViewModel(): AuthorViewModel =
         ViewModelProvider(this, authorViewModelFactory).get(AuthorViewModel::class.java)
+
+    fun getListOfBooksViewModel(): ListOfBooksViewModel =
+        ViewModelProvider(this, listOfBooksViewModelFactory).get(ListOfBooksViewModel::class.java)
 }

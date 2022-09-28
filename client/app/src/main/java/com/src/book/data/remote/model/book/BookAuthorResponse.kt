@@ -1,4 +1,4 @@
-package com.src.book.data.remote.model
+package com.src.book.data.remote.model.book
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 class BookAuthorResponse(
     @SerialName("id") val id: Long,
     @SerialName("rating") val rating: Double,
-    @SerialName("linkCover") val linkCover: String
+    @SerialName("linkCover") val linkCover: String?
 )

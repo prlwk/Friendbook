@@ -1,13 +1,12 @@
 package com.src.book.data.remote.dataSource.author
 
 import android.net.Uri
-import android.util.Log
-import com.src.book.data.remote.model.AuthorResponse
-import com.src.book.data.remote.model.BookAuthorResponse
+import com.src.book.data.remote.model.author.AuthorResponse
+import com.src.book.data.remote.model.book.BookAuthorResponse
 import com.src.book.data.remote.service.AuthorService
 import com.src.book.domain.model.Author
 import com.src.book.domain.model.BookAuthor
-import com.src.book.presentation.utils.AUTHOR_SERVICE_BASE_URL
+import com.src.book.utlis.AUTHOR_SERVICE_BASE_URL
 
 class AuthorDataSourceImpl(private val authorService: AuthorService) : AuthorDataSource {
     override suspend fun loadAuthorById(id: Long): Author? {

@@ -1,10 +1,11 @@
-package com.src.book.data.remote.model
+package com.src.book.data.remote.model.author
 
+import com.src.book.data.remote.model.book.BookAuthorResponse
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
 class AuthorResponse(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: Long,
     @SerialName("name") val name: String,
     @SerialName("yearsLife") val yearsLife: String,
     @SerialName("rating") val rating: Double,

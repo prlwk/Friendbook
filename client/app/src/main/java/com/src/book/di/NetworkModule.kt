@@ -2,11 +2,13 @@ package com.src.book.di
 
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
+import com.src.book.data.remote.dataSource.book.BookDataSource
+import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
 import com.src.book.data.remote.service.AuthorService
 import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.ReviewService
 import com.src.book.data.remote.service.UserService
-import com.src.book.presentation.utils.BOOK_SERVICE_BASE_URL
+import com.src.book.utlis.BOOK_SERVICE_BASE_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -65,6 +67,14 @@ class NetworkModule {
         authorService: AuthorService
     ): AuthorDataSource {
         return AuthorDataSourceImpl(authorService = authorService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookDataSource(
+        bookService: BookService
+    ): BookDataSource {
+        return BookDataSourceImpl(bookService = bookService)
     }
 }
 

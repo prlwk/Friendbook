@@ -41,6 +41,7 @@
     <ImageView
         android:id="@+id/iv_book"
         android:layout_width="140dp"
+        android:layout_marginTop="@dimen/space_4x"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
@@ -127,11 +128,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/will_read"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_bookmark"
             app:layout_constraintTop_toTopOf="parent" />
@@ -164,11 +164,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/estimate"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_star"
             app:layout_constraintTop_toTopOf="parent" />
