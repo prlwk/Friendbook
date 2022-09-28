@@ -45,4 +45,15 @@ public class AuthorController {
                             "Author with id:" + id + " not found."), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/by-name/{name}")
+    public ResponseEntity<?> getAuthorsByName(@PathVariable String name) {
+        try {
+            return new ResponseEntity<>(authorService.getAuthorsByAuthorName(name), HttpStatus.OK);
+        } catch (EntityNotFoundException entityNotFoundException) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "Authors with name:" + name + " not found."), HttpStatus.NOT_FOUND);
+        }
+    }
 }

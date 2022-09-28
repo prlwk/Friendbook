@@ -1,6 +1,9 @@
 package com.friendbook.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -49,6 +52,36 @@ public class AuthorServiceImpl implements AuthorService {
             authorForBook.setId(author.getId());
             authorForBook.setName(author.getName());
             return authorForBook;
+        }
+        throw new EntityNotFoundException("Author not found.");
+    }
+
+    @Override
+    public List<AuthorForBook> getAuthorsByAuthorName(String name) {
+        Scanner scanner = new Scanner("");
+        List<String> listName = new ArrayList<>();
+        if (name != null) {
+            scanner = new Scanner(name);
+            int i = 0;
+            while (scanner.hasNext() && i < 3) {
+                listName.add(scanner.next());
+                i++;
+            }
+        }
+        scanner.close();
+        List<String> list = new ArrayList<>(3);
+        for (int i = 0; i < listName.size(); i++) {
+            if (i == 0) {
+                list.add(listName.get(0));
+                list.add(listName.get(0));
+                list.add(listName.get(0));
+            } else {
+                list.set(i, listName.get(i));
+            }
+        }
+        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName(list.get(0), list.get(1), list.get(2));
+        if (authorForBookList != null && !authorForBookList.isEmpty()) {
+            return authorForBookList;
         }
         throw new EntityNotFoundException("Author not found.");
     }

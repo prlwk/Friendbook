@@ -1,11 +1,16 @@
 package com.friendbook.bookservice.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.bookservice.DTO.AuthorForBook;
@@ -35,6 +40,7 @@ public class BookServiceImpl implements BookService {
         Optional<BookForBookPage> optionalBookForBookPage = bookRepository.getBookById(id);
         if (optionalBookForBookPage.isPresent()) {
             BookForBookPage newBookForBookPage = optionalBookForBookPage.get();
+            bookRepository.updateCountRequestsById(newBookForBookPage.getId());
             if (newBookForBookPage.getAuthors() != null) {
                 for (int i = 0; i < newBookForBookPage.getAuthors().size(); i++) {
                     AuthorForBook newAuthor =
@@ -88,7 +94,58 @@ public class BookServiceImpl implements BookService {
                 }
             }
         }
+        if (!books.isEmpty()) {
+            return books;
+        }
+        throw new EntityNotFoundException("Books not found.");
+    }
 
+    @Override
+    public List<BookForSearch> getBooksBySearch(int numberPage,
+                                                int sizePage,
+                                                com.friendbook.bookservice.utils.Sort sort,
+                                                String word,
+                                                int startRating,
+                                                int finishRating,
+                                                List<Long> listTags,
+                                                List<Long> listGenres, List<Long> listId) {
+        Page<BookForSearch> page;
+        Integer countOfTags = listTags == null || listTags.isEmpty() ? 0 : listTags.size();
+        Integer countOfGenres = listGenres == null || listGenres.isEmpty() ? 0 : listGenres.size();
+        if (sort == com.friendbook.bookservice.utils.Sort.Popularity) {
+            page = bookRepository.getBooksBySearch(
+                    startRating, finishRating, word, listId, listGenres, countOfGenres, listTags, countOfTags,
+                    PageRequest.of(numberPage, sizePage, Sort.by("countRequests").descending()));
+        } else if (sort == com.friendbook.bookservice.utils.Sort.Rating) {
+            page = bookRepository.getBooksBySearch(
+                    startRating, finishRating, word, listId,listGenres, countOfGenres, listTags, countOfTags,
+                    PageRequest.of(numberPage, sizePage, Sort.by("rating").descending()));
+        } else {
+            page = bookRepository.getBooksBySearch(
+                    startRating, finishRating, word, listId, listGenres, countOfGenres,  listTags, countOfTags,
+                    PageRequest.of(numberPage, sizePage));
+        }
+
+        List<BookForSearch> books = new ArrayList<>();
+        if (page != null) {
+            books = page.get().toList();
+
+            for (BookForSearch book : books) {
+                if (book.getAuthors() != null) {
+                    for (int i = 0; i < book.getAuthors().size(); i++) {
+                        AuthorForBook newAuthor = authorRestTemplateClient
+                                .getAuthorById(book.getAuthors().get(i).getId());
+                        book.getAuthors().set(i, newAuthor);
+                    }
+                }
+                if (book.getGenres() != null) {
+                    for (int i = 0; i < book.getGenres().size(); i++) {
+                        book.getGenres()
+                                .set(i, genreService.getGenreById(book.getGenres().get(i).getId()));
+                    }
+                }
+            }
+        }
         if (!books.isEmpty()) {
             return books;
         }
