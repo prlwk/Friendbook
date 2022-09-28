@@ -40,4 +40,5 @@
     <string name="your_name">Ваше имя пользователя -</string>
 
     <string name="no_rating">- - -</string>
+    <string name="all_reviews">Все, %1$s</string>
 </resources>
