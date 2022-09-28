@@ -54,37 +54,15 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_rate_id")
     )
-    private Set<BookRate> booksRate;
+    private Set<Book> booksRate;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> review;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_wbook",
+    @JoinTable(name = "user_want_to_read_book",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "wbook_id")
     )
-    private Set<BookWantToRead> booksWantToRead;
-
-    @ManyToMany
-    private Collection<BookRate> bookRates;
-
-    public Collection<BookRate> getBookRates() {
-        return bookRates;
-    }
-
-    public void setBookRates(Collection<BookRate> bookRates) {
-        this.bookRates = bookRates;
-    }
-
-    @ManyToMany
-    private Collection<BookWantToRead> bookWantToReads;
-
-    public Collection<BookWantToRead> getBookWantToReads() {
-        return bookWantToReads;
-    }
-
-    public void setBookWantToReads(Collection<BookWantToRead> bookWantToReads) {
-        this.bookWantToReads = bookWantToReads;
-    }
+    private Set<Book> booksWantToRead;
 }

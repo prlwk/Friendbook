@@ -62,7 +62,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8081:8080"
+      - "8081:8082"
     networks:
       - backend
   reviewservice:
@@ -76,7 +76,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8082:8080"
+      - "8082:8083"
     networks:
       - backend
   userservice:
@@ -90,7 +90,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8083:8080"
+      - "8083:8084"
     networks:
       - backend
 networks:

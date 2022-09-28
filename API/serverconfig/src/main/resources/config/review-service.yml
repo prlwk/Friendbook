@@ -10,14 +10,14 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: 'true'
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_HOST:http://localhost:8085/eureka/}
+      defaultZone: ${EUREKA_HOST:http://localhost:8080/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:
     instance-id: review-instance
 server:
-  port: 8090
+  port: 8083

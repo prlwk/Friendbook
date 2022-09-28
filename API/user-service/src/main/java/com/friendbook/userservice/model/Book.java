@@ -14,17 +14,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "books_rate")
+@Table(name = "books")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookRate {
+public class Book {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToMany(mappedBy = "booksRate")
     private Set<User> users;
+
+    @ManyToMany(mappedBy = "booksWantToRead")
+    private Set<User> userSet;
 
 }

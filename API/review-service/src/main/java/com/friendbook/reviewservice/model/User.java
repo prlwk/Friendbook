@@ -25,7 +25,6 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
-
 }
