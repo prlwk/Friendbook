@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.main.main_page.FilterFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/space_5x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/space_5x" />
+
+    <ImageView
+        android:id="@+id/iv_back_button"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:src="@drawable/arrow"
+        app:flow_horizontalBias="0.0"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/gl_top"
+        app:tint="@color/color_accent"
+        tools:ignore="ContentDescription" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/basic_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/filters"
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toTopOf="@id/gl_top" />
+
+    <TextView
+        android:id="@+id/tv_sort_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Сортировать"
+        android:textColor="@color/color_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_sort_popular"
+        style="@style/tag_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="По популярности"
+        app:layout_constraintEnd_toStartOf="@id/tv_sort_rating"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sort_title" />
+
+    <TextView
+        android:id="@+id/tv_sort_rating"
+        style="@style/tag_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_5x"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="По рейтингу"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/tv_sort_popular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sort_title" />
+
+    <TextView
+        android:id="@+id/tv_genre_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Жанр"
+        android:textColor="@color/color_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_sort_rating" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_genre_title"
+        app:tint="@color/basic_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_genre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_genre_title"
+        app:spanCount="3"
+        tools:itemCount="9"
+        tools:listitem="@layout/view_holder_tag" />
+
+    <TextView
+        android:id="@+id/tv_tag_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Тэги"
+        android:textColor="@color/color_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/rv_genre" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:src="@drawable/more"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_tag_title"
+        app:tint="@color/basic_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_tag_title"
+        app:spanCount="3"
+        tools:itemCount="9"
+        tools:listitem="@layout/view_holder_tag" />
+
+    <TextView
+        android:id="@+id/tv_rating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:text="Рейтинг"
+        android:textColor="@color/color_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/rv_tag" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/slider_rating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:stepSize="1.0"
+        android:theme="@style/Theme.Slider"
+        android:valueFrom="1.0"
+        android:valueTo="10.0"
+        app:haloColor="@color/transparent"
+        app:labelBehavior="withinBounds"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_rating_title"
+        app:thumbRadius="@dimen/space_4x"
+        app:values="@array/rating_range_slider_values" />
+
+    <TextView
+        android:id="@+id/tv_hide_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_7x"
+        android:text="Скрыть уже прочитанное"
+        android:textColor="@color/color_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/slider_rating" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:paddingVertical="@dimen/space_2x"
+        android:paddingHorizontal="@dimen/space_1x"
+        android:background="@drawable/switch_background"
+        android:theme="@style/MySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintBottom_toBottomOf="@id/tv_hide_read"
+        app:layout_constraintTop_toTopOf="@id/tv_hide_read" />
+</androidx.constraintlayout.widget.ConstraintLayout>

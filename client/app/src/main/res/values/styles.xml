@@ -35,4 +35,34 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="tag_text_view">
+        <item name="android:background">@drawable/tag_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/space_2x</item>
+        <item name="android:paddingRight">@dimen/space_2x</item>
+        <item name="android:paddingTop">@dimen/space_05x</item>
+        <item name="android:paddingBottom">@dimen/space_05x</item>
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Widget.App.Tooltip" parent="Widget.MaterialComponents.Tooltip">
+        <item name="android:textAppearance">@style/TextAppearance.App.Tooltip</item>
+        <item name="backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.App.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
+        <item name="android:textColor">@color/color_accent</item>
+    </style>
+
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <!-- активное состояние (30% прозрачности для фона) -->
+        <item name="colorControlActivated">@color/white</item>
+        <item name="android:colorBackground">@color/basic_color</item>
+        <!-- неактивное состояние ползунка -->
+        <item name="colorSwitchThumbNormal">@color/light_gray</item>
+        <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
+        <item name="android:colorForeground">@color/basic_color</item>
+    </style>
 </resources>

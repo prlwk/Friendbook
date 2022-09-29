@@ -30,6 +30,8 @@
 
     <color name="light_button_not_selected">#66C8C8C8</color>
 
+    <color name="transparent">#00000000</color>
+
     <!--    only dark theme-->
 
 

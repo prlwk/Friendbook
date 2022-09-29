@@ -1,0 +1,6 @@
+<resources>
+    <array name="rating_range_slider_values">
+        <item>2</item>
+        <item>9</item>
+    </array>
+</resources>
