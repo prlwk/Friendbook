@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" android:padding="10dp">
+    <solid android:color="@color/light_button_not_selected"/>
+    <stroke android:color="@color/light_stroke_button"
+        android:width="0.8dp"
+        />
+</shape>

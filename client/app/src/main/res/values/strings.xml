@@ -27,6 +27,7 @@
     <string name="date">date</string>
     <string name="search">Поиск:</string>
     <string name="name">name</string>
+    <string name="nastia">Настя</string>
     <string name="not_found">Ничего не найдено</string>
     <string name="books">Книги</string>
     <string name="add_friends_in_friendBook">Добавьте друга в FriendBook</string>
@@ -41,5 +42,11 @@
 
     <string name="no_rating">- - -</string>
     <string name="all_reviews">Все, %1$s</string>
+
+    <string name="requests">Заявки</string>
+    <string name="incoming">Входящие(5)</string>
+    <string name="sent">Отправленные(10)</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отклонить</string>
     <string name="filters">Фильтры</string>
 </resources>
