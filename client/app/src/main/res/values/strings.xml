@@ -49,4 +49,9 @@
     <string name="add">Добавить</string>
     <string name="cancel">Отклонить</string>
     <string name="filters">Фильтры</string>
+    <string name="hide_read">Скрыть уже прочитанное</string>
+    <string name="rating2">Рейтинг</string>
+    <string name="by_rating">По рейтингу</string>
+    <string name="by_popular">По популярности</string>
+    <string name="sort">Сортировать</string>
 </resources>

@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="Сортировать"
+        android:text="@string/sort"
         android:textColor="@color/color_accent"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -69,7 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="По популярности"
+        android:text="@string/by_popular"
         app:layout_constraintEnd_toStartOf="@id/tv_sort_rating"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@+id/tv_sort_title" />
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_5x"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="По рейтингу"
+        android:text="@string/by_rating"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/tv_sort_popular"
         app:layout_constraintTop_toBottomOf="@+id/tv_sort_title" />
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="Жанр"
+        android:text="@string/genre"
         android:textColor="@color/color_accent"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -104,7 +104,8 @@
         android:src="@drawable/more"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/tv_genre_title"
-        app:tint="@color/basic_color" />
+        app:tint="@color/basic_color"
+        android:contentDescription="@string/more_details" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genre"
@@ -124,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="Тэги"
+        android:text="@string/tags"
         android:textColor="@color/color_accent"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -137,7 +138,8 @@
         android:src="@drawable/more"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/tv_tag_title"
-        app:tint="@color/basic_color" />
+        app:tint="@color/basic_color"
+        android:contentDescription="@string/more_details" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tag"
@@ -157,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4x"
-        android:text="Рейтинг"
+        android:text="@string/rating2"
         android:textColor="@color/color_accent"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -185,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_7x"
-        android:text="Скрыть уже прочитанное"
+        android:text="@string/hide_read"
         android:textColor="@color/color_accent"
         android:textSize="14sp"
         android:textStyle="bold"
