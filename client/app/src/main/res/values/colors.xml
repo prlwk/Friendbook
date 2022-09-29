@@ -29,6 +29,11 @@
     <color name="button_background">#E9E9E9</color>
 
     <color name="light_button_not_selected">#66C8C8C8</color>
+    <color name="light_button_selected">#ACACAC</color>
+    <color name="light_color_text_grey">#B8000000</color>
+    <color name="light_pull_button">#66AFB1B8</color>
+    <color name="light_stroke_button">#C8C8C8</color>
+    <color name="light_block">#EFEAEA</color>
 
     <!--    only dark theme-->
 
