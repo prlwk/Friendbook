@@ -94,20 +94,6 @@
         tools:itemCount="4"
         tools:listitem="@layout/view_holder_author_name" />
 
-    <!--    <androidx.appcompat.widget.AppCompatTextView-->
-    <!--        android:id="@+id/rv_book_author"-->
-    <!--        style="@style/translucent_text"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginTop="@dimen/space_2x"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="@string/author"-->
-    <!--        android:textSize="12sp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/tv_book_genre"-->
-    <!--        app:layout_constraintEnd_toEndOf="@id/iv_book"-->
-    <!--        app:layout_constraintStart_toStartOf="@id/iv_book"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/tv_book_name" />-->
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_book_genre"
         style="@style/translucent_text"
