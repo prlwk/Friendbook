@@ -14,28 +14,28 @@ import com.src.book.domain.model.BookAuthor
 import com.src.book.presentation.utils.RatingColor
 
 
-class BookListAdapter :
+class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :
     ListAdapter<BookAuthor, BookListAdapter.DataViewHolder>(BookAuthorDiffCallback()) {
     private lateinit var binding: ViewHolderSimpleBookBinding
 
-    class DataViewHolder(binding: ViewHolderSimpleBookBinding) :
+    class DataViewHolder(private val binding: ViewHolderSimpleBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val ivBook = binding.ivBook
-        private val tvGlobalRating = binding.tvGlobalRating
-        private val llGlobalRating = binding.llGlobalRating
 
-        fun onBind(bookAuthor: BookAuthor) {
+        fun onBind(bookAuthor: BookAuthor, onClickBook: (item: BookAuthor) -> Unit) {
             //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
             Glide.with(context)
                 .load(bookAuthor.linkCover)
-                .into(ivBook)
+                .into(binding.ivBook)
             if (bookAuthor.rating == 0.0) {
-                tvGlobalRating.text = context.resources.getText(R.string.no_rating)
+                binding.tvGlobalRating.text = context.resources.getText(R.string.no_rating)
             } else {
-                tvGlobalRating.text = bookAuthor.rating.toString()
+                binding.tvGlobalRating.text = bookAuthor.rating.toString()
             }
-            llGlobalRating.background =
+            binding.llGlobalRating.background =
                 ContextCompat.getDrawable(context, RatingColor.getBackground(bookAuthor.rating))
+            itemView.setOnClickListener {
+                onClickBook(bookAuthor)
+            }
         }
 
         private val RecyclerView.ViewHolder.context
@@ -53,7 +53,7 @@ class BookListAdapter :
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
-        holder.onBind(item)
+        holder.onBind(item, onClickBook)
     }
 }
 

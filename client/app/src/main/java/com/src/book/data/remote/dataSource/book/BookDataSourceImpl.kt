@@ -8,14 +8,17 @@ import com.src.book.data.remote.model.ReviewBookResponse
 import com.src.book.data.remote.model.TagResponse
 import com.src.book.data.remote.service.BookService
 import com.src.book.domain.model.*
-import com.src.book.utlis.AUTHOR_SERVICE_BASE_URL
 import com.src.book.utlis.BOOK_SERVICE_BASE_URL
 
 class BookDataSourceImpl(private val bookService: BookService) : BookDataSource {
     override suspend fun loadBooksByAuthorId(id: Long): List<Book>? {
-        val url = Uri.parse("${BOOK_SERVICE_BASE_URL}book/by-author-id/${id}")
-        val booksResponse = bookService.getAllBooksByAuthorId(url)
-        return booksResponse.map { responseBookToModel(it) }
+        return try {
+            val url = Uri.parse("${BOOK_SERVICE_BASE_URL}book/by-author-id/${id}")
+            val booksResponse = bookService.getAllBooksByAuthorId(url)
+            booksResponse.body()?.map { responseBookToModel(it) }
+        } catch (exception: Exception) {
+            null
+        }
     }
 
     override suspend fun loadBookById(id: Long): Book? {

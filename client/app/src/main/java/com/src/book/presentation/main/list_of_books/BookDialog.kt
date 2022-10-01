@@ -17,7 +17,7 @@ class BookDialog(context: Context, private val book: Book) : Dialog(context) {
         setContentView(R.layout.book_dialog)
         val ivBook = findViewById<ImageView>(R.id.iv_book)
         val tvBookName = findViewById<TextView>(R.id.tv_book_name)
-        val tvBookAuthor = findViewById<TextView>(R.id.rv_book_author)
+        val tvBookAuthor = findViewById<TextView>(R.id.tv_book_author)
         val tvBookYear = findViewById<TextView>(R.id.tv_book_year)
         Glide.with(context)
             .load(book.linkCover)

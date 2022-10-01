@@ -22,24 +22,30 @@ import com.src.book.domain.model.Author
 import com.src.book.domain.model.BookAuthor
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.author.AuthorState
-import com.src.book.presentation.author.biography.BiographyFragment
+import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
+import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
 import com.src.book.presentation.utils.*
-import com.src.book.utlis.AUTHOR_ID
-import com.src.book.utlis.BIOGRAPHY
-import com.src.book.utlis.TITLE
-import com.src.book.utlis.TITLE_SECTION_NAME
+import com.src.book.utlis.*
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
     private lateinit var mainBinding: AuthorMainViewBinding
     private lateinit var bottomSheetBinding: AuthorBottomSheetBinding
     private lateinit var viewModel: AuthorViewModel
+    private var authorId: Long = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val args = this.arguments
+        //TODO обработка ошибки если автор не получен
+        if (args?.getLong(AUTHOR_ID) != null) {
+            authorId = args.getLong(AUTHOR_ID) as Long
+        } else {
+            authorId = 1
+        }
         viewModel = (activity as MainActivity).getAuthorViewModel()
     }
 
@@ -58,10 +64,11 @@ class AuthorFragment : Fragment() {
         viewModel.liveDataAuthor.observe(
             this.viewLifecycleOwner, this::setState
         )
-        viewModel.loadAuthorById(1)
+        viewModel.loadAuthorById(authorId)
         mainBinding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+        setOnClickListenerForBackButton()
     }
 
 
@@ -110,12 +117,12 @@ class AuthorFragment : Fragment() {
     }
 
     private fun setAdapterForBookRecyclerView(listBookAuthor: List<BookAuthor>) {
-        val listBookAdapter = BookListAdapter()
+        val listBookAdapter = BookListAdapter { item -> onClickBook(item) }
         listBookAdapter.submitList(listBookAuthor)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
         bottomSheetBinding.rvBook.layoutManager = layoutManager
         bottomSheetBinding.rvBook.adapter = listBookAdapter
-//        bottomSheetBinding.rvBook.isNestedScrollingEnabled=false
+        bottomSheetBinding.rvBook.isNestedScrollingEnabled = false
     }
 
     private fun setPeekHeight() {
@@ -156,8 +163,9 @@ class AuthorFragment : Fragment() {
     private fun setOnClickListenerForBiography(author: Author) {
         bottomSheetBinding.tvBiographyMore.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(BIOGRAPHY, author.biography)
-            val fragment = BiographyFragment()
+            bundle.putString(DESCRIPTION, author.biography)
+            bundle.putString(TITLE, "Биография")
+            val fragment = DescriptionFragment()
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -178,6 +186,23 @@ class AuthorFragment : Fragment() {
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
+        }
+    }
+
+    private fun onClickBook(book: BookAuthor) {
+        val bundle = Bundle()
+        bundle.putLong(BOOK_ID, book.id)
+        val fragment = BookFragment()
+        fragment.arguments = bundle
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setOnClickListenerForBackButton() {
+        mainBinding.ivBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 }

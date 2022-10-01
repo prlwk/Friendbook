@@ -21,6 +21,7 @@ import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
 import com.src.book.domain.model.Book
 import com.src.book.presentation.MainActivity
+import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.main.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.utlis.AUTHOR_ID
@@ -127,7 +128,8 @@ class ListOfBooksFragment : Fragment() {
     }
 
     private fun setAdapterForRecyclerView(books: List<Book>) {
-        val listOfBooksAdapter = ListOfBooksAdapter { item -> onClickMore(item) }
+        val listOfBooksAdapter =
+            ListOfBooksAdapter({ item -> onClickMore(item) }, { item -> onClickBook(item) })
         listOfBooksAdapter.submitList(books)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         binding.rvBooks.layoutManager = layoutManager
@@ -136,5 +138,16 @@ class ListOfBooksFragment : Fragment() {
 
     private fun onClickMore(book: Book) {
         showDialog(book = book)
+    }
+
+    private fun onClickBook(book: Book) {
+        val bundle = Bundle()
+        bundle.putLong(AUTHOR_ID, book.id)
+        val fragment = BookFragment()
+        fragment.arguments = bundle
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

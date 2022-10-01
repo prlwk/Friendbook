@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.ViewHolderTagBinding
 import com.src.book.domain.model.Genre
 
+//TODO сделать кликабельным
 class GenreAdapter : ListAdapter<Genre, GenreAdapter.DataViewHolder>(GenreDiffCallBack()) {
     private lateinit var binding: ViewHolderTagBinding
 

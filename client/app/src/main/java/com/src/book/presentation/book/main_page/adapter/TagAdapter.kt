@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.ViewHolderTagBinding
 import com.src.book.domain.model.Tag
 
+//TODO сделать кликабебельным
 class TagAdapter :
     ListAdapter<Tag, TagAdapter.DataViewHolder>(TagDiffCallBack()) {
     private lateinit var binding: ViewHolderTagBinding

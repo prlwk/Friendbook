@@ -8,7 +8,7 @@ import retrofit2.http.Url
 
 interface BookService {
     @GET
-    suspend fun getAllBooksByAuthorId(@Url url: Uri): List<BookResponse>
+    suspend fun getAllBooksByAuthorId(@Url url: Uri): Response<List<BookResponse>>
 
     @GET
     suspend fun getBookById(@Url url: Uri): Response<BookResponse>

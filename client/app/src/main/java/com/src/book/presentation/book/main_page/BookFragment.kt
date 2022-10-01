@@ -20,11 +20,17 @@ import com.src.book.databinding.BookMainViewBinding
 import com.src.book.databinding.FragmentBookBinding
 import com.src.book.domain.model.*
 import com.src.book.presentation.MainActivity
+import com.src.book.presentation.main.description.DescriptionFragment
+import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.book.main_page.adapter.AuthorNameAdapter
 import com.src.book.presentation.book.main_page.adapter.GenreAdapter
 import com.src.book.presentation.book.main_page.adapter.TagAdapter
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.utils.RatingColor
+import com.src.book.utlis.AUTHOR_ID
+import com.src.book.utlis.BOOK_ID
+import com.src.book.utlis.DESCRIPTION
+import com.src.book.utlis.TITLE
 
 
 class BookFragment : Fragment() {
@@ -32,9 +38,15 @@ class BookFragment : Fragment() {
     private lateinit var bottomSheetBinding: BookBottomSheetBinding
     private lateinit var mainBinding: BookMainViewBinding
     private lateinit var viewModel: BookViewModel
+    private var bookId: Long = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val args = this.arguments
+        //TODO обработка ошибки если книга не получена
+        if (args?.getLong(BOOK_ID) != null) {
+            bookId = args.getLong(BOOK_ID) as Long
+        } else bookId = 1
         viewModel = (activity as MainActivity).getBookViewModel()
     }
 
@@ -54,7 +66,8 @@ class BookFragment : Fragment() {
         viewModel.liveDataBook.observe(
             this.viewLifecycleOwner, this::setState
         )
-        viewModel.loadBookById(1)
+        viewModel.loadBookById(bookId)
+        setOnClickListenerForBackButton()
     }
 
 
@@ -70,7 +83,7 @@ class BookFragment : Fragment() {
         }
     }
 
-    //TODO добавить оценки, возможность оценить, сохранить
+    //TODO добавить оценки,рецензии, возможность оценить, сохранить
     private fun loadData(book: Book) {
         Glide.with(requireContext())
             .load(book.linkCover)
@@ -91,20 +104,23 @@ class BookFragment : Fragment() {
         if (book.tags != null && book.tags.isNotEmpty()) {
             setAdapterForTagsRecyclerView(book.tags)
         } else {
-            //TODO
+            bottomSheetBinding.tvTagTitle.visibility = View.GONE
+            bottomSheetBinding.rvTag.visibility = View.GONE
         }
         if (book.genres != null && book.genres.isNotEmpty()) {
             setAdapterForGenresRecyclerView(book.genres)
         } else {
-            //TODO
+            bottomSheetBinding.tvGenreTitle.visibility = View.GONE
+            bottomSheetBinding.rvGenre.visibility = View.GONE
         }
         if (book.authors != null && book.authors.isNotEmpty()) {
             setAdapterForAuthorsRecyclerView(book.authors)
         } else {
-            //TODO
+            mainBinding.rvBookAuthor.visibility = View.GONE
         }
         setPeekHeight()
         setBookShadow()
+        setOnClickListenerForDescription(book)
 
     }
 
@@ -163,11 +179,42 @@ class BookFragment : Fragment() {
     }
 
     private fun setAdapterForAuthorsRecyclerView(authors: List<AuthorBook>) {
-        val authorAdapter = AuthorNameAdapter()
+        val authorAdapter = AuthorNameAdapter { item -> onClickAuthor(item) }
         authorAdapter.submitList(authors)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         mainBinding.rvBookAuthor.layoutManager = layoutManager
         mainBinding.rvBookAuthor.adapter = authorAdapter
         mainBinding.rvBookAuthor.isNestedScrollingEnabled = false
+    }
+
+    private fun onClickAuthor(author: AuthorBook) {
+        val bundle = Bundle()
+        bundle.putLong(AUTHOR_ID, author.id)
+        val fragment = AuthorFragment()
+        fragment.arguments = bundle
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setOnClickListenerForBackButton() {
+        mainBinding.ivBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setOnClickListenerForDescription(book: Book) {
+        bottomSheetBinding.tvDescriptionMore.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString(DESCRIPTION, book.description)
+            bundle.putString(TITLE, "Описание")
+            val fragment = DescriptionFragment()
+            fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }

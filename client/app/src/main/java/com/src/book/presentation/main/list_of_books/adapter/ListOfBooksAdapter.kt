@@ -15,38 +15,39 @@ import com.src.book.presentation.utils.RatingColor
 
 //TODO дописать сохранена ли книга пользователем + его оценка
 //TODO Если нет рейтинга что делать
+//TODO оценка пользователя
 class ListOfBooksAdapter(
-    private val onClickMore: (it: Book) -> Unit
+    private val onClickMore: (it: Book) -> Unit,
+    private val onClickBook: (it: Book) -> Unit
 ) :
     ListAdapter<Book, ListOfBooksAdapter.DataViewHolder>(BookDiffCallback()) {
     private lateinit var binding: ViewHolderBookBinding
 
-    class DataViewHolder(binding: ViewHolderBookBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val ivBook = binding.ivBook
-        private val tvBookName = binding.tvBookName
-        private val tvAuthor = binding.tvBookAuthor
-        private val tvGenres = binding.tvBookYearGenre
-        private val ivBookmark = binding.ivBookmark
-        private val tvRating = binding.tvRating
-        private val clRating = binding.userRating
-        private val tvGlobalRating = binding.tvGlobalRating
-        private val ivMore = binding.ivMore
-
-        fun onBind(book: Book, onClickMore: (it: Book) -> Unit) {
+    class DataViewHolder(private val binding: ViewHolderBookBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
+        fun onBind(
+            book: Book, onClickMore: (it: Book) -> Unit,
+            onClickBook: (it: Book) -> Unit
+        ) {
             Glide.with(context)
                 .load(book.linkCover)
-                .into(ivBook)
-            tvBookName.text = book.name
-            tvAuthor.text = book.authors?.joinToString(", ") { it.name }
-            ivBookmark.visibility = View.GONE
-            clRating.visibility = View.GONE
-            with(tvGlobalRating) {
+                .into(binding.ivBook)
+            binding.tvBookName.text = book.name
+            binding.tvBookAuthor.text = book.authors?.joinToString(", ") { it.name }
+            binding.ivBookmark.visibility = View.GONE
+            binding.userRating.visibility = View.GONE
+            with(binding.tvGlobalRating) {
                 text = book.rating.toString()
                 setTextColor(ContextCompat.getColor(context, RatingColor.getColor(book.rating)))
             }
-            tvGenres.text = book.genres?.joinToString(", ") { it.name }
-            ivMore.setOnClickListener {
+            binding.tvBookYearGenre.text =
+                "${book.year}, " + book.genres?.joinToString(", ") { it.name }
+            binding.ivMore.setOnClickListener {
                 onClickMore(book)
+            }
+            itemView.setOnClickListener {
+                onClickBook(book)
             }
 
         }
@@ -65,7 +66,7 @@ class ListOfBooksAdapter(
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
-        holder.onBind(item, onClickMore)
+        holder.onBind(item, onClickMore, onClickBook)
     }
 }
 

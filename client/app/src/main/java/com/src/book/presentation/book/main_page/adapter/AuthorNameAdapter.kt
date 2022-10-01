@@ -8,15 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.ViewHolderAuthorNameBinding
 import com.src.book.domain.model.AuthorBook
 
-class AuthorNameAdapter :
+//TODO кликабельное имя
+class AuthorNameAdapter(
+    private val onClickAuthor: (item: AuthorBook) -> Unit
+) :
     ListAdapter<AuthorBook, AuthorNameAdapter.DataViewHolder>(AuthorDiffCallBack()) {
     private lateinit var binding: ViewHolderAuthorNameBinding
 
-    class DataViewHolder(binding: ViewHolderAuthorNameBinding) :
+    class DataViewHolder(private val binding: ViewHolderAuthorNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val name = binding.tvAuthorName
-        fun onBind(author: AuthorBook) {
-            this.name.text = author.name
+        fun onBind(author: AuthorBook, onClickAuthor: (item: AuthorBook) -> Unit) {
+            binding.tvAuthorName.text = author.name
+            binding.root.setOnClickListener {
+                onClickAuthor(author)
+            }
         }
 
         private val RecyclerView.ViewHolder.context
@@ -34,7 +39,7 @@ class AuthorNameAdapter :
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
-        holder.onBind(item)
+        holder.onBind(item, onClickAuthor)
     }
 }
 
