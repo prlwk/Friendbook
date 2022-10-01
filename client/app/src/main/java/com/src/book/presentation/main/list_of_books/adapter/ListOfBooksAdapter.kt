@@ -37,14 +37,14 @@ class ListOfBooksAdapter(
                 .load(book.linkCover)
                 .into(ivBook)
             tvBookName.text = book.name
-            tvAuthor.text = book.authors.joinToString(", ") { it.name }
+            tvAuthor.text = book.authors?.joinToString(", ") { it.name }
             ivBookmark.visibility = View.GONE
             clRating.visibility = View.GONE
             with(tvGlobalRating) {
                 text = book.rating.toString()
                 setTextColor(ContextCompat.getColor(context, RatingColor.getColor(book.rating)))
             }
-            tvGenres.text = book.genres.joinToString(", ") { it.name }
+            tvGenres.text = book.genres?.joinToString(", ") { it.name }
             ivMore.setOnClickListener {
                 onClickMore(book)
             }

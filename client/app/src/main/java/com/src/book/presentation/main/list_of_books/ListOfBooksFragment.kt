@@ -21,7 +21,6 @@ import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
 import com.src.book.domain.model.Book
 import com.src.book.presentation.MainActivity
-import com.src.book.presentation.book.BookState
 import com.src.book.presentation.main.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.utlis.AUTHOR_ID
@@ -70,10 +69,10 @@ class ListOfBooksFragment : Fragment() {
     }
 
     //TODO обработка ошибки загрузки книг
-    private fun setState(state: BookState) {
+    private fun setState(state: ListOfBooksState) {
         when (state) {
-            is BookState.DefaultState -> state.books?.let { loadData(it) }
-            is BookState.ErrorState -> Toast.makeText(
+            is ListOfBooksState.DefaultState -> state.books?.let { loadData(it) }
+            is ListOfBooksState.ErrorState -> Toast.makeText(
                 requireContext(),
                 "Books loading error",
                 Toast.LENGTH_LONG

@@ -10,6 +10,10 @@ import com.src.book.databinding.ActivityMainBinding
 import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
+import com.src.book.presentation.book.main_page.BookFragment
+import com.src.book.presentation.book.main_page.viewModel.BookViewModel
+import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
+import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
 import javax.inject.Inject
@@ -24,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var listOfBooksViewModelFactory: ListOfBooksViewModelFactory
 
+    @Inject
+    lateinit var bookViewModelFactory: BookViewModelFactory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(AuthorFragment())
+        replaceFragment(BookFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
@@ -55,4 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getListOfBooksViewModel(): ListOfBooksViewModel =
         ViewModelProvider(this, listOfBooksViewModelFactory).get(ListOfBooksViewModel::class.java)
+
+    fun getBookViewModel(): BookViewModel =
+        ViewModelProvider(this, bookViewModelFactory).get(BookViewModel::class.java)
 }

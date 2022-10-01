@@ -48,10 +48,10 @@
     <ImageView
         android:id="@+id/iv_book"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/book_example"
+        app:layout_constraintDimensionRatio="H,5:7"
         app:layout_constraintEnd_toStartOf="@id/view_2"
         app:layout_constraintHorizontal_weight="1.5"
         app:layout_constraintStart_toEndOf="@id/view_1"
@@ -77,24 +77,36 @@
         android:text="@string/app_name"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tv_book_author"
+        app:layout_constraintBottom_toTopOf="@id/rv_book_author"
         app:layout_constraintEnd_toEndOf="@id/iv_book"
         app:layout_constraintStart_toStartOf="@id/iv_book"
         app:layout_constraintTop_toBottomOf="@id/iv_book" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_book_author"
-        style="@style/translucent_text"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_book_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_2x"
-        android:gravity="center"
-        android:text="@string/author"
-        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/tv_book_genre"
         app:layout_constraintEnd_toEndOf="@id/iv_book"
         app:layout_constraintStart_toStartOf="@id/iv_book"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_name" />
+        app:layout_constraintTop_toBottomOf="@id/tv_book_name"
+        tools:itemCount="4"
+        tools:listitem="@layout/view_holder_author_name" />
+
+    <!--    <androidx.appcompat.widget.AppCompatTextView-->
+    <!--        android:id="@+id/rv_book_author"-->
+    <!--        style="@style/translucent_text"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="@dimen/space_2x"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="@string/author"-->
+    <!--        android:textSize="12sp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/tv_book_genre"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/iv_book"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/iv_book"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_book_name" />-->
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_book_genre"
@@ -107,7 +119,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@id/iv_book"
         app:layout_constraintStart_toStartOf="@id/iv_book"
-        app:layout_constraintTop_toBottomOf="@id/tv_book_author" />
+        app:layout_constraintTop_toBottomOf="@id/rv_book_author" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_star"

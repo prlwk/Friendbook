@@ -6,6 +6,9 @@ data class Book(
     val rating: Double,
     val linkCover: String?,
     val year: String,
-    val genres: List<Genre>,
-    val authors: List<AuthorBook>
+    val genres: List<Genre>?,
+    val authors: List<AuthorBook>?,
+    val reviews: List<Review>?,
+    val description: String?,
+    val tags: List<Tag>?
 )

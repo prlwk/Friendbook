@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.src.book.databinding.ViewHolderTagBinding
-import com.src.book.domain.model.Tag
+import com.src.book.databinding.ViewHolderAuthorNameBinding
+import com.src.book.domain.model.AuthorBook
 
-class TagAdapter :
-    ListAdapter<Tag, TagAdapter.DataViewHolder>(TagDiffCallBack()) {
-    private lateinit var binding: ViewHolderTagBinding
+class AuthorNameAdapter :
+    ListAdapter<AuthorBook, AuthorNameAdapter.DataViewHolder>(AuthorDiffCallBack()) {
+    private lateinit var binding: ViewHolderAuthorNameBinding
 
-    class DataViewHolder(binding: ViewHolderTagBinding) :
+    class DataViewHolder(binding: ViewHolderAuthorNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val tag = binding.tvTag
-        fun onBind(tag: Tag) {
-            this.tag.text = tag.name
+        private val name = binding.tvAuthorName
+        fun onBind(author: AuthorBook) {
+            this.name.text = author.name
         }
 
         private val RecyclerView.ViewHolder.context
@@ -24,12 +24,12 @@ class TagAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        binding = ViewHolderTagBinding.inflate(
+        binding = ViewHolderAuthorNameBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return DataViewHolder(binding)
+        return AuthorNameAdapter.DataViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -38,12 +38,12 @@ class TagAdapter :
     }
 }
 
-class TagDiffCallBack : DiffUtil.ItemCallback<Tag>() {
-    override fun areItemsTheSame(oldItem: Tag, newItem: Tag): Boolean {
+class AuthorDiffCallBack : DiffUtil.ItemCallback<AuthorBook>() {
+    override fun areItemsTheSame(oldItem: AuthorBook, newItem: AuthorBook): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Tag, newItem: Tag): Boolean {
+    override fun areContentsTheSame(oldItem: AuthorBook, newItem: AuthorBook): Boolean {
         return oldItem == newItem
     }
 

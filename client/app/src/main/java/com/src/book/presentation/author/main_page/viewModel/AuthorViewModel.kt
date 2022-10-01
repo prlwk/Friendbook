@@ -15,7 +15,7 @@ class AuthorViewModel(private val getAuthorUseCase: GetAuthorUseCase) :
 
     fun loadAuthorById(id: Long) {
         viewModelScope.launch {
-            val author = getAuthorUseCase.getAuthor(id)
+            val author = getAuthorUseCase.execute(id)
             if (author == null) {
                 _mutableLiveDataAuthor.value = AuthorState.ErrorState(null)
             } else {

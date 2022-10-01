@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class GetAuthorUseCase(private val authorRepository: AuthorRepository) {
-    suspend fun getAuthor(id: Long): Author? = withContext(Dispatchers.IO) {
+    suspend fun execute(id: Long): Author? = withContext(Dispatchers.IO) {
         return@withContext authorRepository.getAuthorById(id)
     }
 }

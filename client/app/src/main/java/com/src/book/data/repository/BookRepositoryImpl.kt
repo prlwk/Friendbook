@@ -10,4 +10,8 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
     override suspend fun getBooksByAuthorId(id: Long): List<Book>? = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadBooksByAuthorId(id)
     }
+
+    override suspend fun getBookById(id: Long): Book? = withContext(Dispatchers.IO) {
+        return@withContext bookDataSource.loadBookById(id)
+    }
 }

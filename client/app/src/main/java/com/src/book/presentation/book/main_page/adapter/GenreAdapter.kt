@@ -6,17 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.ViewHolderTagBinding
-import com.src.book.domain.model.Tag
+import com.src.book.domain.model.Genre
 
-class TagAdapter :
-    ListAdapter<Tag, TagAdapter.DataViewHolder>(TagDiffCallBack()) {
+class GenreAdapter : ListAdapter<Genre, GenreAdapter.DataViewHolder>(GenreDiffCallBack()) {
     private lateinit var binding: ViewHolderTagBinding
 
     class DataViewHolder(binding: ViewHolderTagBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val tag = binding.tvTag
-        fun onBind(tag: Tag) {
-            this.tag.text = tag.name
+        fun onBind(genre: Genre) {
+            this.tag.text = genre.name
         }
 
         private val RecyclerView.ViewHolder.context
@@ -29,7 +28,7 @@ class TagAdapter :
             parent,
             false
         )
-        return DataViewHolder(binding)
+        return GenreAdapter.DataViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -38,12 +37,12 @@ class TagAdapter :
     }
 }
 
-class TagDiffCallBack : DiffUtil.ItemCallback<Tag>() {
-    override fun areItemsTheSame(oldItem: Tag, newItem: Tag): Boolean {
+class GenreDiffCallBack : DiffUtil.ItemCallback<Genre>() {
+    override fun areItemsTheSame(oldItem: Genre, newItem: Genre): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Tag, newItem: Tag): Boolean {
+    override fun areContentsTheSame(oldItem: Genre, newItem: Genre): Boolean {
         return oldItem == newItem
     }
 

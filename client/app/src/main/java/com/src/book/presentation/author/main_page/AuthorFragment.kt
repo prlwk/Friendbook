@@ -79,7 +79,7 @@ class AuthorFragment : Fragment() {
 
     //TODO если книг нет
     private fun loadData(author: Author) {
-        if (author.books != null) {
+        if (author.books != null && author.books.isNotEmpty()) {
             setAdapterForBookRecyclerView(author.books)
         }
         //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
@@ -112,7 +112,6 @@ class AuthorFragment : Fragment() {
     private fun setAdapterForBookRecyclerView(listBookAuthor: List<BookAuthor>) {
         val listBookAdapter = BookListAdapter()
         listBookAdapter.submitList(listBookAuthor)
-        println("BOOOK")
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
         bottomSheetBinding.rvBook.layoutManager = layoutManager
         bottomSheetBinding.rvBook.adapter = listBookAdapter
@@ -128,9 +127,8 @@ class AuthorFragment : Fragment() {
             val density = Resources.getSystem().displayMetrics.density
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetBinding.bottomSheet)
             val y = (heightScreen - coordinates[1] - 100 * density).toInt()
-            if (y > 0) {
-                bottomSheetBehavior.peekHeight =
-                    (heightScreen - coordinates[1] - 100 * density).toInt()
+            if (y > 50) {
+                bottomSheetBehavior.peekHeight = y
             } else {
                 bottomSheetBehavior.peekHeight = 100 * density.toInt()
             }

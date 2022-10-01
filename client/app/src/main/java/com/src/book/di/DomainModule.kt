@@ -3,6 +3,7 @@ package com.src.book.di
 import com.src.book.domain.repository.AuthorRepository
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.usecase.GetAuthorUseCase
+import com.src.book.domain.usecase.GetBookByIdUseCase
 import com.src.book.domain.usecase.GetBooksByAuthorIdUseCase
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,11 @@ class DomainModule {
     @Provides
     fun provideGetBooksByAuthorIdUseCase(bookRepository: BookRepository): GetBooksByAuthorIdUseCase {
         return GetBooksByAuthorIdUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetBookByIdUseCase(bookRepository: BookRepository): GetBookByIdUseCase {
+        return GetBookByIdUseCase(bookRepository = bookRepository)
     }
 }
