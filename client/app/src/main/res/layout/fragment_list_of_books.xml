@@ -68,4 +68,40 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:itemCount="3"
         tools:listitem="@layout/view_holder_book" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sl_book"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_9x"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+            <include layout="@layout/shimmer_holder_book" />
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

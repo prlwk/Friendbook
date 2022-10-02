@@ -9,16 +9,22 @@ import kotlinx.coroutines.launch
 
 class ListOfBooksViewModel(private val getBooksByAuthorIdUseCase: GetBooksByAuthorIdUseCase) :
     ViewModel() {
-    private val _mutableLiveDataBooks = MutableLiveData<ListOfBooksState>(ListOfBooksState.DefaultState(null))
+    private val _mutableLiveDataBooks =
+        MutableLiveData<ListOfBooksState>(ListOfBooksState.DefaultState(null))
+    private val _mutableLiveDataIsLoading = MutableLiveData<Boolean>(false)
     val liveDataBooks get() = _mutableLiveDataBooks
+    val liveDataIsLoading get() = _mutableLiveDataIsLoading
+
     fun loadBooksByAuthorId(id: Long) {
         viewModelScope.launch {
+            _mutableLiveDataIsLoading.value = true
             val books = getBooksByAuthorIdUseCase.execute(id)
             if (books == null) {
                 _mutableLiveDataBooks.value = ListOfBooksState.ErrorState(null)
             } else {
                 _mutableLiveDataBooks.value = ListOfBooksState.DefaultState(books)
             }
+            _mutableLiveDataIsLoading.value = false
         }
     }
 

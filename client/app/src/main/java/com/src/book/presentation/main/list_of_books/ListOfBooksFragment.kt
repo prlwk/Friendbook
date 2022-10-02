@@ -58,6 +58,9 @@ class ListOfBooksFragment : Fragment() {
         viewModel.liveDataBooks.observe(
             this.viewLifecycleOwner, this::setState
         )
+        viewModel.liveDataIsLoading.observe(
+            this.viewLifecycleOwner, this::setView
+        )
         viewModel.loadBooksByAuthorId(authorId)
 
         setTitle()
@@ -149,5 +152,16 @@ class ListOfBooksFragment : Fragment() {
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun setView(isLoading: Boolean) {
+        if (isLoading) {
+            binding.rvBooks.visibility = View.GONE
+            binding.slBook.startShimmer()
+        } else {
+            binding.rvBooks.visibility = View.VISIBLE
+            binding.slBook.stopShimmer()
+            binding.slBook.visibility = View.GONE
+        }
     }
 }

@@ -5,7 +5,7 @@ import com.src.book.domain.usecase.GetAuthorUseCase
 import com.src.book.domain.usecase.GetBookByIdUseCase
 import com.src.book.domain.usecase.GetBooksByAuthorIdUseCase
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
-import com.src.book.presentation.book.main_page.viewModel.BookViewModel
+import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -27,8 +27,8 @@ class AppModule(var context: Context) {
         return ListOfBooksViewModelFactory(getBooksByAuthorIdUseCase = getBooksByAuthorIdUseCase)
     }
 
-    @Provides
-    fun provideBookViewModelFactory(getBookByIdUseCase: GetBookByIdUseCase): BookViewModel {
-        return BookViewModel(getBookByIdUseCase = getBookByIdUseCase)
-    }
+//    @Provides
+//    fun provideBookViewModelFactory(getBookByIdUseCase: GetBookByIdUseCase): BookViewModelFactory {
+//        return BookViewModelFactory(getBookByIdUseCase = getBookByIdUseCase)
+//    }
 }
