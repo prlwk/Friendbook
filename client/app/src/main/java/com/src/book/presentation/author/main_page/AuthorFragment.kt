@@ -46,7 +46,6 @@ class AuthorFragment : Fragment() {
         } else {
             authorId = 1
         }
-        viewModel = (activity as MainActivity).getAuthorViewModel()
     }
 
     override fun onCreateView(
@@ -56,6 +55,7 @@ class AuthorFragment : Fragment() {
         binding = FragmentAuthorBinding.inflate(inflater)
         bottomSheetBinding = binding.bottomSheet
         mainBinding = binding.main
+        viewModel = (activity as MainActivity).getAuthorViewModel()
         return binding.root
     }
 

@@ -38,7 +38,6 @@ class ListOfBooksFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).getListOfBooksViewModel()
     }
 
     override fun onCreateView(
@@ -50,6 +49,7 @@ class ListOfBooksFragment : Fragment() {
         title = args.getString(TITLE_SECTION_NAME) as String
         titleBasic = args.getString(TITLE) as String
         binding = FragmentListOfBooksBinding.inflate(inflater)
+        viewModel = (activity as MainActivity).getListOfBooksViewModel()
         return binding.root
     }
 

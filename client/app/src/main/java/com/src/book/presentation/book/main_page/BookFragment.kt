@@ -47,7 +47,6 @@ class BookFragment : Fragment() {
         if (args?.getLong(BOOK_ID) != null) {
             bookId = args.getLong(BOOK_ID) as Long
         } else bookId = 1
-        viewModel = (activity as MainActivity).getBookViewModel()
     }
 
     override fun onCreateView(
@@ -57,6 +56,7 @@ class BookFragment : Fragment() {
         binding = FragmentBookBinding.inflate(inflater)
         bottomSheetBinding = binding.bottomSheet
         mainBinding = binding.main
+        viewModel = (activity as MainActivity).getBookViewModel()
         return binding.root
     }
 
@@ -151,7 +151,7 @@ class BookFragment : Fragment() {
             val heightScreen = Resources.getSystem().displayMetrics.heightPixels
             val density = Resources.getSystem().displayMetrics.density
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetBinding.bottomSheet)
-            val y = (heightScreen - coordinates[1] - 100 * density).toInt()
+            val y = (heightScreen - coordinates[1] - 120 * density).toInt()
             if (y > 50) {
                 bottomSheetBehavior.peekHeight = y
             } else {
