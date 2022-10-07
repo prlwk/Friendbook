@@ -1,4 +1,4 @@
-package com.friendbook.serverconfig;
+package com.friendbook.gatewayserver;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
