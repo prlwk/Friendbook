@@ -26,6 +26,7 @@ import com.src.book.presentation.main.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.utlis.AUTHOR_ID
 import com.src.book.presentation.utils.MarginItemDecoration
+import com.src.book.utlis.BOOK_ID
 import com.src.book.utlis.TITLE
 import com.src.book.utlis.TITLE_SECTION_NAME
 
@@ -145,7 +146,7 @@ class ListOfBooksFragment : Fragment() {
 
     private fun onClickBook(book: Book) {
         val bundle = Bundle()
-        bundle.putLong(AUTHOR_ID, book.id)
+        bundle.putLong(BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()

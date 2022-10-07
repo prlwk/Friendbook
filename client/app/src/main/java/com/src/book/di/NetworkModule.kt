@@ -8,7 +8,7 @@ import com.src.book.data.remote.service.AuthorService
 import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.ReviewService
 import com.src.book.data.remote.service.UserService
-import com.src.book.utlis.BOOK_SERVICE_BASE_URL
+import com.src.book.utlis.BASE_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -32,7 +32,7 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BOOK_SERVICE_BASE_URL)
+        .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

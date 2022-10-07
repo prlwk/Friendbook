@@ -1,15 +1,15 @@
 package com.src.book.data.remote.service
 
-import android.net.Uri
 import com.src.book.data.remote.model.book.BookResponse
+import com.src.book.utlis.BOOK_SERVICE_BASE_URL
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Url
+import retrofit2.http.Path
 
 interface BookService {
-    @GET
-    suspend fun getAllBooksByAuthorId(@Url url: Uri): Response<List<BookResponse>>
+    @GET("${BOOK_SERVICE_BASE_URL}book/by-author-id/{id}")
+    suspend fun getAllBooksByAuthorId(@Path("id") id: Long): Response<List<BookResponse>>
 
-    @GET
-    suspend fun getBookById(@Url url: Uri): Response<BookResponse>
+    @GET("${BOOK_SERVICE_BASE_URL}book/{id}")
+    suspend fun getBookById(@Path("id") id: Long): Response<BookResponse>
 }

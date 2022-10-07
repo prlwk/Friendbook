@@ -1,12 +1,12 @@
 package com.src.book.data.remote.service
 
-import android.net.Uri
 import com.src.book.data.remote.model.author.AuthorResponse
+import com.src.book.utlis.AUTHOR_SERVICE_BASE_URL
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Url
+import retrofit2.http.Path
 
 interface AuthorService {
-    @GET
-    suspend fun getAuthorById(@Url url: Uri): Response<AuthorResponse>
+    @GET("${AUTHOR_SERVICE_BASE_URL}author/{id}")
+    suspend fun getAuthorById(@Path("id") id: Long): Response<AuthorResponse>
 }
