@@ -26,7 +26,7 @@ public class AuthorRestTemplateClient {
                             HttpMethod.GET,
                             null, AuthorForBook.class, authorId);
             return restExchange.getBody();
-        } catch (HttpClientErrorException.NotFound exception) {
+        } catch (HttpClientErrorException.NotFound | IllegalStateException exception) {
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class AuthorRestTemplateClient {
                 list.add(mapper.convertValue(restExchange.getBody().get(i), AuthorForBook.class));
             }
             return list;
-        } catch (HttpClientErrorException.NotFound exception) {
+        } catch (HttpClientErrorException.NotFound | IllegalStateException exception) {
             return null;
         }
     }

@@ -19,3 +19,4 @@ eureka:
     fetch-registry: true
   instance:
     instance-id: book-instance
+    preferIpAddress: true

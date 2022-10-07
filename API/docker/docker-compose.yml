@@ -37,6 +37,35 @@ services:
        backend:
          aliases:
           - "eurekaserver"
+  gatewayserver:
+    image: prlwk/gatewayserver:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8072"
+    environment:
+      PROFILE: "default"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+      eurekaserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "gateway"
+#  keycloak:
+#    image: jboss/keycloak
+#    restart: always
+#    environment:
+#      KEYCLOAK_USER: admin
+#      KEYCLOAK_PASSWORD: admin
+#    ports:
+#      - "8086:8080"
+#    networks:
+#      backend:
+#        aliases:
+#         - "keycloak"
   bookservice:
     image: prlwk/book-service:0.0.1-SNAPSHOT
     environment:
@@ -48,7 +77,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8080:8081"
+      - "8082:8082"
     networks:
       - backend
   authorservice:
@@ -62,7 +91,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8081:8082"
+      - "8081:8081"
     networks:
       - backend
   reviewservice:
@@ -76,7 +105,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8082:8083"
+      - "8083:8083"
     networks:
       - backend
   userservice:
@@ -90,7 +119,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8083:8084"
+      - "8084:8084"
     networks:
       - backend
 networks:

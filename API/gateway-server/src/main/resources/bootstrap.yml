@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gatewayserver
+    profiles:
+        active: default
+  cloud:
+    config:
+       uri: http://configserver:8080

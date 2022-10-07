@@ -19,5 +19,6 @@ eureka:
     fetch-registry: true
   instance:
     instance-id: author-instance
+    preferIpAddress: true
 server:
   port: 8081

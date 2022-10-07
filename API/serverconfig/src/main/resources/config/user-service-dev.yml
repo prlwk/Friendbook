@@ -19,5 +19,4 @@ eureka:
     fetch-registry: true
   instance:
     instance-id: user-instance
-server:
-  port: 8070
+    preferIpAddress: true

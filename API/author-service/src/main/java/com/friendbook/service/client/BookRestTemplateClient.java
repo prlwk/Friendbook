@@ -17,14 +17,14 @@ public class BookRestTemplateClient {
     RestTemplate restTemplate;
 
     public Set<Book> getBooksWithAuthorId(Long authorId) {
-        try {
+        try{
             ResponseEntity<Set> restExchange =
                     restTemplate.exchange(
                             "http://book-service/book/by-author-id-for-author-page/{authorId}",
                             HttpMethod.GET,
                             null, Set.class, authorId);
             return restExchange.getBody();
-        } catch (HttpClientErrorException.NotFound exception) {
+        } catch (HttpClientErrorException.NotFound | IllegalStateException exception) {
             return null;
         }
     }

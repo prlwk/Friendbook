@@ -19,5 +19,4 @@ eureka:
     fetch-registry: true
   instance:
     instance-id: review-instance
-server:
-  port: 8090
+    preferIpAddress: true
