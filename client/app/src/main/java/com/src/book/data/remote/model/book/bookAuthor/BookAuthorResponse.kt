@@ -1,4 +1,4 @@
-package com.src.book.data.remote.model.book
+package com.src.book.data.remote.model.book.bookAuthor
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

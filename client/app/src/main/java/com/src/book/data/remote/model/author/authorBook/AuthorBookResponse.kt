@@ -1,9 +1,9 @@
-package com.src.book.data.remote.model
+package com.src.book.data.remote.model.author.authorBook
 
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
-class GenreResponse(
+class AuthorBookResponse(
     @SerialName("id") val id: Long,
     @SerialName("name") val name: String,
 )

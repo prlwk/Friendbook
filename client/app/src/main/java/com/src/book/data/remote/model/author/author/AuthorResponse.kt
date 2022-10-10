@@ -1,6 +1,6 @@
-package com.src.book.data.remote.model.author
+package com.src.book.data.remote.model.author.author
 
-import com.src.book.data.remote.model.book.BookAuthorResponse
+import com.src.book.data.remote.model.book.bookAuthor.BookAuthorResponse
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable

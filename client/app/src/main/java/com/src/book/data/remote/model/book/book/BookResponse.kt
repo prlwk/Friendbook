@@ -1,9 +1,9 @@
-package com.src.book.data.remote.model.book
+package com.src.book.data.remote.model.book.book
 
-import com.src.book.data.remote.model.GenreResponse
-import com.src.book.data.remote.model.ReviewBookResponse
-import com.src.book.data.remote.model.TagResponse
-import com.src.book.data.remote.model.author.AuthorBookResponse
+import com.src.book.data.remote.model.genre.GenreResponse
+import com.src.book.data.remote.model.review.reviewBook.ReviewBookResponse
+import com.src.book.data.remote.model.tag.TagResponse
+import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable

@@ -1,9 +1,13 @@
 package com.src.book.di
 
+import android.content.Context
+import com.src.book.data.remote.NetworkInterceptor
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
+import com.src.book.data.remote.model.author.author.AuthorMapper
+import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.service.AuthorService
 import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.ReviewService
@@ -21,12 +25,20 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
+    fun provideNetworkInterceptor(context: Context): NetworkInterceptor {
+        return NetworkInterceptor(context)
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
+        networkInterceptor: NetworkInterceptor
     ): OkHttpClient =
         OkHttpClient().newBuilder()
             .addInterceptor(
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             )
+            .addNetworkInterceptor(networkInterceptor)
             .build()
 
     @Singleton
@@ -61,20 +73,23 @@ class NetworkModule {
         return retrofit.create(UserService::class.java)
     }
 
+
     @Singleton
     @Provides
     fun provideAuthorDataSource(
-        authorService: AuthorService
+        authorService: AuthorService,
+        authorMapper: AuthorMapper
     ): AuthorDataSource {
-        return AuthorDataSourceImpl(authorService = authorService)
+        return AuthorDataSourceImpl(authorService = authorService, authorMapper)
     }
 
     @Singleton
     @Provides
     fun provideBookDataSource(
-        bookService: BookService
+        bookService: BookService,
+        bookMapper: BookMapper
     ): BookDataSource {
-        return BookDataSourceImpl(bookService = bookService)
+        return BookDataSourceImpl(bookService = bookService, bookMapper = bookMapper)
     }
 }
 

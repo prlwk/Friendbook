@@ -1,4 +1,4 @@
-package com.src.book.data.remote.model
+package com.src.book.data.remote.model.review.reviewBook
 
 @kotlinx.serialization.Serializable
 class ReviewBookResponse(
