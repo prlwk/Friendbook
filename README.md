@@ -18,7 +18,8 @@ Our application will allow you to search for books and authors by specified crit
 Наше приложение позволит искать книги и авторов по заданным критериям, просматривать подборки, а также оценивать произведения и писать на них отзывы, что может породить некоторый соревновательный аспект у пользователей.
 ## Requirements
 #### Use Case Diagram 
-![Use Case Diagram ](https://github.com/prlwk/Friendbook/tree/main/images/use-case-diagram.png)
+<img src="/images/use-case-diagram.png" width="600">
+
 #### Tasks
 1. Develop database schemas for storing information for each of the microservices.
 2. Develop 4 microservices: AuthorService, BookService, ReviewService and UserService, and connect the service discovery service and load balancer.
@@ -30,19 +31,27 @@ Our application will allow you to search for books and authors by specified crit
 8. Write Unit Tests for API and mobile application.
 ## Architecture
 #### System context diagram
-![System context diagram](https://github.com/prlwk/Friendbook/tree/main/images/system-context-diagram.jpg)
+<img src="/images/system-context-diagram.jpg" width="600">
+
 #### Container diagram
-![Container diagram](https://github.com/prlwk/Friendbook/tree/main/images/container-diagram.jpg)
+<img src="/images/container-diagram.jpg" width="600">
+
 ## Design
 The prototype of the project can be viewed in [Figma](https://www.figma.com/file/nGornPW9vpsak0k7U5DCRi/book?node-id=0%3A1)
 #### Light theme 
-![1](https://github.com/prlwk/Friendbook/tree/main/images/screen-1-light.jpg)
-![2](https://github.com/prlwk/Friendbook/tree/main/images/screen-2-light.jpg)
-![3](https://github.com/prlwk/Friendbook/tree/main/images/screen-3-light.jpg)
+<p>
+    <img src="/images/screen-1-light.jpg" width="200">
+    <img src="/images/screen-2-light.jpg" width="200">
+    <img src="/images/screen-3-light.jpg" width="200">
+<p>
+
 #### Dark theme 
-![1](https://github.com/prlwk/Friendbook/tree/main/images/screen-1-dark.jpg)
-![2](https://github.com/prlwk/Friendbook/tree/main/images/screen-2-dark.jpg)
-![3](https://github.com/prlwk/Friendbook/tree/main/images/screen-3-dark.jpg)
+<p>
+    <img src="/images/screen-1-dark.jpg" width="200">
+    <img src="/images/screen-2-dark.jpg" width="200">
+    <img src="/images/screen-3-dark.jpg" width="200">
+<p>
+
 ## Technology stack
 #### For backend:
 * The [Spring Framework](https://spring.io/) was chosen for the development API. A [microservice architecture](https://spring.io/microservices) was used, each of the microseries is a separate [Spring Boot](https://spring.io/projects/spring-boot) application. With several ready-to-use cloud templates, [Spring Cloud](https://spring.io/cloud) helped our project with service discovery: [Spring Cloud Netflix Eureka](https://cloud.spring.io/spring-cloud-netflix/reference/html/), load balancing, and acted as an API gateway.
