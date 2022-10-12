@@ -58,4 +58,14 @@
     <string name="welcome_description">Оценивай книги и делись\nсвоими мыслями с\nдрузьями</string>
     <string name="welcome">Добро\nпожаловать\nв FriendBook</string>
     <string name="blue_circle">Blue Circle</string>
+    <string name="entrance">Вход</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Введите email</string>
+    <string name="password">Пароль</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="sign_in">ВОЙТИ</string>
+    <string name="no_account">Нет аккаунта?</string>
+    <string name="register_no_caps">Зарегистрироваться</string>
+    <string name="skip">Пропустить</string>
 </resources>
