@@ -28,6 +28,5 @@ class FilterFragment : Fragment() {
         binding = FragmentFiltersBinding.bind(view)
 
         //binding.sliderRating.haloRadius=0
-        binding.sliderRating.trackHeight= resources.getDimension(R.dimen.space_4x).toInt()
     }
 }

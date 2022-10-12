@@ -102,11 +102,11 @@
     <ImageView
         android:layout_width="20dp"
         android:layout_height="15dp"
+        android:contentDescription="@string/more_details"
         android:src="@drawable/more"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/tv_genre_title"
-        app:tint="@color/basic_color"
-        android:contentDescription="@string/more_details" />
+        app:tint="@color/basic_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genre"
@@ -136,11 +136,11 @@
     <ImageView
         android:layout_width="20dp"
         android:layout_height="15dp"
+        android:contentDescription="@string/more_details"
         android:src="@drawable/more"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/tv_tag_title"
-        app:tint="@color/basic_color"
-        android:contentDescription="@string/more_details" />
+        app:tint="@color/basic_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tag"
@@ -180,7 +180,11 @@
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_rating_title"
-        app:thumbRadius="@dimen/space_4x"
+        app:thumbElevation="0dp"
+        app:thumbRadius="@dimen/space_3x"
+        app:tickColorActive="@color/transparent"
+        app:tickColorInactive="@color/transparent"
+        app:trackHeight="@dimen/space_2x"
         app:values="@array/rating_range_slider_values" />
 
     <TextView
@@ -196,13 +200,33 @@
         app:layout_constraintTop_toBottomOf="@id/slider_rating" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:paddingVertical="@dimen/space_2x"
-        android:paddingHorizontal="@dimen/space_1x"
-        android:background="@drawable/switch_background"
-        android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        android:background="@drawable/switch_background"
+        android:checked="true"
+        android:maxWidth="57dp"
+        android:paddingHorizontal="@dimen/space_1x"
+        android:paddingVertical="@dimen/space_2x"
+        android:theme="@style/MySwitch"
         app:layout_constraintBottom_toBottomOf="@id/tv_hide_read"
-        app:layout_constraintTop_toTopOf="@id/tv_hide_read" />
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintTop_toTopOf="@id/tv_hide_read"
+        app:trackTint="@color/basic_color" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/filter_search_button_background"
+        android:elevation="0dp"
+        android:paddingHorizontal="@dimen/space_10x"
+        android:paddingVertical="6dp"
+        android:text="Искать"
+        android:textAlignment="center"
+        android:textColor="@color/light_color_text"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_hide_read" />
 </androidx.constraintlayout.widget.ConstraintLayout>

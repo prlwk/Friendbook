@@ -2,6 +2,7 @@ package com.src.book.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
@@ -16,6 +17,7 @@ import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
+import com.src.book.presentation.main.main_page.FilterFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(BookFragment())
+        replaceFragment(FilterFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
