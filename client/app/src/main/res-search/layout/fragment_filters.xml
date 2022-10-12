@@ -221,7 +221,7 @@
         android:elevation="0dp"
         android:paddingHorizontal="@dimen/space_10x"
         android:paddingVertical="6dp"
-        android:text="Искать"
+        android:text="@string/find"
         android:textAlignment="center"
         android:textColor="@color/light_color_text"
         android:textSize="14sp"
