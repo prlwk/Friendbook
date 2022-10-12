@@ -40,7 +40,8 @@ android {
                 'src/main/res-author',
                 'src/main/res-book',
                 'src/main/res-search',
-                'src/main/res-friends'
+                'src/main/res-friends',
+                'src/main/res-registration'
         ]
     }
 }

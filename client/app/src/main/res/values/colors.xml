@@ -6,6 +6,9 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="basic_color">#5D94E7</color>
+    <color name="basic_color_30_per">#4D5D94E7</color>
+    <color name="basic_color_40_per">#665D94E7</color>
+    <color name="basic_color_65_per">#A65D94E7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tv_hint">#CC505050</color>
