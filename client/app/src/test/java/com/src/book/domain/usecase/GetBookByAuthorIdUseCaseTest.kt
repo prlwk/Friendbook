@@ -3,7 +3,6 @@ package com.src.book.domain.usecase
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.BookRepository
 import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -16,11 +15,7 @@ class GetBookByAuthorIdUseCaseTest {
 
     @get:Rule
     val rule = MockKRule(this)
-
-    @MockK
-    lateinit var bookRepository: BookRepository
-
-    @MockK
+    private lateinit var bookRepository: BookRepository
     private lateinit var testModelsGenerator: TestModelsGenerator
     private lateinit var getBookByAuthorIdUseCase: GetBooksByAuthorIdUseCase
 

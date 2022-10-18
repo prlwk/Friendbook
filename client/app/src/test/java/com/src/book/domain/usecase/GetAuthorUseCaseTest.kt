@@ -3,7 +3,6 @@ package com.src.book.domain.usecase
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.AuthorRepository
 import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -20,11 +19,7 @@ import org.junit.After
 class GetAuthorUseCaseTest {
     @get:Rule
     val rule = MockKRule(this)
-
-    @MockK
-    lateinit var authorRepository: AuthorRepository
-
-    @MockK
+    private lateinit var authorRepository: AuthorRepository
     private lateinit var testModelsGenerator: TestModelsGenerator
     private lateinit var getAuthorUseCase: GetAuthorUseCase
 

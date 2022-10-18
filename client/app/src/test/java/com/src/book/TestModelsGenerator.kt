@@ -3,30 +3,62 @@ package com.src.book
 import com.src.book.domain.model.*
 
 class TestModelsGenerator {
-    fun generateAuthorModel(): Author {
-        return Author(
-            id = 1,
-            name = "Author",
-            yearsLife = "1980-2010",
-            rating = 3.6,
-            photoSrc = null,
-            biography = "biography",
-            books = null
-        )
-    }
+    //author
+    fun generateAuthorModel() = Author(
+        id = ID,
+        name = AUTHOR_NAME,
+        yearsLife = AUTHOR_YEARS_LIFE,
+        rating = RATING,
+        photoSrc = null,
+        biography = AUTHOR_BIOGRAPHY,
+        books = listOf(generateBookAuthorModel())
+    )
 
+    fun generateAuthorBookModel() = AuthorBook(
+        id = ID,
+        name = AUTHOR_NAME,
+    )
+
+    //book
     fun generateBookModel() = Book(
-        id = 1,
-        name = "book",
-        rating = 1.2,
+        id = ID,
+        name = BOOK_NAME,
+        rating = RATING,
         linkCover = null,
-        year = "1990",
-        genres = null,
-        authors = null,
-        reviews = null,
-        description = "description",
-        tags = null
+        year = BOOK_YEAR,
+        genres = listOf(generateGenreModel()),
+        authors = listOf(generateAuthorBookModel()),
+        reviews = listOf(generateReviewModel()),
+        description = BOOK_DESCRIPTION,
+        tags = listOf(generateTagModel())
+    )
+
+    fun generateBookAuthorModel() = BookAuthor(
+        id = ID,
+        rating = RATING,
+        linkCover = null
     )
 
     fun generateListOfBooksModel() = listOf(generateBookModel())
+
+    //review
+    fun generateReviewModel() = Review(
+        id = ID,
+        username = REVIEW_USER,
+        photoSrc = null,
+        reviewText = REVIEW_TEXT,
+        rating = REVIEW_RATING
+    )
+
+    //tag
+    fun generateTagModel() = Tag(
+        id = ID,
+        name = TAG_NAME
+    )
+
+    //genre
+    fun generateGenreModel() = Genre(
+        id = ID,
+        name = GENRE_NAME
+    )
 }
