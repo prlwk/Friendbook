@@ -6,3 +6,20 @@ spring:
   cloud:
     config:
       uri: http://configserver:8080
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+         smtp:
+            starttls:
+               enable: true
+            auth: true
+            connectiontimeout: 5000
+            timeout: 5000
+            writetimeout: 5000
+            ssl:
+               trust: smtp.gmail.com
+               protocols: TLSv1.2
+    username: plum.bestcompany@gmail.com
+    password: xuaezmpuqangpqkl

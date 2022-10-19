@@ -1,11 +1,12 @@
 package com.friendbook.userservice.model;
 
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +28,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,12 @@ public class User {
     private String email;
 
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<UserToken> userTokens = new HashSet<UserToken>(0);
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<RefreshToken> refreshTokens = new HashSet<RefreshToken>(0);
 
     private String name;
 
@@ -65,4 +74,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "wbook_id")
     )
     private Set<Book> booksWantToRead;
+
+    private boolean isEnabled;
 }

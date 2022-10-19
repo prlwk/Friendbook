@@ -1,23 +1,18 @@
 package com.friendbook.userservice.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.friendbook.userservice.model.User;
+import com.friendbook.userservice.model.RefreshToken;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findUsersByLogin(String login);
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 
-    List<User> findUsersByEmail(String email);
-
-    @Query(value = "UPDATE User u SET u.linkPhoto=:linkPhoto WHERE u.id=:userId")
+    @Query(value = "DELETE FROM RefreshToken r WHERE r.token=:token and r.user.id=:userId")
     @Modifying
     @Transactional
-    void updateLinkPhotoByUserId(String linkPhoto, Long userId);
+    void deleteRefreshTokensByTokenAndUser(String token, Long userId);
 }
