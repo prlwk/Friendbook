@@ -28,39 +28,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/space_5x" />
 
-    <ImageView
-        android:layout_width="450dp"
-        android:layout_height="450dp"
-        android:layout_marginStart="-150dp"
-        android:layout_marginBottom="-100dp"
-        android:contentDescription="@string/blue_circle"
-        android:src="@drawable/blue_circle_30_per"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:layout_width="550dp"
-        android:layout_height="550dp"
-        android:layout_marginStart="-200dp"
-        android:layout_marginTop="-100dp"
-        android:contentDescription="@string/blue_circle"
-        android:src="@drawable/blue_circle_40_per"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/center_circle"
-        android:layout_width="550dp"
-        android:layout_height="550dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/blue_circle"
-        android:src="@drawable/blue_circle_65_per"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <include layout="@layout/background_circles" />
 
     <LinearLayout
         android:id="@+id/back_panel"
@@ -72,9 +40,10 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/space_5x"
         android:paddingTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toTopOf="@id/center_circle">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -149,12 +118,12 @@
                 android:layout_height="0dp"
                 android:layout_marginVertical="@dimen/space_2x"
                 android:layout_marginEnd="@dimen/space_2x"
+                android:contentDescription="@string/password"
                 android:src="@drawable/ic_visibility_off_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/color_accent"
-                android:contentDescription="@string/password" />
+                app:tint="@color/color_accent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
