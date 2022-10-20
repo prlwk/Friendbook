@@ -77,4 +77,5 @@
     <string name="enter_your_name">Введите ваше имя</string>
     <string name="nickname">Никнейм</string>
     <string name="сome_up_nickname">Придумайте никнейм</string>
+    <string name="enter_code">Введите код, который Вам\n пришел на почту</string>
 </resources>
