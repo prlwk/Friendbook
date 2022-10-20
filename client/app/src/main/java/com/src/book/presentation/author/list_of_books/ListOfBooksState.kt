@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.list_of_books
+package com.src.book.presentation.author.list_of_books
 
 import com.src.book.domain.model.Book
 

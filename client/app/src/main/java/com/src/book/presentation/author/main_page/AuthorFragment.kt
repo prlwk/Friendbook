@@ -25,7 +25,7 @@ import com.src.book.presentation.author.AuthorState
 import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.book.main_page.BookFragment
-import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
+import com.src.book.presentation.author.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
 import com.src.book.presentation.utils.*
 import com.src.book.utlis.*
@@ -178,7 +178,6 @@ class AuthorFragment : Fragment() {
         bottomSheetBinding.tvBookMore.setOnClickListener {
             val bundle = Bundle()
             bundle.putLong(AUTHOR_ID, author.id)
-            bundle.putString(TITLE_SECTION_NAME, "Автор")
             bundle.putString(TITLE, author.name)
             val fragment = ListOfBooksFragment()
             fragment.arguments = bundle

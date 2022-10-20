@@ -8,15 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
 import com.src.book.app.App
 import com.src.book.databinding.ActivityMainBinding
+import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
+import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
 import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
-import com.src.book.presentation.main.list_of_books.ListOfBooksFragment
-import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
-import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
 import javax.inject.Inject
 

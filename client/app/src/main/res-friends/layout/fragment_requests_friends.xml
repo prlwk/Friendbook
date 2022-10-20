@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/space_5x" />
+        app:layout_constraintGuide_begin="@dimen/space_7.5x" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"

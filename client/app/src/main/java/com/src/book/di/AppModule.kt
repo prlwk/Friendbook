@@ -6,7 +6,7 @@ import com.src.book.domain.usecase.GetBookByIdUseCase
 import com.src.book.domain.usecase.GetBooksByAuthorIdUseCase
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
-import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModelFactory
+import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
 import dagger.Module
 import dagger.Provides
 

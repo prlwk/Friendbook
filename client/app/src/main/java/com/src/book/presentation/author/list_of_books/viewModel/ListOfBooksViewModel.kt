@@ -1,10 +1,10 @@
-package com.src.book.presentation.main.list_of_books.viewModel
+package com.src.book.presentation.author.list_of_books.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.src.book.domain.usecase.GetBooksByAuthorIdUseCase
-import com.src.book.presentation.main.list_of_books.ListOfBooksState
+import com.src.book.presentation.author.list_of_books.ListOfBooksState
 import kotlinx.coroutines.launch
 
 class ListOfBooksViewModel(private val getBooksByAuthorIdUseCase: GetBooksByAuthorIdUseCase) :

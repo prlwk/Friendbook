@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.list_of_books.ListOfBooksFragment">
+    tools:context=".presentation.search.list_of_books.SearchListOfBooksFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -30,7 +30,9 @@
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_2.5x"
+        android:adjustViewBounds="true"
         android:src="@drawable/arrow"
         app:flow_horizontalBias="0.0"
         app:layout_constraintStart_toEndOf="@id/gl_start"
@@ -38,22 +40,37 @@
         app:tint="@color/color_accent"
         tools:ignore="ContentDescription" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_title"
+    <LinearLayout
+        android:id="@+id/ll_search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_2x"
-        android:layout_marginEnd="28dp"
-        android:ellipsize="end"
+        android:layout_marginStart="@dimen/space_2.5x"
+        android:layout_marginEnd="@dimen/space_2x"
+        android:background="@drawable/search_bar_background"
         android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/search"
-        android:textColor="@color/basic_color"
-        android:textSize="@dimen/title_size"
-        android:textStyle="bold"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_2x"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/iv_back"
-        app:layout_constraintTop_toTopOf="@id/gl_top" />
+        app:layout_constraintTop_toTopOf="@id/gl_top">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_search_24"
+            app:tint="@color/light_gray" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_1x"
+            android:background="#00000000"
+            android:hint="@string/search_title"
+            android:lines="1"
+            android:textColor="@color/color_accent"
+            android:textColorHint="@color/tv_hint"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_books"
@@ -65,7 +82,7 @@
         android:paddingEnd="@dimen/space_5x"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/ll_search_bar"
         tools:itemCount="3"
         tools:listitem="@layout/view_holder_book" />
 
@@ -73,12 +90,12 @@
         android:id="@+id/sl_book"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_9x"
+        android:layout_marginTop="@dimen/space_4x"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toEndOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_title">
+        app:layout_constraintTop_toBottomOf="@id/ll_search_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,5 +120,6 @@
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

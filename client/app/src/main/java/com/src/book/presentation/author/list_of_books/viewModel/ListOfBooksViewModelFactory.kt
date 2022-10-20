@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.list_of_books.viewModel
+package com.src.book.presentation.author.list_of_books.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
