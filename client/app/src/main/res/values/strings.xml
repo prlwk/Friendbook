@@ -68,4 +68,5 @@
     <string name="no_account">Нет аккаунта?</string>
     <string name="register_no_caps">Зарегистрироваться</string>
     <string name="skip">Пропустить</string>
+    <string name="enter_code">Введите код, который Вам\n пришел на почту</string>
 </resources>

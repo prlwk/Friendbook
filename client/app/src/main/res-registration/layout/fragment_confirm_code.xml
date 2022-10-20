@@ -8,7 +8,6 @@
 
     <include layout="@layout/background_circles" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
@@ -48,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Введите код, который Вам\n пришел на почту"
+            android:text="@string/enter_code"
             android:textAlignment="center"
             android:textColor="@color/color_accent"
             android:textSize="14sp"
@@ -62,7 +61,6 @@
             android:orientation="horizontal">
 
             <EditText
-
                 android:id="@+id/et_code_symbol_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
