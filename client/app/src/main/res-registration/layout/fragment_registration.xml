@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
-    tools:context=".presentation.registration.sign_in.SignInFragment">
+    tools:context=".presentation.registration.first_registration.RegistrationFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -34,7 +34,7 @@
         android:id="@+id/back_panel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHeight_percent="0.55"
         android:layout_marginTop="60dp"
         android:background="@drawable/back_panel_background"
         android:gravity="center"
@@ -62,7 +62,7 @@
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10x"
+            android:layout_marginTop="@dimen/space_3x"
             android:text="@string/email"
             android:textColor="@color/light_color_text"
             android:textSize="13sp"
@@ -78,8 +78,8 @@
             android:autofillHints="emailAddress"
             android:background="@drawable/edit_text_background"
             android:hint="@string/enter_email"
-            android:textColorHint="@color/color_accent"
             android:inputType="text"
+            android:textColorHint="@color/color_accent"
             android:paddingHorizontal="@dimen/space_2x"
             android:paddingVertical="@dimen/space_3x"
             android:textColor="@color/color_accent"
@@ -143,39 +143,86 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv_forgot_password"
+            android:id="@+id/tv_repeat_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/forgot_password"
-            android:textColor="@color/basic_color"
-            android:textSize="11sp"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/repeat_password"
+            android:textColor="@color/light_color_text"
+            android:textSize="13sp"
+            style="@style/black_style_roboto_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_password_back_panel"/>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_password_back_panel2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:background="@drawable/edit_text_background"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_repeat_password">
+
+            <EditText
+                android:id="@+id/et_repeat_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:autofillHints="password"
+                android:background="@color/transparent"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:paddingHorizontal="@dimen/space_2x"
+                android:paddingVertical="@dimen/space_2x"
+                android:text="password"
+                android:textColor="@color/color_accent"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_visible_repeat_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_visible_repeat_password"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:layout_marginEnd="@dimen/space_2x"
+                android:contentDescription="@string/password"
+                android:src="@drawable/ic_visibility_off_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/color_accent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
         <TextView
-            android:id="@+id/tv_button_sign_in"
+            android:id="@+id/tv_button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/sign_in_button_background"
             android:paddingVertical="@dimen/space_2x"
             android:gravity="center"
-            android:text="@string/sign_in"
+            android:text="@string/next"
             android:textColor="@color/white"
+            android:textAllCaps="true"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="@dimen/space_6x"
             app:layout_constraintWidth_percent="0.55"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/cl_no_account_register"
+            android:layout_marginBottom="@dimen/space_6x"
+            app:layout_constraintBottom_toBottomOf="@id/cl_have_account_sign_in"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_no_account_register"
+            android:id="@+id/cl_have_account_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
             android:layout_marginBottom="@dimen/space_4x"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +233,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/space_05x"
-                android:text="@string/no_account"
+                android:text="@string/have_an_account"
                 android:textColor="@color/color_accent"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toStartOf="@id/tv_register"
@@ -198,7 +245,7 @@
                 android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_no_caps"
+                android:text="@string/sign_in_no_caps"
                 android:textColor="@color/basic_color"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"

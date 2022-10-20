@@ -68,4 +68,13 @@
     <string name="no_account">Нет аккаунта?</string>
     <string name="register_no_caps">Зарегистрироваться</string>
     <string name="skip">Пропустить</string>
+    <string name="registration">Регистрация</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="next">Далее</string>
+    <string name="have_an_account">Есть аккаунт?</string>
+    <string name="sign_in_no_caps">Войти</string>
+    <string name="name_user">Имя</string>
+    <string name="enter_your_name">Введите ваше имя</string>
+    <string name="nickname">Никнейм</string>
+    <string name="сome_up_nickname">Придумайте никнейм</string>
 </resources>
