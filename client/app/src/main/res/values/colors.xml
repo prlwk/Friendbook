@@ -40,6 +40,9 @@
 
     <color name="transparent">#00000000</color>
 
+
+    <color name="add_friend_image_color">#B8000000</color>
+
     <!--    only dark theme-->
 
 

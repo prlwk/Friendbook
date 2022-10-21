@@ -77,4 +77,5 @@
     <string name="сome_up_nickname">Придумайте никнейм</string>
     <string name="enter_code">Введите код, который Вам\n пришел на почту</string>
     <string name="search_title">Название книги, автор</string>
+    <string name="photo">Фото</string>
 </resources>
