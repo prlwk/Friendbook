@@ -13,11 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.src.book.R
-import com.src.book.databinding.AuthorBottomSheetBinding
-import com.src.book.databinding.AuthorMainViewBinding
 import com.src.book.databinding.FragmentAuthorBinding
+import com.src.book.databinding.FragmentAuthorShimmerBinding
 import com.src.book.domain.model.Author
 import com.src.book.domain.model.BookAuthor
 import com.src.book.presentation.MainActivity
@@ -32,8 +30,7 @@ import com.src.book.utlis.*
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
-    private lateinit var mainBinding: AuthorMainViewBinding
-    private lateinit var bottomSheetBinding: AuthorBottomSheetBinding
+    private lateinit var bindingShimmer:FragmentAuthorShimmerBinding
     private lateinit var viewModel: AuthorViewModel
     private var authorId: Long = 1
 
@@ -52,11 +49,10 @@ class AuthorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAuthorBinding.inflate(inflater)
-        bottomSheetBinding = binding.bottomSheet
-        mainBinding = binding.main
+        this.binding = FragmentAuthorBinding.inflate(inflater)
+        this.bindingShimmer = binding.layoutShimmer
         viewModel = (activity as MainActivity).getAuthorViewModel()
-        return binding.root
+        return this.binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,8 +60,11 @@ class AuthorFragment : Fragment() {
         viewModel.liveDataAuthor.observe(
             this.viewLifecycleOwner, this::setState
         )
+        viewModel.liveDataIsLoading.observe(
+            this.viewLifecycleOwner, this::setView
+        )
         viewModel.loadAuthorById(authorId)
-        mainBinding.ivBack.setOnClickListener {
+        this.binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
         setOnClickListenerForBackButton()
@@ -92,16 +91,16 @@ class AuthorFragment : Fragment() {
         //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
         Glide.with(requireContext())
             .load(author.photoSrc)
-            .into(mainBinding.ivAuthor)
-        mainBinding.tvAuthorName.text = author.name
-        mainBinding.tvYear.text = author.yearsLife
+            .into(this.binding.ivAuthor)
+        this.binding.tvAuthorName.text = author.name
+        this.binding.tvYear.text = author.yearsLife
         if (author.biography != null) {
-            bottomSheetBinding.tvBiography.text = author.biography
+            this.binding.tvBiography.text = author.biography
         } else {
-            bottomSheetBinding.tvBiography.visibility = View.GONE
-            bottomSheetBinding.tvBiographyTitle.visibility = View.GONE
+            this.binding.tvBiography.visibility = View.GONE
+            this.binding.tvBiographyTitle.visibility = View.GONE
         }
-        with(mainBinding.tvGlobalRating) {
+        with(this.binding.tvGlobalRating) {
             val color = RatingColor.getColor(author.rating)
             setTextColor(ContextCompat.getColor(requireContext(), color))
             text = if (author.rating == 0.0) {
@@ -110,7 +109,6 @@ class AuthorFragment : Fragment() {
                 author.rating.toString()
             }
         }
-        setPeekHeight()
         setAuthorShadow()
         setOnClickListenerForBiography(author)
         setOnClickListenerForBooks(author)
@@ -120,33 +118,16 @@ class AuthorFragment : Fragment() {
         val listBookAdapter = BookListAdapter { item -> onClickBook(item) }
         listBookAdapter.submitList(listBookAuthor)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
-        bottomSheetBinding.rvBook.layoutManager = layoutManager
-        bottomSheetBinding.rvBook.adapter = listBookAdapter
-        bottomSheetBinding.rvBook.isNestedScrollingEnabled = false
-    }
-
-    private fun setPeekHeight() {
-        val observer = mainBinding.tvGlobalRating.viewTreeObserver
-        var coordinates = IntArray(2)
-        observer.addOnGlobalLayoutListener {
-            mainBinding.tvGlobalRating.getLocationInWindow(coordinates)
-            val heightScreen = Resources.getSystem().displayMetrics.heightPixels
-            val density = Resources.getSystem().displayMetrics.density
-            val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetBinding.bottomSheet)
-            val y = (heightScreen - coordinates[1] - 100 * density).toInt()
-            if (y > 50) {
-                bottomSheetBehavior.peekHeight = y
-            } else {
-                bottomSheetBehavior.peekHeight = 100 * density.toInt()
-            }
-        }
+        this.binding.rvBook.layoutManager = layoutManager
+        this.binding.rvBook.adapter = listBookAdapter
+        this.binding.rvBook.isNestedScrollingEnabled = false
     }
 
     private fun setAuthorShadow() {
         val density = Resources.getSystem().displayMetrics.density
         val dx = 20 * density
         val dy = 20 * density
-        mainBinding.ivAuthor.outlineProvider = object : ViewOutlineProvider() {
+        this.binding.ivAuthor.outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {
                 outline.setRoundRect(
                     -dx.toInt(),
@@ -157,11 +138,11 @@ class AuthorFragment : Fragment() {
                 )
             }
         }
-        mainBinding.ivAuthor.elevation = 39 * density
+        this.binding.ivAuthor.elevation = 39 * density
     }
 
     private fun setOnClickListenerForBiography(author: Author) {
-        bottomSheetBinding.tvBiographyMore.setOnClickListener {
+        this.binding.tvBiographyMore.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(DESCRIPTION, author.biography)
             bundle.putString(TITLE, "Биография")
@@ -175,7 +156,7 @@ class AuthorFragment : Fragment() {
     }
 
     private fun setOnClickListenerForBooks(author: Author) {
-        bottomSheetBinding.tvBookMore.setOnClickListener {
+        this.binding.tvBookMore.setOnClickListener {
             val bundle = Bundle()
             bundle.putLong(AUTHOR_ID, author.id)
             bundle.putString(TITLE, author.name)
@@ -200,8 +181,29 @@ class AuthorFragment : Fragment() {
     }
 
     private fun setOnClickListenerForBackButton() {
-        mainBinding.ivBack.setOnClickListener {
+        this.binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
+
+    private fun setView(isLoading: Boolean) {
+        if (isLoading) {
+            setVisibilityMainPage(View.GONE)
+            bindingShimmer.slBook.startShimmer()
+        } else {
+            setVisibilityMainPage(View.VISIBLE)
+            bindingShimmer.slBook.stopShimmer()
+            bindingShimmer.slBook.visibility = View.GONE
+        }
+    }
+
+    private fun setVisibilityMainPage(visibility: Int) {
+        binding.ivAuthor.visibility = visibility
+        binding.tvAuthorName.visibility = visibility
+        binding.tvYear.visibility = visibility
+        binding.tvGlobalRating.visibility = visibility
+        binding.tvRatingTitle.visibility = visibility
+        binding.clTemp.visibility = visibility
+        binding.bottomSheet.visibility = visibility
     }
 }
