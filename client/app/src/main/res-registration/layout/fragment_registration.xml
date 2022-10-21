@@ -197,8 +197,6 @@
                 app:tint="@color/color_accent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <TextView
             android:id="@+id/tv_button_next"
             android:layout_width="0dp"
@@ -214,9 +212,10 @@
             android:textStyle="bold"
             app:layout_constraintWidth_percent="0.55"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="@dimen/space_6x"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/cl_have_account_sign_in"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/cl_password_back_panel2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_have_account_sign_in"

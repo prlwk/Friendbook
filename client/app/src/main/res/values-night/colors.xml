@@ -16,4 +16,5 @@
     <color name="tv_hint">#E6FFFFFF</color>
     <color name="light_button_not_selected">#26262A</color>
     <color name="light_block">#26262A</color>
+    <color name="add_friend_image_color">#FFFFFFFF</color>
 </resources>
