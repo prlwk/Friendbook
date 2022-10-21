@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.list_of_books.ListOfBooksFragment">
+    tools:context=".presentation.author.list_of_books.ListOfBooksFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/space_5x" />
+        app:layout_constraintGuide_begin="@dimen/space_7.5x" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"

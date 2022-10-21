@@ -5,6 +5,6 @@
     android:layout_marginStart="@dimen/space_5x"
     android:layout_marginEnd="@dimen/space_5x"
     android:layout_marginBottom="@dimen/space_5x"
-    android:background="@drawable/shimmer_holder_book_background">
+    android:background="@drawable/shimmer_rectangle">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

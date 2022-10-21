@@ -34,8 +34,6 @@
     <string name="add_friends_in_friendBook">Добавьте друга в FriendBook</string>
     <string name="enter_name_of_friend">ВВЕДИТЕ ИМЯ ПОЛЬЗОВАТЕЛЯ</string>
     <string name="add_friends_description">Для отправки запроса вам понадобится имя интересующего вас пользователя. Обратите внимание, что имя пользователя чувствительно к регистру.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="inastianice" formatted="false">#inastianice</string>
     <string name="send_friend_request">Отправить запрос для дружбы</string>
     <string name="your_name">Ваше имя пользователя -</string>
@@ -68,4 +66,15 @@
     <string name="no_account">Нет аккаунта?</string>
     <string name="register_no_caps">Зарегистрироваться</string>
     <string name="skip">Пропустить</string>
+    <string name="registration">Регистрация</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="next">Далее</string>
+    <string name="have_an_account">Есть аккаунт?</string>
+    <string name="sign_in_no_caps">Войти</string>
+    <string name="name_user">Имя</string>
+    <string name="enter_your_name">Введите ваше имя</string>
+    <string name="nickname">Никнейм</string>
+    <string name="сome_up_nickname">Придумайте никнейм</string>
+    <string name="enter_code">Введите код, который Вам\n пришел на почту</string>
+    <string name="search_title">Название книги, автор</string>
 </resources>

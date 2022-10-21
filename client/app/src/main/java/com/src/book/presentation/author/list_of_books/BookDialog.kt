@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.list_of_books
+package com.src.book.presentation.author.list_of_books
 
 import android.annotation.SuppressLint
 import android.app.Dialog

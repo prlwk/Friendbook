@@ -65,4 +65,16 @@
         <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
         <item name="android:colorForeground">@color/basic_color</item>
     </style>
+
+    <style name="confirm_code_edit_text">
+        <item name="android:backgroundTint">@color/basic_color</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ems">1</item>
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

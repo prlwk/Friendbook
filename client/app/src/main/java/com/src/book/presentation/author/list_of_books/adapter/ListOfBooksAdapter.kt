@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.list_of_books.adapter
+package com.src.book.presentation.author.list_of_books.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

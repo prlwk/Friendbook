@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.list_of_books
+package com.src.book.presentation.author.list_of_books
 
 import android.content.res.Configuration
 import android.graphics.Color
@@ -22,20 +22,18 @@ import com.src.book.databinding.FragmentListOfBooksBinding
 import com.src.book.domain.model.Book
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
-import com.src.book.presentation.main.list_of_books.adapter.ListOfBooksAdapter
-import com.src.book.presentation.main.list_of_books.viewModel.ListOfBooksViewModel
+import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
+import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.utlis.AUTHOR_ID
 import com.src.book.presentation.utils.MarginItemDecoration
 import com.src.book.utlis.BOOK_ID
 import com.src.book.utlis.TITLE
-import com.src.book.utlis.TITLE_SECTION_NAME
 
 class ListOfBooksFragment : Fragment() {
     private lateinit var binding: FragmentListOfBooksBinding
     private lateinit var viewModel: ListOfBooksViewModel
     private var authorId: Long = 0
     private var title: String = ""
-    private var titleBasic: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +45,7 @@ class ListOfBooksFragment : Fragment() {
     ): View? {
         val args = this.arguments
         authorId = args?.getLong(AUTHOR_ID) as Long
-        title = args.getString(TITLE_SECTION_NAME) as String
-        titleBasic = args.getString(TITLE) as String
+        title = args.getString(TITLE) as String
         binding = FragmentListOfBooksBinding.inflate(inflater)
         viewModel = (activity as MainActivity).getListOfBooksViewModel()
         return binding.root
@@ -90,7 +87,7 @@ class ListOfBooksFragment : Fragment() {
     }
 
     private fun setTitle() {
-        val title = SpannableString("${title}: ")
+        val title = SpannableString("Автор: ")
         title.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.basic_color)),
             0,
@@ -98,7 +95,7 @@ class ListOfBooksFragment : Fragment() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.tvTitle.text = title
-        val searchText = SpannableString(titleBasic)
+        val searchText = SpannableString(this.title)
 
         var textColor = 0
         when (requireContext().resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {

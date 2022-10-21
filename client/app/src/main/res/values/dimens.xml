@@ -3,9 +3,11 @@
     <dimen name="space_05x">2dp</dimen>
     <dimen name="space_1x">4dp</dimen>
     <dimen name="space_2x">8dp</dimen>
+    <dimen name="space_2.5x">10dp</dimen>
     <dimen name="space_3x">12dp</dimen>
     <dimen name="space_4x">16dp</dimen>
     <dimen name="space_5x">20dp</dimen>
+    <dimen name="space_6x">24dp</dimen>
     <dimen name="space_7x">28dp</dimen>
     <dimen name="space_7.5x">30dp</dimen>
     <dimen name="space_8x">32dp</dimen>
