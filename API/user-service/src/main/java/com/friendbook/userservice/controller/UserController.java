@@ -88,10 +88,13 @@ public class UserController {
 
     @RequestMapping(path = "/check-email-exists", method = RequestMethod.GET)
     public ResponseEntity<?> checkEmailExists(@RequestParam("email") String email) {
+        Map<String, Boolean> map = new HashMap<>();
         if (userService.isEmailExist(email)) {
-            return new ResponseEntity<>("Email exists", HttpStatus.CONFLICT);
+            map.put("exists", true);
+            return new ResponseEntity<>(map, HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Email does not exists", HttpStatus.OK);
+        map.put("exists", false);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/registration", method = RequestMethod.POST, consumes = {"multipart/form-data"}, produces = "application/json")

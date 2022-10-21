@@ -29,7 +29,7 @@ public class UserToken {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @Column(unique = true)
+    @Column(columnDefinition = "text")
     private String token;
 
     @ManyToOne(fetch = FetchType.EAGER)
