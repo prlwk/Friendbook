@@ -1,7 +1,7 @@
 package com.friendbook.userservice.service;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -10,24 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.userservice.DTO.RegisterBean;
-import com.friendbook.userservice.model.RefreshToken;
 import com.friendbook.userservice.model.User;
-import com.friendbook.userservice.model.UserToken;
-import com.friendbook.userservice.repository.RefreshTokenRepository;
 import com.friendbook.userservice.repository.UserRepository;
-import com.friendbook.userservice.repository.UserTokenRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    UserTokenRepository userTokenRepository;
-
-    @Autowired
-    RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
     public BCryptPasswordEncoder passwordEncoder;
@@ -108,60 +98,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateAccessToken(User user, String newToken, String oldToken) {
-        Set<UserToken> tokenSet = user.getUserTokens();
-        for (UserToken userToken : tokenSet) {
-            if (userToken.getToken().equals(oldToken)) {
-                UserToken newUserToken = new UserToken();
-                newUserToken.setToken(newToken);
-                newUserToken.setUser(user);
-                userTokenRepository.deleteUserTokensByTokenAndUser(oldToken, user.getId());
-                userTokenRepository.save(newUserToken);
-                return true;
-            }
+    public User getUserById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
         }
-        return false;
-    }
-
-    @Override
-    public boolean updateRefreshToken(User user, String newToken, String oldToken) {
-        Set<RefreshToken> tokenSet = user.getRefreshTokens();
-        for (RefreshToken refreshToken : tokenSet) {
-            if (refreshToken.getToken().equals(oldToken)) {
-                RefreshToken token = new RefreshToken();
-                token.setToken(newToken);
-                token.setUser(user);
-                refreshTokenRepository.deleteRefreshTokensByTokenAndUser(oldToken, user.getId());
-                refreshTokenRepository.save(token);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void addToken(User user, String newToken) {
-        UserToken userToken = new UserToken();
-        userToken.setToken(newToken);
-        userToken.setUser(user);
-        userTokenRepository.save(userToken);
-    }
-
-    @Override
-    public void addRefreshToken(User user, String newToken) {
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setToken(newToken);
-        refreshToken.setUser(user);
-        refreshTokenRepository.save(refreshToken);
-    }
-
-    @Override
-    public void deleteToken(User user, String token) {
-        userTokenRepository.deleteUserTokensByTokenAndUser(token, user.getId());
-    }
-
-    @Override
-    public void deleteRefreshToken(User user, String token) {
-        refreshTokenRepository.deleteRefreshTokensByTokenAndUser(token, user.getId());
+        throw new EntityNotFoundException("User not found.");
     }
 }

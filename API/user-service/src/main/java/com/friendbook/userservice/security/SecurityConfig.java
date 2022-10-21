@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.friendbook.userservice.security.jwt.JwtAuthFilter;
+import com.friendbook.userservice.security.jwt.JwtAuthProvider;
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -36,9 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/registration").permitAll()
                 .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/refresh-access-token").permitAll()
-                .antMatchers("/user/refresh-token").permitAll()
-                .antMatchers("/user/change-password").permitAll()
+                .antMatchers("/refresh-tokens*").permitAll()
+                .antMatchers("/user/id/**").permitAll()
+                .antMatchers("/user/password-recovery*").permitAll()
+                .antMatchers("/user/confirm-account*").permitAll()
+                .antMatchers("/send-code-for-recovery-password*").permitAll()
+                .antMatchers("/send-code-for-confirmation-account*").permitAll()
+                .antMatchers("/user/check-email-exists*").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling();
     }
