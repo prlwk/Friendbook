@@ -83,8 +83,8 @@ public class TokenController {
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (IOException | URISyntaxException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Error generating token."), HttpStatus.NOT_FOUND);
+                    new AppError(HttpStatus.BAD_REQUEST.value(),
+                            "Error generating token."), HttpStatus.BAD_REQUEST);
         }
     }
 

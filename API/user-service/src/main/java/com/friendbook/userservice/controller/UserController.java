@@ -8,9 +8,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -49,9 +47,7 @@ import com.friendbook.userservice.DTO.EmailAndTokensBean;
 import com.friendbook.userservice.DTO.LoginBean;
 import com.friendbook.userservice.DTO.RegisterBean;
 import com.friendbook.userservice.DTO.UserProfile;
-import com.friendbook.userservice.model.RefreshToken;
 import com.friendbook.userservice.model.User;
-import com.friendbook.userservice.model.UserToken;
 import com.friendbook.userservice.model.VerifyCode;
 import com.friendbook.userservice.security.jwt.JwtService;
 import com.friendbook.userservice.service.RefreshTokenService;
@@ -157,22 +153,18 @@ public class UserController {
             javaMailSender.send(message);
         } catch (MessagingException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Error sending code."), HttpStatus.NOT_FOUND);
-        } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "User with id " + user.getEmail() + " does not exist."), HttpStatus.NOT_FOUND);
+                    new AppError(HttpStatus.BAD_REQUEST.value(),
+                            "Error sending code."), HttpStatus.BAD_REQUEST);
         }
 
         try {
             Map<String, String> map =
-                    generateMapWithInfoAboutTokens(user, null, null);
+                    generateMapWithInfoAboutTokens(user);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (IOException | URISyntaxException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Error generation token!"), HttpStatus.NOT_FOUND);
+                    new AppError(HttpStatus.BAD_REQUEST.value(),
+                            "Error generation token!"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -233,12 +225,12 @@ public class UserController {
 
         try {
             Map<String, String> map =
-                    generateMapWithInfoAboutTokens(user, null, null);
+                    generateMapWithInfoAboutTokens(user);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (IOException | URISyntaxException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Error generation token!"), HttpStatus.NOT_FOUND);
+                    new AppError(HttpStatus.BAD_REQUEST.value(),
+                            "Error generation token!"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -262,44 +254,25 @@ public class UserController {
                 }
             } else {
                 return new ResponseEntity<>(
-                        new AppError(HttpStatus.NOT_FOUND.value(),
-                                "Bad authorization."), HttpStatus.NOT_FOUND);
+                        new AppError(HttpStatus.BAD_REQUEST.value(),
+                                "Bad authorization."), HttpStatus.BAD_REQUEST);
             }
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "The user with such nickname does not exist."), HttpStatus.NOT_FOUND);
-        }
-        Set<RefreshToken> refreshTokenSet = user.getRefreshTokens();
-        Iterator<RefreshToken> iter = refreshTokenSet.iterator();
-        boolean isValidRefreshToken = false;
-        while (iter.hasNext()) {
-            RefreshToken refreshToken = iter.next();
-            if (refreshToken.getToken().equals(emailAndTokensBean.getRefreshToken())) {
-                isValidRefreshToken = true;
-            }
+                            "The user with " + emailAndTokensBean.getEmail() + " does not exist."), HttpStatus.NOT_FOUND);
         }
 
-        if (!isValidRefreshToken) {
+        if (!refreshTokenService.isCorrectRefreshToken(user, emailAndTokensBean.getRefreshToken())) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
                             "This refresh token does not exist."), HttpStatus.NOT_FOUND);
         }
 
-        Set<UserToken> tokenSet = user.getUserTokens();
-        Iterator<UserToken> it = tokenSet.iterator();
-        boolean isValidToken = false;
-        while (it.hasNext()) {
-            UserToken userToken = it.next();
-            if (userToken.getToken().equals(emailAndTokensBean.getAccessToken())) {
-                isValidToken = true;
-            }
-        }
-
-        if (!isValidToken) {
+        if (!userTokenService.isCorrectAccessToken(user, emailAndTokensBean.getAccessToken())) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "This token does not exist."), HttpStatus.NOT_FOUND);
+                            "This access token does not exist."), HttpStatus.NOT_FOUND);
         }
 
         userTokenService.deleteAccessToken(user, emailAndTokensBean.getAccessToken());
@@ -326,17 +299,17 @@ public class UserController {
             verifyCodeService.deleteVerifyCodeByUser(user);
             try {
                 Map<String, String> map =
-                        generateMapWithInfoAboutTokens(user, null, null);
+                        generateMapWithInfoAboutTokens(user);
                 return new ResponseEntity<>(map, HttpStatus.OK);
             } catch (IOException | URISyntaxException e) {
                 return new ResponseEntity<>(
-                        new AppError(HttpStatus.NOT_FOUND.value(),
-                                "Error generation token!"), HttpStatus.NOT_FOUND);
+                        new AppError(HttpStatus.BAD_REQUEST.value(),
+                                "Error generation token!"), HttpStatus.BAD_REQUEST);
             }
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Code for user with" + email + "does not exist."), HttpStatus.NOT_FOUND);
+                            "Code for user with " + email + " does not exist."), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -360,13 +333,13 @@ public class UserController {
                 }
             } else {
                 return new ResponseEntity<>(
-                        new AppError(HttpStatus.NOT_FOUND.value(),
-                                "Bad authorization."), HttpStatus.NOT_FOUND);
+                        new AppError(HttpStatus.BAD_REQUEST.value(),
+                                "Bad authorization."), HttpStatus.BAD_REQUEST);
             }
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "User with email" + changePasswordBean.getEmail() + "does not exist."), HttpStatus.NOT_FOUND);
+                            "User with email " + changePasswordBean.getEmail() + " does not exist."), HttpStatus.NOT_FOUND);
         }
         userService.changePassword(changePasswordBean.getPassword(), user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -405,9 +378,7 @@ public class UserController {
     }
 
     private Map<String, String> generateMapWithInfoAboutTokens(
-            User user,
-            String oldAccessToken,
-            String oldRefreshToken) throws IOException, URISyntaxException {
+            User user) throws IOException, URISyntaxException {
         String newAccessToken;
         String newRefreshToken;
         newAccessToken = jwtService.accessTokenFor(user.getEmail(), ACCESS_TOKEN_EXPIRATION_TIME_MINUTES);
