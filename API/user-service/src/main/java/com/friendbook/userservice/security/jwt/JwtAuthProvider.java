@@ -1,4 +1,4 @@
-package com.friendbook.userservice.security;
+package com.friendbook.userservice.security.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -19,7 +19,9 @@ public class UserServiceApplication {
 
     @LoadBalanced
     @Bean
-    public RestTemplate getRestTemplate(){
+    public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
+
+
 }

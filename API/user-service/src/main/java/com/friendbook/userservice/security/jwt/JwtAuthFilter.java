@@ -1,4 +1,4 @@
-package com.friendbook.userservice.security;
+package com.friendbook.userservice.security.jwt;
 
 import java.io.IOException;
 

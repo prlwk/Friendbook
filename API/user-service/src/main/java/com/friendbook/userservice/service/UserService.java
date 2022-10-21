@@ -22,15 +22,5 @@ public interface UserService {
 
     void setLinkPhoto(String linkPhoto, Long userId);
 
-    boolean updateAccessToken(User user, String newToken, String oldToken);
-
-    boolean updateRefreshToken(User user, String newToken, String oldToken);
-
-    void addToken(User user, String newToken);
-
-    void addRefreshToken(User user, String newToken);
-
-    void deleteToken(User user, String newToken);
-
-    void deleteRefreshToken(User user, String newToken);
+    User getUserById(Long id);
 }

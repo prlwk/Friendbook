@@ -1,4 +1,4 @@
-package com.friendbook.userservice.security;
+package com.friendbook.userservice.security.jwt;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,14 +27,13 @@ public class JwtService {
         this.secretKeyProvider = secretKeyProvider;
     }
 
-    public String tokenFor(String login) throws IOException, URISyntaxException {
+    public String accessTokenFor(String login, Integer countMinutes) throws IOException, URISyntaxException {
         byte[] secretKey = secretKeyProvider.getKey();
-
         String uuid = UUID.randomUUID().toString().replace("-", "");
         Date expiration = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(expiration);
-        c.add(Calendar.MINUTE, 30);
+        c.add(Calendar.MINUTE, countMinutes);
         expiration = c.getTime();
         return Jwts.builder()
                 .setId(uuid)
@@ -45,14 +44,14 @@ public class JwtService {
                 .compact();
     }
 
-    public String refreshTokenFor(String login) throws IOException, URISyntaxException {
+    public String refreshTokenFor(String login, Integer countMonths) throws IOException, URISyntaxException {
         byte[] secretKey = secretKeyProvider.getKey();
 
         String uuid = UUID.randomUUID().toString().replace("-", "");
         Date expiration = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(expiration);
-        c.add(Calendar.MONTH, 6);
+        c.add(Calendar.MONTH, countMonths);
         expiration = c.getTime();
         return Jwts.builder()
                 .setId(uuid)
@@ -66,5 +65,9 @@ public class JwtService {
     public Jws<Claims> verify(String token) throws IOException, URISyntaxException {
         byte[] secretKey = secretKeyProvider.getKey();
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+    }
+
+    public Claims extractAllClaims(String token) throws URISyntaxException, IOException {
+        return Jwts.parser().setSigningKey(secretKeyProvider.getKey()).parseClaimsJws(token).getBody();
     }
 }
