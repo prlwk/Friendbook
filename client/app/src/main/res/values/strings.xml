@@ -78,4 +78,10 @@
     <string name="enter_code">Введите код, который Вам\n пришел на почту</string>
     <string name="search_title">Название книги, автор</string>
     <string name="photo">Фото</string>
+    <string name="settings">Настройки</string>
+    <string name="num_friends">друзей</string>
+    <string name="edit_profile">Редактировать\nпрофиль</string>
+    <string name="books_read">книг прочитано</string>
+    <string name="reviews_read">рецензий</string>
+    <string name="want_read">хочу почитать</string>
 </resources>

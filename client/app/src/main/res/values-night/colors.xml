@@ -5,6 +5,7 @@
     <color name="main_background">#000000</color>
     <color name="color_accent">#FFFFFF</color>
     <color name="pull_button">#662C334F</color>
+    <color name="pull_button_100_per">#2C334F</color>
     <color name="block">#0A0D15</color>
     <color name="block_night_white">#FFFFFF</color>
     <color name="light_gray">#AEAEAE</color>
@@ -18,4 +19,5 @@
     <color name="light_block">#26262A</color>
     <color name="add_friend_image_color">#FFFFFFFF</color>
     <color name="main_tint">#DB0D0C0C</color>
+    <color name="original_name">#888888</color>
 </resources>
