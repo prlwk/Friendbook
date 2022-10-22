@@ -1,23 +1,28 @@
 package com.src.book.data.remote.dataSource.login
 
 import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
+import com.src.book.data.remote.model.user.login.LoginMapper
 import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.ERROR_EMAIL
 import com.src.book.data.remote.utils.ERROR_NICKNAME
 import com.src.book.data.remote.utils.ERROR_PASSWORD
 import com.src.book.data.remote.utils.ErrorMessage
+import com.src.book.domain.model.user.Login
 import com.src.book.domain.utils.LoginState
 
-class LoginDataSourceImpl(val loginService: LoginService, val sessionStorage: SessionStorage) :
+class LoginDataSourceImpl(
+    private val loginService: LoginService,
+    private val sessionStorage: SessionStorage,
+    private val loginMapper: LoginMapper
+) :
     LoginDataSource {
-    override suspend fun signIn(data: Map<String, String>): LoginState {
-        val registrationAnswerResponse = loginService.signIn(data)
+    override suspend fun signIn(data: Login): LoginState {
+        val registrationAnswerResponse =
+            loginService.signIn(loginMapper.mapFromModelToResponse(data))
         if (registrationAnswerResponse.isSuccessful) {
-            println("УРААА")
             if (registrationAnswerResponse.body() != null) {
                 val body = registrationAnswerResponse.body()!!
-                println("token ${body.accessToken}")
                 sessionStorage.refresh(
                     refreshToken = body.refreshToken,
                     expireTimeRefreshToken = body.expireTimeRefreshToken,

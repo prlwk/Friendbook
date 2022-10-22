@@ -7,6 +7,7 @@ import com.src.book.data.remote.model.book.bookAuthor.BookAuthorMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookMapper
 import com.src.book.data.remote.model.tag.TagMapper
+import com.src.book.data.remote.model.user.login.LoginMapper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -65,5 +66,11 @@ class MapperModule {
         bookAuthorMapper: BookAuthorMapper
     ): AuthorMapper {
         return AuthorMapper(bookAuthorMapper = bookAuthorMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoginMapper(): LoginMapper {
+        return LoginMapper()
     }
 }

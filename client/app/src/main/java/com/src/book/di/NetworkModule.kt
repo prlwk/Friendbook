@@ -8,11 +8,15 @@ import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
+import com.src.book.data.remote.dataSource.user.UserDataSource
+import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
+import com.src.book.data.remote.model.user.login.LoginMapper
 import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.session.SessionStorageImpl
+import com.src.book.data.remote.utils.TokenInterceptor
 import com.src.book.utlis.*
 import dagger.Module
 import dagger.Provides
@@ -58,13 +62,15 @@ class NetworkModule {
     @Provides
     @Named(NAME_OKHTTP_WITH_TOKEN)
     fun provideOkHttpClientToken(
-        networkInterceptor: NetworkInterceptor
+        networkInterceptor: NetworkInterceptor,
+        tokenInterceptor: TokenInterceptor
     ): OkHttpClient =
         OkHttpClient().newBuilder()
             .addInterceptor(
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             )
             .addNetworkInterceptor(networkInterceptor)
+            .addInterceptor(tokenInterceptor)
             .build()
 
     @Singleton
@@ -97,7 +103,13 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideUserService(@Named(NAME_RETROFIT_WITH_TOKEN) retrofit: Retrofit): UserService {
+    fun provideUserServiceWithToken(@Named(NAME_RETROFIT_WITH_TOKEN) retrofit: Retrofit): UserServiceWithToken {
+        return retrofit.create(UserServiceWithToken::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 
@@ -105,6 +117,12 @@ class NetworkModule {
     @Provides
     fun provideLoginService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSessionService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): SessionService {
+        return retrofit.create(SessionService::class.java)
     }
 
     @Singleton
@@ -135,9 +153,28 @@ class NetworkModule {
     @Provides
     fun provideLoginDataSource(
         loginService: LoginService,
-        sessionStorage: SessionStorage
+        sessionStorage: SessionStorage,
+        loginMapper: LoginMapper
     ): LoginDataSource {
-        return LoginDataSourceImpl(loginService = loginService, sessionStorage = sessionStorage)
+        return LoginDataSourceImpl(
+            loginService = loginService,
+            sessionStorage = sessionStorage,
+            loginMapper = loginMapper
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDataSource(
+        userService: UserService,
+        userServiceWithToken: UserServiceWithToken,
+        sessionStorage: SessionStorage
+    ): UserDataSource {
+        return UserDataSourceImpl(
+            userService = userService,
+            userServiceWithToken = userServiceWithToken,
+            sessionStorage = sessionStorage
+        )
     }
 }
 

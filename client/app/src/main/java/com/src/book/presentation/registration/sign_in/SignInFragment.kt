@@ -40,18 +40,19 @@ class SignInFragment : Fragment() {
             this.viewLifecycleOwner, this::checkState
         )
         binding.tvButtonSignIn.setOnClickListener {
-            val isEntryByEmail: Boolean
-            val emailWithoutSpace = removeAllSpaces(binding.etEmail.text.toString())
-                val regex = REGEX_EMAIL
-                isEntryByEmail = Pattern.matches(regex, emailWithoutSpace.toString())
-            val passwordWithoutSpace=removeAllSpaces(binding.etPassword.text.toString())
-            binding.etEmail.text
-            isClickNext = true
-            viewModel.signInRequest(
-                emailWithoutSpace!!,
-                passwordWithoutSpace!!,
-                isEntryByEmail
-            )
+            if (!isClickNext) {
+                val isEntryByEmail: Boolean
+                val emailWithoutSpace = removeAllSpaces(binding.etEmail.text.toString())
+                isEntryByEmail = Pattern.matches(REGEX_EMAIL, emailWithoutSpace.toString())
+                val passwordWithoutSpace = removeAllSpaces(binding.etPassword.text.toString())
+                binding.etEmail.text
+                isClickNext = true
+                viewModel.signInRequest(
+                    emailWithoutSpace!!,
+                    passwordWithoutSpace!!,
+                    isEntryByEmail
+                )
+            }
         }
     }
 

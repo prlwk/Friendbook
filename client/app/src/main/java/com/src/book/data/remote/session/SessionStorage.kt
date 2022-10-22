@@ -11,4 +11,19 @@ interface SessionStorage {
     )
 
     fun getRefreshToken(): String
+    fun getTokensAndEmail(): Map<String, String>
+    fun getAccessToken(): String
+    fun accessTokenIsValid(): Boolean
+    fun refreshTokenIsValid(): Boolean
+    fun refreshAccessToken(
+        accessToken: String,
+        expireTimeAccessToken: String
+    )
+
+    fun refreshRefreshToken(
+        refreshToken: String,
+        expireTimeRefreshToken: String
+    )
+
+    fun getEmail():String
 }
