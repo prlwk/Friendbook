@@ -75,12 +75,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:background="@drawable/edit_text_background"
             android:textColorHint="@color/icon_nav_not_selected"
             app:boxStrokeColor="@color/transparent"
             app:boxStrokeErrorColor="@color/transparent"
+            app:endIconMode="custom"
             app:endIconTint="@color/transparent"
             app:errorTextColor="@color/negative_rating"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_email"
             app:prefixTextColor="@color/white">
@@ -89,7 +90,7 @@
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:background="@drawable/edit_text_background"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_email"
                 android:inputType="textEmailAddress"
@@ -97,7 +98,7 @@
                 android:paddingVertical="@dimen/space_2x"
                 android:textColor="@color/color_accent"
                 android:textCursorDrawable="@null"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -118,7 +119,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:background="@drawable/edit_text_background"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_password">
@@ -130,9 +130,10 @@
                 android:textColorHint="@color/icon_nav_not_selected"
                 app:boxStrokeColor="@color/transparent"
                 app:boxStrokeErrorColor="@color/transparent"
-                app:endIconTint="@color/transparent"
+                app:endIconMode="password_toggle"
                 app:errorTextColor="@color/negative_rating"
-                app:layout_constraintEnd_toStartOf="@id/iv_visible_password"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:prefixTextColor="@color/white">
@@ -141,28 +142,15 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/edit_text_background"
                     android:hint="@string/enter_password"
                     android:inputType="textPassword"
                     android:paddingHorizontal="@dimen/space_2x"
                     android:paddingVertical="@dimen/space_2x"
                     android:textColor="@color/color_accent"
                     android:textCursorDrawable="@null"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/iv_visible_password"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                android:contentDescription="@string/password"
-                android:src="@drawable/ic_visibility_off_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/color_accent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -174,6 +162,7 @@
             android:text="@string/forgot_password"
             android:textColor="@color/basic_color"
             android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_password_back_panel" />
 
