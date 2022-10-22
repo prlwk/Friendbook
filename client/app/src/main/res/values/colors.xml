@@ -21,10 +21,12 @@
     <color name="nav_bar_stroke">#C1BFBF</color>
     <color name="color_accent">#000000</color>
     <color name="pull_button">#66AFB1B8</color>
+    <color name="pull_button_100_per">#AFB1B8</color>
     <color name="block">#EFEAEA</color>
     <color name="block_night_white">#EFEAEA</color>
     <color name="light_color_text">#B8000000</color>
     <color name="card_background">#FFFFFF</color>
+    <color name="original_name">#575757</color>
 
     <color name="search_error_number">#E2ECFB</color>
     <color name="light_gray">#706F6F</color>
