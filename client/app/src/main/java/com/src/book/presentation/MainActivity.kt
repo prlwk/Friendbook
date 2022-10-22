@@ -1,8 +1,8 @@
 package com.src.book.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
@@ -10,13 +10,12 @@ import com.src.book.app.App
 import com.src.book.databinding.ActivityMainBinding
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
-import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
-import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
+import com.src.book.presentation.registration.LoginActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 //                R.id.personal_account ->
 //            }
         }
+    ///    startActivity(Intent(this, LoginActivity::class.java))
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
@@ -59,11 +59,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getAuthorViewModel(): AuthorViewModel =
-        ViewModelProvider(this, authorViewModelFactory).get(AuthorViewModel::class.java)
+        ViewModelProvider(this, authorViewModelFactory)[AuthorViewModel::class.java]
 
     fun getListOfBooksViewModel(): ListOfBooksViewModel =
-        ViewModelProvider(this, listOfBooksViewModelFactory).get(ListOfBooksViewModel::class.java)
+        ViewModelProvider(this, listOfBooksViewModelFactory)[ListOfBooksViewModel::class.java]
 
     fun getBookViewModel(): BookViewModel =
-        ViewModelProvider(this, bookViewModelFactory).get(BookViewModel::class.java)
+        ViewModelProvider(this, bookViewModelFactory)[BookViewModel::class.java]
 }

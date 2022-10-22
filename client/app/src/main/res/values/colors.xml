@@ -43,6 +43,8 @@
 
     <color name="add_friend_image_color">#B8000000</color>
 
+    <color name="main_tint">#CC2C2C2C</color>
+
     <!--    only dark theme-->
 
 

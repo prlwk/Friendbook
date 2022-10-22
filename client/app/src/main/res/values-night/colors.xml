@@ -17,4 +17,5 @@
     <color name="light_button_not_selected">#26262A</color>
     <color name="light_block">#26262A</color>
     <color name="add_friend_image_color">#FFFFFFFF</color>
+    <color name="main_tint">#DB0D0C0C</color>
 </resources>

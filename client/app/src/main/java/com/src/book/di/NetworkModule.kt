@@ -6,19 +6,21 @@ import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
+import com.src.book.data.remote.dataSource.login.LoginDataSource
+import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
-import com.src.book.data.remote.service.AuthorService
-import com.src.book.data.remote.service.BookService
-import com.src.book.data.remote.service.ReviewService
-import com.src.book.data.remote.service.UserService
-import com.src.book.utlis.BASE_URL
+import com.src.book.data.remote.service.*
+import com.src.book.data.remote.session.SessionStorage
+import com.src.book.data.remote.session.SessionStorageImpl
+import com.src.book.utlis.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -31,6 +33,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    @Named(NAME_OKHTTP_WITHOUT_TOKEN)
     fun provideOkHttpClient(
         networkInterceptor: NetworkInterceptor
     ): OkHttpClient =
@@ -43,36 +46,66 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    @Named(NAME_RETROFIT_WITHOUT_TOKEN)
+    fun provideRetrofit(@Named(NAME_OKHTTP_WITHOUT_TOKEN) okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     @Singleton
     @Provides
-    fun provideBookService(retrofit: Retrofit): BookService {
+    @Named(NAME_OKHTTP_WITH_TOKEN)
+    fun provideOkHttpClientToken(
+        networkInterceptor: NetworkInterceptor
+    ): OkHttpClient =
+        OkHttpClient().newBuilder()
+            .addInterceptor(
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            )
+            .addNetworkInterceptor(networkInterceptor)
+            .build()
+
+    @Singleton
+    @Provides
+    @Named(NAME_RETROFIT_WITH_TOKEN)
+    fun provideRetrofitToken(@Named(NAME_OKHTTP_WITH_TOKEN) okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideBookService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): BookService {
         return retrofit.create(BookService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideAuthorService(retrofit: Retrofit): AuthorService {
+    fun provideAuthorService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): AuthorService {
         return retrofit.create(AuthorService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideReviewService(retrofit: Retrofit): ReviewService {
+    fun provideReviewService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): ReviewService {
         return retrofit.create(ReviewService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideUserService(retrofit: Retrofit): UserService {
+    fun provideUserService(@Named(NAME_RETROFIT_WITH_TOKEN) retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideLoginService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): LoginService {
+        return retrofit.create(LoginService::class.java)
+    }
 
     @Singleton
     @Provides
@@ -90,6 +123,21 @@ class NetworkModule {
         bookMapper: BookMapper
     ): BookDataSource {
         return BookDataSourceImpl(bookService = bookService, bookMapper = bookMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSessionStorage(context: Context): SessionStorage {
+        return SessionStorageImpl(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoginDataSource(
+        loginService: LoginService,
+        sessionStorage: SessionStorage
+    ): LoginDataSource {
+        return LoginDataSourceImpl(loginService = loginService, sessionStorage = sessionStorage)
     }
 }
 
