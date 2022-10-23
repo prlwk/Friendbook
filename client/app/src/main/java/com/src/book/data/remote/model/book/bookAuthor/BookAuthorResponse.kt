@@ -1,11 +1,11 @@
 package com.src.book.data.remote.model.book.bookAuthor
 
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
 class BookAuthorResponse(
-    @SerialName("id") val id: Long,
-    @SerialName("rating") val rating: Double,
-    @SerialName("linkCover") val linkCover: String?
+    @SerializedName("id") val id: Long,
+    @SerializedName("rating") val rating: Double,
+    @SerializedName("linkCover") val linkCover: String?
 )

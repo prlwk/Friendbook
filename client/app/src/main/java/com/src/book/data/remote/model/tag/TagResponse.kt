@@ -1,9 +1,9 @@
 package com.src.book.data.remote.model.tag
 
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 
 @kotlinx.serialization.Serializable
 class TagResponse(
-    @SerialName("id") val id: Long,
-    @SerialName("name") val name: String
+    @SerializedName("id") val id: Long,
+    @SerializedName("name") val name: String
 )

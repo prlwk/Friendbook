@@ -7,6 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AuthorService {
-    @GET("${AUTHOR_SERVICE_BASE_URL}author/{id}")
+    @GET("${AUTHOR_SERVICE_BASE_URL}/author/{id}")
     suspend fun getAuthorById(@Path("id") id: Long): Response<AuthorResponse>
 }
