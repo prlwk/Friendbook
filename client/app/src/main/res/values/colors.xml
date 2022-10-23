@@ -35,6 +35,7 @@
     <color name="button_background">#E9E9E9</color>
     <color name="clicked_button">#C8C8C8</color>
     <color name="clicked_button_stroke">#ACACAC</color>
+    <color name="light_button_2">#E8E4E4</color>
 
     <color name="light_button_not_selected">#66C8C8C8</color>
     <color name="light_button_selected">#ACACAC</color>

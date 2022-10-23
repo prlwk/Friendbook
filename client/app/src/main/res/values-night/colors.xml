@@ -23,4 +23,6 @@
     <color name="original_name">#888888</color>
     <color name="clicked_button">#26262A</color>
     <color name="clicked_button_stroke">#333339</color>
+    <color name="light_button_2">#6627262A</color>
+
 </resources>
