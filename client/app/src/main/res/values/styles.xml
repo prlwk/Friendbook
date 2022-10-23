@@ -77,4 +77,11 @@
         <item name="android:inputType">number</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="BottomSheetExitDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomExitSheetStyleWrapper</item>
+    </style>
+    <style name="bottomExitSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>
