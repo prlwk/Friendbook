@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/space_5x" />
+        app:layout_constraintGuide_begin="@dimen/space_7.5x" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="@dimen/space_7x"
-        android:background="@drawable/books_btn_background"
+        android:background="@drawable/profile_books_btn_on_click"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/space_2x"
@@ -173,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="@dimen/space_7x"
-        android:background="@drawable/books_btn_background"
+        android:background="@drawable/profile_books_btn_on_click"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/space_2x"
@@ -206,7 +206,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="@dimen/space_7x"
-        android:background="@drawable/books_btn_background"
+        android:background="@drawable/profile_books_btn_on_click"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/space_2x"

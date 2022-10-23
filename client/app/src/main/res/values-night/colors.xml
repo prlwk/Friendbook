@@ -20,4 +20,6 @@
     <color name="add_friend_image_color">#FFFFFFFF</color>
     <color name="main_tint">#DB0D0C0C</color>
     <color name="original_name">#888888</color>
+    <color name="clicked_button">#26262A</color>
+    <color name="clicked_button_stroke">#333339</color>
 </resources>
