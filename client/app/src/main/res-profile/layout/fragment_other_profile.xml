@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_background"
     android:clipChildren="false"
-    tools:context=".presentation.profile.my_profile.MyProfileFragment">
+    tools:context=".presentation.profile.other_profile.OtherProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -83,9 +83,9 @@
             android:layout_marginTop="@dimen/space_3x"
             android:background="@drawable/edit_profile_btn_background"
             android:fontFamily="sans-serif-light"
-            android:paddingHorizontal="@dimen/space_2x"
+            android:paddingHorizontal="@dimen/space_6x"
             android:paddingVertical="@dimen/space_05x"
-            android:text="@string/edit_profile"
+            android:text="@string/add_friend"
             android:textAlignment="center"
             android:textColor="@color/light_color_text"
             android:textSize="15sp"
