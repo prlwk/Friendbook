@@ -26,8 +26,8 @@ public class MailController {
             mailService.sendConfirmationCode(id);
         } catch (MessagingException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Error sending code."), HttpStatus.NOT_FOUND);
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Error sending code."), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
@@ -42,8 +42,8 @@ public class MailController {
             mailService.sendPasswordRecoveryCode(email);
         } catch (MessagingException e) {
             return new ResponseEntity<>(
-                    new AppError(HttpStatus.BAD_REQUEST.value(),
-                            "Error sending code."), HttpStatus.BAD_REQUEST);
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Error sending code."), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
