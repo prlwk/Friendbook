@@ -16,11 +16,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtService {
+    @Autowired
     private SecretKeyProvider secretKeyProvider;
-
-    public JwtService() {
-        this(null);
-    }
 
     @Autowired
     public JwtService(SecretKeyProvider secretKeyProvider) {
@@ -69,5 +66,9 @@ public class JwtService {
 
     public Claims extractAllClaims(String token) throws URISyntaxException, IOException {
         return Jwts.parser().setSigningKey(secretKeyProvider.getKey()).parseClaimsJws(token).getBody();
+    }
+
+    public String extractUserInfo(String token) throws URISyntaxException, IOException {
+        return extractAllClaims(token).getSubject();
     }
 }

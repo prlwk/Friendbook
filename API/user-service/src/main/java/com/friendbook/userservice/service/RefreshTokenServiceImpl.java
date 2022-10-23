@@ -33,6 +33,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
+    public void deleteAllRefreshTokensByUser(User user) {
+        refreshTokenRepository.deleteAllRefreshTokensByUser(user.getId());
+    }
+
+    @Override
     public boolean isCorrectRefreshToken(User user, String token) {
         List<RefreshToken> list = refreshTokenRepository.findAllByUser(user);
         for (RefreshToken refreshToken : list) {

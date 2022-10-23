@@ -9,8 +9,9 @@ public interface UserTokenService {
 
     void deleteAccessToken(User user, String newToken);
 
+    void deleteAllAccessTokensByUser(User user);
+
     boolean isCorrectAccessToken(User user, String token);
 
     Long getExpirationTime();
-
 }

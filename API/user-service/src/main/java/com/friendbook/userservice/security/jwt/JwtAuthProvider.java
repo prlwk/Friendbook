@@ -1,5 +1,8 @@
 package com.friendbook.userservice.security.jwt;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -12,11 +15,16 @@ import com.friendbook.userservice.exception.JwtAuthenticationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 
 @Component
 public class JwtAuthProvider implements AuthenticationProvider {
     @Autowired
     private final JwtService jwtService;
+
+    @Autowired
+    private SecretKeyProvider secretKeyProvider;
 
     public JwtAuthProvider() {
         this(null);
@@ -35,6 +43,22 @@ public class JwtAuthProvider implements AuthenticationProvider {
             return new JwtAuthenticatedProfile(currentUser);
         } catch (Exception e) {
             throw new JwtAuthenticationException("Failed to verify token", e);
+        }
+    }
+
+    public Authentication getAuthentication(String token) throws URISyntaxException, IOException {
+        Claims claims = Jwts.parser().setSigningKey(secretKeyProvider.getKey()).parseClaimsJws(token).getBody();
+        String currentUser = claims.getSubject();
+        return new JwtAuthenticatedProfile(currentUser);
+    }
+
+
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(secretKeyProvider.getKey()).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException | URISyntaxException | IOException e) {
+            return false;
         }
     }
 

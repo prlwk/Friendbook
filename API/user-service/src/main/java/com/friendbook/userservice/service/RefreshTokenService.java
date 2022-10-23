@@ -9,6 +9,8 @@ public interface RefreshTokenService {
 
     void deleteRefreshToken(User user, String newToken);
 
+    void deleteAllRefreshTokensByUser(User user);
+
     boolean isCorrectRefreshToken(User user, String token);
 
     Long getExpirationTime();
