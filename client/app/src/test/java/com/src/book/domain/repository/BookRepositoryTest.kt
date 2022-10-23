@@ -51,4 +51,24 @@ class BookRepositoryTest {
             bookRepository.getBooksByAuthorId(1)
         )
     }
+
+    @Test
+    fun testGetAllGenresSuccessful() = runTest {
+        val genresModel = listOf(testModelsGenerator.generateGenreModel())
+        coEvery { bookDataSource.loadAllGenres() } returns genresModel
+        Assert.assertEquals(
+            genresModel,
+            bookRepository.getAllGenres()
+        )
+    }
+
+    @Test
+    fun testGetAllTagsSuccessful() = runTest {
+        val tagsModel = listOf(testModelsGenerator.generateTagModel())
+        coEvery { bookDataSource.loadAllTags() } returns tagsModel
+        Assert.assertEquals(
+            tagsModel,
+            bookRepository.getAllTags()
+        )
+    }
 }

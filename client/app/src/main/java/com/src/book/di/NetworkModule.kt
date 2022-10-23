@@ -12,6 +12,8 @@ import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
+import com.src.book.data.remote.model.genre.GenreMapper
+import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.user.login.LoginMapper
 import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage
@@ -138,9 +140,16 @@ class NetworkModule {
     @Provides
     fun provideBookDataSource(
         bookService: BookService,
-        bookMapper: BookMapper
+        bookMapper: BookMapper,
+        genreMapper: GenreMapper,
+        tagMapper: TagMapper
     ): BookDataSource {
-        return BookDataSourceImpl(bookService = bookService, bookMapper = bookMapper)
+        return BookDataSourceImpl(
+            bookService = bookService,
+            bookMapper = bookMapper,
+            genreMapper = genreMapper,
+            tagMapper = tagMapper
+        )
     }
 
     @Singleton

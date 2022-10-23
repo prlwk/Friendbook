@@ -40,4 +40,16 @@ class DomainModule {
     fun provideChangePasswordUseCase(userRepository: UserRepository): ChangePasswordUseCase {
         return ChangePasswordUseCase(userRepository = userRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetAllGenresUseCase(bookRepository: BookRepository): GetAllGenresUseCase {
+        return GetAllGenresUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllTagsUseCase(bookRepository: BookRepository): GetAllTagsUseCase {
+        return GetAllTagsUseCase(bookRepository = bookRepository)
+    }
 }
