@@ -200,9 +200,10 @@
         app:layout_constraintTop_toBottomOf="@id/slider_rating" />
 
     <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sc_hide_read"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/switch_background"
+        android:background="@drawable/switch_background_active"
         android:checked="true"
         android:maxWidth="57dp"
         android:paddingHorizontal="@dimen/space_1x"
@@ -211,7 +212,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tv_hide_read"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/tv_hide_read"
-        app:trackTint="@color/basic_color" />
+        app:trackTint="@color/transparent" />
 
     <TextView
         android:layout_width="wrap_content"

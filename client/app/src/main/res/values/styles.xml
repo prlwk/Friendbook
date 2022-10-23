@@ -59,11 +59,11 @@
     <style name="MySwitch" parent="Theme.AppCompat.Light">
         <!-- активное состояние (30% прозрачности для фона) -->
         <item name="colorControlActivated">@color/white</item>
-        <item name="android:colorBackground">@color/basic_color</item>
+        <item name="android:colorBackground">@color/transparent</item>
         <!-- неактивное состояние ползунка -->
-        <item name="colorSwitchThumbNormal">@color/light_gray</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
         <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
-        <item name="android:colorForeground">@color/basic_color</item>
+        <item name="android:colorForeground">@color/transparent</item>
     </style>
 
     <style name="confirm_code_edit_text">
