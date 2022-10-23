@@ -13,6 +13,7 @@
     <color name="light_color_text">#E6FFFFFF</color>
     <color name="search_error_number">#2C334F</color>
     <color name="stroke_button">#26262A</color>
+    <color name="stroke_button_2">#2C2C2C</color>
     <color name="button_background">#00E9E9E9</color>
     <color name="tv_hint">#E6FFFFFF</color>
     <color name="light_button_not_selected">#26262A</color>

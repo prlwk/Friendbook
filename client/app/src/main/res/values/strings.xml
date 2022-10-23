@@ -84,4 +84,7 @@
     <string name="books_read">книг прочитано</string>
     <string name="reviews_read">рецензий</string>
     <string name="want_read">хочу почитать</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_friend">Добавить\nв друзья</string>
 </resources>
