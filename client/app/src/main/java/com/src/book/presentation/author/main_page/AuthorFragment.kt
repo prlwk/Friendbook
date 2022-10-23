@@ -26,7 +26,7 @@ import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
 import com.src.book.presentation.utils.*
-import com.src.book.utlis.*
+import com.src.book.utils.*
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding

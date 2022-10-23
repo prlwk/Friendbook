@@ -1,7 +1,7 @@
 package com.src.book.data.remote.session
 
 import android.content.Context
-import com.src.book.utlis.*
+import com.src.book.utils.*
 
 class SessionStorageImpl(context: Context) : SessionStorage {
     private val sharedPreferences = context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE)

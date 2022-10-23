@@ -17,7 +17,7 @@ import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.session.SessionStorageImpl
 import com.src.book.data.remote.utils.TokenInterceptor
-import com.src.book.utlis.*
+import com.src.book.utils.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

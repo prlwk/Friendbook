@@ -1,4 +1,4 @@
-package com.src.book.utlis
+package com.src.book.utils
 
 const val AUTHOR_ID = "author_id"
 const val TITLE_SECTION_NAME = "title_blue"

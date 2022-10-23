@@ -48,6 +48,9 @@ android {
     packagingOptions {
         resources.excludes.add("META-INF/*")
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -94,4 +97,5 @@ dependencies {
     testImplementation 'io.mockk:mockk:1.12.4'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
+    testImplementation 'org.json:json:20180813'
 }

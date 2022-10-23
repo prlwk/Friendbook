@@ -1,4 +1,4 @@
-package com.src.book.utlis
+package com.src.book.utils
 
 const val REFRESH_TOKEN = "refreshToken"
 const val ACCESS_TOKEN = "accessToken"

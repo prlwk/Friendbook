@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.src.book.databinding.FragmentDescriptionBinding
-import com.src.book.utlis.DESCRIPTION
-import com.src.book.utlis.TITLE
+import com.src.book.utils.DESCRIPTION
+import com.src.book.utils.TITLE
 
 class DescriptionFragment : Fragment() {
     private lateinit var binding: FragmentDescriptionBinding

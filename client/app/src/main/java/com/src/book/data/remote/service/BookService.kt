@@ -1,7 +1,7 @@
 package com.src.book.data.remote.service
 
 import com.src.book.data.remote.model.book.book.BookResponse
-import com.src.book.utlis.BOOK_SERVICE_BASE_URL
+import com.src.book.utils.BOOK_SERVICE_BASE_URL
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -24,10 +24,10 @@ import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
-import com.src.book.utlis.AUTHOR_ID
+import com.src.book.utils.AUTHOR_ID
 import com.src.book.presentation.utils.MarginItemDecoration
-import com.src.book.utlis.BOOK_ID
-import com.src.book.utlis.TITLE
+import com.src.book.utils.BOOK_ID
+import com.src.book.utils.TITLE
 
 class ListOfBooksFragment : Fragment() {
     private lateinit var binding: FragmentListOfBooksBinding

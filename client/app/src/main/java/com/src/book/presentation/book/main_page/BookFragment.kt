@@ -25,10 +25,10 @@ import com.src.book.presentation.book.main_page.adapter.GenreAdapter
 import com.src.book.presentation.book.main_page.adapter.TagAdapter
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.utils.RatingColor
-import com.src.book.utlis.AUTHOR_ID
-import com.src.book.utlis.BOOK_ID
-import com.src.book.utlis.DESCRIPTION
-import com.src.book.utlis.TITLE
+import com.src.book.utils.AUTHOR_ID
+import com.src.book.utils.BOOK_ID
+import com.src.book.utils.DESCRIPTION
+import com.src.book.utils.TITLE
 
 
 class BookFragment : Fragment() {

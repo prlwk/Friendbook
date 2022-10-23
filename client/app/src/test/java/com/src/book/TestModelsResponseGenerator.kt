@@ -5,8 +5,10 @@ import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import com.src.book.data.remote.model.book.book.BookResponse
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorResponse
 import com.src.book.data.remote.model.genre.GenreResponse
+import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookResponse
 import com.src.book.data.remote.model.tag.TagResponse
+import com.src.book.data.remote.model.user.login.LoginResponse
 
 class TestModelsResponseGenerator {
     //author
@@ -64,5 +66,21 @@ class TestModelsResponseGenerator {
     fun generateGenreResponseModel() = GenreResponse(
         id = ID,
         name = GENRE_NAME
+    )
+
+    //login
+    fun generateLoginResponseModel() = LoginResponse(
+        loginOrEmail = EMAIL,
+        password = PASSWORD,
+        isEntryByEmail = IS_ENTRY_BY_EMAIL.toString()
+    )
+
+    fun generateLoginAnswerResponse() = LoginAnswerResponse(
+        accessToken = ACCESS_TOKEN,
+        expireTimeAccessToken = EXPIRE_TIME_ACCESS_TOKEN,
+        refreshToken = REFRESH_TOKEN,
+        expireTimeRefreshToken = EXPIRE_TIME_REFRESH_TOKEN,
+        id = ID.toString(),
+        email = EMAIL
     )
 }

@@ -1,6 +1,7 @@
 package com.src.book
 
 import com.src.book.domain.model.*
+import com.src.book.domain.model.user.Login
 
 class TestModelsGenerator {
     //author
@@ -60,5 +61,12 @@ class TestModelsGenerator {
     fun generateGenreModel() = Genre(
         id = ID,
         name = GENRE_NAME
+    )
+
+    //login
+    fun generateLoginModel() = Login(
+        loginOrEmail = EMAIL,
+        password = PASSWORD,
+        isEntryByEmail = IS_ENTRY_BY_EMAIL
     )
 }
