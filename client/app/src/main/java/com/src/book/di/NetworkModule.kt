@@ -14,7 +14,7 @@ import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.tag.TagMapper
-import com.src.book.data.remote.model.user.login.LoginMapper
+import com.src.book.data.remote.model.login.login.LoginMapper
 import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.session.SessionStorageImpl

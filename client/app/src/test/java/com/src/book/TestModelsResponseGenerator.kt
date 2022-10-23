@@ -5,10 +5,11 @@ import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import com.src.book.data.remote.model.book.book.BookResponse
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorResponse
 import com.src.book.data.remote.model.genre.GenreResponse
+import com.src.book.data.remote.model.login.emailExists.EmailExistsResponse
 import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookResponse
 import com.src.book.data.remote.model.tag.TagResponse
-import com.src.book.data.remote.model.user.login.LoginResponse
+import com.src.book.data.remote.model.login.login.LoginResponse
 
 class TestModelsResponseGenerator {
     //author
@@ -82,5 +83,13 @@ class TestModelsResponseGenerator {
         expireTimeRefreshToken = EXPIRE_TIME_REFRESH_TOKEN,
         id = ID.toString(),
         email = EMAIL
+    )
+
+    fun generateEmailExistsTrueResponse() = EmailExistsResponse(
+        exists = true
+    )
+
+    fun generateEmailExistsFalseResponse() = EmailExistsResponse(
+        exists = false
     )
 }

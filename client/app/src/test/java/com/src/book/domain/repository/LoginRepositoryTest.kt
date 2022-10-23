@@ -1,5 +1,6 @@
 package com.src.book.domain.repository
 
+import com.src.book.EMAIL
 import com.src.book.TestModelsGenerator
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.repository.LoginRepositoryImpl
@@ -34,7 +35,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun signInSuccessful() = runTest {
+    fun testSignInSuccessful() = runTest {
         val login = testModelsGenerator.generateLoginModel()
         coEvery { loginDataSource.signIn(any()) } returns LoginState.SuccessState
         Assert.assertEquals(
@@ -44,7 +45,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun signInErrorServer() = runTest {
+    fun testSignInErrorServer() = runTest {
         val login = testModelsGenerator.generateLoginModel()
         coEvery { loginDataSource.signIn(any()) } returns LoginState.ErrorServerState
         Assert.assertEquals(
@@ -54,7 +55,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun signInErrorPassword() = runTest {
+    fun testSignInErrorPassword() = runTest {
         val login = testModelsGenerator.generateLoginModel()
         coEvery { loginDataSource.signIn(any()) } returns LoginState.ErrorPasswordState
         Assert.assertEquals(
@@ -64,12 +65,21 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun signInErrorEmailLogin() = runTest {
+    fun testSignInErrorEmailLogin() = runTest {
         val login = testModelsGenerator.generateLoginModel()
         coEvery { loginDataSource.signIn(any()) } returns LoginState.ErrorEmailLoginState
         Assert.assertEquals(
             LoginState.ErrorEmailLoginState,
             loginRepository.signIn(login)
+        )
+    }
+
+    @Test
+    fun testCheckEmailExistsSuccessful() = runTest {
+        coEvery { loginDataSource.checkEmailExists(any()) } returns false
+        Assert.assertEquals(
+            false,
+            loginRepository.checkEmailExists(EMAIL)
         )
     }
 }

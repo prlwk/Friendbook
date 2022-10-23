@@ -3,7 +3,7 @@ package com.src.book.data.remote.dataSource
 import com.src.book.*
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
-import com.src.book.data.remote.model.user.login.LoginMapper
+import com.src.book.data.remote.model.login.login.LoginMapper
 import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.domain.utils.LoginState
@@ -128,6 +128,28 @@ class LoginDaraSourceTest {
         Assert.assertEquals(
             LoginState.ErrorServerState,
             loginDataSource.signIn(loginModel)
+        )
+    }
+
+    @Test
+    fun testCheckEmailExistsTrueSuccessful() = runTest {
+        coEvery { loginService.checkEmailExists(any()) } returns Response.success(
+            testModelsResponseGenerator.generateEmailExistsTrueResponse()
+        )
+        Assert.assertEquals(
+            true,
+            loginDataSource.checkEmailExists(EMAIL)
+        )
+    }
+
+    @Test
+    fun testCheckEmailExistsFalseSuccessful() = runTest {
+        coEvery { loginService.checkEmailExists(any()) } returns Response.success(
+            testModelsResponseGenerator.generateEmailExistsFalseResponse()
+        )
+        Assert.assertEquals(
+            false,
+            loginDataSource.checkEmailExists(EMAIL)
         )
     }
 }

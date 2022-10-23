@@ -52,4 +52,10 @@ class DomainModule {
     fun provideGetAllTagsUseCase(bookRepository: BookRepository): GetAllTagsUseCase {
         return GetAllTagsUseCase(bookRepository = bookRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideCheckEmailExistsUseCase(loginRepository: LoginRepository): CheckEmailExistsUseCase {
+        return CheckEmailExistsUseCase(loginRepository = loginRepository)
+    }
 }

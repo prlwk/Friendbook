@@ -1,7 +1,7 @@
 package com.src.book.data.remote.dataSource.login
 
 import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
-import com.src.book.data.remote.model.user.login.LoginMapper
+import com.src.book.data.remote.model.login.login.LoginMapper
 import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.ERROR_EMAIL
@@ -45,5 +45,9 @@ class LoginDataSourceImpl(
             }
             return LoginState.ErrorServerState
         }
+    }
+
+    override suspend fun checkEmailExists(email: String): Boolean {
+        return loginService.checkEmailExists(email).body()?.exists!!
     }
 }

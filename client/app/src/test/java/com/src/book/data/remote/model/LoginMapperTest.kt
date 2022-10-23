@@ -2,7 +2,7 @@ package com.src.book.data.remote.model
 
 import com.src.book.TestModelsGenerator
 import com.src.book.TestModelsResponseGenerator
-import com.src.book.data.remote.model.user.login.LoginMapper
+import com.src.book.data.remote.model.login.login.LoginMapper
 import io.mockk.junit4.MockKRule
 import io.mockk.unmockkAll
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -8,6 +8,10 @@ import kotlinx.coroutines.withContext
 
 class LoginRepositoryImpl(private val loginDataSource: LoginDataSource) : LoginRepository {
     override suspend fun signIn(data: Login) = withContext(Dispatchers.IO) {
-       return@withContext loginDataSource.signIn(data)
+        return@withContext loginDataSource.signIn(data)
+    }
+
+    override suspend fun checkEmailExists(email: String): Boolean = withContext(Dispatchers.IO) {
+        return@withContext loginDataSource.checkEmailExists(email)
     }
 }

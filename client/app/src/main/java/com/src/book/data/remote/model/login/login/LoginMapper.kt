@@ -1,4 +1,4 @@
-package com.src.book.data.remote.model.user.login
+package com.src.book.data.remote.model.login.login
 
 import com.src.book.domain.model.user.Login
 

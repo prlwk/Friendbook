@@ -5,4 +5,5 @@ import com.src.book.domain.utils.LoginState
 
 interface LoginRepository {
     suspend fun signIn(data: Login): LoginState
+    suspend fun checkEmailExists(email:String):Boolean
 }
