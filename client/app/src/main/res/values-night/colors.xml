@@ -26,4 +26,6 @@
     <color name="light_button_2">#6627262A</color>
     <color name="pull_line">#8F8F8F</color>
     <color name="light_color_text_grey">#E6FFFFFF</color>
+    <color name="basic_color_65_per_night_white">#E6FFFFFF</color>
+
 </resources>
