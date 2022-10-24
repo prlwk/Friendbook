@@ -59,26 +59,27 @@ public class AuthUserController {
         }
         User user = (User) responseEntity.getBody();
         Map<String, Boolean> map = new HashMap<>();
-        if (userService.isCorrectPassword(user, password)) {
-            map.put("isCorrectPassword", true);
-        } else {
-            map.put("isCorrectPassword", false);
-        }
+        map.put("isCorrectPassword", userService.isCorrectPassword(user, password));
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/change-password", method = RequestMethod.GET)
-    public ResponseEntity<?> changePassword(@RequestParam String password, @RequestParam String refreshToken, HttpServletRequest request) {
+    public ResponseEntity<?> changePassword(@RequestParam String newPassword, @RequestParam String oldPassword, @RequestParam String refreshToken, HttpServletRequest request) {
         ResponseEntity<?> responseEntity = getUserByRequest(request);
         if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity;
         }
         User user = (User) responseEntity.getBody();
+        if (!userService.isCorrectPassword(user, oldPassword)) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "Wrong old password!"), HttpStatus.NOT_FOUND);
+        }
         userTokenService.deleteAllAccessTokensByUser(user);
         refreshTokenService.deleteAllRefreshTokensByUser(user);
         userTokenService.addAccessToken(user, resolveToken(request));
         refreshTokenService.addRefreshToken(user, refreshToken);
-        userService.changePassword(password, user);
+        userService.changePassword(newPassword, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

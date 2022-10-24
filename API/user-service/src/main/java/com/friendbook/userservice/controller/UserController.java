@@ -72,11 +72,7 @@ public class UserController {
     @RequestMapping(path = "/check-email-exists", method = RequestMethod.GET)
     public ResponseEntity<?> checkEmailExists(@RequestParam("email") String email) {
         Map<String, Boolean> map = new HashMap<>();
-        if (userService.isEmailExist(email)) {
-            map.put("exists", true);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        }
-        map.put("exists", false);
+        map.put("exists", userService.isEmailExist(email));
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
