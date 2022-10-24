@@ -13,6 +13,7 @@
     <dimen name="space_8x">32dp</dimen>
     <dimen name="space_9x">36dp</dimen>
     <dimen name="space_10x">40dp</dimen>
+    <dimen name="space_14x">60dp</dimen>
     <dimen name="space_16.5x">70dp</dimen>
     <dimen name="title_size">16sp</dimen>
     <dimen name="description_addFriends_size">11sp</dimen>
