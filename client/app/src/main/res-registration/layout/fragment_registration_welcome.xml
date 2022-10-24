@@ -62,10 +62,11 @@
         app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="170dp"
         android:contentDescription="@string/books"
         android:src="@drawable/book_icon"
+        android:layout_marginEnd="-40dp"
         app:layout_constraintBottom_toTopOf="@id/welcome_text"
         app:layout_constraintEnd_toEndOf="@id/welcome_text" />
 
