@@ -2,7 +2,7 @@ package com.src.book.presentation.registration.first_registration.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.CheckEmailExistsUseCase
+import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
 import javax.inject.Inject
 
 class RegistrationViewModelFactory @Inject constructor(private val emailExistsUseCase: CheckEmailExistsUseCase) :

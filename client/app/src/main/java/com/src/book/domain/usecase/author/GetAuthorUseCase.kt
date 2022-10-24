@@ -1,4 +1,4 @@
-package com.src.book.domain.usecase
+package com.src.book.domain.usecase.author
 
 import com.src.book.domain.model.Author
 import com.src.book.domain.repository.AuthorRepository

@@ -2,7 +2,7 @@ package com.src.book.presentation.profile.settings.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.LogoutUseCase
+import com.src.book.domain.usecase.user.LogoutUseCase
 import javax.inject.Inject
 
 class SettingsViewModelFactory @Inject constructor(private val logoutUseCase: LogoutUseCase) :

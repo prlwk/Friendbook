@@ -1,4 +1,4 @@
-package com.src.book.domain.usecase
+package com.src.book.domain.usecase.user
 
 import com.src.book.PASSWORD
 import com.src.book.domain.repository.UserRepository

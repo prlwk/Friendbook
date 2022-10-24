@@ -3,7 +3,7 @@ package com.src.book.presentation.profile.settings.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.usecase.LogoutUseCase
+import com.src.book.domain.usecase.user.LogoutUseCase
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.launch
 

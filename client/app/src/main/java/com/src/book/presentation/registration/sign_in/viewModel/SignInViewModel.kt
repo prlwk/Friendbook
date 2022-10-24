@@ -3,7 +3,7 @@ package com.src.book.presentation.registration.sign_in.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.usecase.SignInUseCase
+import com.src.book.domain.usecase.login.SignInUseCase
 import com.src.book.domain.utils.LoginState
 import kotlinx.coroutines.launch
 

@@ -3,7 +3,7 @@ package com.src.book.presentation.registration.password_recovery.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.usecase.CheckEmailExistsUseCase
+import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
 import kotlinx.coroutines.launch
 
 class PasswordRecoveryEmailViewModel (private val checkEmailExistsUseCase: CheckEmailExistsUseCase) :

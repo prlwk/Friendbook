@@ -1,4 +1,4 @@
-package com.src.book.domain.usecase
+package com.src.book.domain.usecase.login
 
 import com.src.book.EMAIL
 import com.src.book.IS_ENTRY_BY_EMAIL

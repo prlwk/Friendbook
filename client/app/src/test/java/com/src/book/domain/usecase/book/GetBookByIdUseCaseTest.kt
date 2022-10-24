@@ -1,4 +1,4 @@
-package com.src.book.domain.usecase
+package com.src.book.domain.usecase.book
 
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.BookRepository
@@ -11,17 +11,18 @@ import kotlinx.coroutines.test.runTest
 import org.junit.*
 
 @ExperimentalCoroutinesApi
-class GetAllTagsUseCaseTest {
+class GetBookByIdUseCaseTest {
+
     @get:Rule
     val rule = MockKRule(this)
     private lateinit var bookRepository: BookRepository
     private lateinit var testModelsGenerator: TestModelsGenerator
-    private lateinit var getAllTagsUseCase: GetAllTagsUseCase
+    private lateinit var getBookByIdUseCase: GetBookByIdUseCase
 
     @Before
     fun setUp() {
         bookRepository = mockk()
-        getAllTagsUseCase = GetAllTagsUseCase(bookRepository)
+        getBookByIdUseCase = GetBookByIdUseCase(bookRepository)
         testModelsGenerator = TestModelsGenerator()
     }
 
@@ -31,9 +32,9 @@ class GetAllTagsUseCaseTest {
     }
 
     @Test
-    fun testGetAllTagsUseCaseSuccessful() = runTest {
-        val tagsModel = listOf(testModelsGenerator.generateTagModel())
-        coEvery { bookRepository.getAllTags() } returns tagsModel
-        Assert.assertEquals(tagsModel, getAllTagsUseCase.execute())
+    fun testGetBookByIdUseCaseSuccessful() = runTest {
+        val bookModel = testModelsGenerator.generateBookModel()
+        coEvery { bookRepository.getBookById(any()) } returns bookModel
+        Assert.assertEquals(bookModel, getBookByIdUseCase.execute(1))
     }
 }

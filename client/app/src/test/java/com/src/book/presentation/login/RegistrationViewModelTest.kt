@@ -1,7 +1,7 @@
 package com.src.book.presentation.login
 
 import com.src.book.EMAIL
-import com.src.book.domain.usecase.CheckEmailExistsUseCase
+import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import io.mockk.coEvery
 import kotlinx.coroutines.Dispatchers

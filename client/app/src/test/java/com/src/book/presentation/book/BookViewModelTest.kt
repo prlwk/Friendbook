@@ -2,7 +2,7 @@ package com.src.book.presentation.book
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.TestModelsGenerator
-import com.src.book.domain.usecase.GetBookByIdUseCase
+import com.src.book.domain.usecase.book.GetBookByIdUseCase
 import com.src.book.presentation.book.main_page.BookState
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import io.mockk.coEvery

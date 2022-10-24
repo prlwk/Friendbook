@@ -2,7 +2,7 @@ package com.src.book.presentation.author.list_of_books.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.GetBooksByAuthorIdUseCase
+import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import javax.inject.Inject
 
 class ListOfBooksViewModelFactory @Inject constructor(val getBooksByAuthorIdUseCase: GetBooksByAuthorIdUseCase) :

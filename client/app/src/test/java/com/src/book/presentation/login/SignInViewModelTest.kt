@@ -3,7 +3,7 @@ package com.src.book.presentation.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.EMAIL
 import com.src.book.PASSWORD
-import com.src.book.domain.usecase.SignInUseCase
+import com.src.book.domain.usecase.login.SignInUseCase
 import com.src.book.domain.utils.LoginState
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
 import io.mockk.coEvery

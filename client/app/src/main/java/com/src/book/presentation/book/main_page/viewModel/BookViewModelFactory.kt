@@ -2,7 +2,7 @@ package com.src.book.presentation.book.main_page.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.GetBookByIdUseCase
+import com.src.book.domain.usecase.book.GetBookByIdUseCase
 import javax.inject.Inject
 
 class BookViewModelFactory @Inject constructor(private val getBookByIdUseCase: GetBookByIdUseCase) :

@@ -2,7 +2,7 @@ package com.src.book.presentation.registration.sign_in.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.SignInUseCase
+import com.src.book.domain.usecase.login.SignInUseCase
 import javax.inject.Inject
 
 class SignInViewModelFactory @Inject constructor(val signInUseCase: SignInUseCase) :

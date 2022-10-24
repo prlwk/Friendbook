@@ -4,7 +4,15 @@ import com.src.book.domain.repository.AuthorRepository
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.repository.LoginRepository
 import com.src.book.domain.repository.UserRepository
-import com.src.book.domain.usecase.*
+import com.src.book.domain.usecase.author.GetAuthorUseCase
+import com.src.book.domain.usecase.book.GetBookByIdUseCase
+import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
+import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
+import com.src.book.domain.usecase.login.SignInUseCase
+import com.src.book.domain.usecase.search.GetAllGenresUseCase
+import com.src.book.domain.usecase.search.GetAllTagsUseCase
+import com.src.book.domain.usecase.user.ChangePasswordUseCase
+import com.src.book.domain.usecase.user.LogoutUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
