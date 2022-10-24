@@ -89,4 +89,12 @@
     <string name="name_nickname">Имя, никнейм</string>
     <string name="books_read_2_lines">книг\nпрочитано</string>
     <string name="want_read_2_lines">хочу\nпрочитать</string>
+    <string name="password_recovery">Восстановление пароля</string>
+    <string name="password_recovery_instruction">Для восстановления доступа на ваш Email будет выслан код для подтверждения.</string>
+    <string name="password_recovery_instruction_code">Проверьте почту.\n\n Введите код для подверждения.</string>
+    <string name="code">Код</string>
+    <string name="enter_code_hint">Введите код</string>
+    <string name="send_code_again">Отправить код повторно</string>
+    <string name="enter_new_password">Введите новый пароль.</string>
+    <string name="confirm">Подтвердить</string>
 </resources>
