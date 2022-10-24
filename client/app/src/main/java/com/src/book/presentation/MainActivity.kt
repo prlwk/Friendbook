@@ -12,6 +12,7 @@ import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewM
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
+import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(SettingsFragment())
+        replaceFragment(BookFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {

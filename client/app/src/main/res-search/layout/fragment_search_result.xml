@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.search.list_of_books.SearchListOfBooksFragment">
+    tools:context=".presentation.search.result.SearchResultFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -90,7 +90,7 @@
         android:id="@+id/sl_book"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_8x"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
