@@ -2,7 +2,7 @@ package com.src.book.domain.usecase
 
 import com.src.book.PASSWORD
 import com.src.book.domain.repository.UserRepository
-import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.ChangePasswordState
 import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
@@ -31,13 +31,48 @@ class ChangePasswordUseCaseTest {
 
     @Test
     fun testChangePasswordUseCaseSuccessful() = runTest {
-        coEvery { userRepository.changePassword(PASSWORD) } returns BasicState.SuccessState
-        Assert.assertEquals(BasicState.SuccessState, changePasswordUseCase.execute(PASSWORD))
+        coEvery {
+            userRepository.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.SuccessState
+        Assert.assertEquals(
+            ChangePasswordState.SuccessState, changePasswordUseCase.execute(
+                PASSWORD,
+                PASSWORD
+            )
+        )
     }
 
     @Test
     fun testChangePasswordUseCaseError() = runTest {
-        coEvery { userRepository.changePassword(PASSWORD) } returns BasicState.ErrorState
-        Assert.assertEquals(BasicState.ErrorState, changePasswordUseCase.execute(PASSWORD))
+        coEvery {
+            userRepository.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.ErrorState
+        Assert.assertEquals(
+            ChangePasswordState.ErrorState, changePasswordUseCase.execute(
+                PASSWORD,
+                PASSWORD
+            )
+        )
+    }
+    @Test
+    fun testChangePasswordUseCaseWrong() = runTest {
+        coEvery {
+            userRepository.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.WrongPasswordState
+        Assert.assertEquals(
+            ChangePasswordState.WrongPasswordState, changePasswordUseCase.execute(
+                PASSWORD,
+                PASSWORD
+            )
+        )
     }
 }
