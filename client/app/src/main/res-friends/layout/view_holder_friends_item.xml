@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp"
+    android:background="@drawable/friend_card_background"
+    android:paddingBottom="@dimen/space_3x">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/space_5x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/space_4x" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/space_4x" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_user_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/negative_rating"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/gl_top"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        style="@style/black_style_roboto_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/nastia"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_photo"
+        app:layout_constraintStart_toEndOf="@id/iv_user_photo"
+        app:layout_constraintTop_toTopOf="@id/iv_user_photo" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        style="@style/light_style_roboto_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/inastianice"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
+        app:layout_constraintStart_toEndOf="@id/tv_user_name"
+        app:layout_constraintTop_toTopOf="@id/tv_user_name" />
+
+    <LinearLayout
+        android:id="@+id/ll_books_read"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_2x"
+        android:layout_marginEnd="@dimen/space_3x"
+        android:background="@drawable/friend_books_number_background"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_2x"
+        android:paddingVertical="@dimen/space_2x"
+        app:layout_constraintEnd_toStartOf="@id/ll_reviews"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_name">
+
+        <TextView
+            android:id="@+id/tv_books_read_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="500"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/books_read_2_lines"
+            android:textAlignment="center"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_reviews"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/space_3x"
+        app:layout_constraintBottom_toBottomOf="@id/ll_books_read"
+        android:layout_marginTop="@dimen/space_2x"
+        android:background="@drawable/friend_books_number_background"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_2x"
+        android:paddingVertical="@dimen/space_2x"
+
+        app:layout_constraintEnd_toStartOf="@id/ll_want_read"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/ll_books_read"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_name">
+
+        <TextView
+            android:id="@+id/tv_reviews_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="50"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/reviews_read"
+            android:textAlignment="center"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_want_read"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/space_3x"
+        android:layout_marginTop="@dimen/space_2x"
+        android:background="@drawable/friend_books_number_background"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_2x"
+        android:paddingVertical="@dimen/space_2x"
+        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintBottom_toBottomOf="@id/ll_books_read"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/ll_reviews"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_name">
+
+        <TextView
+            android:id="@+id/tv_want_read_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="15"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/want_read_2_lines"
+            android:textAlignment="center"
+            android:textColor="@color/color_accent"
+            android:textSize="11sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

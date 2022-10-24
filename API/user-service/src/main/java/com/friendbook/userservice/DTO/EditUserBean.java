@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChangePasswordBean {
-    private String email;
-    private String password;
+public class EditUserBean {
+    private String name;
+    private String login;
 }

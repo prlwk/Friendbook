@@ -33,6 +33,11 @@ public class UserTokenServiceImpl implements UserTokenService {
     }
 
     @Override
+    public void deleteAllAccessTokensByUser(User user) {
+        userTokenRepository.deleteAllUserTokensByUser(user.getId());
+    }
+
+    @Override
     public boolean isCorrectAccessToken(User user, String token) {
         List<UserToken> list = userTokenRepository.findAllByUser(user);
         for (UserToken userToken : list) {

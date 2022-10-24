@@ -20,4 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Transactional
     void updateLinkPhotoByUserId(String linkPhoto, Long userId);
+
+    @Query(value = "DELETE FROM User u WHERE u.email=:email and u.isEnabled=false")
+    @Modifying
+    @Transactional
+    void deleteAllUsersExceptVerified(String email);
 }

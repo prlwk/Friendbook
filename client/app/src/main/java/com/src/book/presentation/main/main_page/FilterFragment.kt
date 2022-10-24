@@ -27,6 +27,14 @@ class FilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFiltersBinding.bind(view)
 
-        //binding.sliderRating.haloRadius=0
+        binding.scHideRead.setOnCheckedChangeListener { v, checked ->
+            run {
+                if (checked) {
+                    v.setBackgroundResource(R.drawable.switch_background_active)
+                } else {
+                    v.setBackgroundResource(R.drawable.switch_background_inactive)
+                }
+            }
+        }
     }
 }

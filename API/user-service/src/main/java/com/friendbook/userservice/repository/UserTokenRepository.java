@@ -17,5 +17,10 @@ public interface UserTokenRepository extends JpaRepository<UserToken, Long> {
     @Transactional
     void deleteUserTokensByTokenAndUser(String token, Long id);
 
+    @Query(value = "DELETE FROM UserToken ut WHERE ut.user.id=:id")
+    @Modifying
+    @Transactional
+    void deleteAllUserTokensByUser(Long id);
+
     List<UserToken> findAllByUser(User user);
 }

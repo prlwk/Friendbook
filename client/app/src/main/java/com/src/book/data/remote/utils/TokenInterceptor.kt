@@ -15,7 +15,7 @@ class TokenInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        if (response.code == 403) {
+        if (response.code == 403 || response.code == 401) {
             val sessionStorage = sessionStorageProvider.get()
             val sessionService = sessionServiceProvider.get()
             if (!sessionStorage.accessTokenIsValid()) {
