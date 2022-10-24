@@ -49,8 +49,8 @@ class UserDataSourceTest {
 
     @Test
     fun testChangePasswordSuccessful() = runTest {
-        coEvery { userServiceWithToken.changePassword(any()) } returns Response.success(Unit)
-        coEvery { sessionStorage.getEmail() } returns EMAIL
+        coEvery { userServiceWithToken.changePassword(any(), any()) } returns Response.success(Unit)
+        coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
         Assert.assertEquals(
             BasicState.SuccessState,
             userDataSource.changePassword(PASSWORD)
@@ -59,11 +59,11 @@ class UserDataSourceTest {
 
     @Test
     fun testChangePasswordError() = runTest {
-        coEvery { userServiceWithToken.changePassword(any()) } returns Response.error(
+        coEvery { userServiceWithToken.changePassword(any(),any()) } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
-        coEvery { sessionStorage.getEmail() } returns EMAIL
+        coEvery { sessionStorage.getRefreshToken() }  returns REFRESH_TOKEN
         Assert.assertEquals(
             BasicState.ErrorState,
             userDataSource.changePassword(PASSWORD)
