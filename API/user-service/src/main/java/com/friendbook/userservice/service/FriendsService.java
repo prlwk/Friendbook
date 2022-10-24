@@ -14,4 +14,6 @@ public interface FriendsService {
     List<UserInRequest> getOutgoingRequests(User user);
     List<UserInRequest> getIncomingRequests(User user);
     List<UserForFriends> getFriends(User user);
+    boolean isFriends(User user1, User user2);
+    boolean isExistingRequest(User user1, User user2);
 }

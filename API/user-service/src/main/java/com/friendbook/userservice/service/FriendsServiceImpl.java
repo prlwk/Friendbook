@@ -91,6 +91,28 @@ public class FriendsServiceImpl implements FriendsService {
         return friendsListPart;
     }
 
+    @Override
+    public boolean isFriends(User user1, User user2) {
+        Friends friends = friendsRepository.getFriendsBySenderAndRecipient(user1.getId(), user2.getId());
+        if (friends != null && friends.isAcceptedRequest()) {
+            return true;
+        }
+        friends = friendsRepository.getFriendsBySenderAndRecipient(user2.getId(), user1.getId());
+        if (friends != null && friends.isAcceptedRequest()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isExistingRequest(User user1, User user2) {
+        Friends friends = friendsRepository.getFriendsBySenderAndRecipient(user1.getId(), user2.getId());
+        if (friends != null && !friends.isAcceptedRequest()) {
+            return true;
+        }
+        return false;
+    }
+
     private List<UserInRequest> setImagesForFriendsInRequests(List<UserInRequest> userInRequestList) {
         for (UserInRequest userInRequest : userInRequestList) {
             try {

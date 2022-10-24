@@ -54,6 +54,20 @@ public class FriendsController {
                     new AppError(HttpStatus.NOT_FOUND.value(),
                             "User with login " + login + " does not exist."), HttpStatus.NOT_FOUND);
         }
+        if (friendsService.isFriends(user, friend)) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.CONFLICT.value(),
+                            "They are already friends."), HttpStatus.CONFLICT);
+        }
+        if (friendsService.isExistingRequest(user, friend)) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.CONFLICT.value(),
+                            "Such request already exists"), HttpStatus.CONFLICT);
+        }
+        if (friendsService.isExistingRequest(friend, user)) {
+            friendsService.submitFriendsRequest(friend, user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
         friendsService.addFriendsRequest(user, friend);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -184,7 +198,7 @@ public class FriendsController {
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Friend request does not exist."), HttpStatus.NOT_FOUND);
+                            "Friends does not exist."), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
