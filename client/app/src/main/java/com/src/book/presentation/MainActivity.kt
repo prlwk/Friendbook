@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 //                R.id.personal_account ->
 //            }
         }
-    ///    startActivity(Intent(this, LoginActivity::class.java))
+        ///   startActivity(Intent(this, LoginActivity::class.java))
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 

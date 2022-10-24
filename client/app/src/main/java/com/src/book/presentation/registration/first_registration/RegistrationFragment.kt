@@ -32,6 +32,12 @@ class RegistrationFragment : Fragment() {
         viewModel.liveDataIsLoading.observe(this.viewLifecycleOwner, this::checkLoading)
         viewModel.liveDataEmailExists.observe(this.viewLifecycleOwner, this::checkEmailExists)
         binding.tvButtonNext.setOnClickListener {
+//            binding.tilEmail.error = "Некорректная почта"
+//            binding.tilPassword.error = "Некорректный пароль"
+//            binding.tilPassword2.error = "Некорректный пароль снова"
+//            binding.tilEmail.errorIconDrawable = null
+//            binding.tilPassword.errorIconDrawable = null
+//            binding.tilPassword2.errorIconDrawable = null
             //TODO сюда передать почту из эддит текста
             if (!onClickNext) {
                 viewModel.checkEmailExists("alena-alena-2002@yandex.r")

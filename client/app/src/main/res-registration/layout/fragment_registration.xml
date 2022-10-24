@@ -34,7 +34,7 @@
         android:id="@+id/back_panel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintHeight_percent="0.62"
         android:layout_marginTop="60dp"
         android:background="@drawable/back_panel_background"
         android:gravity="center"
@@ -101,18 +101,26 @@
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            android:id="@+id/v_empty_view_near_email"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_email"
+            app:layout_constraintTop_toTopOf="@id/til_email" />
+
         <TextView
             android:id="@+id/tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_16.5x"
             android:text="@string/password"
             android:textColor="@color/light_color_text"
             android:textSize="13sp"
             style="@style/black_style_roboto_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_email"/>
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view_near_email"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_password_back_panel"
@@ -133,7 +141,6 @@
                 app:endIconMode="password_toggle"
                 app:errorTextColor="@color/negative_rating"
                 app:hintEnabled="false"
-                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -154,18 +161,26 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/v_empty_view_near_password"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_password"
+            app:layout_constraintTop_toTopOf="@id/cl_password_back_panel" />
+
         <TextView
             android:id="@+id/tv_repeat_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_16.5x"
             android:text="@string/repeat_password"
             android:textColor="@color/light_color_text"
             android:textSize="13sp"
             style="@style/black_style_roboto_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_password_back_panel"/>
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view_near_password"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_password_back_panel2"
@@ -206,11 +221,19 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/v_empty_view_near_repeat_password"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_repeat_password"
+            app:layout_constraintTop_toTopOf="@id/cl_password_back_panel2" />
+
         <TextView
             android:id="@+id/tv_button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="95dp"
             android:background="@drawable/sign_in_button_background"
             android:paddingVertical="@dimen/space_2x"
             android:gravity="center"
@@ -224,7 +247,7 @@
             android:layout_marginBottom="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/cl_have_account_sign_in"
-            app:layout_constraintTop_toBottomOf="@id/cl_password_back_panel2" />
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view_near_repeat_password" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_have_account_sign_in"

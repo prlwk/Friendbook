@@ -112,7 +112,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
-            android:id="@+id/v_empty_view"
+            android:id="@+id/v_empty_view_near_name"
             android:layout_width="1dp"
             android:layout_height="1dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
             android:textColor="@color/light_color_text"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_empty_view" />
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view_near_name" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_nickname"
@@ -165,11 +165,19 @@
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            android:id="@+id/v_empty_view_near_nickname"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_nickname"
+            app:layout_constraintTop_toTopOf="@id/til_nickname" />
+
         <TextView
             android:id="@+id/tv_button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="95dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/sign_in_button_background"
             android:gravity="center"
@@ -181,7 +189,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_nickname"
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view_near_nickname"
             app:layout_constraintWidth_percent="0.55" />
 
 
