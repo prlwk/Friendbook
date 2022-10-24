@@ -70,22 +70,36 @@
             app:layout_constraintTop_toBottomOf="@id/tv_sign_in"
             style="@style/black_style_roboto_text"/>
 
-        <EditText
-            android:id="@+id/et_enter_mail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:autofillHints="emailAddress"
-            android:background="@drawable/edit_text_background"
-            android:hint="@string/enter_email"
-            android:inputType="text"
-            android:textColorHint="@color/color_accent"
-            android:paddingHorizontal="@dimen/space_2x"
-            android:paddingVertical="@dimen/space_3x"
-            android:textColor="@color/color_accent"
-            android:textSize="12sp"
+            android:textColorHint="@color/icon_nav_not_selected"
+            app:boxStrokeColor="@color/transparent"
+            app:boxStrokeErrorColor="@color/transparent"
+            app:endIconMode="custom"
+            app:endIconTint="@color/transparent"
+            app:errorTextColor="@color/negative_rating"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_email"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_email"
+            app:prefixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_background"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="@dimen/space_2x"
+                android:paddingVertical="@dimen/space_2x"
+                android:textColor="@color/color_accent"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_password"
@@ -98,48 +112,46 @@
             android:textSize="13sp"
             style="@style/black_style_roboto_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_enter_mail"/>
+            app:layout_constraintTop_toBottomOf="@id/til_email"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_password_back_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:background="@drawable/edit_text_background"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_password">
 
-            <EditText
-                android:id="@+id/et_password"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:autofillHints="password"
-                android:background="@color/transparent"
-                android:hint="@string/enter_password"
-                android:inputType="textPassword"
-                android:paddingHorizontal="@dimen/space_2x"
-                android:paddingVertical="@dimen/space_2x"
-                android:text="password"
-                android:textColor="@color/color_accent"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_visible_password"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_visible_password"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                android:contentDescription="@string/password"
-                android:src="@drawable/ic_visibility_off_24"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/icon_nav_not_selected"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeErrorColor="@color/transparent"
+                app:endIconMode="password_toggle"
+                app:errorTextColor="@color/negative_rating"
+                app:hintEnabled="false"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/color_accent" />
+                app:prefixTextColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/enter_password"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="@dimen/space_2x"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:textColor="@color/color_accent"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -160,48 +172,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:background="@drawable/edit_text_background"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_repeat_password">
 
-            <EditText
-                android:id="@+id/et_repeat_password"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password2"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:autofillHints="password"
-                android:background="@color/transparent"
-                android:hint="@string/enter_password"
-                android:inputType="textPassword"
-                android:paddingHorizontal="@dimen/space_2x"
-                android:paddingVertical="@dimen/space_2x"
-                android:text="password"
-                android:textColor="@color/color_accent"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_visible_repeat_password"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_visible_repeat_password"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                android:contentDescription="@string/password"
-                android:src="@drawable/ic_visibility_off_24"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/icon_nav_not_selected"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeErrorColor="@color/transparent"
+                app:endIconMode="password_toggle"
+                app:errorTextColor="@color/negative_rating"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/color_accent" />
+                app:prefixTextColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/enter_password"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="@dimen/space_2x"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:textColor="@color/color_accent"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/sign_in_button_background"
             android:paddingVertical="@dimen/space_2x"
             android:gravity="center"
@@ -222,7 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:layout_marginBottom="@dimen/space_4x"
+            android:layout_marginBottom="@dimen/space_2x"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">

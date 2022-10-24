@@ -5,21 +5,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.src.book.R
+import com.src.book.databinding.FragmentLoginLoadingBinding
+import com.src.book.databinding.FragmentRegistrationUserInformationBinding
+import com.src.book.databinding.FragmentSignInBinding
+import com.src.book.domain.utils.LoginState
+import com.src.book.presentation.registration.LoginActivity
+import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
 
 class RegistrationUserInfoFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private lateinit var binding: FragmentRegistrationUserInformationBinding
+    private lateinit var bindingLoading: FragmentLoginLoadingBinding
+    private lateinit var viewModel: SignInViewModel
+    private var isClickNext = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration_user_information, container, false)
+        this.binding = FragmentRegistrationUserInformationBinding.inflate(inflater)
+        viewModel = (activity as LoginActivity).getSignInViewModel()
+        return binding.root
     }
 
-    companion object {}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.tvButtonNext.setOnClickListener {
+            binding.tilNickname.error = "Введите корректный никнейм"
+            binding.tilNickname.errorIconDrawable = null
+            binding.tilEnterName.error = "Введите корректное имя"
+            binding.tilEnterName.errorIconDrawable = null
+        }
+    }
+
 }

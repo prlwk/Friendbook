@@ -41,7 +41,7 @@
         android:paddingHorizontal="@dimen/space_5x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
-        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintHeight_percent="0.62"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -81,22 +81,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_photo" />
 
-        <EditText
-            android:id="@+id/et_enter_mail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_enter_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:autofillHints="emailAddress"
-            android:background="@drawable/edit_text_background"
-            android:hint="@string/enter_your_name"
-            android:inputType="text"
-            android:paddingHorizontal="@dimen/space_2x"
-            android:paddingVertical="@dimen/space_3x"
+            android:textColorHint="@color/icon_nav_not_selected"
+            app:boxStrokeColor="@color/transparent"
+            app:boxStrokeErrorColor="@color/transparent"
+            app:endIconMode="custom"
+            app:endIconTint="@color/transparent"
+            app:errorTextColor="@color/negative_rating"
+            app:hintEnabled="false"
             android:textColor="@color/color_accent"
-            android:textColorHint="@color/color_accent"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_background"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_your_name"
+                android:paddingHorizontal="@dimen/space_2x"
+                android:paddingVertical="@dimen/space_2x"
+                android:textColor="@color/color_accent"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/v_empty_view"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toTopOf="@id/til_enter_name" />
 
         <TextView
             android:id="@+id/tv_nickname"
@@ -104,28 +125,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_16.5x"
             android:text="@string/nickname"
             android:textColor="@color/light_color_text"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_enter_mail" />
+            app:layout_constraintTop_toBottomOf="@id/v_empty_view" />
 
-        <EditText
-            android:id="@+id/et_nickname"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:background="@drawable/edit_text_background"
             android:hint="@string/сome_up_nickname"
-            android:inputType="text"
-            android:paddingHorizontal="@dimen/space_2x"
-            android:paddingVertical="@dimen/space_3x"
-            android:textColor="@color/color_accent"
+            app:boxStrokeColor="@color/transparent"
+            app:boxStrokeErrorColor="@color/transparent"
+            app:endIconMode="custom"
+            app:endIconTint="@color/transparent"
+            app:errorTextColor="@color/negative_rating"
+            app:hintEnabled="false"
             android:textColorHint="@color/color_accent"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            app:prefixTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_background"
+                android:gravity="center_vertical"
+                android:hint="@string/сome_up_nickname"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="@dimen/space_2x"
+                android:paddingVertical="@dimen/space_2x"
+                android:textColor="@color/color_accent"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_button_next"
@@ -143,7 +181,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/til_nickname"
             app:layout_constraintWidth_percent="0.55" />
 
 

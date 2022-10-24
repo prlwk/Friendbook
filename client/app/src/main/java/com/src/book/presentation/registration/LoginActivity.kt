@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
 import com.src.book.app.App
 import com.src.book.presentation.registration.first_registration.RegistrationFragment
+import com.src.book.presentation.registration.first_registration.RegistrationUserInfoFragment
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModelFactory
 import com.src.book.presentation.registration.sign_in.SignInFragment

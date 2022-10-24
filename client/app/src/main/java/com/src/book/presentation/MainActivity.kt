@@ -16,6 +16,7 @@ import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
 import com.src.book.presentation.registration.LoginActivity
+import com.src.book.presentation.registration.sign_in.SignInFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
