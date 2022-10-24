@@ -51,12 +51,11 @@ public class User {
 
     private String linkPhoto;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private Set<User> friends;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Friends> senders;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Friends> recipients;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_books_rate",

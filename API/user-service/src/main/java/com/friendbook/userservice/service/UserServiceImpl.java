@@ -144,17 +144,27 @@ public class UserServiceImpl implements UserService {
         MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
         formData.add("user", new UserProfile(user));
         try {
-            String path = new File("").getAbsolutePath();
-            File file = new File(path + "/user-service/src/main/resources/user-photo/" + user.getLinkPhoto());
-            FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
-            InputStream input = new FileInputStream(file);
-            OutputStream os = fileItem.getOutputStream();
-            IOUtils.copy(input, os);
-            MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
-            formData.add("image", new ByteArrayResource(multipartFile.getBytes()));
+            formData.add("image", new ByteArrayResource(getImageForUser(user.getId()).getBytes()));
         } catch (IOException e) {
             formData.add("image", null);
         }
         return formData;
+    }
+
+    @Override
+    public MultipartFile getImageForUser(Long id) {
+        try {
+            User user = getUserById(id);
+            String path = new File("").getAbsolutePath();
+            File file = new File(path + "/user-service/src/main/resources/user-photo/" + user.getLinkPhoto());
+            FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false,
+                    file.getName(), (int) file.length(), file.getParentFile());
+            InputStream input = new FileInputStream(file);
+            OutputStream os = fileItem.getOutputStream();
+            IOUtils.copy(input, os);
+            return new CommonsMultipartFile(fileItem);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.friendbook.userservice.service;
 
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.DTO.RegisterBean;
@@ -34,4 +35,6 @@ public interface UserService {
     void deleteAllUsersExceptVerified(String email);
 
     MultiValueMap<String, Object> getInfoForProfile(User user);
+
+    MultipartFile getImageForUser(Long id);
 }
