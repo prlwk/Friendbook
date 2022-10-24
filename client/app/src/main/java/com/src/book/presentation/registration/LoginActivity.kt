@@ -10,6 +10,8 @@ import com.src.book.presentation.registration.first_registration.RegistrationFra
 import com.src.book.presentation.registration.first_registration.RegistrationUserInfoFragment
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModelFactory
+import com.src.book.presentation.registration.password_recovery.viewModel.PasswordRecoveryEmailViewModel
+import com.src.book.presentation.registration.password_recovery.viewModel.PasswordRecoveryEmailViewModelFactory
 import com.src.book.presentation.registration.sign_in.SignInFragment
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModelFactory
@@ -22,11 +24,14 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var registrationViewModelFactory: RegistrationViewModelFactory
 
+    @Inject
+    lateinit var passwordRecoveryEmailViewModelFactory: PasswordRecoveryEmailViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
         setContentView(R.layout.activity_login)
-        replaceFragment(RegistrationFragment())
+        replaceFragment(SignInFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -41,4 +46,10 @@ class LoginActivity : AppCompatActivity() {
 
     fun getRegistrationViewModel(): RegistrationViewModel =
         ViewModelProvider(this, registrationViewModelFactory)[RegistrationViewModel::class.java]
+
+    fun getPasswordRecoveryEmailViewModel(): PasswordRecoveryEmailViewModel =
+        ViewModelProvider(
+            this,
+            passwordRecoveryEmailViewModelFactory
+        )[PasswordRecoveryEmailViewModel::class.java]
 }
