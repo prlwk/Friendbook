@@ -64,16 +64,21 @@ public class AuthUserController {
     }
 
     @RequestMapping(path = "/change-password", method = RequestMethod.GET)
-    public ResponseEntity<?> changePassword(@RequestParam String newPassword, @RequestParam String oldPassword, @RequestParam String refreshToken, HttpServletRequest request) {
+    public ResponseEntity<?> changePassword(@RequestParam String newPassword,
+                                            @RequestParam(required = false) String oldPassword,
+                                            @RequestParam String refreshToken,
+                                            HttpServletRequest request) {
         ResponseEntity<?> responseEntity = getUserByRequest(request);
         if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity;
         }
         User user = (User) responseEntity.getBody();
-        if (!userService.isCorrectPassword(user, oldPassword)) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Wrong old password!"), HttpStatus.NOT_FOUND);
+        if (oldPassword != null) {
+            if (!userService.isCorrectPassword(user, oldPassword)) {
+                return new ResponseEntity<>(
+                        new AppError(HttpStatus.NOT_FOUND.value(),
+                                "Wrong old password!"), HttpStatus.NOT_FOUND);
+            }
         }
         userTokenService.deleteAllAccessTokensByUser(user);
         refreshTokenService.deleteAllRefreshTokensByUser(user);
@@ -150,7 +155,8 @@ public class AuthUserController {
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public ResponseEntity<?> logout(@RequestParam String refreshToken, HttpServletRequest request) {
+    public ResponseEntity<?> logout(@RequestParam String refreshToken,
+                                    HttpServletRequest request) {
         ResponseEntity<?> responseEntity = getUserByRequest(request);
         if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity;
