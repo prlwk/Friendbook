@@ -73,7 +73,7 @@
         android:id="@+id/sl_book"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_9x"
+        android:layout_marginTop="@dimen/space_8x"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/gl_end"

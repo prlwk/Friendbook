@@ -7,6 +7,7 @@ import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.service.UserServiceWithToken
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.ChangePasswordState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -49,24 +50,67 @@ class UserDataSourceTest {
 
     @Test
     fun testChangePasswordSuccessful() = runTest {
-        coEvery { userServiceWithToken.changePassword(any(), any()) } returns Response.success(Unit)
+        coEvery {
+            userServiceWithToken.changePassword(
+                any(),
+                any(),
+                any()
+            )
+        } returns Response.success(Unit)
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
         Assert.assertEquals(
-            BasicState.SuccessState,
-            userDataSource.changePassword(PASSWORD)
+            ChangePasswordState.SuccessState,
+            userDataSource.changePassword(PASSWORD, PASSWORD)
         )
     }
 
     @Test
     fun testChangePasswordError() = runTest {
-        coEvery { userServiceWithToken.changePassword(any(),any()) } returns Response.error(
+        coEvery { userServiceWithToken.changePassword(any(), any(), any()) } returns Response.error(
+            500, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        Assert.assertEquals(
+            ChangePasswordState.ErrorState,
+            userDataSource.changePassword(PASSWORD, PASSWORD)
+        )
+    }
+
+    @Test
+    fun testChangePasswordWrongPassword() = runTest {
+        coEvery { userServiceWithToken.changePassword(any(), any(), any()) } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
-        coEvery { sessionStorage.getRefreshToken() }  returns REFRESH_TOKEN
+        coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        Assert.assertEquals(
+            ChangePasswordState.WrongPasswordState,
+            userDataSource.changePassword(PASSWORD, PASSWORD)
+        )
+    }
+
+    @Test
+    fun testLogoutSuccessful() = runTest {
+        coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        coEvery { userServiceWithToken.logout(any()) } returns Response.success(Unit)
+        coEvery { sessionStorage.clearSession() } returns Unit
+        Assert.assertEquals(
+            BasicState.SuccessState,
+            userDataSource.logout()
+        )
+    }
+
+    @Test
+    fun testLogoutError() = runTest {
+        coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        coEvery { userServiceWithToken.logout(any()) } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
         Assert.assertEquals(
             BasicState.ErrorState,
-            userDataSource.changePassword(PASSWORD)
+            userDataSource.logout()
         )
     }
 }

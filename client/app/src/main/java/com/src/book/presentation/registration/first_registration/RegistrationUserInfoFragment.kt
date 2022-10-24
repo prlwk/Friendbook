@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.src.book.R
-import com.src.book.databinding.FragmentLoginLoadingBinding
+import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentRegistrationUserInformationBinding
 import com.src.book.databinding.FragmentSignInBinding
 import com.src.book.domain.utils.LoginState
@@ -16,7 +16,7 @@ import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
 
 class RegistrationUserInfoFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationUserInformationBinding
-    private lateinit var bindingLoading: FragmentLoginLoadingBinding
+    private lateinit var bindingLoading: FragmentLoadingBinding
     private lateinit var viewModel: SignInViewModel
     private var isClickNext = false
     override fun onCreateView(

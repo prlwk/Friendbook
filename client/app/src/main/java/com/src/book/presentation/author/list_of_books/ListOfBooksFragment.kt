@@ -25,7 +25,6 @@ import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.utils.AUTHOR_ID
-import com.src.book.presentation.utils.MarginItemDecoration
 import com.src.book.utils.BOOK_ID
 import com.src.book.utils.TITLE
 
@@ -62,9 +61,6 @@ class ListOfBooksFragment : Fragment() {
         viewModel.loadBooksByAuthorId(authorId)
 
         setTitle()
-        binding.rvBooks.addItemDecoration(
-            MarginItemDecoration(resources.getDimensionPixelSize(R.dimen.space_5x))
-        )
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }

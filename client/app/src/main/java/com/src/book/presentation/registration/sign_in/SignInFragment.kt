@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.src.book.databinding.FragmentLoginLoadingBinding
+import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentSignInBinding
 import com.src.book.domain.utils.LoginState
 import com.src.book.presentation.registration.LoginActivity
@@ -18,7 +18,8 @@ private const val REGEX_EMAIL =
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
-    private lateinit var bindingLoading: FragmentLoginLoadingBinding
+    private lateinit var bindingLoading: FragmentLoadingBinding
+
     private lateinit var viewModel: SignInViewModel
     private var isClickNext = false
     override fun onCreateView(

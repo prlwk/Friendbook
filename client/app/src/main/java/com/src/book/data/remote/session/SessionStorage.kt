@@ -25,5 +25,6 @@ interface SessionStorage {
         expireTimeRefreshToken: String
     )
 
-    fun getEmail():String
+    fun getEmail(): String
+    fun clearSession()
 }

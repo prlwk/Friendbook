@@ -4,6 +4,7 @@ import com.src.book.PASSWORD
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.repository.UserRepositoryImpl
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.ChangePasswordState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -37,20 +38,55 @@ class UserRepositoryTest {
 
     @Test
     fun testChangePasswordSuccessful() = runTest {
-        val password = PASSWORD
-        coEvery { userDataSource.changePassword(any()) } returns BasicState.SuccessState
+        coEvery {
+            userDataSource.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.SuccessState
         Assert.assertEquals(
-            BasicState.SuccessState,
-            userRepository.changePassword(password)
+            ChangePasswordState.SuccessState,
+            userRepository.changePassword(PASSWORD, PASSWORD)
         )
     }
 
     @Test
     fun testChangePasswordError() = runTest {
-        coEvery { userDataSource.changePassword(any()) } returns BasicState.ErrorState
+        coEvery {
+            userDataSource.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.ErrorState
         Assert.assertEquals(
-            BasicState.ErrorState,
-            userRepository.changePassword(PASSWORD)
+            ChangePasswordState.ErrorState,
+            userRepository.changePassword(PASSWORD, PASSWORD)
         )
+    }
+
+    @Test
+    fun testChangePasswordWrong() = runTest {
+        coEvery {
+            userDataSource.changePassword(
+                any(),
+                any()
+            )
+        } returns ChangePasswordState.WrongPasswordState
+        Assert.assertEquals(
+            ChangePasswordState.WrongPasswordState,
+            userRepository.changePassword(PASSWORD, PASSWORD)
+        )
+    }
+
+    @Test
+    fun testLogoutSuccessful() = runTest {
+        coEvery { userDataSource.logout() } returns BasicState.SuccessState
+        Assert.assertEquals(BasicState.SuccessState, userRepository.logout())
+    }
+
+    @Test
+    fun testLogoutError() = runTest {
+        coEvery { userDataSource.logout() } returns BasicState.ErrorState
+        Assert.assertEquals(BasicState.ErrorState, userRepository.logout())
     }
 }

@@ -77,4 +77,17 @@ class SessionStorageImpl(context: Context) : SessionStorage {
         return (sharedPreferences.getString(EMAIL, "") ?: "")
     }
 
+    override fun clearSession() {
+        sharedPreferences.edit()
+            .putString(REFRESH_TOKEN, "")
+            .putString(ACCESS_TOKEN, "")
+            .putString(CURRENT_DATE_ACCESS_TOKEN, "")
+            .putString(CURRENT_DATE_REFRESH_TOKEN, "")
+            .putString(EXPIRE_TIME_REFRESH_TOKEN, "")
+            .putString(EXPIRE_TIME_ACCESS_TOKEN, "")
+            .putString(ID, "")
+            .putString(EMAIL, "")
+            .apply()
+    }
+
 }

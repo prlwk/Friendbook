@@ -12,9 +12,13 @@ import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewM
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
+import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
+import com.src.book.presentation.profile.settings.SettingsFragment
+import com.src.book.presentation.profile.settings.viewModel.SettingsViewModel
+import com.src.book.presentation.profile.settings.viewModel.SettingsViewModelFactory
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.sign_in.SignInFragment
 import javax.inject.Inject
@@ -32,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var bookViewModelFactory: BookViewModelFactory
 
+    @Inject
+    lateinit var settingsViewModelFactory: SettingsViewModelFactory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(FilterFragment())
+        replaceFragment(BookFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
@@ -67,4 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getBookViewModel(): BookViewModel =
         ViewModelProvider(this, bookViewModelFactory)[BookViewModel::class.java]
+
+    fun getSettingsViewModel(): SettingsViewModel =
+        ViewModelProvider(this, settingsViewModelFactory)[SettingsViewModel::class.java]
 }
