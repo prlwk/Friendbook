@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.src.book.databinding.FragmentLoginLoadingBinding
+import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentRegistrationBinding
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
@@ -14,7 +14,7 @@ class RegistrationFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var viewModel: RegistrationViewModel
-    private lateinit var bindingLoading: FragmentLoginLoadingBinding
+    private lateinit var bindingLoading: FragmentLoadingBinding
     private var onClickNext = false
 
     override fun onCreateView(

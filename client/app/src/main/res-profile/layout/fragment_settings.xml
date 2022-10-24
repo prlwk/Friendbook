@@ -203,5 +203,8 @@
             app:layout_constraintStart_toEndOf="@id/iv_log_out_door"
             app:layout_constraintTop_toTopOf="@id/iv_log_out_door" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <include
+        android:id="@+id/loading"
+        layout="@layout/fragment_loading"
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

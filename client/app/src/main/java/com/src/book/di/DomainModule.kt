@@ -58,4 +58,10 @@ class DomainModule {
     fun provideCheckEmailExistsUseCase(loginRepository: LoginRepository): CheckEmailExistsUseCase {
         return CheckEmailExistsUseCase(loginRepository = loginRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideLogoutUseCase(userRepository: UserRepository): LogoutUseCase {
+        return LogoutUseCase(userRepository = userRepository)
+    }
 }

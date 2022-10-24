@@ -8,7 +8,14 @@ import retrofit2.http.Query
 interface UserServiceWithToken {
     @GET("$USER_SERVICE_BASE_URL/user/change-password")
     suspend fun changePassword(
-        @Query("refreshToken", encoded = true) refreshToken: String,
-        @Query("password", encoded = true) password: String
+        @Query("newPassword", encoded = true) newPassword: String,
+        @Query("oldPassword", encoded = true) oldPassword: String,
+        @Query("refreshToken", encoded = true) refreshToken: String
     ): Response<Unit>
+
+    @GET("$USER_SERVICE_BASE_URL/user/logout")
+    suspend fun logout(
+        @Query("refreshToken", encoded = true) refreshToken: String
+    ): Response<Unit>
+
 }
