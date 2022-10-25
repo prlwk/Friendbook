@@ -4,6 +4,7 @@ import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.domain.repository.UserRepository
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
+import com.src.book.domain.utils.SendFriendRequestState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,4 +23,9 @@ class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepos
     override suspend fun logout(): BasicState = withContext(Dispatchers.IO) {
         return@withContext userDataSource.logout()
     }
+
+    override suspend fun sendFriendRequest(login: String): SendFriendRequestState =
+        withContext(Dispatchers.IO) {
+            return@withContext userDataSource.sendFriendRequest(login)
+        }
 }

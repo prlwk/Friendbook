@@ -5,17 +5,77 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.src.book.R
+import com.src.book.databinding.FragmentAddFriendsBinding
+import com.src.book.databinding.FragmentLoadingBinding
+import com.src.book.domain.utils.SendFriendRequestState
+import com.src.book.presentation.MainActivity
+import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModel
 
-class AddFriendsFragment : Fragment(){
+class AddFriendsFragment : Fragment() {
+    private lateinit var binding: FragmentAddFriendsBinding
+    private lateinit var viewModel: AddFriendsViewModel
+    private var isClick = false
+    private lateinit var bindingLoading: FragmentLoadingBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_friends, container, false)
+        this.binding = FragmentAddFriendsBinding.inflate(inflater)
+        bindingLoading = binding.loading
+        viewModel = (activity as MainActivity).getAddFriendsViewModel()
+        return this.binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.liveDataIsLoading.observe(
+            this.viewLifecycleOwner, this::checkLoading
+        )
+        viewModel.liveDataState.observe(
+            this.viewLifecycleOwner, this::checkState
+        )
+        setOcClickListenerForSendRequestButton()
+    }
+
+    private fun setOcClickListenerForSendRequestButton() {
+        binding.btSendRequest.setOnClickListener {
+            isClick = true
+            val login = binding.etEnterUsername.text.toString()
+            viewModel.sendFriendRequest(login.substring(1))
+
+        }
+    }
+
+    private fun checkLoading(isLoading: Boolean) {
+        if (isLoading) {
+            bindingLoading.clLoadingPage.visibility = View.VISIBLE
+        } else {
+            bindingLoading.clLoadingPage.visibility = View.GONE
+        }
+    }
+
+    //TODO в зависимости от ситуации обработать ошибки
+    private fun checkState(sendFriendRequestState: SendFriendRequestState) {
+        if (isClick) {
+            when (sendFriendRequestState) {
+                is SendFriendRequestState.SuccessState -> {
+                    println("success")
+                }
+                is SendFriendRequestState.ErrorState -> {
+                    println("error")
+                }
+                is SendFriendRequestState.ErrorLoginState -> {
+                    println("такого логина не существует")
+                }
+                is SendFriendRequestState.FriendAlreadyExists -> {
+                    println("друг уже в друзьях")
+                }
+                is SendFriendRequestState.SuchRequestAlreadyExists -> {
+                    println("запрос уже отправлен")
+                }
+            }
+            isClick = false
+        }
     }
 }
