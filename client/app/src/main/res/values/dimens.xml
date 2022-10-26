@@ -18,4 +18,7 @@
     <dimen name="title_size">16sp</dimen>
     <dimen name="description_addFriends_size">11sp</dimen>
     <dimen name="send_request_button_text_size">13sp</dimen>
+    <dimen name="rate_book_central_mark_size">84dp</dimen>
+    <dimen name="rate_book_other_mark_size">55dp</dimen>
+    <dimen name="margin_between_book_mark">15dp</dimen>
 </resources>
