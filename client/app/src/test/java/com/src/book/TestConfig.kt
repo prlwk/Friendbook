@@ -43,3 +43,7 @@ const val ERROR_PASSWORD = "Wrong password!"
 const val ERROR = "error"
 const val MESSAGE = "message"
 const val STATUS = "status"
+
+//user
+const val LOGIN = "login"
+const val CODE = "123456"

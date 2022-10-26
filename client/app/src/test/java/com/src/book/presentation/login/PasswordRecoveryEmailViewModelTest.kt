@@ -2,7 +2,8 @@ package com.src.book.presentation.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.EMAIL
-import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
+import com.src.book.domain.usecase.login.SendCodeForRecoveryPasswordUseCase
+import com.src.book.domain.utils.CodeState
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -18,7 +19,7 @@ import org.junit.*
 class PasswordRecoveryEmailViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
-    private lateinit var checkEmailExistsUseCase: CheckEmailExistsUseCase
+    private lateinit var sendCodeForRecoveryPasswordUseCase: SendCodeForRecoveryPasswordUseCase
 
     private lateinit var passwordRecoveryEmailViewModel: PasswordRecoveryEmailViewModel
     private val dispatcher = UnconfinedTestDispatcher()
@@ -26,8 +27,9 @@ class PasswordRecoveryEmailViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher = dispatcher)
-        checkEmailExistsUseCase = mockk()
-        passwordRecoveryEmailViewModel = PasswordRecoveryEmailViewModel(checkEmailExistsUseCase)
+        sendCodeForRecoveryPasswordUseCase = mockk()
+        passwordRecoveryEmailViewModel =
+            PasswordRecoveryEmailViewModel(sendCodeForRecoveryPasswordUseCase)
     }
 
     @After
@@ -37,25 +39,19 @@ class PasswordRecoveryEmailViewModelTest {
 
     @Test
     fun testCheckEmailExistsTrueSuccessful() = runTest {
-        coEvery { checkEmailExistsUseCase.execute(any()) } returns true
-        passwordRecoveryEmailViewModel.checkEmailExists(EMAIL)
+        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any()) } returns CodeState.SuccessState
+        passwordRecoveryEmailViewModel.sendCode(EMAIL)
         Assert.assertEquals(
-            true, passwordRecoveryEmailViewModel.liveDataEmailExists.value
-        )
-        Assert.assertEquals(
-            false, passwordRecoveryEmailViewModel.liveDataIsLoading.value
+            CodeState.SuccessState, passwordRecoveryEmailViewModel.liveDataCodeState.value
         )
     }
 
     @Test
     fun testCheckEmailExistsFalseSuccessful() = runTest {
-        coEvery { checkEmailExistsUseCase.execute(any()) } returns false
-        passwordRecoveryEmailViewModel.checkEmailExists(EMAIL)
+        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any()) } returns CodeState.ErrorState
+        passwordRecoveryEmailViewModel.sendCode(EMAIL)
         Assert.assertEquals(
-            false, passwordRecoveryEmailViewModel.liveDataEmailExists.value
-        )
-        Assert.assertEquals(
-            false, passwordRecoveryEmailViewModel.liveDataIsLoading.value
+            CodeState.ErrorState, passwordRecoveryEmailViewModel.liveDataCodeState.value
         )
     }
 }

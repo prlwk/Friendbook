@@ -1,7 +1,6 @@
 package com.src.book.data.remote.dataSource.user
 
 import com.src.book.data.remote.service.UserService
-import com.src.book.data.remote.service.UserServiceWithToken
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
 import com.src.book.data.remote.utils.ErrorMessage
@@ -11,7 +10,6 @@ import com.src.book.domain.utils.SendFriendRequestState
 
 class UserDataSourceImpl(
     private val userService: UserService,
-    private val userServiceWithToken: UserServiceWithToken,
     private val sessionStorage: SessionStorage
 ) :
     UserDataSource {
@@ -19,7 +17,7 @@ class UserDataSourceImpl(
         oldPassword: String,
         newPassword: String
     ): ChangePasswordState {
-        val response = userServiceWithToken.changePassword(
+        val response = userService.changePassword(
             refreshToken = sessionStorage.getRefreshToken(),
             oldPassword = oldPassword,
             newPassword = newPassword
@@ -35,7 +33,7 @@ class UserDataSourceImpl(
 
     override suspend fun logout(): BasicState {
         val refreshToken = sessionStorage.getRefreshToken()
-        val response = userServiceWithToken.logout(refreshToken)
+        val response = userService.logout(refreshToken)
         return if (response.isSuccessful) {
             sessionStorage.clearSession()
             BasicState.SuccessState
@@ -45,7 +43,7 @@ class UserDataSourceImpl(
     }
 
     override suspend fun sendFriendRequest(login: String): SendFriendRequestState {
-        val response = userServiceWithToken.sendFriendRequest(login)
+        val response = userService.sendFriendRequest(login)
         if (response.isSuccessful) {
             return SendFriendRequestState.SuccessState
         }

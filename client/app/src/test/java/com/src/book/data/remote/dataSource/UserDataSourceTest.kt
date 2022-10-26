@@ -4,10 +4,11 @@ import com.src.book.*
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.service.UserService
-import com.src.book.data.remote.service.UserServiceWithToken
 import com.src.book.data.remote.session.SessionStorage
+import com.src.book.data.remote.utils.ALREADY_FRIENDS
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
+import com.src.book.domain.utils.SendFriendRequestState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -16,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -32,15 +34,12 @@ class UserDataSourceTest {
     private lateinit var userService: UserService
 
     @MockK
-    private lateinit var userServiceWithToken: UserServiceWithToken
-
-    @MockK
     private lateinit var sessionStorage: SessionStorage
     private lateinit var userDataSource: UserDataSource
 
     @Before
     fun setUp() {
-        userDataSource = UserDataSourceImpl(userService, userServiceWithToken, sessionStorage)
+        userDataSource = UserDataSourceImpl(userService, sessionStorage)
     }
 
     @After
@@ -51,7 +50,7 @@ class UserDataSourceTest {
     @Test
     fun testChangePasswordSuccessful() = runTest {
         coEvery {
-            userServiceWithToken.changePassword(
+            userService.changePassword(
                 any(),
                 any(),
                 any()
@@ -66,7 +65,7 @@ class UserDataSourceTest {
 
     @Test
     fun testChangePasswordError() = runTest {
-        coEvery { userServiceWithToken.changePassword(any(), any(), any()) } returns Response.error(
+        coEvery { userService.changePassword(any(), any(), any()) } returns Response.error(
             500, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
@@ -79,7 +78,7 @@ class UserDataSourceTest {
 
     @Test
     fun testChangePasswordWrongPassword() = runTest {
-        coEvery { userServiceWithToken.changePassword(any(), any(), any()) } returns Response.error(
+        coEvery { userService.changePassword(any(), any(), any()) } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
@@ -93,7 +92,7 @@ class UserDataSourceTest {
     @Test
     fun testLogoutSuccessful() = runTest {
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
-        coEvery { userServiceWithToken.logout(any()) } returns Response.success(Unit)
+        coEvery { userService.logout(any()) } returns Response.success(Unit)
         coEvery { sessionStorage.clearSession() } returns Unit
         Assert.assertEquals(
             BasicState.SuccessState,
@@ -104,13 +103,88 @@ class UserDataSourceTest {
     @Test
     fun testLogoutError() = runTest {
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
-        coEvery { userServiceWithToken.logout(any()) } returns Response.error(
+        coEvery { userService.logout(any()) } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         Assert.assertEquals(
             BasicState.ErrorState,
             userDataSource.logout()
+        )
+    }
+
+    @Test
+    fun sendFriendRequestSuccessful() = runTest {
+        coEvery { userService.sendFriendRequest(any()) } returns Response.success(Unit)
+        Assert.assertEquals(
+            SendFriendRequestState.SuccessState,
+            userDataSource.sendFriendRequest(LOGIN)
+        )
+    }
+
+    @Test
+    fun sendFriendRequestErrorLogin() = runTest {
+        val json = JSONObject(
+            mapOf(
+                STATUS to 404,
+                ERROR to "Not Found",
+                MESSAGE to "error"
+            )
+        )
+        coEvery { userService.sendFriendRequest(any()) } returns Response.error(
+            404, json.toString()
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertEquals(
+            SendFriendRequestState.ErrorLoginState, userDataSource.sendFriendRequest(
+                LOGIN
+            )
+        )
+    }
+
+    @Test
+    fun sendFriendRequestFriendsAlreadyExists() = runTest {
+        coEvery { userService.sendFriendRequest(any()) } returns Response.error(
+            409, ALREADY_FRIENDS
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertEquals(
+            SendFriendRequestState.FriendAlreadyExists, userDataSource.sendFriendRequest(
+                LOGIN
+            )
+        )
+    }
+
+    @Test
+    fun sendFriendRequestSuchRequestAlreadyExists() = runTest {
+        val json = JSONObject(
+            mapOf(
+                STATUS to 409,
+                ERROR to "Not Found",
+                MESSAGE to "error"
+            )
+        )
+        coEvery { userService.sendFriendRequest(any()) } returns Response.error(
+            409, json.toString()
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertEquals(
+            SendFriendRequestState.SuchRequestAlreadyExists, userDataSource.sendFriendRequest(
+                LOGIN
+            )
+        )
+    }
+
+    @Test
+    fun sendFriendRequestError() = runTest {
+        coEvery { userService.sendFriendRequest(any()) } returns Response.error(
+            500, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertEquals(
+            SendFriendRequestState.ErrorState, userDataSource.sendFriendRequest(
+                LOGIN
+            )
         )
     }
 }
