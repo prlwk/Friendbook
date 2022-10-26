@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
 import com.src.book.app.App
-import com.src.book.presentation.registration.first_registration.RegistrationFragment
-import com.src.book.presentation.registration.first_registration.RegistrationUserInfoFragment
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModelFactory
-import com.src.book.presentation.registration.password_recovery.viewModel.PasswordRecoveryEmailViewModel
-import com.src.book.presentation.registration.password_recovery.viewModel.PasswordRecoveryEmailViewModelFactory
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModel
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModelFactory
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModel
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModelFactory
 import com.src.book.presentation.registration.sign_in.SignInFragment
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModelFactory
@@ -26,6 +26,9 @@ class LoginActivity : AppCompatActivity() {
 
     @Inject
     lateinit var passwordRecoveryEmailViewModelFactory: PasswordRecoveryEmailViewModelFactory
+
+    @Inject
+    lateinit var passwordRecoveryCodeViewModelFactory: PasswordRecoveryCodeViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,4 +55,9 @@ class LoginActivity : AppCompatActivity() {
             this,
             passwordRecoveryEmailViewModelFactory
         )[PasswordRecoveryEmailViewModel::class.java]
+
+    fun getPasswordRecoveryCodeViewModel(): PasswordRecoveryCodeViewModel = ViewModelProvider(
+        this,
+        passwordRecoveryCodeViewModelFactory
+    )[PasswordRecoveryCodeViewModel::class.java]
 }

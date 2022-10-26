@@ -20,4 +20,14 @@ interface LoginService {
     suspend fun checkEmailExists(
         @Query("email", encoded = true) email: String
     ): Response<EmailExistsResponse>
+
+    @GET("$USER_SERVICE_BASE_URL/user/password-recovery")
+    suspend fun checkRecoveryCode(
+        @Query("code") code: String,
+        @Query("email", encoded = true) email: String
+    ): Response<LoginAnswerResponse>
+
+    @GET("$USER_SERVICE_BASE_URL/send-code-for-recovery-password")
+    suspend fun sendCodeForRecoveryPassword(
+        @Query("email", encoded = true) email: String): Response<Unit>
 }

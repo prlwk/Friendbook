@@ -1,5 +1,6 @@
 package com.src.book.data.remote.service
 
+import com.src.book.domain.utils.SendFriendRequestState
 import com.src.book.utils.USER_SERVICE_BASE_URL
 import retrofit2.Response
 import retrofit2.http.GET
@@ -18,4 +19,6 @@ interface UserServiceWithToken {
         @Query("refreshToken", encoded = true) refreshToken: String
     ): Response<Unit>
 
+    @GET("$USER_SERVICE_BASE_URL/send-friend-request")
+    suspend fun sendFriendRequest(@Query("login") login: String): Response<Unit>
 }

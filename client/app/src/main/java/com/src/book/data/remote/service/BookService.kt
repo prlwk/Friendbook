@@ -12,7 +12,7 @@ interface BookService {
     @GET("${BOOK_SERVICE_BASE_URL}/book/by-author-id/{id}")
     suspend fun getAllBooksByAuthorId(@Path("id") id: Long): Response<List<BookResponse>>
 
-    @GET("${BOOK_SERVICE_BASE_URL}/book/{id}")
+    @GET("${BOOK_SERVICE_BASE_URL}/book/id/{id}")
     suspend fun getBookById(@Path("id") id: Long): Response<BookResponse>
 
     @GET("${BOOK_SERVICE_BASE_URL}/genre/all")

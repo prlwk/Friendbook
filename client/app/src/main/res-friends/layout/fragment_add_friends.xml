@@ -8,7 +8,6 @@
     android:background="@color/main_background"
     tools:context=".presentation.friends.add_friends.AddFriendsFragment"
     xsi:schemaLocation="http://schemas.android.com/tools ">
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
@@ -98,7 +97,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_enter_username" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/bt_send_request"
         style="@style/basic_white_text"
         android:layout_width="0dp"
@@ -115,7 +114,6 @@
         app:layout_constraintStart_toEndOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/et_enter_username"
         app:layout_constraintWidth_percent="0.75" />
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_your_name"
@@ -139,5 +137,13 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/tv_your_name"
         app:layout_constraintTop_toBottomOf="@id/bt_send_request" />
+    <include
+        android:id="@+id/loading"
+        layout="@layout/fragment_loading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
