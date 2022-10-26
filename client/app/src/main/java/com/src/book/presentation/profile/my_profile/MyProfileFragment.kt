@@ -1,14 +1,14 @@
 package com.src.book.presentation.profile.my_profile
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.src.book.R
 import com.src.book.databinding.FragmentMyProfileBinding
+import com.src.book.presentation.book.rate_dialog.RateBookDialog
 
 class MyProfileFragment : Fragment() {
 
@@ -36,6 +36,7 @@ class MyProfileFragment : Fragment() {
             llBooksRead.setOnClickListener(ProfileSectionOnClickListener())
             llWantRead.setOnClickListener(ProfileSectionOnClickListener())
         }
+        setOnClick()
     }
 
     inner class ProfileSectionOnClickListener : OnClickListener {
@@ -67,6 +68,14 @@ class MyProfileFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun setOnClick() {
+        this.binding.tvEditProfileButton.setOnClickListener {
+            /*val a = RateBookDialog(this)
+            a.show()*/
+            val a = RateBookDialog()
+            a.show(parentFragmentManager, "dlg1")
+        }
     }
 }
