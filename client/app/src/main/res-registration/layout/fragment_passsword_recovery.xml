@@ -231,4 +231,9 @@
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start" />
 
+    <include
+        android:id="@+id/loading"
+        layout="@layout/fragment_loading"
+        android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

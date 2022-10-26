@@ -9,8 +9,8 @@ import retrofit2.http.Query
 interface UserService {
     @GET("$USER_SERVICE_BASE_URL/user/change-password")
     suspend fun changePassword(
-        @Query("newPassword", encoded = true) newPassword: String,
-        @Query("oldPassword", encoded = true) oldPassword: String,
+        @Query("newPassword") newPassword: String,
+        @Query("oldPassword") oldPassword: String?,
         @Query("refreshToken", encoded = true) refreshToken: String
     ): Response<Unit>
 

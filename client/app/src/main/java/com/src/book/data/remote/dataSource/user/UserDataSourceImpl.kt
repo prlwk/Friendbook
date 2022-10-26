@@ -1,5 +1,7 @@
 package com.src.book.data.remote.dataSource.user
 
+import com.src.book.data.remote.model.token.RefreshTokenResponse
+import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
@@ -10,13 +12,38 @@ import com.src.book.domain.utils.SendFriendRequestState
 
 class UserDataSourceImpl(
     private val userService: UserService,
+    private val sessionService: SessionService,
     private val sessionStorage: SessionStorage
 ) :
     UserDataSource {
     override suspend fun changePassword(
-        oldPassword: String,
+        oldPassword: String?,
         newPassword: String
     ): ChangePasswordState {
+        if (!sessionStorage.refreshTokenIsValid()) {
+            val sessionResponse = sessionService.refreshTokens(
+                RefreshTokenResponse(
+                    generateRefreshToken = true,
+                    email = sessionStorage.getEmail(),
+                    accessToken = sessionStorage.getAccessToken(),
+                    refreshToken = sessionStorage.getRefreshToken()
+                )
+            ).execute().body()
+            sessionResponse?.let {
+                sessionStorage.refreshAccessToken(
+                    sessionResponse.accessToken,
+                    it.expireTimeAccessToken
+                )
+                sessionResponse.refreshToken?.let { it1 ->
+                    sessionResponse.expireTimeRefreshToken?.let { it2 ->
+                        sessionStorage.refreshRefreshToken(
+                            it1,
+                            it2
+                        )
+                    }
+                }
+            }
+        }
         val response = userService.changePassword(
             refreshToken = sessionStorage.getRefreshToken(),
             oldPassword = oldPassword,

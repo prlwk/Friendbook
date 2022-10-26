@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepository {
     override suspend fun changePassword(
-        oldPassword: String,
+        oldPassword: String?,
         newPassword: String
     ): ChangePasswordState =
         withContext(Dispatchers.IO) {

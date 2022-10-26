@@ -8,6 +8,9 @@ import com.src.book.R
 import com.src.book.app.App
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModelFactory
+import com.src.book.presentation.registration.password_recovery.PasswordRecoveryFragment
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecovery.PasswordRecoveryViewModel
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecovery.PasswordRecoveryViewModelFactory
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModel
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModelFactory
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModel
@@ -30,18 +33,19 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var passwordRecoveryCodeViewModelFactory: PasswordRecoveryCodeViewModelFactory
 
+    @Inject
+    lateinit var passwordRecoveryViewModelFactory: PasswordRecoveryViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
         setContentView(R.layout.activity_login)
-        replaceFragment(SignInFragment())
+        replaceFragment(PasswordRecoveryFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
     fun getSignInViewModel(): SignInViewModel =
@@ -50,14 +54,15 @@ class LoginActivity : AppCompatActivity() {
     fun getRegistrationViewModel(): RegistrationViewModel =
         ViewModelProvider(this, registrationViewModelFactory)[RegistrationViewModel::class.java]
 
-    fun getPasswordRecoveryEmailViewModel(): PasswordRecoveryEmailViewModel =
-        ViewModelProvider(
-            this,
-            passwordRecoveryEmailViewModelFactory
-        )[PasswordRecoveryEmailViewModel::class.java]
+    fun getPasswordRecoveryEmailViewModel(): PasswordRecoveryEmailViewModel = ViewModelProvider(
+        this, passwordRecoveryEmailViewModelFactory
+    )[PasswordRecoveryEmailViewModel::class.java]
 
     fun getPasswordRecoveryCodeViewModel(): PasswordRecoveryCodeViewModel = ViewModelProvider(
-        this,
-        passwordRecoveryCodeViewModelFactory
+        this, passwordRecoveryCodeViewModelFactory
     )[PasswordRecoveryCodeViewModel::class.java]
+
+    fun getPasswordRecoveryViewModel(): PasswordRecoveryViewModel = ViewModelProvider(
+        this, passwordRecoveryViewModelFactory
+    )[PasswordRecoveryViewModel::class.java]
 }

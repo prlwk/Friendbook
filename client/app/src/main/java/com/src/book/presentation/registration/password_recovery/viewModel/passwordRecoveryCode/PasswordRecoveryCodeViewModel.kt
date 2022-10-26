@@ -14,7 +14,7 @@ class PasswordRecoveryCodeViewModel(
 ) :
     ViewModel() {
     private val _mutableLiveDataIsLoading = MutableLiveData<Boolean>(false)
-    private val _mutableLiveDataCodeState = MutableLiveData<CodeState>(CodeState.SuccessState)
+    private val _mutableLiveDataCodeState = MutableLiveData<CodeState>(CodeState.DefaultState)
     private val _mutableLiveDataRepeatingCodeState =
         MutableLiveData<CodeState>(CodeState.SuccessState)
     val liveDataIsLoading get() = _mutableLiveDataIsLoading
@@ -36,5 +36,9 @@ class PasswordRecoveryCodeViewModel(
             _mutableLiveDataRepeatingCodeState.value =
                 sendCodeForRecoveryPasswordUseCase.execute(email)
         }
+    }
+
+    fun setDefaultValueForCodeState() {
+        _mutableLiveDataRepeatingCodeState.value = CodeState.DefaultState
     }
 }

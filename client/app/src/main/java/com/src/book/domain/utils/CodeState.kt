@@ -6,4 +6,5 @@ sealed class CodeState {
     object WrongCodeState : CodeState()
     object WrongEmailState : CodeState()
     object LoadingState : CodeState()
+    object DefaultState : CodeState()
 }

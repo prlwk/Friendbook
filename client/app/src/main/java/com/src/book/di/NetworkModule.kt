@@ -105,7 +105,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideUserService(@Named(NAME_RETROFIT_WITHOUT_TOKEN) retrofit: Retrofit): UserService {
+    fun provideUserService(@Named(NAME_RETROFIT_WITH_TOKEN) retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 
@@ -170,11 +170,13 @@ class NetworkModule {
     @Provides
     fun provideUserDataSource(
         userService: UserService,
-        sessionStorage: SessionStorage
+        sessionStorage: SessionStorage,
+        sessionService: SessionService
     ): UserDataSource {
         return UserDataSourceImpl(
             userService = userService,
-            sessionStorage = sessionStorage
+            sessionStorage = sessionStorage,
+            sessionService = sessionService
         )
     }
 }

@@ -3,6 +3,7 @@ package com.src.book.data.remote.dataSource
 import com.src.book.*
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
+import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
@@ -35,11 +36,18 @@ class UserDataSourceTest {
 
     @MockK
     private lateinit var sessionStorage: SessionStorage
+
+    @MockK
+    private lateinit var sessionService: SessionService
     private lateinit var userDataSource: UserDataSource
 
     @Before
     fun setUp() {
-        userDataSource = UserDataSourceImpl(userService, sessionStorage)
+        userDataSource = UserDataSourceImpl(
+            userService = userService,
+            sessionStorage = sessionStorage,
+            sessionService = sessionService
+        )
     }
 
     @After

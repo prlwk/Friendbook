@@ -79,7 +79,7 @@ class PasswordRecoveryCodeViewModelTest {
 
     @Test
     fun testSendCodeForRecoveryPasswordSuccessful() = runTest {
-        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any())} returns CodeState.SuccessState
+        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any()) } returns CodeState.SuccessState
         passwordRecoveryCodeViewModel.sendRepeatingCodeState(EMAIL)
         Assert.assertEquals(
             CodeState.SuccessState,
@@ -89,20 +89,30 @@ class PasswordRecoveryCodeViewModelTest {
 
     @Test
     fun testSendCodeForRecoveryPasswordWrongEmail() = runTest {
-        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any())} returns CodeState.WrongEmailState
+        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any()) } returns CodeState.WrongEmailState
         passwordRecoveryCodeViewModel.sendRepeatingCodeState(EMAIL)
         Assert.assertEquals(
             CodeState.WrongEmailState,
             passwordRecoveryCodeViewModel.liveDataRepeatingCodeState.value
         )
     }
+
     @Test
     fun testSendCodeForRecoveryPasswordError() = runTest {
-        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any())} returns CodeState.ErrorState
+        coEvery { sendCodeForRecoveryPasswordUseCase.execute(any()) } returns CodeState.ErrorState
         passwordRecoveryCodeViewModel.sendRepeatingCodeState(EMAIL)
         Assert.assertEquals(
             CodeState.ErrorState,
             passwordRecoveryCodeViewModel.liveDataRepeatingCodeState.value
+        )
+    }
+
+    @Test
+    fun testSetDefaultValueForCodeState() = runTest {
+        passwordRecoveryCodeViewModel.setDefaultValueForCodeState()
+        Assert.assertEquals(
+            CodeState.DefaultState,
+            passwordRecoveryCodeViewModel.liveDataCodeState.value
         )
     }
 }
