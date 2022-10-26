@@ -3,7 +3,7 @@ package com.src.book.presentation.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.EMAIL
 import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
-import com.src.book.presentation.registration.password_recovery.viewModel.PasswordRecoveryEmailViewModel
+import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
