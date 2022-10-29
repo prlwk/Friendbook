@@ -1,14 +1,25 @@
 package com.friendbook.userservice.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
+import org.hibernate.procedure.internal.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -103,7 +114,9 @@ public class UserController {
         try {
             if (file != null) {
                 String path = new File("").getAbsolutePath();
-                File newFile = new File(path + PHOTO_PATH + user.getId() + ".0.jpg");
+                System.out.println(path);
+                File newFile = new File(path + user.getId() + ".0.jpg");
+                System.out.println(newFile.getAbsolutePath());
                 file.transferTo(newFile);
                 userService.setLinkPhoto(user.getId() + ".0.jpg", user.getId());
             } else {
@@ -195,7 +208,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(path = "/password-recovery", method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
+    @RequestMapping(path = "/password-recovery", method = RequestMethod.GET)
     public ResponseEntity<?> recoverPassword(@RequestParam String email, @RequestParam String code) {
         User user;
         try {
@@ -244,6 +257,29 @@ public class UserController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         return new ResponseEntity<>(userService.getInfoForProfile(user), httpHeaders, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> getUserImage(@RequestParam Long id) {
+        User user;
+        try {
+            user = userService.getUserById(id);
+        } catch (EntityNotFoundException exception) {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "User with id " + id + " does not exist."), httpHeaders, HttpStatus.NOT_FOUND);
+        }
+        try {
+            String path = new File("").getAbsolutePath();
+            File file = new File(path + user.getLinkPhoto());
+            InputStream input = new FileInputStream(file);
+            return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     private Map<String, String> generateMapWithInfoAboutTokens(

@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = getUserById(id);
             String path = new File("").getAbsolutePath();
-            File file = new File(path + "/user-service/src/main/resources/user-photo/" + user.getLinkPhoto());
+            File file = new File(path + user.getLinkPhoto());
             FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false,
                     file.getName(), (int) file.length(), file.getParentFile());
             InputStream input = new FileInputStream(file);
