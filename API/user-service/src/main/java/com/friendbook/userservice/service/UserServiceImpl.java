@@ -15,16 +15,14 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.DTO.RegisterBean;
+import com.friendbook.userservice.DTO.UserPageWithoutEmail;
 import com.friendbook.userservice.DTO.UserProfile;
 import com.friendbook.userservice.model.User;
 import com.friendbook.userservice.repository.UserRepository;
@@ -140,21 +138,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MultiValueMap<String, Object> getInfoForProfile(User user) {
-        MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-        formData.add("user", new UserProfile(user));
-        try {
-            formData.add("image", new ByteArrayResource(getImageForUser(user.getId()).getBytes()));
-        } catch (IOException e) {
-            formData.add("image", null);
-        }
-        return formData;
+    public UserProfile getInfoForProfile(User user) {
+        UserProfile userProfile = new UserProfile(user);
+        userProfile.setImage("/user/image?id=" + user.getId());
+        return userProfile;
+    }
+
+    @Override
+    public UserPageWithoutEmail getInfoForUserPageWithoutEmail(User user) {
+        UserPageWithoutEmail userPageWithoutEmail = new UserPageWithoutEmail(user);
+        userPageWithoutEmail.setImage("/user/image?id=" + user.getId());
+        return userPageWithoutEmail;
     }
 
     @Override
     public MultipartFile getImageForUser(Long id) {
         try {
             User user = getUserById(id);
+            if (user.getLinkPhoto() == null) {
+                return null;
+            }
             String path = new File("").getAbsolutePath();
             File file = new File(path + user.getLinkPhoto());
             FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false,

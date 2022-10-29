@@ -11,9 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +34,6 @@ import com.friendbook.userservice.utils.AppError;
 @RestController
 @RequestMapping("/user")
 public class AuthUserController {
-
-    private final String PHOTO_PATH = "/user-service/src/main/resources/user-photo/";
 
     @Autowired
     private JwtService jwtService;
@@ -95,9 +91,7 @@ public class AuthUserController {
             return responseEntity;
         }
         User user = (User) responseEntity.getBody();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-        return new ResponseEntity<>(userService.getInfoForProfile(user), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getInfoForProfile(user), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/edit-profile", method = RequestMethod.POST, consumes = {"multipart/form-data"}, produces = "application/json")
@@ -137,9 +131,9 @@ public class AuthUserController {
                 }
                 photoVersion++;
                 String path = new File("").getAbsolutePath();
-                File newFile = new File(path + PHOTO_PATH + user.getId() + "." + photoVersion + ".jpg");
+                File newFile = new File(path + user.getId() + "." + photoVersion + ".jpg");
                 file.transferTo(newFile);
-                File oldPhoto = new File(path + PHOTO_PATH + user.getId() + "." + --photoVersion + ".jpg");
+                File oldPhoto = new File(path + user.getId() + "." + --photoVersion + ".jpg");
                 oldPhoto.delete();
             }
         } catch (IOException e) {
@@ -175,7 +169,7 @@ public class AuthUserController {
         }
         User user = (User) responseEntity.getBody();
         String path = new File("").getAbsolutePath();
-        File file = new File(path + PHOTO_PATH + user.getLinkPhoto());
+        File file = new File(path + user.getLinkPhoto());
         file.delete();
         userService.deleteUser(user);
         return new ResponseEntity<>(HttpStatus.OK);

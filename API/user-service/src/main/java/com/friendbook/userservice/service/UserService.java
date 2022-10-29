@@ -1,10 +1,11 @@
 package com.friendbook.userservice.service;
 
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.DTO.RegisterBean;
+import com.friendbook.userservice.DTO.UserPageWithoutEmail;
+import com.friendbook.userservice.DTO.UserProfile;
 import com.friendbook.userservice.model.User;
 
 public interface UserService {
@@ -34,7 +35,9 @@ public interface UserService {
 
     void deleteAllUsersExceptVerified(String email);
 
-    MultiValueMap<String, Object> getInfoForProfile(User user);
+    UserProfile getInfoForProfile(User user);
+
+    UserPageWithoutEmail getInfoForUserPageWithoutEmail(User user);
 
     MultipartFile getImageForUser(Long id);
 }
