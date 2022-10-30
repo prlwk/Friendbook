@@ -1,7 +1,5 @@
 package com.friendbook.userservice.DTO;
 
-import org.springframework.core.io.ByteArrayResource;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,7 @@ public class UserInRequest {
     private Long id;
     private String name;
     private String login;
-    private ByteArrayResource image;
+    private String image;
 
     public UserInRequest(Long id, String name, String login) {
         this.id = id;

@@ -15,19 +15,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfile {
+public class UserPageWithoutEmail {
     private String name;
     private String login;
     private String image;
-    private String email;
     private Set<Book> booksRate;
     private Set<Book> booksWantToRead;
     private Set<Review> reviews;
 
-    public UserProfile(User user) {
+    public UserPageWithoutEmail(User user) {
         this.name = user.getName();
         this.login = user.getLogin();
-        this.email = user.getEmail();
         this.booksRate = user.getBooksRate();
         this.booksWantToRead = user.getBooksWantToRead();
         this.reviews = user.getReview();

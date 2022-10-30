@@ -1,7 +1,5 @@
 package com.friendbook.userservice.DTO;
 
-import org.springframework.core.io.ByteArrayResource;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +16,7 @@ public class UserForFriends {
     private int countRateBooks = 0;
     private int countReviews = 0;
     private int countWantToReadBooks = 0;
-    private ByteArrayResource image;
+    private String image;
 
     public UserForFriends(Long id, String name, String login, int countRateBooks, int countReviews, int countWantToReadBooks) {
         this.id = id;

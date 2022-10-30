@@ -1,12 +1,10 @@
 package com.friendbook.userservice.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.userservice.DTO.UserForFriends;
@@ -82,11 +80,7 @@ public class FriendsServiceImpl implements FriendsService {
         List<UserForFriends> friendsListPart2 = friendsRepository.getFriendsWhereUserRecipient(user.getId());
         friendsListPart.addAll(friendsListPart2);
         for (UserForFriends userForFriends : friendsListPart) {
-            try {
-                userForFriends.setImage(new ByteArrayResource(userService.getImageForUser(userForFriends.getId()).getBytes()));
-            } catch (IOException e) {
-                userForFriends.setImage(null);
-            }
+            userForFriends.setImage("/user/image?id=" + userForFriends.getId());
         }
         return friendsListPart;
     }
@@ -115,11 +109,7 @@ public class FriendsServiceImpl implements FriendsService {
 
     private List<UserInRequest> setImagesForFriendsInRequests(List<UserInRequest> userInRequestList) {
         for (UserInRequest userInRequest : userInRequestList) {
-            try {
-                userInRequest.setImage(new ByteArrayResource(userService.getImageForUser(userInRequest.getId()).getBytes()));
-            } catch (IOException e) {
-                userInRequest.setImage(null);
-            }
+            userInRequest.setImage("/user/image?id=" + userInRequest.getId());
         }
         return userInRequestList;
     }
