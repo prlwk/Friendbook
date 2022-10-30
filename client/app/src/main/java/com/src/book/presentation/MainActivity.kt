@@ -20,6 +20,9 @@ import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.friends.add_friends.AddFriendsFragment
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModel
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModelFactory
+import com.src.book.presentation.friends.friends_requests.RequestsFriendsFragment
+import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
+import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
 import com.src.book.presentation.profile.settings.SettingsFragment
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModel
@@ -47,6 +50,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var addFriendsViewModelFactory: AddFriendsViewModelFactory
 
+    @Inject
+    lateinit var requestsFriendsViewModelFactory: RequestsFriendsViewModelFactory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(AddFriendsFragment())
+        replaceFragment(RequestsFriendsFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
@@ -88,4 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getAddFriendsViewModel(): AddFriendsViewModel =
         ViewModelProvider(this, addFriendsViewModelFactory)[AddFriendsViewModel::class.java]
+
+    fun getRequestsFriendsViewModel(): RequestsFriendsViewModel =
+        ViewModelProvider(this, requestsFriendsViewModelFactory)[RequestsFriendsViewModel::class.java]
 }

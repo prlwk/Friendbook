@@ -2,16 +2,11 @@ package com.src.book.di
 
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSource
+import com.src.book.data.remote.dataSource.friend.FriendDataSource
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSource
-import com.src.book.data.repository.AuthorRepositoryImpl
-import com.src.book.data.repository.BookRepositoryImpl
-import com.src.book.data.repository.LoginRepositoryImpl
-import com.src.book.data.repository.UserRepositoryImpl
-import com.src.book.domain.repository.AuthorRepository
-import com.src.book.domain.repository.BookRepository
-import com.src.book.domain.repository.LoginRepository
-import com.src.book.domain.repository.UserRepository
+import com.src.book.data.repository.*
+import com.src.book.domain.repository.*
 import dagger.Module
 import dagger.Provides
 
@@ -35,5 +30,10 @@ class DataModule {
     @Provides
     fun provideUserRepository(userDataSource: UserDataSource): UserRepository {
         return UserRepositoryImpl(userDataSource)
+    }
+
+    @Provides
+    fun provideFriendRepository(friendDataSource: FriendDataSource): FriendRepository {
+        return FriendRepositoryImpl(friendDataSource)
     }
 }

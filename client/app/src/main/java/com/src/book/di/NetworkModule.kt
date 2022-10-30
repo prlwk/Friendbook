@@ -6,12 +6,15 @@ import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
+import com.src.book.data.remote.dataSource.friend.FriendDataSource
+import com.src.book.data.remote.dataSource.friend.FriendDataSourceImpl
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
+import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.login.login.LoginMapper
@@ -26,6 +29,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -123,6 +127,12 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    fun provideFriendService(@Named(NAME_RETROFIT_WITH_TOKEN) retrofit: Retrofit): FriendService {
+        return retrofit.create(FriendService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideAuthorDataSource(
         authorService: AuthorService,
         authorMapper: AuthorMapper
@@ -177,6 +187,18 @@ class NetworkModule {
             userService = userService,
             sessionStorage = sessionStorage,
             sessionService = sessionService
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFriendDataSource(
+        friendService: FriendService,
+        friendRequestMapper: FriendRequestMapper
+    ): FriendDataSource {
+        return FriendDataSourceImpl(
+            friendService = friendService,
+            friendRequestMapper = friendRequestMapper
         )
     }
 }

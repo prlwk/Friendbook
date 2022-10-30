@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
         setContentView(R.layout.activity_login)
-        replaceFragment(PasswordRecoveryFragment())
+        replaceFragment(SignInFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {

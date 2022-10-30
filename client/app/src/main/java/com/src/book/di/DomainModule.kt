@@ -1,12 +1,10 @@
 package com.src.book.di
 
-import com.src.book.domain.repository.AuthorRepository
-import com.src.book.domain.repository.BookRepository
-import com.src.book.domain.repository.LoginRepository
-import com.src.book.domain.repository.UserRepository
+import com.src.book.domain.repository.*
 import com.src.book.domain.usecase.author.GetAuthorUseCase
 import com.src.book.domain.usecase.book.GetBookByIdUseCase
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
+import com.src.book.domain.usecase.friend.*
 import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
 import com.src.book.domain.usecase.login.CheckRecoveryCodeUseCase
 import com.src.book.domain.usecase.login.SendCodeForRecoveryPasswordUseCase
@@ -92,5 +90,35 @@ class DomainModule {
     @Provides
     fun provideSendCodeForRecoveryPasswordUseCase(loginRepository: LoginRepository): SendCodeForRecoveryPasswordUseCase {
         return SendCodeForRecoveryPasswordUseCase(loginRepository = loginRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetIncomingRequestsUseCase(friendRepository: FriendRepository): GetIncomingRequestsUseCase {
+        return GetIncomingRequestsUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSubmitFriendRequestUseCase(friendRepository: FriendRepository): SubmitFriendRequestUseCase {
+        return SubmitFriendRequestUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRejectIncomingFriendRequestUseCase(friendRepository: FriendRepository): RejectIncomingFriendRequestUseCase {
+        return RejectIncomingFriendRequestUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetOutgoingRequestsUseCase(friendRepository: FriendRepository): GetOutgoingRequestUseCase {
+        return GetOutgoingRequestUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRejectOutgoingFriendRequestUseCase(friendRepository: FriendRepository): RejectOutgoingFriendRequestUseCase {
+        return RejectOutgoingFriendRequestUseCase(friendRepository = friendRepository)
     }
 }

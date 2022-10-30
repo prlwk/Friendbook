@@ -51,7 +51,7 @@
         app:layout_constraintTop_toTopOf="@id/iv_user_photo" />
 
     <TextView
-        android:id="@+id/tv_username"
+        android:id="@+id/tv_login"
         style="@style/light_style_roboto_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
