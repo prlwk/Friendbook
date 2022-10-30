@@ -13,7 +13,7 @@ import com.src.book.domain.usecase.search.GetAllGenresUseCase
 import com.src.book.domain.usecase.search.GetAllTagsUseCase
 import com.src.book.domain.usecase.user.ChangePasswordUseCase
 import com.src.book.domain.usecase.user.LogoutUseCase
-import com.src.book.domain.usecase.user.SendFriendRequestUseCase
+import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -76,8 +76,8 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideSendFriendRequestUseCase(userRepository: UserRepository): SendFriendRequestUseCase {
-        return SendFriendRequestUseCase(userRepository = userRepository)
+    fun provideSendFriendRequestUseCase(friendRepository: FriendRepository): SendFriendRequestUseCase {
+        return SendFriendRequestUseCase(friendRepository = friendRepository)
     }
 
     @Singleton

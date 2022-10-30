@@ -2,7 +2,7 @@ package com.src.book.presentation.friends
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.LOGIN
-import com.src.book.domain.usecase.user.SendFriendRequestUseCase
+import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import com.src.book.domain.utils.SendFriendRequestState
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModel
 import io.mockk.coEvery

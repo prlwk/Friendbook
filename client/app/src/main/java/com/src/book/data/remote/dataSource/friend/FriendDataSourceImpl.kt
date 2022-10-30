@@ -2,7 +2,10 @@ package com.src.book.data.remote.dataSource.friend
 
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.service.FriendService
+import com.src.book.data.remote.utils.ALREADY_FRIENDS
+import com.src.book.data.remote.utils.ErrorMessage
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.SendFriendRequestState
 
 class FriendDataSourceImpl(
     private val friendService: FriendService,
@@ -10,7 +13,6 @@ class FriendDataSourceImpl(
 ) : FriendDataSource {
     override suspend fun getIncomingRequests(): BasicState {
         val response = friendService.getIncomingRequests()
-        Thread.sleep(5000)
         if (response.isSuccessful) {
             return BasicState.SuccessStateWithResources(
                 response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
@@ -38,7 +40,6 @@ class FriendDataSourceImpl(
 
     override suspend fun getOutgoingRequests(): BasicState {
         val response = friendService.getOutgoingRequests()
-        Thread.sleep(5000)
         if (response.isSuccessful) {
             return BasicState.SuccessStateWithResources(response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
         }
@@ -52,5 +53,25 @@ class FriendDataSourceImpl(
         } else {
             BasicState.ErrorState
         }
+    }
+    override suspend fun sendFriendRequest(login: String): SendFriendRequestState {
+        val response = friendService.sendFriendRequest(login)
+        if (response.isSuccessful) {
+            return SendFriendRequestState.SuccessState
+        }
+        when (response.code()) {
+            404 -> {
+                return SendFriendRequestState.ErrorLoginState
+            }
+            409 -> {
+                val errorMessage = ErrorMessage<Unit>()
+                val message = errorMessage.getErrorMessage(response)
+                if (message == ALREADY_FRIENDS) {
+                    return SendFriendRequestState.FriendAlreadyExists
+                }
+                return SendFriendRequestState.SuchRequestAlreadyExists
+            }
+        }
+        return SendFriendRequestState.ErrorState
     }
 }

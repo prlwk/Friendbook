@@ -68,25 +68,4 @@ class UserDataSourceImpl(
             BasicState.ErrorState
         }
     }
-
-    override suspend fun sendFriendRequest(login: String): SendFriendRequestState {
-        val response = userService.sendFriendRequest(login)
-        if (response.isSuccessful) {
-            return SendFriendRequestState.SuccessState
-        }
-        when (response.code()) {
-            404 -> {
-                return SendFriendRequestState.ErrorLoginState
-            }
-            409 -> {
-                val errorMessage = ErrorMessage<Unit>()
-                val message = errorMessage.getErrorMessage(response)
-                if (message == ALREADY_FRIENDS) {
-                    return SendFriendRequestState.FriendAlreadyExists
-                }
-                return SendFriendRequestState.SuchRequestAlreadyExists
-            }
-        }
-        return SendFriendRequestState.ErrorState
-    }
 }

@@ -36,6 +36,7 @@ class AddFriendsFragment : Fragment() {
             this.viewLifecycleOwner, this::checkState
         )
         setOcClickListenerForSendRequestButton()
+        setOnClickListenerForBackButton()
     }
 
     private fun setOcClickListenerForSendRequestButton() {
@@ -44,6 +45,11 @@ class AddFriendsFragment : Fragment() {
             val login = binding.etEnterUsername.text.toString()
             viewModel.sendFriendRequest(login.substring(1))
 
+        }
+    }
+    private fun setOnClickListenerForBackButton(){
+        binding.ivBackButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

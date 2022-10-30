@@ -91,40 +91,4 @@ class UserRepositoryTest {
         coEvery { userDataSource.logout() } returns BasicState.ErrorState
         Assert.assertEquals(BasicState.ErrorState, userRepository.logout())
     }
-
-    @Test
-    fun testSendFriendRequestSuccessful() = runTest {
-        coEvery { userDataSource.sendFriendRequest(any()) } returns SendFriendRequestState.SuccessState
-        Assert.assertEquals(
-            SendFriendRequestState.SuccessState,
-            userDataSource.sendFriendRequest(LOGIN)
-        )
-    }
-
-    @Test
-    fun testSendFriendRequestSuchRequestAlreadyExists() = runTest {
-        coEvery { userDataSource.sendFriendRequest(any()) } returns SendFriendRequestState.SuchRequestAlreadyExists
-        Assert.assertEquals(
-            SendFriendRequestState.SuchRequestAlreadyExists,
-            userDataSource.sendFriendRequest(LOGIN)
-        )
-    }
-
-    @Test
-    fun testSendFriendRequestFriendsAlreadyExists() = runTest {
-        coEvery { userDataSource.sendFriendRequest(any()) } returns SendFriendRequestState.FriendAlreadyExists
-        Assert.assertEquals(
-            SendFriendRequestState.FriendAlreadyExists,
-            userDataSource.sendFriendRequest(LOGIN)
-        )
-    }
-
-    @Test
-    fun testSendFriendRequestError() = runTest {
-        coEvery { userDataSource.sendFriendRequest(any()) } returns SendFriendRequestState.ErrorState
-        Assert.assertEquals(
-            SendFriendRequestState.ErrorState,
-            userDataSource.sendFriendRequest(LOGIN)
-        )
-    }
 }

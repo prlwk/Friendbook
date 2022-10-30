@@ -1,5 +1,6 @@
 package com.src.book.presentation.friends.friends_requests
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.src.book.R
 import com.src.book.databinding.FragmentRequestsFriendsBinding
 import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
+import com.src.book.presentation.friends.add_friends.AddFriendsFragment
 import com.src.book.presentation.friends.friends_requests.viewModel.FriendRequestsState
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import com.src.book.presentation.friends.friends_requests.viewModel.adapter.IncomingRequestsAdapter
@@ -21,6 +24,8 @@ class RequestsFriendsFragment : Fragment() {
     private lateinit var viewModel: RequestsFriendsViewModel
     private lateinit var incomingRequests: ArrayList<FriendRequest>
     private lateinit var outgoingRequest: ArrayList<FriendRequest>
+    private var countIncomingRequests = 0
+    private var countOutgoingRequests = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +69,19 @@ class RequestsFriendsFragment : Fragment() {
             viewModel.loadOutgoingRequests()
         }
         viewModel.loadIncomingRequests()
+        viewModel.loadOutgoingRequests()
+        setOnClickListenerForAddFriend()
+        setTextForIncomingButton(0)
+        setTextForSentButton(0)
+    }
+
+    private fun setOnClickListenerForAddFriend() {
+        binding.btAddFriend.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, AddFriendsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     //TODO eсли произошла ошибка когда принимали заявку в друзья
@@ -119,10 +137,24 @@ class RequestsFriendsFragment : Fragment() {
 
     private fun loadIncomingRequest(requests: List<FriendRequest>) {
         setIncomingAdapterForRecyclerView(requests)
+        setTextForIncomingButton(requests.size)
+        countIncomingRequests = requests.size
     }
 
     private fun loadOutgoingRequest(requests: List<FriendRequest>) {
         setOutgoingAdapterForRecyclerView(requests)
+        setTextForSentButton(requests.size)
+        countOutgoingRequests = requests.size
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTextForIncomingButton(size: Int) {
+        binding.incomingButton.text = "Входящие ($size)"
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTextForSentButton(size: Int) {
+        binding.sentButton.text = "Исходящие ($size)"
     }
 
     private fun setIncomingAdapterForRecyclerView(requests: List<FriendRequest>) {
@@ -150,7 +182,7 @@ class RequestsFriendsFragment : Fragment() {
         binding.rvOutgoingFriends.adapter = adapter
         binding.rvOutgoingFriends.layoutManager = layoutManager
     }
-    
+
     private fun setView(isLoading: Boolean) {
         if (isLoading) {
             binding.slRequests.visibility = View.VISIBLE
@@ -163,17 +195,23 @@ class RequestsFriendsFragment : Fragment() {
         viewModel.submitFriendRequest(friend.id)
         incomingRequests.removeAt(position)
         binding.rvIncomingFriends.adapter?.notifyItemRemoved(position)
+        countIncomingRequests--;
+        setTextForIncomingButton(countIncomingRequests)
     }
 
     private fun onClickIncomingRejectFriend(friend: FriendRequest, position: Int) {
         viewModel.rejectIncomingFriendRequest(friend.id)
         incomingRequests.removeAt(position)
         binding.rvIncomingFriends.adapter?.notifyItemRemoved(position)
+        countIncomingRequests--
+        setTextForIncomingButton(countIncomingRequests)
     }
 
     private fun onClickOutgoingRejectFriend(friend: FriendRequest, position: Int) {
         viewModel.rejectOutgoingFriendRequest(friend.id)
         outgoingRequest.removeAt(position)
         binding.rvOutgoingFriends.adapter?.notifyItemRemoved(position)
+        countOutgoingRequests--
+        setTextForSentButton(countOutgoingRequests)
     }
 }

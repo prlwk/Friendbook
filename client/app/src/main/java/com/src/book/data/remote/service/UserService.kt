@@ -18,7 +18,4 @@ interface UserService {
     suspend fun logout(
         @Query("refreshToken", encoded = true) refreshToken: String
     ): Response<Unit>
-
-    @GET("$USER_SERVICE_BASE_URL/send-friend-request")
-    suspend fun sendFriendRequest(@Query("login") login: String): Response<Unit>
 }

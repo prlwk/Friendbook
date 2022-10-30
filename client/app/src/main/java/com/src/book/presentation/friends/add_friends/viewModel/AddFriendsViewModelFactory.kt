@@ -2,7 +2,7 @@ package com.src.book.presentation.friends.add_friends.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.user.SendFriendRequestUseCase
+import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import javax.inject.Inject
 
 class AddFriendsViewModelFactory @Inject constructor(val sendFriendRequestUseCase: SendFriendRequestUseCase) :

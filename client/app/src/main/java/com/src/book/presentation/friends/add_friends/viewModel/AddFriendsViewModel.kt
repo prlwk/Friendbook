@@ -3,7 +3,7 @@ package com.src.book.presentation.friends.add_friends.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.usecase.user.SendFriendRequestUseCase
+import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import com.src.book.domain.utils.SendFriendRequestState
 import kotlinx.coroutines.launch
 

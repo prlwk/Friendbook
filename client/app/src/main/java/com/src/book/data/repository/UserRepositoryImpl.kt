@@ -23,9 +23,4 @@ class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepos
     override suspend fun logout(): BasicState = withContext(Dispatchers.IO) {
         return@withContext userDataSource.logout()
     }
-
-    override suspend fun sendFriendRequest(login: String): SendFriendRequestState =
-        withContext(Dispatchers.IO) {
-            return@withContext userDataSource.sendFriendRequest(login)
-        }
 }

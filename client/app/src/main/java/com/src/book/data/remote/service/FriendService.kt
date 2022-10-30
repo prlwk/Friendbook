@@ -21,4 +21,7 @@ interface FriendService {
 
     @GET("$USER_SERVICE_BASE_URL/reject-outgoing-request")
     suspend fun rejectOutgoingFriendRequest(@Query("friendId") friendId: Long): Response<Unit>
+
+    @GET("$USER_SERVICE_BASE_URL/send-friend-request")
+    suspend fun sendFriendRequest(@Query("login") login: String): Response<Unit>
 }
