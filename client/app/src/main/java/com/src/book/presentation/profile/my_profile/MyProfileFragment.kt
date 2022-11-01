@@ -36,7 +36,6 @@ class MyProfileFragment : Fragment() {
             llBooksRead.setOnClickListener(ProfileSectionOnClickListener())
             llWantRead.setOnClickListener(ProfileSectionOnClickListener())
         }
-        setOnClick()
     }
 
     inner class ProfileSectionOnClickListener : OnClickListener {
@@ -67,15 +66,6 @@ class MyProfileFragment : Fragment() {
                     binding.llWantRead.setBackgroundResource(R.drawable.books_btn_click_background)
                 }
             }
-        }
-    }
-
-    private fun setOnClick() {
-        this.binding.tvEditProfileButton.setOnClickListener {
-            /*val a = RateBookDialog(this)
-            a.show()*/
-            val a = RateBookDialog()
-            a.show(parentFragmentManager, "dlg1")
         }
     }
 }

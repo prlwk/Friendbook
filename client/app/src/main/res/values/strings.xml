@@ -97,4 +97,7 @@
     <string name="send_code_again">Отправить код повторно</string>
     <string name="enter_new_password">Введите новый пароль.</string>
     <string name="confirm">Подтвердить</string>
+    <string name="review_book">Оцените книгу</string>
+    <string name="write_your_review_here">Напишите свой отзыв здесь!</string>
+    <string name="make_review">Оценить</string>
 </resources>
