@@ -1,6 +1,7 @@
 package com.src.book
 
 import com.src.book.domain.model.*
+import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.model.user.Login
 
 class TestModelsGenerator {
@@ -68,5 +69,12 @@ class TestModelsGenerator {
         loginOrEmail = EMAIL,
         password = PASSWORD,
         isEntryByEmail = IS_ENTRY_BY_EMAIL
+    )
+//friends
+    fun generateFriendRequestModel() = FriendRequest(
+        id = ID,
+        imageUrl = IMAGE_URL,
+        login = LOGIN,
+        name = NAME
     )
 }

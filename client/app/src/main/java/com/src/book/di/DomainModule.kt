@@ -112,8 +112,8 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideGetOutgoingRequestsUseCase(friendRepository: FriendRepository): GetOutgoingRequestUseCase {
-        return GetOutgoingRequestUseCase(friendRepository = friendRepository)
+    fun provideGetOutgoingRequestsUseCase(friendRepository: FriendRepository): GetOutgoingRequestsUseCase {
+        return GetOutgoingRequestsUseCase(friendRepository = friendRepository)
     }
 
     @Singleton

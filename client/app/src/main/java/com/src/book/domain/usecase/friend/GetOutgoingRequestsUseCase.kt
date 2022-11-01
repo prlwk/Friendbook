@@ -5,7 +5,7 @@ import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GetOutgoingRequestUseCase(private val friendRepository: FriendRepository) {
+class GetOutgoingRequestsUseCase(private val friendRepository: FriendRepository) {
     suspend fun execute():BasicState = withContext(Dispatchers.IO) {
         return@withContext friendRepository.getOutgoingRequests()
     }

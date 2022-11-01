@@ -9,7 +9,7 @@ class RequestsFriendsViewModelFactory @Inject constructor(
     private val getIncomingRequestsUseCase: GetIncomingRequestsUseCase,
     private val submitFriendRequestUseCase: SubmitFriendRequestUseCase,
     private val rejectIncomingFriendRequestUseCase: RejectIncomingFriendRequestUseCase,
-    private val getOutgoingRequestUseCase: GetOutgoingRequestUseCase,
+    private val getOutgoingRequestUseCase: GetOutgoingRequestsUseCase,
     private val rejectOutgoingFriendRequestUseCase: RejectOutgoingFriendRequestUseCase
 ) :
     ViewModelProvider.Factory {

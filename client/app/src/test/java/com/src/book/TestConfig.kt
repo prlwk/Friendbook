@@ -47,3 +47,5 @@ const val STATUS = "status"
 //user
 const val LOGIN = "login"
 const val CODE = "123456"
+const val IMAGE_URL = "url"
+const val NAME = "name"
