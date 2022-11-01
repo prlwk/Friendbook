@@ -1,10 +1,9 @@
 package com.src.book.presentation.book.rate_dialog
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.src.book.R
 
@@ -13,7 +12,6 @@ class RateBookDialog() : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.RateDialog);
     }
 
     override fun onCreateView(
@@ -21,14 +19,21 @@ class RateBookDialog() : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.book_rate_dialog, container, false)
-
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val rootView = inflater.inflate(R.layout.book_rate_dialog, container)
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
     }
 
     override fun onStart() {
         super.onStart()
         val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
         dialog?.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.RateDialog);
     }
 }

@@ -24,6 +24,7 @@ import com.src.book.presentation.book.main_page.adapter.AuthorNameAdapter
 import com.src.book.presentation.book.main_page.adapter.GenreAdapter
 import com.src.book.presentation.book.main_page.adapter.TagAdapter
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
+import com.src.book.presentation.book.rate_dialog.RateBookDialog
 import com.src.book.presentation.utils.RatingColor
 import com.src.book.utils.AUTHOR_ID
 import com.src.book.utils.BOOK_ID
@@ -67,6 +68,7 @@ class BookFragment : Fragment() {
         )
         viewModel.loadBookById(bookId)
         setOnClickListenerForBackButton()
+        setOnClickListenerForRateButton()
     }
 
 
@@ -181,6 +183,13 @@ class BookFragment : Fragment() {
     private fun setOnClickListenerForBackButton() {
         this.binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setOnClickListenerForRateButton() {
+        this.binding.clStar.setOnClickListener {
+            val a = RateBookDialog()
+            a.show(parentFragmentManager, "rate_book_dialog")
         }
     }
 

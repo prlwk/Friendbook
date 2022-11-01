@@ -24,6 +24,7 @@ import com.src.book.presentation.friends.friends_requests.RequestsFriendsFragmen
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModelFactory
 import com.src.book.presentation.main.main_page.FilterFragment
+import com.src.book.presentation.profile.my_profile.MyProfileFragment
 import com.src.book.presentation.profile.settings.SettingsFragment
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModel
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModelFactory
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(RequestsFriendsFragment())
+        replaceFragment(MyProfileFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
