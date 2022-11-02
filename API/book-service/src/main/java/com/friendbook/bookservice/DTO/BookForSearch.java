@@ -27,6 +27,10 @@ public class BookForSearch {
 
     private List<GenreForBook> genres;
 
+    private Integer grade;
+
+    private Boolean isWantToRead;
+
 
     public BookForSearch(Book book) {
         this.id = book.getId();
@@ -36,7 +40,11 @@ public class BookForSearch {
         book.getAuthors().forEach(a -> this.authors.add(new AuthorForBook(a.getId())));
         book.getGenres().forEach(g -> this.genres.add(new GenreForBook(g.getId())));
         this.year = book.getYear();
-        this.rating = book.getRating();
-        this.linkCover = book.getLinkCover();
+        if (book.getCountMarks() != 0) {
+            this.rating = (double) book.getSumMarks() / book.getCountMarks();
+        } else {
+            this.rating = 0;
+        }
+        this.linkCover = "/book/image?id=" + book.getId();
     }
 }

@@ -6,7 +6,9 @@ import com.friendbook.DTO.AuthorForBook;
 import com.friendbook.DTO.AuthorWithBooks;
 
 public interface AuthorService {
-    public AuthorWithBooks getAuthor(Long authorId);
-    public AuthorForBook getAuthorForBook(Long authorId);
-    public List<AuthorForBook> getAuthorsByAuthorName(String name);
+    AuthorWithBooks getAuthor(Long authorId);
+
+    AuthorForBook getAuthorForBook(Long authorId);
+
+    List<AuthorForBook> getAuthorsByAuthorName(String name);
 }

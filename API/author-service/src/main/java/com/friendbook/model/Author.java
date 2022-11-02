@@ -28,8 +28,6 @@ public class Author {
 
     private String yearsLife;
 
-    private double rating;
-
     private String photoSrc;
 
     @Column(columnDefinition = "text")

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,10 @@ import com.friendbook.bookservice.DTO.AuthorForBook;
 import com.friendbook.bookservice.DTO.BookForAuthor;
 import com.friendbook.bookservice.DTO.BookForBookPage;
 import com.friendbook.bookservice.DTO.BookForSearch;
+import com.friendbook.bookservice.model.Book;
 import com.friendbook.bookservice.repository.BookRepository;
 import com.friendbook.bookservice.service.client.AuthorRestTemplateClient;
+import com.friendbook.bookservice.service.client.UserRestTemplateClient;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -35,8 +38,20 @@ public class BookServiceImpl implements BookService {
     @Autowired
     AuthorRestTemplateClient authorRestTemplateClient;
 
+    @Autowired
+    UserRestTemplateClient userRestTemplateClient;
+
     @Override
-    public BookForBookPage getBookById(Long id) {
+    public Book getBookById(Long id) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isPresent()) {
+            return book.get();
+        }
+        throw new EntityNotFoundException("Book not found.");
+    }
+
+    @Override
+    public BookForBookPage getBookForBookPageById(Long id) {
         Optional<BookForBookPage> optionalBookForBookPage = bookRepository.getBookById(id);
         if (optionalBookForBookPage.isPresent()) {
             BookForBookPage newBookForBookPage = optionalBookForBookPage.get();
@@ -77,7 +92,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Set<BookForSearch> getBooksByAuthorId(Long authorId) {
+    public Set<BookForSearch> getBooksByAuthorId(Long authorId, Boolean isAuthUser, HttpServletRequest request) {
         Set<BookForSearch> books = bookRepository.getBooksByAuthorId(authorId);
         for (BookForSearch bookForSearch : books) {
             if (bookForSearch.getAuthors() != null) {
@@ -92,6 +107,13 @@ public class BookServiceImpl implements BookService {
                             .getGenres()
                             .set(i, genreService.getGenreById(bookForSearch.getGenres().get(i).getId()));
                 }
+            }
+            if (isAuthUser) {
+                bookForSearch.setGrade(userRestTemplateClient.getBookGrade(request, bookForSearch.getId()));
+                bookForSearch.setIsWantToRead(userRestTemplateClient.isSavingBook(request, bookForSearch.getId()));
+            } else {
+                bookForSearch.setGrade(null);
+                bookForSearch.setIsWantToRead(false);
             }
         }
         if (!books.isEmpty()) {
@@ -118,11 +140,11 @@ public class BookServiceImpl implements BookService {
                     PageRequest.of(numberPage, sizePage, Sort.by("countRequests").descending()));
         } else if (sort == com.friendbook.bookservice.utils.Sort.Rating) {
             page = bookRepository.getBooksBySearch(
-                    startRating, finishRating, word, listId,listGenres, countOfGenres, listTags, countOfTags,
+                    startRating, finishRating, word, listId, listGenres, countOfGenres, listTags, countOfTags,
                     PageRequest.of(numberPage, sizePage, Sort.by("rating").descending()));
         } else {
             page = bookRepository.getBooksBySearch(
-                    startRating, finishRating, word, listId, listGenres, countOfGenres,  listTags, countOfTags,
+                    startRating, finishRating, word, listId, listGenres, countOfGenres, listTags, countOfTags,
                     PageRequest.of(numberPage, sizePage));
         }
 

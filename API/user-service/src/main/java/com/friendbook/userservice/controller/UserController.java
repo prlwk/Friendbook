@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -261,11 +263,16 @@ public class UserController {
                             "User with id " + id + " does not exist."), httpHeaders, HttpStatus.NOT_FOUND);
         }
         try {
-            String path = new File("").getAbsolutePath();
-            File file = new File(path + user.getLinkPhoto());
-            InputStream input = new FileInputStream(file);
-            return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
-        } catch (IOException e) {
+            URL res = getClass().getClassLoader().getResource("user-photo/" + user.getLinkPhoto());
+            File file;
+            if (res != null) {
+                file = Paths.get(res.toURI()).toFile();
+                InputStream input = new FileInputStream(file);
+                return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException | URISyntaxException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }

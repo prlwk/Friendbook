@@ -46,8 +46,12 @@ public class BookForBookPage {
         book.getGenres().forEach(g -> this.genres.add(new GenreForBook(g.getId())));
         book.getTags().forEach(t -> this.tags.add(new TagForBook(t.getId())));
         this.year = book.getYear();
-        this.rating = book.getRating();
-        this.linkCover = book.getLinkCover();
+        if (book.getCountMarks() != 0) {
+            this.rating = (double) book.getSumMarks() / book.getCountMarks();
+        } else {
+            this.rating = 0;
+        }
+        this.linkCover = "/book/image?id=" + book.getId();
         this.description = book.getDescription();
     }
 }

@@ -2,9 +2,10 @@ package com.friendbook.userservice.DTO;
 
 import java.util.Set;
 
-import com.friendbook.userservice.model.Book;
 import com.friendbook.userservice.model.Review;
 import com.friendbook.userservice.model.User;
+import com.friendbook.userservice.model.UserBooksGrade;
+import com.friendbook.userservice.model.UserBooksWantToRead;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,8 +20,8 @@ public class UserPageWithoutEmail {
     private String name;
     private String login;
     private String image;
-    private Set<Book> booksRate;
-    private Set<Book> booksWantToRead;
+    private Set<UserBooksGrade> booksRate;
+    private Set<UserBooksWantToRead> booksWantToRead;
     private Set<Review> reviews;
 
     public UserPageWithoutEmail(User user) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.friendbook.DTO.AuthorForBook;
 import com.friendbook.DTO.AuthorWithBooks;
+import com.friendbook.DTO.Book;
 import com.friendbook.model.Author;
 import com.friendbook.repository.AuthorRepository;
 import com.friendbook.service.client.BookRestTemplateClient;
@@ -31,13 +33,16 @@ public class AuthorServiceImpl implements AuthorService {
         AuthorWithBooks authorWithBooks = new AuthorWithBooks();
         if (authorOptional.isPresent()) {
             Author author = authorOptional.get();
+            Set<Book> books = bookRestTemplateClient.getBooksWithAuthorId(author.getId());
             authorWithBooks.setBooks(bookRestTemplateClient.getBooksWithAuthorId(author.getId()));
             authorWithBooks.setId(author.getId());
             authorWithBooks.setBiography(author.getBiography());
             authorWithBooks.setName(author.getName());
-            authorWithBooks.setPhotoSrc(author.getPhotoSrc());
+            authorWithBooks.setPhotoSrc("/author/image?id=" + author.getId());
             authorWithBooks.setYearsLife(author.getYearsLife());
-            authorWithBooks.setRating(author.getRating());
+            double rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+            rating /= books.size();
+            authorWithBooks.setRating(rating);
             return authorWithBooks;
         }
         throw new EntityNotFoundException("Author not found.");

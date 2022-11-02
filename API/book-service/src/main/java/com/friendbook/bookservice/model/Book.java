@@ -42,7 +42,9 @@ public class Book {
 
     private Long year;
 
-    private double rating;
+    private long sumMarks;
+
+    private int countMarks;
 
     private String linkCover;
 
