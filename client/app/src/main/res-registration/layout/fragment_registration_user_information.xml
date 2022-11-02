@@ -7,6 +7,8 @@
     android:background="@color/main_background"
     tools:context=".presentation.registration.first_registration.RegistrationUserInfoFragment">
 
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
@@ -45,18 +47,36 @@
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_add_picture"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_add_picture"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            app:cardCornerRadius="250dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/add_picture_item_background"
-            android:contentDescription="@string/books"
-            android:padding="23dp"
-            android:src="@drawable/add_picture_image"
+            app:cardBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_add_friends"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/add_picture_image"
+                    android:padding="18dp"
+                    android:scaleType="centerInside"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/tv_photo"
@@ -67,7 +87,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_add_picture" />
+            app:layout_constraintTop_toBottomOf="@id/cd_add_picture" />
 
         <TextView
             android:id="@+id/tv_name"

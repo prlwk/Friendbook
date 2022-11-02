@@ -51,10 +51,11 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    namespace 'com.src.book'
 }
 
 dependencies {
-
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'androidx.core:core-ktx:1.9.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -99,4 +100,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     testImplementation 'org.json:json:20180813'
+
+
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
