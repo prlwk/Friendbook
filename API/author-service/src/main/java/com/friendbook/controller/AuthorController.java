@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.friendbook.DTO.AuthorWithBooks;
 import com.friendbook.model.Author;
 import com.friendbook.service.AuthorService;
 import com.friendbook.utils.AppError;

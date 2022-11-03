@@ -212,7 +212,11 @@ public class AuthUserController {
 
     @RequestMapping(path = "/check-token", method = RequestMethod.GET)
     public ResponseEntity<?> checkToken(HttpServletRequest request) {
-        return getUserByRequest(request);
+        ResponseEntity<?> responseEntity = getUserByRequest(request);
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            return responseEntity;
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
