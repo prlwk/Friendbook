@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.friendbook.DTO.AuthorForBook;
 import com.friendbook.DTO.AuthorWithBooks;
+import com.friendbook.model.Author;
 
 public interface AuthorService {
-    AuthorWithBooks getAuthor(Long authorId);
+    Author getAuthor(Long id);
+    AuthorWithBooks getAuthorWithBooks(Long authorId);
 
     AuthorForBook getAuthorForBook(Long authorId);
 

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.friendbook.DTO.AuthorWithBooks;
+import com.friendbook.model.Author;
 import com.friendbook.service.AuthorService;
 import com.friendbook.utils.AppError;
 
@@ -42,7 +43,7 @@ public class AuthorController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getAuthor(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(authorService.getAuthor(id), HttpStatus.OK);
+            return new ResponseEntity<>(authorService.getAuthorWithBooks(id), HttpStatus.OK);
         } catch (EntityNotFoundException entityNotFoundException) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
@@ -75,7 +76,7 @@ public class AuthorController {
     @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public ResponseEntity<?> getAuthorImage(@RequestParam Long id) {
-        AuthorWithBooks author;
+        Author author;
         try {
             author = authorService.getAuthor(id);
         } catch (EntityNotFoundException exception) {
@@ -88,7 +89,7 @@ public class AuthorController {
 
         try {
             URL res = getClass().getClassLoader().getResource("images/" + author.getPhotoSrc());
-            File file = null;
+            File file;
             if (res != null) {
                 file = Paths.get(res.toURI()).toFile();
                 InputStream input = new FileInputStream(file);
