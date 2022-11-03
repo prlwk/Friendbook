@@ -81,28 +81,6 @@ class ListOfBooksAdapter(
                 binding.userRating.visibility = View.GONE
                 binding.ivBookmark.visibility = View.GONE
             }
-//            if (book.grade != null) {
-//                binding.tvRating.textAlignment = book.grade
-//                binding.userRating.background = ContextCompat.getDrawable(
-//                    context,
-//                    RatingColor.getBackground(book.grade.toDouble())
-//                )
-//                if (book.isWantToRead) {
-//                    binding.ivBookmark.setColorFilter(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.basic_color
-//                        )
-//                    )
-//                } else {
-//                    binding.ivBookmark.setColorFilter(
-//                        ContextCompat.getColor(
-//                            context,
-//                            R.color.icon_nav_not_selected
-//                        )
-//                    )
-//                }
-//            }
         }
 
         private val RecyclerView.ViewHolder.context get() = this.itemView.context
