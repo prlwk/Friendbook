@@ -13,9 +13,6 @@ public class UserBooksWantToReadServiceImpl implements UserBooksWantToReadServic
 
     @Override
     public Boolean isSavingBook(Long idBook, User user) {
-        if (userBooksWantToReadRepository.findByBookIdAndUser(idBook, user).isPresent()) {
-            return true;
-        }
-        return false;
+        return userBooksWantToReadRepository.getSavingByBookIdAndUserId(idBook, user.getId());
     }
 }

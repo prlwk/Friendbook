@@ -28,7 +28,16 @@ public class AuthorServiceImpl implements AuthorService {
     BookRestTemplateClient bookRestTemplateClient;
 
     @Override
-    public AuthorWithBooks getAuthor(Long authorId) {
+    public Author getAuthor(Long id) {
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        if (authorOptional.isPresent()) {
+            return authorOptional.get();
+        }
+        throw new EntityNotFoundException("Author not found.");
+    }
+
+    @Override
+    public AuthorWithBooks getAuthorWithBooks(Long authorId) {
         Optional<Author> authorOptional = authorRepository.findById(authorId);
         AuthorWithBooks authorWithBooks = new AuthorWithBooks();
         if (authorOptional.isPresent()) {
@@ -40,8 +49,11 @@ public class AuthorServiceImpl implements AuthorService {
             authorWithBooks.setName(author.getName());
             authorWithBooks.setPhotoSrc("/author/image?id=" + author.getId());
             authorWithBooks.setYearsLife(author.getYearsLife());
-            double rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
-            rating /= books.size();
+            double rating = 0;
+            if (books != null) {
+                rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+                rating /= books.size();
+            }
             authorWithBooks.setRating(rating);
             return authorWithBooks;
         }

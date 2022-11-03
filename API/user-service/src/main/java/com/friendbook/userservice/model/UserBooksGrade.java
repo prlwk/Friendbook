@@ -3,6 +3,8 @@ package com.friendbook.userservice.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,6 +22,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserBooksGrade {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "idBook", nullable = false)
     private Long bookId;
 
