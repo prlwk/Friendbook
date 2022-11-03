@@ -1,8 +1,9 @@
 package com.src.book.presentation.author.list_of_books
 
-import com.src.book.domain.model.Book
+import com.src.book.domain.model.BookList
 
 sealed class ListOfBooksState {
-    class DefaultState(val books: List<Book>?) : ListOfBooksState()
-    class ErrorState(val books: List<Book>?) : ListOfBooksState()
+    class SuccessState(val books: List<BookList>) : ListOfBooksState()
+    object ErrorState : ListOfBooksState()
+    object DefaultState : ListOfBooksState()
 }

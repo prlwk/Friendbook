@@ -10,4 +10,5 @@ interface FriendRepository {
     suspend fun getOutgoingRequests(): BasicState
     suspend fun rejectOutgoingFriendRequest(id: Long): BasicState
     suspend fun sendFriendRequest(login: String): SendFriendRequestState
+    suspend fun getFriends():BasicState
 }

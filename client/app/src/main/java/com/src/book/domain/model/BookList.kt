@@ -1,16 +1,14 @@
 package com.src.book.domain.model
 
-data class Book(
+data class BookList(
     val id: Long,
     val name: String,
     val rating: Double,
     val linkCover: String?,
-    val year: String,
     val genres: List<Genre>?,
+    val year: String,
     val authors: List<AuthorBook>?,
-    val reviews: List<Review>?,
-    val description: String?,
-    val tags: List<Tag>?,
     val grade: Int?,
-    val isWantToRead: Boolean
+    val isWantToRead: Boolean,
+    val isAuth:Boolean
 )

@@ -1,5 +1,6 @@
 package com.src.book.data.remote.dataSource.friend
 
+import com.src.book.data.remote.model.friend.friend.FriendMapper
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.service.FriendService
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
@@ -9,7 +10,8 @@ import com.src.book.domain.utils.SendFriendRequestState
 
 class FriendDataSourceImpl(
     private val friendService: FriendService,
-    private val friendRequestMapper: FriendRequestMapper
+    private val friendRequestMapper: FriendRequestMapper,
+    private val friendMapper: FriendMapper
 ) : FriendDataSource {
     override suspend fun getIncomingRequests(): BasicState {
         val response = friendService.getIncomingRequests()
@@ -41,7 +43,8 @@ class FriendDataSourceImpl(
     override suspend fun getOutgoingRequests(): BasicState {
         val response = friendService.getOutgoingRequests()
         if (response.isSuccessful) {
-            return BasicState.SuccessStateWithResources(response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
+            return BasicState.SuccessStateWithResources(
+                response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
         }
         return BasicState.ErrorState
     }
@@ -54,6 +57,7 @@ class FriendDataSourceImpl(
             BasicState.ErrorState
         }
     }
+
     override suspend fun sendFriendRequest(login: String): SendFriendRequestState {
         val response = friendService.sendFriendRequest(login)
         if (response.isSuccessful) {
@@ -73,5 +77,14 @@ class FriendDataSourceImpl(
             }
         }
         return SendFriendRequestState.ErrorState
+    }
+
+    override suspend fun getFriends(): BasicState {
+        val response = friendService.getFriends()
+        if (response.isSuccessful) {
+            return BasicState.SuccessStateWithResources(
+                response.body()!!.map { friendMapper.mapFromResponseToModel(it) })
+        }
+        return BasicState.ErrorState
     }
 }

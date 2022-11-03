@@ -1,5 +1,6 @@
 package com.src.book.data.remote.service
 
+import com.src.book.data.remote.model.friend.friend.FriendResponse
 import com.src.book.data.remote.model.friend.request.FriendRequestResponse
 import com.src.book.utils.USER_SERVICE_BASE_URL
 import retrofit2.Response
@@ -24,4 +25,7 @@ interface FriendService {
 
     @GET("$USER_SERVICE_BASE_URL/send-friend-request")
     suspend fun sendFriendRequest(@Query("login") login: String): Response<Unit>
+
+    @GET("$USER_SERVICE_BASE_URL/friends")
+    suspend fun getFriends(): Response<List<FriendResponse>>
 }

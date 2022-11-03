@@ -121,4 +121,10 @@ class DomainModule {
     fun provideRejectOutgoingFriendRequestUseCase(friendRepository: FriendRepository): RejectOutgoingFriendRequestUseCase {
         return RejectOutgoingFriendRequestUseCase(friendRepository = friendRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetFriendsUseCase(friendRepository: FriendRepository): GetFriendsUseCase {
+        return GetFriendsUseCase(friendRepository = friendRepository)
+    }
 }
