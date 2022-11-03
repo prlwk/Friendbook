@@ -106,9 +106,7 @@ public class UserController {
         try {
             if (file != null) {
                 String path = new File("").getAbsolutePath();
-                System.out.println(path);
                 File newFile = new File(path + user.getId() + ".0.jpg");
-                System.out.println(newFile.getAbsolutePath());
                 file.transferTo(newFile);
                 userService.setLinkPhoto(user.getId() + ".0.jpg", user.getId());
             } else {
@@ -263,16 +261,11 @@ public class UserController {
                             "User with id " + id + " does not exist."), httpHeaders, HttpStatus.NOT_FOUND);
         }
         try {
-            URL res = getClass().getClassLoader().getResource("user-photo/" + user.getLinkPhoto());
-            File file;
-            if (res != null) {
-                file = Paths.get(res.toURI()).toFile();
-                InputStream input = new FileInputStream(file);
-                return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException | URISyntaxException e) {
+            String path = new File("").getAbsolutePath();
+            File file = new File(path + user.getLinkPhoto());
+            InputStream input = new FileInputStream(file);
+            return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
+        } catch (IOException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }

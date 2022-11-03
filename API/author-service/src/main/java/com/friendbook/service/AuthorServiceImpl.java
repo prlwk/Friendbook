@@ -40,8 +40,11 @@ public class AuthorServiceImpl implements AuthorService {
             authorWithBooks.setName(author.getName());
             authorWithBooks.setPhotoSrc("/author/image?id=" + author.getId());
             authorWithBooks.setYearsLife(author.getYearsLife());
-            double rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
-            rating /= books.size();
+            double rating = 0;
+            if(books != null) {
+                rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+                rating /= books.size();
+            }
             authorWithBooks.setRating(rating);
             return authorWithBooks;
         }
