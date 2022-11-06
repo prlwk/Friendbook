@@ -27,4 +27,5 @@ interface SessionStorage {
 
     fun getEmail(): String
     fun clearSession()
+    fun getId():String
 }

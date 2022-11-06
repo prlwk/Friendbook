@@ -1,11 +1,16 @@
 package com.src.book.presentation.registration
 
+import android.Manifest
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.R
 import com.src.book.app.App
+import com.src.book.presentation.registration.first_registration.RegistrationFragment
+import com.src.book.presentation.registration.first_registration.RegistrationUserInfoFragment
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModelFactory
 import com.src.book.presentation.registration.password_recovery.PasswordRecoveryFragment
@@ -40,7 +45,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
         setContentView(R.layout.activity_login)
-        replaceFragment(SignInFragment())
+        replaceFragment(RegistrationFragment())
+//        ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE},
+//            REQUEST_PERMISSION);
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1
+        );
     }
 
     private fun replaceFragment(fragment: Fragment) {

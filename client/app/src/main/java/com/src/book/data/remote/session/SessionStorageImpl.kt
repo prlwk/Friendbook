@@ -90,4 +90,8 @@ class SessionStorageImpl(context: Context) : SessionStorage {
             .apply()
     }
 
+    override fun getId(): String {
+        return (sharedPreferences.getString(ID, "") ?: "")
+    }
+
 }

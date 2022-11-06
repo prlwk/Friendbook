@@ -5,15 +5,12 @@ import com.src.book.domain.usecase.author.GetAuthorUseCase
 import com.src.book.domain.usecase.book.GetBookByIdUseCase
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import com.src.book.domain.usecase.friend.*
-import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
-import com.src.book.domain.usecase.login.CheckRecoveryCodeUseCase
-import com.src.book.domain.usecase.login.SendCodeForRecoveryPasswordUseCase
-import com.src.book.domain.usecase.login.SignInUseCase
 import com.src.book.domain.usecase.search.GetAllGenresUseCase
 import com.src.book.domain.usecase.search.GetAllTagsUseCase
 import com.src.book.domain.usecase.user.ChangePasswordUseCase
 import com.src.book.domain.usecase.user.LogoutUseCase
 import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
+import com.src.book.domain.usecase.login.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -126,5 +123,23 @@ class DomainModule {
     @Provides
     fun provideGetFriendsUseCase(friendRepository: FriendRepository): GetFriendsUseCase {
         return GetFriendsUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRegistrationUseCase(loginRepository: LoginRepository): RegistrationUseCase {
+        return RegistrationUseCase(loginRepository = loginRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCheckRecoveryCodeForConfirmationsUseCase(loginRepository: LoginRepository): CheckRecoveryCodeForConfirmationsUseCase {
+        return CheckRecoveryCodeForConfirmationsUseCase(loginRepository = loginRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSendCodeForConfirmationsUseCase(loginRepository: LoginRepository): SendCodeForConfirmationsUseCase {
+        return SendCodeForConfirmationsUseCase(loginRepository = loginRepository)
     }
 }
