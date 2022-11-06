@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="@id/gl_top" />
 
     <ImageView
-        android:id="@+id/iv_add_friends"
+        android:id="@+id/iv_add_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/friends"
@@ -77,8 +77,8 @@
         android:textSize="8sp"
         android:textStyle="bold"
         app:layout_constraintHeight="12dp"
-        app:layout_constraintStart_toStartOf="@id/iv_add_friends"
-        app:layout_constraintTop_toTopOf="@id/iv_add_friends"
+        app:layout_constraintStart_toStartOf="@id/iv_add_picture"
+        app:layout_constraintTop_toTopOf="@id/iv_add_picture"
         app:layout_constraintWidth="12dp"
         tools:ignore="SmallSp" />
 

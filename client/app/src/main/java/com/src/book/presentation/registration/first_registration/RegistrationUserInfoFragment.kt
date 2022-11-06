@@ -32,7 +32,6 @@ class RegistrationUserInfoFragment : Fragment() {
     private var photo: Uri? = null
 
     val GALLERY_REQUEST_CODE = 1234
-    var imSemafor: ImageView? = null
 
     private var isClickNext = false
     override fun onCreateView(

@@ -8,6 +8,7 @@
     tools:context=".presentation.registration.first_registration.RegistrationUserInfoFragment">
 
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
         android:layout_width="wrap_content"
@@ -51,28 +52,29 @@
             android:id="@+id/cd_add_picture"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            app:cardCornerRadius="250dp"
             android:layout_marginTop="50dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="250dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                app:cardCornerRadius="250dp">
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/iv_add_friends"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/add_picture_image"
                     android:padding="18dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/add_picture_image" />
+                    android:scaleType="centerInside"/>
 
             </androidx.cardview.widget.CardView>
+
         </androidx.cardview.widget.CardView>
 
 
@@ -104,7 +106,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:textColor="@color/color_accent"
             android:textColorHint="@color/icon_nav_not_selected"
             app:boxStrokeColor="@color/transparent"
             app:boxStrokeErrorColor="@color/transparent"
@@ -112,6 +113,7 @@
             app:endIconTint="@color/transparent"
             app:errorTextColor="@color/negative_rating"
             app:hintEnabled="false"
+            android:textColor="@color/color_accent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name">
 
@@ -122,10 +124,10 @@
                 android:background="@drawable/edit_text_background"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_your_name"
+                android:textColorHint="@color/tv_hint"
                 android:paddingHorizontal="@dimen/space_2x"
                 android:paddingVertical="@dimen/space_2x"
                 android:textColor="@color/color_accent"
-                android:textColorHint="@color/tv_hint"
                 android:textCursorDrawable="@null"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -134,8 +136,8 @@
             android:id="@+id/v_empty_view_near_name"
             android:layout_width="1dp"
             android:layout_height="1dp"
-            app:layout_constraintEnd_toStartOf="@id/tv_name"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_name"
             app:layout_constraintTop_toTopOf="@id/til_enter_name" />
 
         <TextView
@@ -157,14 +159,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
             android:hint="@string/сome_up_nickname"
-            android:textColorHint="@color/color_accent"
-            android:textSize="12sp"
             app:boxStrokeColor="@color/transparent"
             app:boxStrokeErrorColor="@color/transparent"
             app:endIconMode="custom"
             app:endIconTint="@color/transparent"
             app:errorTextColor="@color/negative_rating"
             app:hintEnabled="false"
+            android:textColorHint="@color/color_accent"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname"
             app:prefixTextColor="@color/white">
@@ -177,10 +179,10 @@
                 android:gravity="center_vertical"
                 android:hint="@string/сome_up_nickname"
                 android:inputType="textEmailAddress"
+                android:textColorHint="@color/tv_hint"
                 android:paddingHorizontal="@dimen/space_2x"
                 android:paddingVertical="@dimen/space_2x"
                 android:textColor="@color/color_accent"
-                android:textColorHint="@color/tv_hint"
                 android:textCursorDrawable="@null"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -189,8 +191,8 @@
             android:id="@+id/v_empty_view_near_nickname"
             android:layout_width="1dp"
             android:layout_height="1dp"
-            app:layout_constraintEnd_toStartOf="@id/tv_nickname"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_nickname"
             app:layout_constraintTop_toTopOf="@id/til_nickname" />
 
         <TextView
