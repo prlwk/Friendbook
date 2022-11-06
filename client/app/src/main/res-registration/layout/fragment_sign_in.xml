@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_skip_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
@@ -93,11 +94,11 @@
                 android:background="@drawable/edit_text_background"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_email"
-                android:textColorHint="@color/tv_hint"
                 android:inputType="textEmailAddress"
                 android:paddingHorizontal="@dimen/space_2x"
                 android:paddingVertical="@dimen/space_2x"
                 android:textColor="@color/color_accent"
+                android:textColorHint="@color/tv_hint"
                 android:textCursorDrawable="@null"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -106,8 +107,8 @@
             android:id="@+id/v_empty_view"
             android:layout_width="1dp"
             android:layout_height="1dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_email"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/til_email" />
 
 
@@ -154,11 +155,11 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_background"
                     android:hint="@string/enter_password"
-                    android:textColorHint="@color/tv_hint"
                     android:inputType="textPassword"
                     android:paddingHorizontal="@dimen/space_2x"
                     android:paddingVertical="@dimen/space_2x"
                     android:textColor="@color/color_accent"
+                    android:textColorHint="@color/tv_hint"
                     android:textCursorDrawable="@null"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,9 +174,9 @@
             android:text="@string/forgot_password"
             android:textColor="@color/basic_color"
             android:textSize="11sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_button_sign_in" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_button_sign_in"

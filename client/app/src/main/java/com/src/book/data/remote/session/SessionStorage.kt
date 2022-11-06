@@ -28,4 +28,6 @@ interface SessionStorage {
     fun getEmail(): String
     fun clearSession()
     fun getId():String
+    fun setIsActive(isActive:Boolean)
+    fun getIsActive():Boolean
 }

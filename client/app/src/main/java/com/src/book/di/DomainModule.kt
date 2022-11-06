@@ -142,4 +142,10 @@ class DomainModule {
     fun provideSendCodeForConfirmationsUseCase(loginRepository: LoginRepository): SendCodeForConfirmationsUseCase {
         return SendCodeForConfirmationsUseCase(loginRepository = loginRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideLoginAsGuestUseCase(loginRepository: LoginRepository): LoginAsGuestUseCase {
+        return LoginAsGuestUseCase(loginRepository = loginRepository)
+    }
 }

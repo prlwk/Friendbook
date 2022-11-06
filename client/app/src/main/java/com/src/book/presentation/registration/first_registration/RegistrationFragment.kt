@@ -12,6 +12,7 @@ import com.src.book.databinding.FragmentRegistrationBinding
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
+import com.src.book.presentation.registration.sign_in.SignInFragment
 import com.src.book.utils.REGEX_EMAIL
 import java.util.regex.Pattern
 
@@ -55,12 +56,14 @@ class RegistrationFragment : Fragment() {
                 }
             }
         }
+        setOnClickListenerForSkipButton()
+        setOnClickListenerForSignInButton()
     }
 
     private fun checkEmailExists(state: BasicState) {
         if (onClickNext) {
-            onClickNext=false
-            Log.d("onClickNext","onClick")
+            onClickNext = false
+            Log.d("onClickNext", "onClick")
             if (state is BasicState.SuccessStateWithResources<*>) {
                 val isExists = (state as BasicState.SuccessStateWithResources<Boolean>).data
                 if (isExists) {
@@ -81,7 +84,7 @@ class RegistrationFragment : Fragment() {
                     }
                     if (password1 != null && password2 != null && password1.isNotEmpty() && password2.isNotEmpty() && password1 == password2) {
                         viewModel.setPassword(password1)
-                       requireActivity().supportFragmentManager.beginTransaction()
+                        requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, RegistrationUserInfoFragment())
                             .addToBackStack(null)
                             .commit()
@@ -98,6 +101,22 @@ class RegistrationFragment : Fragment() {
             bindingLoading.clLoadingPage.visibility = View.VISIBLE
         } else {
             bindingLoading.clLoadingPage.visibility = View.GONE
+        }
+    }
+
+    //TODO перейти в новый фрагмент
+    private fun setOnClickListenerForSkipButton() {
+        binding.tvSkipButton.setOnClickListener {
+            viewModel.loginAsGuest()
+        }
+    }
+
+    private fun setOnClickListenerForSignInButton() {
+        binding.tvSignin.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SignInFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 

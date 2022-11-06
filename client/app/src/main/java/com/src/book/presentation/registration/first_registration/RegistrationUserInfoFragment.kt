@@ -59,6 +59,7 @@ class RegistrationUserInfoFragment : Fragment() {
         viewModel.liveDataRegistration.observe(this.viewLifecycleOwner, this::checkRegistration)
         viewModel.liveDataIsLoading.observe(this.viewLifecycleOwner, this::checkLoading)
         setOnClickListenerForNextButton()
+        setOnClickListenerForSkipButton()
     }
 
     private fun pickFromGallery() {
@@ -191,7 +192,12 @@ class RegistrationUserInfoFragment : Fragment() {
             bindingLoading.clLoadingPage.visibility = View.GONE
         }
     }
-
+    //TODO перейти в новый фрагмент
+    private fun setOnClickListenerForSkipButton() {
+        binding.tvSkipButton.setOnClickListener {
+            viewModel.loginAsGuest()
+        }
+    }
     companion object {
         private const val TAG = "AppDebug"
     }

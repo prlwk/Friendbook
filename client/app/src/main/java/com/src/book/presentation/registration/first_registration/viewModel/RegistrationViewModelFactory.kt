@@ -2,17 +2,15 @@ package com.src.book.presentation.registration.first_registration.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
-import com.src.book.domain.usecase.login.CheckRecoveryCodeForConfirmationsUseCase
-import com.src.book.domain.usecase.login.RegistrationUseCase
-import com.src.book.domain.usecase.login.SendCodeForConfirmationsUseCase
+import com.src.book.domain.usecase.login.*
 import javax.inject.Inject
 
 class RegistrationViewModelFactory @Inject constructor(
     private val emailExistsUseCase: CheckEmailExistsUseCase,
     private val registrationUseCase: RegistrationUseCase,
     private val checkRecoveryCodeForConfirmationsUseCase: CheckRecoveryCodeForConfirmationsUseCase,
-    private val sendCodeForConfirmationsUseCase: SendCodeForConfirmationsUseCase
+    private val sendCodeForConfirmationsUseCase: SendCodeForConfirmationsUseCase,
+    private val loginAsGuestUseCase: LoginAsGuestUseCase
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -20,7 +18,8 @@ class RegistrationViewModelFactory @Inject constructor(
             checkEmailExistsUseCase = emailExistsUseCase,
             registrationUseCase = registrationUseCase,
             checkRecoveryCodeForConfirmationsUseCase = checkRecoveryCodeForConfirmationsUseCase,
-            sendCodeForConfirmationsUseCase = sendCodeForConfirmationsUseCase
+            sendCodeForConfirmationsUseCase = sendCodeForConfirmationsUseCase,
+            loginAsGuestUseCase = loginAsGuestUseCase
         ) as T
     }
 }

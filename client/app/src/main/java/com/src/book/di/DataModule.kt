@@ -1,5 +1,6 @@
 package com.src.book.di
 
+import com.src.book.data.local.LocalUserRepository
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.friend.FriendDataSource
@@ -23,8 +24,11 @@ class DataModule {
     }
 
     @Provides
-    fun provideLoginRepository(loginDataSource: LoginDataSource): LoginRepository {
-        return LoginRepositoryImpl(loginDataSource)
+    fun provideLoginRepository(
+        loginDataSource: LoginDataSource,
+        localUserRepository: LocalUserRepository
+    ): LoginRepository {
+        return LoginRepositoryImpl(loginDataSource, localUserRepository)
     }
 
     @Provides

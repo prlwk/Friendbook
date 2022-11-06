@@ -4,10 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.usecase.login.CheckEmailExistsUseCase
-import com.src.book.domain.usecase.login.CheckRecoveryCodeForConfirmationsUseCase
-import com.src.book.domain.usecase.login.RegistrationUseCase
-import com.src.book.domain.usecase.login.SendCodeForConfirmationsUseCase
+import com.src.book.domain.usecase.login.*
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.CodeState
 import com.src.book.domain.utils.RegistrationState
@@ -17,7 +14,8 @@ class RegistrationViewModel(
     private val checkEmailExistsUseCase: CheckEmailExistsUseCase,
     private val registrationUseCase: RegistrationUseCase,
     private val checkRecoveryCodeForConfirmationsUseCase: CheckRecoveryCodeForConfirmationsUseCase,
-    private val sendCodeForConfirmationsUseCase: SendCodeForConfirmationsUseCase
+    private val sendCodeForConfirmationsUseCase: SendCodeForConfirmationsUseCase,
+    private val loginAsGuestUseCase: LoginAsGuestUseCase
 ) : ViewModel() {
     private val _mutableEmailExists = MutableLiveData<BasicState>(BasicState.DefaultState)
     private val _mutableLiveDataIsLoading = MutableLiveData(false)
@@ -110,5 +108,11 @@ class RegistrationViewModel(
 
     fun setDefaultValueForCodeState() {
         _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState
+    }
+
+    fun loginAsGuest() {
+        viewModelScope.launch {
+            loginAsGuestUseCase.execute()
+        }
     }
 }

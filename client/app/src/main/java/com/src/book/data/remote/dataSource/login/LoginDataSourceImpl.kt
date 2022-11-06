@@ -36,6 +36,7 @@ class LoginDataSourceImpl(
                     id = body.id,
                     email = body.email
                 )
+                sessionStorage.setIsActive(true)
             }
             return LoginState.SuccessState
         } else {
@@ -74,6 +75,7 @@ class LoginDataSourceImpl(
                     id = body.id,
                     email = body.email
                 )
+                sessionStorage.setIsActive(true)
             }
             return CodeState.SuccessState
         } else {
@@ -150,6 +152,7 @@ class LoginDataSourceImpl(
     override suspend fun sendCodeForAccountConfirmations(): BasicState {
         val id = sessionStorage.getId()
         if (id.isNotEmpty()) {
+            sessionStorage.setIsActive(true)
             val response = loginService.sendCodeForAccountConfirmations(id.toLong())
             if (response.isSuccessful) {
                 return BasicState.SuccessState

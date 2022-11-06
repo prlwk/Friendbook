@@ -15,4 +15,5 @@ interface LoginRepository {
     suspend fun registration(data: String, file: File?): RegistrationState
     suspend fun checkRecoveryCodeForAccountConfirmations(code: String, email: String): CodeState
     suspend fun sendCodeForAccountConfirmations(): BasicState
+    suspend fun setIsActiveAndClearSession()
 }

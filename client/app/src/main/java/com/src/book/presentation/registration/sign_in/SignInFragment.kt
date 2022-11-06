@@ -11,6 +11,7 @@ import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentSignInBinding
 import com.src.book.domain.utils.LoginState
 import com.src.book.presentation.registration.LoginActivity
+import com.src.book.presentation.registration.first_registration.RegistrationFragment
 import com.src.book.presentation.registration.password_recovery.PasswordRecoveryEmailFragment
 import com.src.book.presentation.registration.password_recovery.PasswordRecoveryFragment
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
@@ -57,6 +58,8 @@ class SignInFragment : Fragment() {
             }
         }
         setOnClickListenerForForgotPassword()
+        setOnClickListenerForSkipButton()
+        setOnClickListenerForRegisterButton()
     }
 
     private fun checkLoading(isLoading: Boolean) {
@@ -101,6 +104,21 @@ class SignInFragment : Fragment() {
                 ?.replace(R.id.fragment_container, PasswordRecoveryEmailFragment())
                 ?.addToBackStack(null)
                 ?.commit()
+        }
+    }
+
+    //TODO перейти в новый фрагмент
+    private fun setOnClickListenerForSkipButton() {
+        binding.tvSkipButton.setOnClickListener {
+            viewModel.loginAsGuest()
+        }
+    }
+    private fun setOnClickListenerForRegisterButton() {
+        binding.tvRegister.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, RegistrationFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 }
