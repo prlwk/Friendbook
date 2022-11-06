@@ -1,4 +1,4 @@
-package com.src.book.presentation.registration.first_registration
+package com.src.book.presentation.profile.my_profile
 
 import android.app.Activity
 import android.content.Intent
@@ -9,43 +9,36 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.src.book.databinding.FragmentLoadingBinding
-import com.src.book.databinding.FragmentRegistrationUserInformationBinding
-import com.src.book.presentation.MainActivity
-import com.src.book.presentation.registration.LoginActivity
-import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
+import com.src.book.R
+import com.src.book.databinding.FragmentEditProfileBinding
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
-class RegistrationUserInfoFragment : Fragment() {
-    private lateinit var binding: FragmentRegistrationUserInformationBinding
-    private lateinit var bindingLoading: FragmentLoadingBinding
-    private lateinit var viewModel: SignInViewModel
+class EditMyProfileFragment : Fragment() {
+
+    private lateinit var binding: FragmentEditProfileBinding
 
     val GALLERY_REQUEST_CODE = 1234
 
-    private var isClickNext = false
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.binding = FragmentRegistrationUserInformationBinding.inflate(inflater)
-        viewModel = (activity as LoginActivity).getSignInViewModel()
-        return binding.root
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.tvButtonNext.setOnClickListener {
-            binding.tilNickname.error = "Введите корректный никнейм"
-            binding.tilNickname.errorIconDrawable = null
-            binding.tilEnterName.error = "Введите корректное имя"
-            binding.tilEnterName.errorIconDrawable = null
-        }
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentEditProfileBinding.bind(view)
 
-        binding.cdAddPicture.setOnClickListener {
+        binding.cdEditPicture.setOnClickListener {
             pickFromGallery()
         }
     }
@@ -87,10 +80,9 @@ class RegistrationUserInfoFragment : Fragment() {
     }
 
     private fun setImage(uri: Uri) {
-        binding.ivAddPicture.setPadding(0,0,0,0)
         Glide.with(this)
             .load(uri)
-            .into(binding.ivAddPicture)
+            .into(binding.ivPicture)
     }
 
     private fun launchImageCrop(uri: Uri?) {

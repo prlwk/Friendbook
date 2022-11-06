@@ -46,7 +46,7 @@ class FriendsListFragment : Fragment() {
             this.viewLifecycleOwner, this::setView
         )
         viewModel.loadFriends()
-        binding.ivAddFriends.setOnClickListener {
+        binding.ivAddPicture.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, RequestsFriendsFragment())
                 .addToBackStack(null)

@@ -100,4 +100,5 @@
     <string name="review_book">Оцените книгу</string>
     <string name="write_your_review_here">Напишите свой отзыв здесь!</string>
     <string name="make_review">Оценить</string>
+    <string name="save">Сохранить</string>
 </resources>
