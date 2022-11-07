@@ -107,6 +107,11 @@ public class FriendsServiceImpl implements FriendsService {
         return false;
     }
 
+    @Override
+    public int getCountIncomingRequest(User user) {
+        return friendsRepository.getCountIncomingRequests(user.getId());
+    }
+
     private List<UserInRequest> setImagesForFriendsInRequests(List<UserInRequest> userInRequestList) {
         for (UserInRequest userInRequest : userInRequestList) {
             userInRequest.setImage("/user/image?id=" + userInRequest.getId());

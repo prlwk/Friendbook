@@ -203,6 +203,16 @@ public class FriendsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/count-incoming-requests", method = RequestMethod.GET)
+    public ResponseEntity<?> getCountsFriendRequests(HttpServletRequest request) {
+        ResponseEntity<?> responseEntity = getUserByRequest(request);
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            return responseEntity;
+        }
+        User user = (User) responseEntity.getBody();
+        return new ResponseEntity<>(friendsService.getCountIncomingRequest(user), HttpStatus.OK);
+    }
+
     private ResponseEntity<?> getUserByRequest(HttpServletRequest request) {
         String email;
         String token = resolveToken(request);
