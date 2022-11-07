@@ -141,6 +141,7 @@ class LoginDataSourceImpl(
     ): CodeState {
         val response = loginService.checkRecoveryCodeForAccountConfirmations(code, email)
         if (response.isSuccessful) {
+            sessionStorage.setIsActive(true)
             return CodeState.SuccessState
         }
         if (response.code() == 404) {
@@ -152,7 +153,6 @@ class LoginDataSourceImpl(
     override suspend fun sendCodeForAccountConfirmations(): BasicState {
         val id = sessionStorage.getId()
         if (id.isNotEmpty()) {
-            sessionStorage.setIsActive(true)
             val response = loginService.sendCodeForAccountConfirmations(id.toLong())
             if (response.isSuccessful) {
                 return BasicState.SuccessState

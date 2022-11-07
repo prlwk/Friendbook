@@ -135,10 +135,11 @@ class PasswordRecoveryCodeFragment : Fragment() {
                 viewModel.setDefaultValueForCodeState()
                 println("wrong code")
             }
-            else -> {
+            is CodeState.ErrorState ->{
                 viewModel.setDefaultValueForCodeState()
                 println("error")
             }
+            else ->{}
         }
     }
 

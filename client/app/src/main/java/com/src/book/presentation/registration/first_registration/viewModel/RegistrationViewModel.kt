@@ -53,11 +53,22 @@ class RegistrationViewModel(
         }
     }
 
-    fun registration(data: String, uri: Uri?) {
+    fun registration(uri: Uri?) {
         viewModelScope.launch {
             _mutableLiveDataIsLoading.value = true
             _mutableLiveDataRegistration.value = RegistrationState.DefaultState
-            _mutableLiveDataRegistration.value = registrationUseCase.execute(data, uri)
+            if (_mutableLiveDataEmail.value != null && _mutableLiveDataPassword.value != null && _mutableLiveDataLogin.value != null && _mutableLiveDataName.value!=null ) {
+                _mutableLiveDataRegistration.value = registrationUseCase.execute(
+                    email = _mutableLiveDataEmail.value!!,
+                    password = _mutableLiveDataPassword.value!!,
+                    login = _mutableLiveDataLogin.value!!,
+                    name = _mutableLiveDataName.value!!,
+                    uri = uri
+                )
+            }
+            else{
+                _mutableLiveDataRegistration.value = RegistrationState.ErrorState
+            }
             _mutableLiveDataIsLoading.value = false
         }
     }

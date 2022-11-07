@@ -11,6 +11,7 @@ import com.src.book.domain.usecase.user.ChangePasswordUseCase
 import com.src.book.domain.usecase.user.LogoutUseCase
 import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import com.src.book.domain.usecase.login.*
+import com.src.book.domain.usecase.user.EditProfileUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -147,5 +148,11 @@ class DomainModule {
     @Provides
     fun provideLoginAsGuestUseCase(loginRepository: LoginRepository): LoginAsGuestUseCase {
         return LoginAsGuestUseCase(loginRepository = loginRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEditProfileUseCase(userRepository: UserRepository): EditProfileUseCase {
+        return EditProfileUseCase(userRepository = userRepository)
     }
 }

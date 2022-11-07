@@ -164,20 +164,12 @@ class RegistrationUserInfoFragment : Fragment() {
                     if (viewModel.liveDataLogin.value == null || viewModel.liveDataName.value == null || viewModel.liveDataEmail.value == null || viewModel.liveDataPassword.value == null) {
                         //TODO обработка ошибки (в клиенте что-то не сохранилось)
                     } else {
-                        val json = JSONObject(
-                            mapOf(
-                                "login" to viewModel.liveDataLogin.value,
-                                "name" to viewModel.liveDataName.value,
-                                "email" to viewModel.liveDataEmail.value,
-                                "password" to viewModel.liveDataPassword.value
-                            )
-                        )
                         val photoCompression = PhotoCompression()
                         if (photo != null) {
                             photo = photoCompression.execute(requireContext(), photo!!)
                             viewModel.setImage(uri = photo!!)
                         }
-                        viewModel.registration(json.toString(), null)
+                        viewModel.registration(photo)
                     }
                 }
             }
@@ -192,12 +184,14 @@ class RegistrationUserInfoFragment : Fragment() {
             bindingLoading.clLoadingPage.visibility = View.GONE
         }
     }
+
     //TODO перейти в новый фрагмент
     private fun setOnClickListenerForSkipButton() {
         binding.tvSkipButton.setOnClickListener {
             viewModel.loginAsGuest()
         }
     }
+
     companion object {
         private const val TAG = "AppDebug"
     }

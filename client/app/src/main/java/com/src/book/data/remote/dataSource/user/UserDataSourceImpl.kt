@@ -4,11 +4,14 @@ import com.src.book.data.remote.model.token.RefreshTokenResponse
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
-import com.src.book.data.remote.utils.ALREADY_FRIENDS
-import com.src.book.data.remote.utils.ErrorMessage
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
-import com.src.book.domain.utils.SendFriendRequestState
+import com.src.book.domain.utils.EditProfileState
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class UserDataSourceImpl(
     private val userService: UserService,
@@ -67,5 +70,23 @@ class UserDataSourceImpl(
         } else {
             BasicState.ErrorState
         }
+    }
+
+    override suspend fun editProfile(data: String, file: File?): EditProfileState {
+        val dataMultipart = data.toRequestBody("text/plain".toMediaTypeOrNull())
+        var part: MultipartBody.Part? = null
+        if (file != null) {
+            val fileMultipart = file.asRequestBody("image/*".toMediaTypeOrNull())
+            part = MultipartBody.Part.createFormData("file", file.name, fileMultipart)
+        }
+        val response = userService.editProfile(dataMultipart, part)
+        if (response.isSuccessful) {
+            return EditProfileState.SuccessState
+        } else {
+            if (response.code() == 409) {
+                return EditProfileState.LoginAlreadyExistsState
+            }
+        }
+        return EditProfileState.ErrorState
     }
 }

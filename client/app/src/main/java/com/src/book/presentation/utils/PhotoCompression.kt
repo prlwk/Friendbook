@@ -22,10 +22,12 @@ class PhotoCompression {
                 if (scaled == 0.0) {
                     scaled = 1.0
                 }
+                val newHeight = (height/scaled).toInt()
+                val newWidth = (width/scaled).toInt()
                 val newBitmap = Bitmap.createScaledBitmap(
                     bitmap,
-                    (height / scaled).toInt(),
-                    (width / scaled).toInt(),
+                    newHeight,
+                    newWidth,
                     true
                 )
                 return bitmapToUri(context, newBitmap)
@@ -49,13 +51,12 @@ class PhotoCompression {
     private fun bitmapToUri(context: Context, bitmap: Bitmap): Uri {
         val cachePath = File(context.externalCacheDir, "my_images/")
         cachePath.mkdirs()
-        val file = File(cachePath, "1.jpeg")
+        val file = File(cachePath, "1.png")
         val fileOutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream)
         fileOutputStream.flush()
         fileOutputStream.close()
         val myImageFileUri = Uri.fromFile(file)
-        println(myImageFileUri.path)
         return myImageFileUri
     }
 }
