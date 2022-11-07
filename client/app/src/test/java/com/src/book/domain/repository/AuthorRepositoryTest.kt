@@ -1,8 +1,10 @@
 package com.src.book.domain.repository
 
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.repository.AuthorRepositoryImpl
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -35,10 +37,22 @@ class AuthorRepositoryTest {
     @Test
     fun testGetAuthorByIdSuccessful() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
-        coEvery { authorDataSource.loadAuthorById(any()) } returns authorModel
+        val state = BasicState.SuccessStateWithResources(authorModel)
+        coEvery { authorDataSource.loadAuthorById(any()) } returns state
+        Assert.assertTrue(
+            authorRepository.getAuthorById(ID) is BasicState.SuccessStateWithResources<*>
+        )
         Assert.assertEquals(
-            authorModel,
-            authorRepository.getAuthorById(1)
+            (authorRepository.getAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            authorModel
+        )
+    }
+
+    @Test
+    fun testGetAuthorByIdError() = runTest {
+        coEvery { authorDataSource.loadAuthorById(any()) } returns BasicState.ErrorState
+        Assert.assertTrue(
+            authorRepository.getAuthorById(ID) is BasicState.ErrorState
         )
     }
 }

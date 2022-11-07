@@ -270,13 +270,13 @@
                 android:text="@string/have_an_account"
                 android:textColor="@color/color_accent"
                 android:textSize="11sp"
-                app:layout_constraintEnd_toStartOf="@id/tv_register"
+                app:layout_constraintEnd_toStartOf="@id/tv_signin"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_register"
+                android:id="@+id/tv_signin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in_no_caps"
@@ -304,6 +304,7 @@
         app:layout_constraintStart_toStartOf="@id/gl_start" />
 
     <TextView
+        android:id="@+id/tv_skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_2x"

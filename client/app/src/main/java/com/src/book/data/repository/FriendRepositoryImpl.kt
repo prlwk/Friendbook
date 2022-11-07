@@ -16,19 +16,26 @@ class FriendRepositoryImpl(private val friendDataSource: FriendDataSource) : Fri
         return@withContext friendDataSource.submitFriendRequest(id)
     }
 
-    override suspend fun rejectIncomingFriendRequest(id: Long): BasicState = withContext(Dispatchers.IO) {
-        return@withContext friendDataSource.rejectIncomingFriendRequest(id)
-    }
+    override suspend fun rejectIncomingFriendRequest(id: Long): BasicState =
+        withContext(Dispatchers.IO) {
+            return@withContext friendDataSource.rejectIncomingFriendRequest(id)
+        }
 
     override suspend fun getOutgoingRequests(): BasicState = withContext(Dispatchers.IO) {
         return@withContext friendDataSource.getOutgoingRequests()
     }
 
-    override suspend fun rejectOutgoingFriendRequest(id: Long): BasicState = withContext(Dispatchers.IO) {
-        return@withContext  friendDataSource.rejectOutgoingFriendRequest(id)
-    }
+    override suspend fun rejectOutgoingFriendRequest(id: Long): BasicState =
+        withContext(Dispatchers.IO) {
+            return@withContext friendDataSource.rejectOutgoingFriendRequest(id)
+        }
+
     override suspend fun sendFriendRequest(login: String): SendFriendRequestState =
         withContext(Dispatchers.IO) {
             return@withContext friendDataSource.sendFriendRequest(login)
         }
+
+    override suspend fun getFriends(): BasicState = withContext(Dispatchers.IO) {
+        return@withContext friendDataSource.getFriends()
+    }
 }

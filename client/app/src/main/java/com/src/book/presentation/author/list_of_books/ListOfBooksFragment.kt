@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
-import com.src.book.domain.model.Book
+import com.src.book.domain.model.BookList
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
@@ -34,14 +34,10 @@ class ListOfBooksFragment : Fragment() {
     private var authorId: Long = 0
     private var title: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val args = this.arguments
         authorId = args?.getLong(AUTHOR_ID) as Long
         title = args.getString(TITLE) as String
@@ -69,16 +65,17 @@ class ListOfBooksFragment : Fragment() {
     //TODO обработка ошибки загрузки книг
     private fun setState(state: ListOfBooksState) {
         when (state) {
-            is ListOfBooksState.DefaultState -> state.books?.let { loadData(it) }
+            is ListOfBooksState.SuccessState -> loadData(state.books)
             is ListOfBooksState.ErrorState -> Toast.makeText(
                 requireContext(),
                 "Books loading error",
                 Toast.LENGTH_LONG
             ).show()
+            else -> {}
         }
     }
 
-    private fun loadData(books: List<Book>) {
+    private fun loadData(books: List<BookList>) {
         setAdapterForRecyclerView(books)
     }
 
@@ -108,7 +105,7 @@ class ListOfBooksFragment : Fragment() {
         binding.tvTitle.append(searchText)
     }
 
-    private fun showDialog(book: Book) {
+    private fun showDialog(book: BookList) {
         val dialog = BookDialog(requireContext(), book)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.book_dialog)
@@ -124,7 +121,7 @@ class ListOfBooksFragment : Fragment() {
         }
     }
 
-    private fun setAdapterForRecyclerView(books: List<Book>) {
+    private fun setAdapterForRecyclerView(books: List<BookList>) {
         val listOfBooksAdapter =
             ListOfBooksAdapter({ item -> onClickMore(item) }, { item -> onClickBook(item) })
         listOfBooksAdapter.submitList(books)
@@ -133,11 +130,11 @@ class ListOfBooksFragment : Fragment() {
         binding.rvBooks.adapter = listOfBooksAdapter
     }
 
-    private fun onClickMore(book: Book) {
+    private fun onClickMore(book: BookList) {
         showDialog(book = book)
     }
 
-    private fun onClickBook(book: Book) {
+    private fun onClickBook(book: BookList) {
         val bundle = Bundle()
         bundle.putLong(BOOK_ID, book.id)
         val fragment = BookFragment()

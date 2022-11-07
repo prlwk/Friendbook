@@ -1,7 +1,9 @@
 package com.src.book.domain.usecase.author
 
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.AuthorRepository
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -13,6 +15,7 @@ import org.junit.Test
 import io.mockk.junit4.MockKRule
 import io.mockk.unmockkAll
 import org.junit.After
+import org.junit.Assert
 
 
 @ExperimentalCoroutinesApi
@@ -39,7 +42,18 @@ class GetAuthorUseCaseTest {
     @Test
     fun testGetAuthorUseCaseSuccessful() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
-        coEvery { authorRepository.getAuthorById(any()) } returns authorModel
-        assertEquals(authorModel, getAuthorUseCase.execute(1))
+        val state = BasicState.SuccessStateWithResources(authorModel)
+        coEvery { authorRepository.getAuthorById(any()) } returns state
+        Assert.assertTrue(authorRepository.getAuthorById(ID) is BasicState.SuccessStateWithResources<*>)
+        assertEquals(
+            (authorRepository.getAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            authorModel
+        )
+    }
+
+    @Test
+    fun testGetAuthorUseCaseError() = runTest {
+        coEvery { authorRepository.getAuthorById(any()) } returns BasicState.ErrorState
+        Assert.assertTrue(authorRepository.getAuthorById(ID) is BasicState.ErrorState)
     }
 }

@@ -24,9 +24,4 @@ class AppModule(var context: Context) {
     fun provideListOfBooksViewModelFactory(getBooksByAuthorIdUseCase: GetBooksByAuthorIdUseCase): ListOfBooksViewModelFactory {
         return ListOfBooksViewModelFactory(getBooksByAuthorIdUseCase = getBooksByAuthorIdUseCase)
     }
-
-//    @Provides
-//    fun provideBookViewModelFactory(getBookByIdUseCase: GetBookByIdUseCase): BookViewModelFactory {
-//        return BookViewModelFactory(getBookByIdUseCase = getBookByIdUseCase)
-//    }
 }

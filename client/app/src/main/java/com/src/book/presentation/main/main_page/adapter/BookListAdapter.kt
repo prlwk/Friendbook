@@ -12,6 +12,8 @@ import com.src.book.R
 import com.src.book.databinding.ViewHolderSimpleBookBinding
 import com.src.book.domain.model.BookAuthor
 import com.src.book.presentation.utils.RatingColor
+import com.src.book.utils.BASE_URL
+import com.src.book.utils.BOOK_SERVICE_BASE_URL
 
 
 class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :

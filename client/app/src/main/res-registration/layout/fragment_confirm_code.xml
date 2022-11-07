@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="presentation.registration.confirmation_code.ConfirmCodeFragment">
+    tools:context=".presentation.registration.first_registration.ConfirmCodeFragment">
 
     <include layout="@layout/background_circles" />
 

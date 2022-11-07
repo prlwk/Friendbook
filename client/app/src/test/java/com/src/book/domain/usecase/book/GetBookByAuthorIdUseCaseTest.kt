@@ -1,7 +1,9 @@
 package com.src.book.domain.usecase.book
 
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.BookRepository
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
@@ -34,7 +36,17 @@ class GetBookByAuthorIdUseCaseTest {
     @Test
     fun testGetBookByIdUseCaseSuccessful() = runTest {
         val booksModel = testModelsGenerator.generateListOfBooksModel()
-        coEvery { bookRepository.getBooksByAuthorId(any()) } returns booksModel
-        Assert.assertEquals(booksModel, getBookByAuthorIdUseCase.execute(1))
+        val state = BasicState.SuccessStateWithResources(booksModel)
+        coEvery { bookRepository.getBooksByAuthorId(any()) } returns state
+        Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.SuccessStateWithResources<*>)
+        Assert.assertEquals(
+            (getBookByAuthorIdUseCase.execute(ID) as BasicState.SuccessStateWithResources<*>).data,
+        booksModel)
+    }
+
+    @Test
+    fun testGetBookByIdUseCaseError() = runTest {
+        coEvery { bookRepository.getBooksByAuthorId(any()) } returns BasicState.ErrorState
+        Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.ErrorState)
     }
 }

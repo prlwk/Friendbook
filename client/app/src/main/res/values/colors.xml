@@ -52,6 +52,8 @@
     <color name="add_friend_image_color">#B8000000</color>
 
     <color name="main_tint">#CC2C2C2C</color>
+    <color name="pencil_background_color">#E9E9E9</color>
+    <color name="pencil_color">#000000</color>
 
     <!--    only dark theme-->
 

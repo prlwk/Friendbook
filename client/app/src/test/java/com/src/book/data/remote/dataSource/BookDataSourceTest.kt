@@ -1,13 +1,19 @@
 package com.src.book.data.remote.dataSource
 
+import com.src.book.ACCESS_TOKEN
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.TestModelsResponseGenerator
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSourceImpl
 import com.src.book.data.remote.model.book.book.BookMapper
+import com.src.book.data.remote.model.book.bookList.BookListMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.service.BookService
+import com.src.book.data.remote.service.SessionService
+import com.src.book.data.remote.session.SessionStorage
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -37,11 +43,28 @@ class BookDataSourceTest {
 
     @MockK
     private lateinit var tagMapper: TagMapper
+
+    @MockK
+    private lateinit var sessionService: SessionService
+
+    @MockK
+    private lateinit var sessionStorage: SessionStorage
+
+    @MockK
+    private lateinit var bookListMapper: BookListMapper
     private lateinit var bookDataSource: BookDataSource
 
     @Before
     fun setUp() {
-        bookDataSource = BookDataSourceImpl(bookService, bookMapper, genreMapper, tagMapper)
+        bookDataSource = BookDataSourceImpl(
+            bookService = bookService,
+            bookMapper = bookMapper,
+            genreMapper = genreMapper,
+            tagMapper = tagMapper,
+            sessionService = sessionService,
+            sessionStorage = sessionStorage,
+            bookListMapper = bookListMapper
+        )
         testModelsResponseGenerator = TestModelsResponseGenerator()
         testModelsGenerator = TestModelsGenerator()
     }
@@ -59,7 +82,7 @@ class BookDataSourceTest {
         coEvery { bookMapper.mapFromResponseToModel(any()) } returns bookModel
         Assert.assertEquals(
             bookModel,
-            bookDataSource.loadBookById(1)
+            bookDataSource.loadBookById(ID)
         )
     }
 
@@ -72,34 +95,65 @@ class BookDataSourceTest {
         )
         coEvery { bookMapper.mapFromResponseToModel(any()) } returns bookModel
         Assert.assertNull(
-            bookDataSource.loadBookById(1)
+            bookDataSource.loadBookById(ID)
         )
     }
 
     @Test
-    fun testGetBooksByAuthorIdSuccessful() = runTest {
-        val booksResponseModel = listOf(testModelsResponseGenerator.generateBookResponseModel())
-        val bookModel = testModelsGenerator.generateBookModel()
-        coEvery { bookService.getAllBooksByAuthorId(any()) } returns Response.success(
-            booksResponseModel
+    fun testGetBooksByAuthorIdSuccessfulNotAuth() = runTest {
+        val bookListResponseModel =
+            listOf(testModelsResponseGenerator.generateBookListResponseModel())
+        val bookListModel = testModelsGenerator.generateBookListModel(false)
+        coEvery { bookService.getAllBooksByAuthorId(any(), any()) } returns Response.success(
+            bookListResponseModel
         )
-        coEvery { bookMapper.mapFromResponseToModel(any()) } returns bookModel
+        coEvery { bookListMapper.mapFromResponseToModel(any(), any()) } returns bookListModel
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessStateWithResources<*>
+        )
         Assert.assertEquals(
-            listOf(bookModel),
-            bookDataSource.loadBooksByAuthorId(1)
+            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessStateWithResources<*>).data,
+            listOf(bookListModel)
+        )
+    }
+
+    @Test
+    fun testGetBooksByAuthorIdSuccessfulAuth() = runTest {
+        val bookListResponseModel =
+            listOf(testModelsResponseGenerator.generateBookListResponseModel())
+        val bookListModel = testModelsGenerator.generateBookListModel(true)
+        coEvery { bookService.getAllBooksByAuthorId(any(), any()) } returns Response.success(
+            bookListResponseModel
+        )
+        coEvery { bookListMapper.mapFromResponseToModel(any(), any()) } returns bookListModel
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessStateWithResources<*>
+        )
+        Assert.assertEquals(
+            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessStateWithResources<*>).data,
+            listOf(bookListModel)
         )
     }
 
     @Test
     fun testGetBooksByAuthorIdFailed() = runTest {
-        val bookModel = testModelsGenerator.generateBookModel()
-        coEvery { bookService.getAllBooksByAuthorId(any()) } returns Response.error(
+        val bookListModel = testModelsGenerator.generateBookListModel(false)
+        coEvery { bookService.getAllBooksByAuthorId(any(), any()) } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
-        coEvery { bookMapper.mapFromResponseToModel(any()) } returns bookModel
-        Assert.assertNull(
-            bookDataSource.loadBooksByAuthorId(1)
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        coEvery { bookListMapper.mapFromResponseToModel(any(), any()) } returns bookListModel
+        Assert.assertTrue(
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.ErrorState
         )
     }
 
@@ -143,7 +197,7 @@ class BookDataSourceTest {
     @Test
     fun getAllTagsFailed() = runTest {
         val tagModel = testModelsGenerator.generateTagModel()
-        coEvery { bookService.getAllGenres() } returns Response.error(
+        coEvery { bookService.getAllTags() } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )

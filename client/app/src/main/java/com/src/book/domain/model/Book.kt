@@ -10,5 +10,7 @@ data class Book(
     val authors: List<AuthorBook>?,
     val reviews: List<Review>?,
     val description: String?,
-    val tags: List<Tag>?
+    val tags: List<Tag>?,
+    val grade: Int?,
+    val isWantToRead: Boolean
 )

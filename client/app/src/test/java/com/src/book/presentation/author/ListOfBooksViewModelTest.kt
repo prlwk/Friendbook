@@ -1,8 +1,10 @@
 package com.src.book.presentation.author
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
+import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.author.list_of_books.ListOfBooksState
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import io.mockk.coEvery
@@ -41,27 +43,24 @@ class ListOfBooksViewModelTest {
     @Test
     fun testLoadBooksByAuthorIdSuccessful() = runTest {
         val booksModel = listOf(testModelsGenerator.generateBookModel())
-        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns booksModel
-        listOfBooksViewModel.loadBooksByAuthorId(1)
+        val state = BasicState.SuccessStateWithResources(booksModel)
+        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns state
+        listOfBooksViewModel.loadBooksByAuthorId(ID)
         Assert.assertTrue(
-            listOfBooksViewModel.liveDataBooks.value is ListOfBooksState.DefaultState
+            listOfBooksViewModel.liveDataBooks.value is ListOfBooksState.SuccessState
         )
         Assert.assertEquals(
-            (listOfBooksViewModel.liveDataBooks.value as ListOfBooksState.DefaultState).books,
+            (listOfBooksViewModel.liveDataBooks.value as ListOfBooksState.SuccessState).books,
             booksModel
         )
     }
 
     @Test
     fun testLoadBooksByAuthorIdError() = runTest {
-        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns null
-        listOfBooksViewModel.loadBooksByAuthorId(1)
+        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns BasicState.ErrorState
+        listOfBooksViewModel.loadBooksByAuthorId(ID)
         Assert.assertTrue(
             listOfBooksViewModel.liveDataBooks.value is ListOfBooksState.ErrorState
-        )
-        Assert.assertEquals(
-            (listOfBooksViewModel.liveDataBooks.value as ListOfBooksState.ErrorState).books,
-            null
         )
     }
 }

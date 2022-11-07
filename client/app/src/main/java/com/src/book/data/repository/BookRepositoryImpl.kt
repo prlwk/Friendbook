@@ -5,11 +5,12 @@ import com.src.book.domain.model.Book
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
 import com.src.book.domain.repository.BookRepository
+import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepository {
-    override suspend fun getBooksByAuthorId(id: Long): List<Book>? = withContext(Dispatchers.IO) {
+    override suspend fun getBooksByAuthorId(id: Long): BasicState = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadBooksByAuthorId(id)
     }
 

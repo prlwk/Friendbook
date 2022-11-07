@@ -12,43 +12,54 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.src.book.R
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentRegistrationUserInformationBinding
-import com.src.book.presentation.MainActivity
+import com.src.book.domain.utils.RegistrationState
 import com.src.book.presentation.registration.LoginActivity
-import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
+import com.src.book.presentation.registration.first_registration.viewModel.RegistrationViewModel
+import com.src.book.presentation.utils.PhotoCompression
+import com.src.book.utils.REGEX_SPACE
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import org.json.JSONObject
+import java.util.*
 
 class RegistrationUserInfoFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationUserInformationBinding
     private lateinit var bindingLoading: FragmentLoadingBinding
-    private lateinit var viewModel: SignInViewModel
+    private lateinit var viewModel: RegistrationViewModel
+    private var photo: Uri? = null
 
     val GALLERY_REQUEST_CODE = 1234
-    var imSemafor: ImageView? = null
 
     private var isClickNext = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         this.binding = FragmentRegistrationUserInformationBinding.inflate(inflater)
-        viewModel = (activity as LoginActivity).getSignInViewModel()
+        viewModel = (activity as LoginActivity).getRegistrationViewModel()
+        bindingLoading = binding.loading
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.tvButtonNext.setOnClickListener {
-            binding.tilNickname.error = "Введите корректный никнейм"
-            binding.tilNickname.errorIconDrawable = null
-            binding.tilEnterName.error = "Введите корректное имя"
-            binding.tilEnterName.errorIconDrawable = null
-        }
+        if (viewModel.imageIsNotEmpty()) {
+            val image = viewModel.liveDataImage.value
+            binding.ivAddFriends.setPadding(0, 0, 0, 0)
+            Glide.with(this)
+                .load(image)
+                .into(binding.ivAddFriends)
 
+        }
         binding.cdAddPicture.setOnClickListener {
             pickFromGallery()
         }
+        viewModel.liveDataRegistration.observe(this.viewLifecycleOwner, this::checkRegistration)
+        viewModel.liveDataIsLoading.observe(this.viewLifecycleOwner, this::checkLoading)
+        setOnClickListenerForNextButton()
+        setOnClickListenerForSkipButton()
     }
 
     private fun pickFromGallery() {
@@ -74,7 +85,6 @@ class RegistrationUserInfoFragment : Fragment() {
 
             CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                 val result = CropImage.getActivityResult(data)
-                println(result.uri)
                 if (resultCode == Activity.RESULT_OK) {
                     result.uri?.let {
                         setImage(it)
@@ -88,7 +98,8 @@ class RegistrationUserInfoFragment : Fragment() {
     }
 
     private fun setImage(uri: Uri) {
-        binding.ivAddFriends.setPadding(0,0,0,0)
+        binding.ivAddFriends.setPadding(0, 0, 0, 0)
+        photo = uri
         Glide.with(this)
             .load(uri)
             .into(binding.ivAddFriends)
@@ -102,6 +113,91 @@ class RegistrationUserInfoFragment : Fragment() {
             .start(requireContext(), this)
     }
 
+    //TODO обработка ошибок
+    private fun checkRegistration(state: RegistrationState) {
+        if (isClickNext) {
+            isClickNext = false
+            when (state) {
+                is RegistrationState.SuccessState -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ConfirmCodeFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
+                is RegistrationState.EmailAlreadyExistsState -> println("такая почта уже существует")
+                is RegistrationState.LoginAlreadyExistsState -> println("такой логин уже существует")
+                is RegistrationState.ErrorState -> println("ошибка сервера")
+                else -> {
+
+                }
+            }
+        }
+    }
+
+    //TODO достать login, name из полей
+    private fun setOnClickListenerForNextButton() {
+        binding.tvButtonNext.setOnClickListener {
+            if (binding.etNickname.text.toString().contains(" ")) {
+                binding.tilNickname.error = "Логин не должен содержать пробелы."
+                binding.tilNickname.errorIconDrawable = null
+            } else {
+                val nameWithoutSpace = binding.etName.text.toString()
+                    .replace(REGEX_SPACE, " ")
+                    .lowercase(Locale.getDefault())
+                    .trim()
+                val loginWithoutSpace =
+                    binding.etNickname.text.toString().replace("\\s".toRegex(), "")
+                if (nameWithoutSpace.isEmpty()) {
+                    binding.tilEnterName.error = "Заполните поле."
+                    binding.tilEnterName.errorIconDrawable = null
+                }
+                if (loginWithoutSpace.isEmpty()) {
+                    binding.tilNickname.error = "Заполните поле."
+                    binding.tilNickname.errorIconDrawable = null
+                }
+                if (binding.etName.text.toString()
+                        .isNotEmpty() && binding.etNickname.text.toString()
+                        .isNotEmpty()
+                ) {
+                    viewModel.setName(binding.etName.text.toString())
+                    viewModel.setLogin(binding.etNickname.text.toString())
+                    if (viewModel.liveDataLogin.value == null || viewModel.liveDataName.value == null || viewModel.liveDataEmail.value == null || viewModel.liveDataPassword.value == null) {
+                        //TODO обработка ошибки (в клиенте что-то не сохранилось)
+                    } else {
+                        val json = JSONObject(
+                            mapOf(
+                                "login" to viewModel.liveDataLogin.value,
+                                "name" to viewModel.liveDataName.value,
+                                "email" to viewModel.liveDataEmail.value,
+                                "password" to viewModel.liveDataPassword.value
+                            )
+                        )
+                        val photoCompression = PhotoCompression()
+                        if (photo != null) {
+                            photo = photoCompression.execute(requireContext(), photo!!)
+                            viewModel.setImage(uri = photo!!)
+                        }
+                        viewModel.registration(json.toString(), null)
+                    }
+                }
+            }
+            isClickNext = true
+        }
+    }
+
+    private fun checkLoading(isLoading: Boolean) {
+        if (isLoading) {
+            bindingLoading.clLoadingPage.visibility = View.VISIBLE
+        } else {
+            bindingLoading.clLoadingPage.visibility = View.GONE
+        }
+    }
+    //TODO перейти в новый фрагмент
+    private fun setOnClickListenerForSkipButton() {
+        binding.tvSkipButton.setOnClickListener {
+            viewModel.loginAsGuest()
+        }
+    }
     companion object {
         private const val TAG = "AppDebug"
     }

@@ -17,5 +17,7 @@ class BookResponse(
     @SerializedName("authors") val authors: List<AuthorBookResponse>?,
     @SerializedName("reviews") val reviews: List<ReviewBookResponse>?,
     @SerializedName("description") val description: String?,
-    @SerializedName("tags") val tags: List<TagResponse>?
+    @SerializedName("tags") val tags: List<TagResponse>?,
+    @SerializedName("grade") val grade: Int?,
+    @SerializedName("isWantToRead") val isWantToRead: Boolean
 )

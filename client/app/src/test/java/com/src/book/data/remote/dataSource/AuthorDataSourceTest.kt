@@ -1,11 +1,13 @@
 package com.src.book.data.remote.dataSource
 
+import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.TestModelsResponseGenerator
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.service.AuthorService
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -13,7 +15,7 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.*
 import retrofit2.Response
 
@@ -50,9 +52,12 @@ class AuthorDataSourceTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
         coEvery { authorService.getAuthorById(any()) } returns Response.success(authorResponseModel)
         coEvery { authorMapper.mapFromResponseToModel(any()) } returns authorModel
+        Assert.assertTrue(
+            authorDataSource.loadAuthorById(ID) is BasicState.SuccessStateWithResources<*>
+        )
         Assert.assertEquals(
-            authorModel,
-            authorDataSource.loadAuthorById(1)
+            (authorDataSource.loadAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            authorModel
         )
     }
 
@@ -60,13 +65,12 @@ class AuthorDataSourceTest {
     fun testGetAuthorByIdFailed() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
         coEvery { authorService.getAuthorById(any()) } returns Response.error(
-            404, ResponseBody.create(
-                "application/json".toMediaTypeOrNull(), "error"
-            )
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { authorMapper.mapFromResponseToModel(any()) } returns authorModel
-        Assert.assertNull(
-            authorDataSource.loadAuthorById(1)
+        Assert.assertTrue(
+            authorDataSource.loadAuthorById(ID) is BasicState.ErrorState
         )
     }
 }

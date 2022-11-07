@@ -14,6 +14,8 @@ import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.book.book.BookMapper
+import com.src.book.data.remote.model.book.bookList.BookListMapper
+import com.src.book.data.remote.model.friend.friend.FriendMapper
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.tag.TagMapper
@@ -29,7 +31,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -145,14 +146,20 @@ class NetworkModule {
     fun provideBookDataSource(
         bookService: BookService,
         bookMapper: BookMapper,
+        bookListMapper: BookListMapper,
         genreMapper: GenreMapper,
-        tagMapper: TagMapper
+        tagMapper: TagMapper,
+        sessionService: SessionService,
+        sessionStorage: SessionStorage
     ): BookDataSource {
         return BookDataSourceImpl(
             bookService = bookService,
             bookMapper = bookMapper,
+            bookListMapper = bookListMapper,
             genreMapper = genreMapper,
-            tagMapper = tagMapper
+            tagMapper = tagMapper,
+            sessionService = sessionService,
+            sessionStorage = sessionStorage
         )
     }
 
@@ -194,11 +201,13 @@ class NetworkModule {
     @Provides
     fun provideFriendDataSource(
         friendService: FriendService,
-        friendRequestMapper: FriendRequestMapper
+        friendRequestMapper: FriendRequestMapper,
+        friendMapper: FriendMapper
     ): FriendDataSource {
         return FriendDataSourceImpl(
             friendService = friendService,
-            friendRequestMapper = friendRequestMapper
+            friendRequestMapper = friendRequestMapper,
+            friendMapper = friendMapper
         )
     }
 }

@@ -4,6 +4,8 @@ import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.author.authorBook.AuthorBookMapper
 import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorMapper
+import com.src.book.data.remote.model.book.bookList.BookListMapper
+import com.src.book.data.remote.model.friend.friend.FriendMapper
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookMapper
@@ -74,9 +76,25 @@ class MapperModule {
     fun provideLoginMapper(): LoginMapper {
         return LoginMapper()
     }
+
     @Singleton
     @Provides
-    fun provideFriendRequestMapper():FriendRequestMapper{
+    fun provideFriendRequestMapper(): FriendRequestMapper {
         return FriendRequestMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookListResponse(
+        authorBookMapper: AuthorBookMapper,
+        genreMapper: GenreMapper
+    ): BookListMapper {
+        return BookListMapper(authorBookMapper = authorBookMapper, genreMapper = genreMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFriendMapper(): FriendMapper {
+        return FriendMapper()
     }
 }

@@ -30,7 +30,7 @@ import com.src.book.utils.*
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
-    private lateinit var bindingShimmer:FragmentAuthorShimmerBinding
+    private lateinit var bindingShimmer: FragmentAuthorShimmerBinding
     private lateinit var viewModel: AuthorViewModel
     private var authorId: Long = 1
 
@@ -39,7 +39,7 @@ class AuthorFragment : Fragment() {
         val args = this.arguments
         //TODO обработка ошибки если автор не получен
         if (args?.getLong(AUTHOR_ID) != null) {
-            authorId = args.getLong(AUTHOR_ID) as Long
+            authorId = args.getLong(AUTHOR_ID)
         } else {
             authorId = 1
         }
@@ -48,7 +48,7 @@ class AuthorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         this.binding = FragmentAuthorBinding.inflate(inflater)
         this.bindingShimmer = binding.layoutShimmer
         viewModel = (activity as MainActivity).getAuthorViewModel()
@@ -74,12 +74,13 @@ class AuthorFragment : Fragment() {
     //TODO обработка ошибки загрузки автора
     private fun setState(state: AuthorState) {
         when (state) {
-            is AuthorState.DefaultState -> state.author?.let { loadData(it) }
+            is AuthorState.SuccessState -> state.author?.let { loadData(it) }
             is AuthorState.ErrorState -> Toast.makeText(
                 requireContext(),
                 "Author loading error",
                 Toast.LENGTH_LONG
             ).show()
+            else -> {}
         }
     }
 

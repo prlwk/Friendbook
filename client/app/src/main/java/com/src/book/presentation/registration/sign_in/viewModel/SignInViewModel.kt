@@ -3,11 +3,15 @@ package com.src.book.presentation.registration.sign_in.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.src.book.domain.usecase.login.LoginAsGuestUseCase
 import com.src.book.domain.usecase.login.SignInUseCase
 import com.src.book.domain.utils.LoginState
 import kotlinx.coroutines.launch
 
-class SignInViewModel(val signInUseCase: SignInUseCase) : ViewModel() {
+class SignInViewModel(
+    val signInUseCase: SignInUseCase,
+    private val loginAsGuestUseCase: LoginAsGuestUseCase
+) : ViewModel() {
     private val _mutableLoginState = MutableLiveData<LoginState>(LoginState.SuccessState)
     private val _mutableLiveDataIsLoading = MutableLiveData<Boolean>(false)
 
@@ -19,6 +23,12 @@ class SignInViewModel(val signInUseCase: SignInUseCase) : ViewModel() {
             _mutableLiveDataIsLoading.value = true
             _mutableLoginState.value = signInUseCase.execute(email, password, isEntryByEmail)
             _mutableLiveDataIsLoading.value = false
+        }
+    }
+
+    fun loginAsGuest() {
+        viewModelScope.launch {
+            loginAsGuestUseCase.execute()
         }
     }
 }

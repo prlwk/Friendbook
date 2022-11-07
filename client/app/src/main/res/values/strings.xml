@@ -85,7 +85,7 @@
     <string name="reviews_read">рецензий</string>
     <string name="want_read">хочу почитать</string>
     <string name="add_friend">Добавить\nв друзья</string>
-    <string name="friends_with_holder">Друзья (%1$s)</string>
+    <string name="friends_with_holder">Друзья</string>
     <string name="name_nickname">Имя, никнейм</string>
     <string name="books_read_2_lines">книг\nпрочитано</string>
     <string name="want_read_2_lines">хочу\nпрочитать</string>
@@ -100,4 +100,5 @@
     <string name="review_book">Оцените книгу</string>
     <string name="write_your_review_here">Напишите свой отзыв здесь!</string>
     <string name="make_review">Оценить</string>
+    <string name="save">Сохранить</string>
 </resources>

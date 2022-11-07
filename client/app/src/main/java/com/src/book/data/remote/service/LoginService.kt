@@ -4,11 +4,15 @@ import com.src.book.data.remote.model.login.emailExists.EmailExistsResponse
 import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.model.login.login.LoginResponse
 import com.src.book.utils.USER_SERVICE_BASE_URL
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface LoginService {
@@ -29,5 +33,23 @@ interface LoginService {
 
     @GET("$USER_SERVICE_BASE_URL/send-code-for-recovery-password")
     suspend fun sendCodeForRecoveryPassword(
-        @Query("email", encoded = true) email: String): Response<Unit>
+        @Query("email", encoded = true) email: String
+    ): Response<Unit>
+
+    @Multipart
+    @POST("$USER_SERVICE_BASE_URL/user/registration")
+    suspend fun signUp(
+        @Part("registerBeanString") data: RequestBody,
+        @Part file: MultipartBody.Part?
+    ): Response<LoginAnswerResponse>
+
+    @GET("$USER_SERVICE_BASE_URL/user/confirm-account")
+    suspend fun checkRecoveryCodeForAccountConfirmations(
+        @Query("confirmationCode") code: String,
+        @Query("email", encoded = true) email: String
+    ): Response<Unit>
+
+    @GET("$USER_SERVICE_BASE_URL/send-code-for-confirmation-account")
+    suspend fun sendCodeForAccountConfirmations(@Query("userId") userId: Long): Response<Unit>
+
 }

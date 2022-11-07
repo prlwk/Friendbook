@@ -87,7 +87,20 @@ class SessionStorageImpl(context: Context) : SessionStorage {
             .putString(EXPIRE_TIME_ACCESS_TOKEN, "")
             .putString(ID, "")
             .putString(EMAIL, "")
+            .putBoolean(IS_ACTIVE, false)
             .apply()
+    }
+
+    override fun getId(): String {
+        return (sharedPreferences.getString(ID, "") ?: "")
+    }
+
+    override fun setIsActive(isActive: Boolean) {
+        sharedPreferences.edit().putBoolean(IS_ACTIVE, isActive).apply()
+    }
+
+    override fun getIsActive(): Boolean {
+        return sharedPreferences.getBoolean(IS_ACTIVE, false)
     }
 
 }

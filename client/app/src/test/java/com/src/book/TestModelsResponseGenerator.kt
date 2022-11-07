@@ -4,6 +4,7 @@ import com.src.book.data.remote.model.author.author.AuthorResponse
 import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import com.src.book.data.remote.model.book.book.BookResponse
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorResponse
+import com.src.book.data.remote.model.book.bookList.BookListResponse
 import com.src.book.data.remote.model.friend.request.FriendRequestResponse
 import com.src.book.data.remote.model.genre.GenreResponse
 import com.src.book.data.remote.model.login.emailExists.EmailExistsResponse
@@ -40,7 +41,21 @@ class TestModelsResponseGenerator {
         authors = listOf(generateAuthorBookResponseModel()),
         reviews = listOf(generateReviewBookResponseModel()),
         description = BOOK_DESCRIPTION,
-        tags = listOf(generateTagResponseModel())
+        tags = listOf(generateTagResponseModel()),
+        isWantToRead = false,
+        grade = RATING.toInt()
+    )
+
+    fun generateBookListResponseModel() = BookListResponse(
+        id = ID,
+        name = BOOK_NAME,
+        rating = RATING,
+        linkCover = null,
+        year = BOOK_YEAR,
+        genres = listOf(generateGenreResponseModel()),
+        authors = listOf(generateAuthorBookResponseModel()),
+        isWantToRead = false,
+        grade = RATING.toInt()
     )
 
     fun generateBookAuthorResponseModel() = BookAuthorResponse(
@@ -93,6 +108,7 @@ class TestModelsResponseGenerator {
     fun generateEmailExistsFalseResponse() = EmailExistsResponse(
         exists = false
     )
+
     fun generateFriendRequestResponse() = FriendRequestResponse(
         id = ID,
         imageUrl = IMAGE_URL,
