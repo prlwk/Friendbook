@@ -210,6 +210,34 @@ public class AuthUserController {
         return new ResponseEntity<>(userBooksWantToReadService.isSavingBook(idBook, user), HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/save-book", method = RequestMethod.GET)
+    public ResponseEntity<?> saveBook(@RequestParam Long idBook, HttpServletRequest request) {
+        ResponseEntity<?> responseEntity = getUserByRequest(request);
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            return responseEntity;
+        }
+        User user = (User) responseEntity.getBody();
+        userBooksWantToReadService.saveBook(idBook, user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/delete-saving-book", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteSavingBook(@RequestParam Long idBook, HttpServletRequest request) {
+        ResponseEntity<?> responseEntity = getUserByRequest(request);
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            return responseEntity;
+        }
+        User user = (User) responseEntity.getBody();
+        try {
+            userBooksWantToReadService.deleteSavingBook(idBook, user);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/check-token", method = RequestMethod.GET)
     public ResponseEntity<?> checkToken(HttpServletRequest request) {
         ResponseEntity<?> responseEntity = getUserByRequest(request);
@@ -253,6 +281,4 @@ public class AuthUserController {
         }
         return null;
     }
-
-
 }

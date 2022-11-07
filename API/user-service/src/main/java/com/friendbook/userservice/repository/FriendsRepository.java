@@ -43,4 +43,9 @@ public interface FriendsRepository extends JpaRepository<Friends, Long> {
             "FROM Friends f " +
             "WHERE f.recipient.id=:id AND f.isAcceptedRequest = false")
     List<UserInRequest> getIncomingRequests(Long id);
+
+    @Query("SELECT count(f) " +
+            "FROM Friends f " +
+            "WHERE f.recipient.id=:id AND f.isAcceptedRequest = false")
+    int getCountIncomingRequests(Long id);
 }
