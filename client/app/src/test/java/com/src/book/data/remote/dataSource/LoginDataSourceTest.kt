@@ -6,9 +6,12 @@ import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
 import com.src.book.data.remote.model.login.login.LoginMapper
 import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
+import com.src.book.data.remote.utils.EMAIL_ALREADY_IN_USE
 import com.src.book.data.remote.utils.INVALID_CODE
+import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.CodeState
 import com.src.book.domain.utils.LoginState
+import com.src.book.domain.utils.RegistrationState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -22,7 +25,7 @@ import org.junit.*
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-class LoginDaraSourceTest {
+class LoginDataSourceTest {
     @get:Rule
     val rule = MockKRule(this)
     private lateinit var testModelsResponseGenerator: TestModelsResponseGenerator
@@ -57,6 +60,7 @@ class LoginDaraSourceTest {
         val loginModel = testModelsGenerator.generateLoginModel()
         coEvery { loginService.signIn(any()) } returns Response.success(loginAnswerResponseModel)
         coEvery { loginMapper.mapFromModelToResponse(any()) } returns loginResponse
+        coEvery { sessionStorage.setIsActive(true) } returns Unit
         coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
         Assert.assertEquals(
             LoginState.SuccessState,
@@ -138,9 +142,12 @@ class LoginDaraSourceTest {
         coEvery { loginService.checkEmailExists(any()) } returns Response.success(
             testModelsResponseGenerator.generateEmailExistsTrueResponse()
         )
+        Assert.assertTrue(
+            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessStateWithResources<*>
+        )
         Assert.assertEquals(
-            true,
-            loginDataSource.checkEmailExists(EMAIL)
+            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            true
         )
     }
 
@@ -149,9 +156,22 @@ class LoginDaraSourceTest {
         coEvery { loginService.checkEmailExists(any()) } returns Response.success(
             testModelsResponseGenerator.generateEmailExistsFalseResponse()
         )
+        Assert.assertTrue(
+            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessStateWithResources<*>
+        )
         Assert.assertEquals(
-            false,
-            loginDataSource.checkEmailExists(EMAIL)
+            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            false
+        )
+    }
+
+    @Test
+    fun testCheckEmailExistsError() = runTest {
+        coEvery { loginService.checkEmailExists(any()) } returns Response.error(
+            404, "error".toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertTrue(
+            loginDataSource.checkEmailExists(EMAIL) is BasicState.ErrorState
         )
     }
 
@@ -161,6 +181,7 @@ class LoginDaraSourceTest {
         coEvery { loginService.checkRecoveryCode(any(), any()) } returns Response.success(
             loginResponse
         )
+        coEvery { sessionStorage.setIsActive(true) } returns Unit
         coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
         Assert.assertEquals(CodeState.SuccessState, loginDataSource.checkRecoveryCode(CODE, EMAIL))
     }
@@ -232,4 +253,139 @@ class LoginDaraSourceTest {
         )
     }
 
+    @Test
+    fun testRegistrationSuccessful() = runTest {
+        val loginAnswerResponseModel = testModelsResponseGenerator.generateLoginAnswerResponse()
+        val loginResponse = testModelsResponseGenerator.generateLoginResponseModel()
+        coEvery { loginService.signUp(any(), any()) } returns Response.success(
+            loginAnswerResponseModel
+        )
+        coEvery { loginMapper.mapFromModelToResponse(any()) } returns loginResponse
+        coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.registration(
+                "data",
+                null
+            ) is RegistrationState.SuccessState
+        )
+    }
+
+    @Test
+    fun testRegistrationLoginAlreadyExistsError() = runTest {
+        val json = JSONObject(
+            mapOf(
+                STATUS to 409,
+                ERROR to "Not Found",
+                MESSAGE to "error"
+            )
+        )
+        val loginResponse = testModelsResponseGenerator.generateLoginResponseModel()
+        coEvery { loginService.signUp(any(), any()) } returns Response.error(
+            409, json.toString().toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { loginMapper.mapFromModelToResponse(any()) } returns loginResponse
+        coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.registration(
+                "data",
+                null
+            ) is RegistrationState.LoginAlreadyExistsState
+        )
+    }
+
+    @Test
+    fun testRegistrationEmailAlreadyExistsError() = runTest {
+        val json = JSONObject(
+            mapOf(
+                STATUS to 409,
+                ERROR to "Not Found",
+                MESSAGE to EMAIL_ALREADY_IN_USE
+            )
+        )
+        val loginResponse = testModelsResponseGenerator.generateLoginResponseModel()
+        coEvery { loginService.signUp(any(), any()) } returns Response.error(
+            409, json.toString().toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { loginMapper.mapFromModelToResponse(any()) } returns loginResponse
+        coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.registration(
+                "data",
+                null
+            ) is RegistrationState.EmailAlreadyExistsState
+        )
+    }
+
+    @Test
+    fun testRegistrationError() = runTest {
+        val loginResponse = testModelsResponseGenerator.generateLoginResponseModel()
+        coEvery { loginService.signUp(any(), any()) } returns Response.error(
+            404, "error".toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { loginMapper.mapFromModelToResponse(any()) } returns loginResponse
+        coEvery { sessionStorage.refresh(any(), any(), any(), any(), any(), any()) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.registration(
+                "data",
+                null
+            ) is RegistrationState.ErrorState
+        )
+    }
+
+    @Test
+    fun testCheckRecoveryCodeForAccountConfirmationsSuccessful() = runTest {
+        coEvery {
+            loginService.checkRecoveryCodeForAccountConfirmations(
+                any(),
+                any()
+            )
+        } returns Response.success(Unit)
+        coEvery { sessionStorage.setIsActive(true) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.checkRecoveryCodeForAccountConfirmations(
+                CODE,
+                EMAIL
+            ) is CodeState.SuccessState
+        )
+    }
+
+    @Test
+    fun testCheckRecoveryCodeForAccountConfirmationsWrongCodeError() = runTest {
+        coEvery {
+            loginService.checkRecoveryCodeForAccountConfirmations(
+                any(),
+                any()
+            )
+        } returns Response.error(
+            404,
+            "error".toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.setIsActive(true) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.checkRecoveryCodeForAccountConfirmations(
+                CODE,
+                EMAIL
+            ) is CodeState.WrongCodeState
+        )
+    }
+
+    @Test
+    fun testCheckRecoveryCodeForAccountConfirmationsError() = runTest {
+        coEvery {
+            loginService.checkRecoveryCodeForAccountConfirmations(
+                any(),
+                any()
+            )
+        } returns Response.error(
+            500,
+            "error".toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.setIsActive(true) } returns Unit
+        Assert.assertTrue(
+            loginDataSource.checkRecoveryCodeForAccountConfirmations(
+                CODE,
+                EMAIL
+            ) is CodeState.ErrorState
+        )
+    }
 }

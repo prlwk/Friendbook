@@ -3,6 +3,7 @@ package com.src.book.data.remote.dataSource
 import com.src.book.*
 import com.src.book.data.remote.dataSource.friend.FriendDataSource
 import com.src.book.data.remote.dataSource.friend.FriendDataSourceImpl
+import com.src.book.data.remote.model.friend.friend.FriendMapper
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.service.FriendService
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
@@ -34,13 +35,17 @@ class FriendDataSourceTest {
     @MockK
     private lateinit var friendRequestMapper: FriendRequestMapper
 
+    @MockK
+    private lateinit var friendMapper: FriendMapper
+
     private lateinit var friendDataSource: FriendDataSource
 
     @Before
     fun setUp() {
         friendDataSource = FriendDataSourceImpl(
             friendService = friendService,
-            friendRequestMapper = friendRequestMapper
+            friendRequestMapper = friendRequestMapper,
+            friendMapper = friendMapper
         )
         testModelsResponseGenerator = TestModelsResponseGenerator()
         testModelsGenerator = TestModelsGenerator()
@@ -244,5 +249,48 @@ class FriendDataSourceTest {
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         Assert.assertTrue(friendDataSource.rejectOutgoingFriendRequest(ID) is BasicState.ErrorState)
+    }
+
+    @Test
+    fun testGetFriendsSuccessful() = runTest {
+        val friendModel = testModelsGenerator.getFriendModel()
+        val response = listOf(testModelsResponseGenerator.getFriendResponse())
+        coEvery { friendService.getFriends() } returns Response.success(response)
+        coEvery { friendMapper.mapFromResponseToModel(any()) } returns friendModel
+        Assert.assertTrue(friendDataSource.getFriends() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertEquals(
+            (friendDataSource.getFriends() as BasicState.SuccessStateWithResources<*>).data,
+            listOf(friendModel)
+        )
+    }
+
+    @Test
+    fun testGetFriendsError() = runTest {
+        val friendModel = testModelsGenerator.getFriendModel()
+        coEvery { friendService.getFriends() } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { friendMapper.mapFromResponseToModel(any()) } returns friendModel
+        Assert.assertTrue(friendDataSource.getFriends() is BasicState.ErrorState)
+    }
+
+    @Test
+    fun testGetIncomingRequestsCountSuccessful() = runTest {
+        coEvery { friendService.getIncomingRequestsCount() } returns Response.success(3)
+        Assert.assertTrue(friendDataSource.getIncomingRequestsCount() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertEquals(
+            (friendDataSource.getIncomingRequestsCount() as BasicState.SuccessStateWithResources<*>).data,
+            3
+        )
+    }
+
+    @Test
+    fun testGetIncomingRequestsCountError() = runTest {
+        coEvery { friendService.getIncomingRequestsCount() } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertTrue(friendDataSource.getIncomingRequestsCount() is BasicState.ErrorState)
     }
 }

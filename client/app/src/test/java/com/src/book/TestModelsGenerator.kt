@@ -40,7 +40,7 @@ class TestModelsGenerator {
         grade = RATING.toInt()
     )
 
-    fun generateBookListModel(isAuth:Boolean) = BookList(
+    fun generateBookListModel(isAuth: Boolean) = BookList(
         id = ID,
         name = BOOK_NAME,
         rating = RATING,
@@ -93,6 +93,16 @@ class TestModelsGenerator {
     fun generateFriendRequestModel() = FriendRequest(
         id = ID,
         imageUrl = IMAGE_URL,
+        login = LOGIN,
+        name = NAME
+    )
+
+    fun getFriendModel() = Friend(
+        id= ID,
+        countWantToReadBooks = 0,
+        countReviews = 0,
+        countRateBooks = 0,
+        image = IMAGE_URL,
         login = LOGIN,
         name = NAME
     )

@@ -1,12 +1,11 @@
 package com.src.book.domain.repository
 
-import com.src.book.LOGIN
 import com.src.book.PASSWORD
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.repository.UserRepositoryImpl
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
-import com.src.book.domain.utils.SendFriendRequestState
+import com.src.book.domain.utils.EditProfileState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -90,5 +89,33 @@ class UserRepositoryTest {
     fun testLogoutError() = runTest {
         coEvery { userDataSource.logout() } returns BasicState.ErrorState
         Assert.assertEquals(BasicState.ErrorState, userRepository.logout())
+    }
+
+    @Test
+    fun testEditProfileSuccessful() = runTest {
+        coEvery { userDataSource.editProfile(any(), any()) } returns EditProfileState.SuccessState
+        Assert.assertTrue(userRepository.editProfile("data", null) is EditProfileState.SuccessState)
+    }
+
+    @Test
+    fun testEditProfileLoginAlreadyExistsError() = runTest {
+        coEvery {
+            userDataSource.editProfile(
+                any(),
+                any()
+            )
+        } returns EditProfileState.LoginAlreadyExistsState
+        Assert.assertTrue(
+            userRepository.editProfile(
+                "data",
+                null
+            ) is EditProfileState.LoginAlreadyExistsState
+        )
+    }
+
+    @Test
+    fun testEditProfileError() = runTest {
+        coEvery { userDataSource.editProfile(any(), any()) } returns EditProfileState.ErrorState
+        Assert.assertTrue(userRepository.editProfile("data", null) is EditProfileState.ErrorState)
     }
 }

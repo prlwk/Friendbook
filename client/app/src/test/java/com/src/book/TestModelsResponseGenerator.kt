@@ -5,6 +5,7 @@ import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import com.src.book.data.remote.model.book.book.BookResponse
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorResponse
 import com.src.book.data.remote.model.book.bookList.BookListResponse
+import com.src.book.data.remote.model.friend.friend.FriendResponse
 import com.src.book.data.remote.model.friend.request.FriendRequestResponse
 import com.src.book.data.remote.model.genre.GenreResponse
 import com.src.book.data.remote.model.login.emailExists.EmailExistsResponse
@@ -109,9 +110,20 @@ class TestModelsResponseGenerator {
         exists = false
     )
 
+    //friend
     fun generateFriendRequestResponse() = FriendRequestResponse(
         id = ID,
         imageUrl = IMAGE_URL,
+        login = LOGIN,
+        name = NAME
+    )
+
+    fun getFriendResponse() = FriendResponse(
+        id = ID,
+        countWantToReadBooks = 0,
+        countReviews = 0,
+        countRateBooks = 0,
+        image = IMAGE_URL,
         login = LOGIN,
         name = NAME
     )

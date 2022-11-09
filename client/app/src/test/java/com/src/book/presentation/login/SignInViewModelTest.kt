@@ -3,6 +3,7 @@ package com.src.book.presentation.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.EMAIL
 import com.src.book.PASSWORD
+import com.src.book.domain.usecase.login.LoginAsGuestUseCase
 import com.src.book.domain.usecase.login.SignInUseCase
 import com.src.book.domain.utils.LoginState
 import com.src.book.presentation.registration.sign_in.viewModel.SignInViewModel
@@ -27,12 +28,17 @@ class SignInViewModelTest {
     private lateinit var signInUseCase: SignInUseCase
     private lateinit var signInViewModel: SignInViewModel
     private val dispatcher = UnconfinedTestDispatcher()
+    private lateinit var loginAsGuestUseCase: LoginAsGuestUseCase
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher = dispatcher)
         signInUseCase = mockk()
-        signInViewModel = SignInViewModel(signInUseCase = signInUseCase)
+        loginAsGuestUseCase = mockk()
+        signInViewModel = SignInViewModel(
+            signInUseCase = signInUseCase,
+            loginAsGuestUseCase = loginAsGuestUseCase
+        )
     }
 
     @After
@@ -59,7 +65,8 @@ class SignInViewModelTest {
     @Test
     fun signInRequestErrorEmailLogin() = runTest {
         coEvery {
-            signInUseCase.execute(any(), any(), any()) } returns LoginState.ErrorEmailLoginState
+            signInUseCase.execute(any(), any(), any())
+        } returns LoginState.ErrorEmailLoginState
         signInViewModel.signInRequest(EMAIL, PASSWORD, true)
         Assert.assertEquals(
             LoginState.ErrorEmailLoginState,

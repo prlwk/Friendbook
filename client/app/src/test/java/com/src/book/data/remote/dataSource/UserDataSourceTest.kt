@@ -6,10 +6,9 @@ import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
-import com.src.book.data.remote.utils.ALREADY_FRIENDS
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
-import com.src.book.domain.utils.SendFriendRequestState
+import com.src.book.domain.utils.EditProfileState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -18,7 +17,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -65,6 +63,7 @@ class UserDataSourceTest {
             )
         } returns Response.success(Unit)
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
         Assert.assertEquals(
             ChangePasswordState.SuccessState,
             userDataSource.changePassword(PASSWORD, PASSWORD)
@@ -78,6 +77,7 @@ class UserDataSourceTest {
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
         Assert.assertEquals(
             ChangePasswordState.ErrorState,
             userDataSource.changePassword(PASSWORD, PASSWORD)
@@ -91,6 +91,7 @@ class UserDataSourceTest {
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
         Assert.assertEquals(
             ChangePasswordState.WrongPasswordState,
             userDataSource.changePassword(PASSWORD, PASSWORD)
@@ -118,6 +119,40 @@ class UserDataSourceTest {
         Assert.assertEquals(
             BasicState.ErrorState,
             userDataSource.logout()
+        )
+    }
+
+    @Test
+    fun testEditProfileSuccessful() = runTest {
+        coEvery { userService.editProfile(any(), any()) } returns Response.success(Unit)
+        Assert.assertTrue(userDataSource.editProfile("data", null) is EditProfileState.SuccessState)
+    }
+
+    @Test
+    fun testEditProfileLoginAlreadyExistsError() = runTest {
+        coEvery { userService.editProfile(any(), any()) } returns Response.error(
+            409, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertTrue(
+            userDataSource.editProfile(
+                "data",
+                null
+            ) is EditProfileState.LoginAlreadyExistsState
+        )
+    }
+
+    @Test
+    fun testEditProfileError() = runTest {
+        coEvery { userService.editProfile(any(), any()) } returns Response.error(
+            500, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        Assert.assertTrue(
+            userDataSource.editProfile(
+                "data",
+                null
+            ) is EditProfileState.ErrorState
         )
     }
 }

@@ -109,7 +109,7 @@ class RegistrationViewModel(
         }
     }
 
-    fun sendRepeatingCodeState() {
+    fun sendRepeatingCode() {
         viewModelScope.launch {
             _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState
             _mutableLiveDataRepeatingCodeState.value =
