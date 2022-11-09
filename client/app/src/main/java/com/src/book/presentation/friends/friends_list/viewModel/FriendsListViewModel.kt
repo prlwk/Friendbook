@@ -5,16 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.src.book.domain.model.Friend
 import com.src.book.domain.usecase.friend.GetFriendsUseCase
+import com.src.book.domain.usecase.friend.GetIncomingRequestsCountUseCase
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.friends.friends_list.FriendsListState
 import kotlinx.coroutines.launch
 
-class FriendsListViewModel(private val getFriendsUseCase: GetFriendsUseCase) : ViewModel() {
+class FriendsListViewModel(
+    private val getFriendsUseCase: GetFriendsUseCase,
+    private val getIncomingRequestsCountUseCase: GetIncomingRequestsCountUseCase
+) : ViewModel() {
     private val _mutableLiveDataFriends =
         MutableLiveData<FriendsListState>(FriendsListState.DefaultState)
     private val _mutableLiveDataIsLoading = MutableLiveData(false)
+    private val _mutableLiveDataIncomingRequestsCount =
+        MutableLiveData<BasicState>(BasicState.DefaultState)
+
     val liveDataFriends get() = _mutableLiveDataFriends
     val liveDataIsLoading get() = _mutableLiveDataIsLoading
+    val liveDataIncomingRequestsCount get() = _mutableLiveDataIncomingRequestsCount
     fun loadFriends() {
         viewModelScope.launch {
             _mutableLiveDataIsLoading.value = true
@@ -27,6 +35,14 @@ class FriendsListViewModel(private val getFriendsUseCase: GetFriendsUseCase) : V
                 _mutableLiveDataFriends.value = FriendsListState.ErrorState
             }
             _mutableLiveDataIsLoading.value = false
+        }
+    }
+
+    fun loadIncomingRequestsCount() {
+        viewModelScope.launch {
+            _mutableLiveDataIncomingRequestsCount.value = BasicState.DefaultState
+            _mutableLiveDataIncomingRequestsCount.value = getIncomingRequestsCountUseCase.execute()
+
         }
     }
 }

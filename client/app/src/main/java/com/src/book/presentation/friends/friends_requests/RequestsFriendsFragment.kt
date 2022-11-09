@@ -73,6 +73,7 @@ class RequestsFriendsFragment : Fragment() {
         setOnClickListenerForAddFriend()
         setTextForIncomingButton(0)
         setTextForSentButton(0)
+        setOnClickListenerForBackButton()
     }
 
     private fun setOnClickListenerForAddFriend() {
@@ -213,5 +214,11 @@ class RequestsFriendsFragment : Fragment() {
         binding.rvOutgoingFriends.adapter?.notifyItemRemoved(position)
         countOutgoingRequests--
         setTextForSentButton(countOutgoingRequests)
+    }
+
+    private fun setOnClickListenerForBackButton() {
+        binding.ivBackButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }

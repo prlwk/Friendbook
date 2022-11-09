@@ -38,4 +38,8 @@ class FriendRepositoryImpl(private val friendDataSource: FriendDataSource) : Fri
     override suspend fun getFriends(): BasicState = withContext(Dispatchers.IO) {
         return@withContext friendDataSource.getFriends()
     }
+
+    override suspend fun getIncomingRequestsCount(): BasicState = withContext(Dispatchers.IO) {
+        return@withContext friendDataSource.getIncomingRequestsCount()
+    }
 }

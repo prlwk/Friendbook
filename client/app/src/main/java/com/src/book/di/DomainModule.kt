@@ -155,4 +155,10 @@ class DomainModule {
     fun provideEditProfileUseCase(userRepository: UserRepository): EditProfileUseCase {
         return EditProfileUseCase(userRepository = userRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetIncomingRequestsComingUseCase(friendRepository: FriendRepository): GetIncomingRequestsCountUseCase {
+        return GetIncomingRequestsCountUseCase(friendRepository = friendRepository)
+    }
 }

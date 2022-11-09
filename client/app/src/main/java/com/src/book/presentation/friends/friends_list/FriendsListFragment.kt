@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentFriendsListBinding
 import com.src.book.domain.model.Friend
+import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.friends.friends_list.adapter.FriendsAdapter
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModel
@@ -45,6 +46,10 @@ class FriendsListFragment : Fragment() {
         viewModel.liveDataIsLoading.observe(
             this.viewLifecycleOwner, this::setView
         )
+        viewModel.liveDataIncomingRequestsCount.observe(
+            this.viewLifecycleOwner, this::checkStateForIncomingRequests
+        )
+        viewModel.loadIncomingRequestsCount()
         viewModel.loadFriends()
         binding.ivAddPicture.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
@@ -125,5 +130,27 @@ class FriendsListFragment : Fragment() {
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         binding.rvFriends.layoutManager = layoutManager
         binding.rvFriends.adapter = adapter
+    }
+
+    //TODO обработать ошибку получения количества реквестов
+    private fun checkStateForIncomingRequests(state: BasicState) {
+        when (state) {
+            is BasicState.SuccessStateWithResources<*> -> {
+                val count = (state.data as Int)
+                if (count == 0) {
+                    binding.tvFriendsRequestsNumber.visibility = View.INVISIBLE
+                } else {
+                    binding.tvFriendsRequestsNumber.visibility = View.VISIBLE
+                    val countString: String = if (count > 9) {
+                        "9+"
+                    } else {
+                        count.toString()
+                    }
+                    binding.tvFriendsRequestsNumber.text = countString
+                }
+            }
+            is BasicState.ErrorState -> {}
+            else -> {}
+        }
     }
 }

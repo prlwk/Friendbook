@@ -28,4 +28,7 @@ interface FriendService {
 
     @GET("$USER_SERVICE_BASE_URL/friends")
     suspend fun getFriends(): Response<List<FriendResponse>>
+
+    @GET("$USER_SERVICE_BASE_URL/count-incoming-requests")
+    suspend fun getIncomingRequestsCount(): Response<Int>
 }

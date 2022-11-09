@@ -87,4 +87,14 @@ class FriendDataSourceImpl(
         }
         return BasicState.ErrorState
     }
+
+    override suspend fun getIncomingRequestsCount(): BasicState {
+        val response = friendService.getIncomingRequestsCount()
+        if (response.isSuccessful) {
+            if (response.body() != null) {
+                return BasicState.SuccessStateWithResources(response.body()!!)
+            }
+        }
+        return BasicState.ErrorState
+    }
 }
