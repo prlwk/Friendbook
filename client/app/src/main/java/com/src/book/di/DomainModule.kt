@@ -4,6 +4,7 @@ import com.src.book.domain.repository.*
 import com.src.book.domain.usecase.author.GetAuthorUseCase
 import com.src.book.domain.usecase.book.GetBookByIdUseCase
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
+import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.usecase.friend.*
 import com.src.book.domain.usecase.search.GetAllGenresUseCase
 import com.src.book.domain.usecase.search.GetAllTagsUseCase
@@ -160,5 +161,11 @@ class DomainModule {
     @Provides
     fun provideGetIncomingRequestsComingUseCase(friendRepository: FriendRepository): GetIncomingRequestsCountUseCase {
         return GetIncomingRequestsCountUseCase(friendRepository = friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSetBookmarkUseCase(bookRepository: BookRepository): SetBookmarkUseCase {
+        return SetBookmarkUseCase(bookRepository = bookRepository)
     }
 }

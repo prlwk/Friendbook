@@ -50,7 +50,7 @@ class FriendsListViewModelTest {
 
     @Test
     fun testGetFriendsSuccessful() = runTest {
-        val friendsModel = listOf(testModelsGenerator.getFriendModel())
+        val friendsModel = listOf(testModelsGenerator.generateFriendModel())
         coEvery { getFriendsUseCase.execute() } returns BasicState.SuccessStateWithResources(
             friendsModel
         )

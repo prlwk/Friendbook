@@ -38,7 +38,7 @@ class GetFriendsUseCaseTest {
 
     @Test
     fun testGetFriendsSuccessful() = runTest {
-        val friendsModel = listOf(testModelsGenerator.getFriendModel())
+        val friendsModel = listOf(testModelsGenerator.generateFriendModel())
         coEvery { friendRepository.getFriends() } returns BasicState.SuccessStateWithResources(
             friendsModel
         )

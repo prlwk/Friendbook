@@ -253,8 +253,8 @@ class FriendDataSourceTest {
 
     @Test
     fun testGetFriendsSuccessful() = runTest {
-        val friendModel = testModelsGenerator.getFriendModel()
-        val response = listOf(testModelsResponseGenerator.getFriendResponse())
+        val friendModel = testModelsGenerator.generateFriendModel()
+        val response = listOf(testModelsResponseGenerator.generateFriendResponse())
         coEvery { friendService.getFriends() } returns Response.success(response)
         coEvery { friendMapper.mapFromResponseToModel(any()) } returns friendModel
         Assert.assertTrue(friendDataSource.getFriends() is BasicState.SuccessStateWithResources<*>)
@@ -266,7 +266,7 @@ class FriendDataSourceTest {
 
     @Test
     fun testGetFriendsError() = runTest {
-        val friendModel = testModelsGenerator.getFriendModel()
+        val friendModel = testModelsGenerator.generateFriendModel()
         coEvery { friendService.getFriends() } returns Response.error(
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())

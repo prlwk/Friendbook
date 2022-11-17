@@ -1,5 +1,6 @@
 package com.src.book.presentation.author.list_of_books
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
 import com.src.book.domain.model.BookList
+import com.src.book.domain.utils.BookmarkState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
@@ -33,6 +36,7 @@ class ListOfBooksFragment : Fragment() {
     private lateinit var viewModel: ListOfBooksViewModel
     private var authorId: Long = 0
     private var title: String = ""
+    private lateinit var bookList: ArrayList<BookList>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +64,9 @@ class ListOfBooksFragment : Fragment() {
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+        viewModel.liveDataSetBookmarkState.observe(
+            this.viewLifecycleOwner, this::checkSetBookmarkState
+        )
     }
 
     //TODO обработка ошибки загрузки книг
@@ -106,7 +113,7 @@ class ListOfBooksFragment : Fragment() {
     }
 
     private fun showDialog(book: BookList) {
-        val dialog = BookDialog(requireContext(), book)
+        val dialog = BookDialog(requireContext(), book) { item -> onClickBookmark(item) }
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.book_dialog)
         dialog.show()
@@ -122,9 +129,13 @@ class ListOfBooksFragment : Fragment() {
     }
 
     private fun setAdapterForRecyclerView(books: List<BookList>) {
+        bookList = ArrayList(books)
         val listOfBooksAdapter =
-            ListOfBooksAdapter({ item -> onClickMore(item) }, { item -> onClickBook(item) })
-        listOfBooksAdapter.submitList(books)
+            ListOfBooksAdapter(
+                { item -> onClickMore(item) },
+                { item -> onClickBook(item) },
+                { item -> onClickBookmark(item) })
+        listOfBooksAdapter.submitList(bookList)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         binding.rvBooks.layoutManager = layoutManager
         binding.rvBooks.adapter = listOfBooksAdapter
@@ -145,6 +156,19 @@ class ListOfBooksFragment : Fragment() {
             .commit()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onClickBookmark(book: BookList) {
+        viewModel.setBookmark(book.id, book.isWantToRead)
+        if (book.isAuth) {
+            for (item in bookList) {
+                if (item.id == book.id) {
+                    item.isWantToRead = !book.isWantToRead
+                }
+            }
+            binding.rvBooks.adapter?.notifyDataSetChanged()
+        }
+    }
+
     private fun setView(isLoading: Boolean) {
         if (isLoading) {
             binding.rvBooks.visibility = View.GONE
@@ -153,6 +177,20 @@ class ListOfBooksFragment : Fragment() {
             binding.rvBooks.visibility = View.VISIBLE
             binding.slBook.stopShimmer()
             binding.slBook.visibility = View.GONE
+        }
+    }
+
+    private fun checkSetBookmarkState(state: BookmarkState) {
+        when (state) {
+            is BookmarkState.ErrorState -> {
+                //TODO ошибка сервера
+            }
+            is BookmarkState.NotAuthorizedState -> {
+                //TODO человек не авторизован
+                Log.d("listOfBookFragment", "не авторизован")
+            }
+            else -> {}
+
         }
     }
 }

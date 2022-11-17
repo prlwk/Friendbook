@@ -10,6 +10,7 @@ import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.domain.model.*
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.BookmarkState
 import com.src.book.utils.TOKEN_TYPE
 
 class BookDataSourceImpl(
@@ -22,38 +23,7 @@ class BookDataSourceImpl(
     private val sessionStorage: SessionStorage
 ) : BookDataSource {
     override suspend fun loadBooksByAuthorId(id: Long): BasicState {
-        val token: String?
-        println(sessionStorage.accessTokenIsValid() && sessionStorage.refreshTokenIsValid())
-        if (sessionStorage.getAccessToken().isEmpty()) {
-            token = null
-        } else {
-            if (!sessionStorage.accessTokenIsValid()) {
-                val needToRefreshToken = !sessionStorage.refreshTokenIsValid()
-                val sessionResponse = sessionService.refreshTokens(
-                    RefreshTokenResponse(
-                        generateRefreshToken = needToRefreshToken,
-                        email = sessionStorage.getEmail(),
-                        accessToken = sessionStorage.getAccessToken(),
-                        refreshToken = sessionStorage.getRefreshToken()
-                    )
-                ).execute().body()
-                sessionResponse?.let {
-                    sessionStorage.refreshAccessToken(
-                        sessionResponse.accessToken,
-                        it.expireTimeAccessToken
-                    )
-                    sessionResponse.refreshToken?.let { it1 ->
-                        sessionResponse.expireTimeRefreshToken?.let { it2 ->
-                            sessionStorage.refreshRefreshToken(
-                                it1,
-                                it2
-                            )
-                        }
-                    }
-                }
-            }
-            token = "$TOKEN_TYPE ${sessionStorage.getAccessToken()}"
-        }
+        val token = getToken()
         val booksResponse = bookService.getAllBooksByAuthorId(id, token)
         if (booksResponse.isSuccessful) {
             val isAuth = token != null
@@ -86,5 +56,64 @@ class BookDataSourceImpl(
             return tagsResponse.body()?.map { tagMapper.mapFromResponseToModel(it) }
         }
         return null
+    }
+
+    override suspend fun removeBookmark(bookId: Long): BookmarkState {
+        val token = getToken()
+        if (token == null) {
+            return BookmarkState.NotAuthorizedState
+        } else {
+            val response = bookService.removeBookmark(token, bookId)
+            if (response.isSuccessful) {
+                return BookmarkState.SuccessState
+            }
+            return BookmarkState.ErrorState
+        }
+    }
+
+    override suspend fun addBookmark(bookId: Long): BookmarkState {
+        val token = getToken()
+        if (token == null) {
+            return BookmarkState.NotAuthorizedState
+        } else {
+            val response = bookService.addBookmark(token, bookId)
+            if (response.isSuccessful) {
+                return BookmarkState.SuccessState
+            }
+            return BookmarkState.ErrorState
+        }
+    }
+
+    private fun getToken(): String? {
+        if (sessionStorage.getAccessToken().isEmpty()) {
+            return null
+        } else {
+            if (!sessionStorage.accessTokenIsValid()) {
+                val needToRefreshToken = !sessionStorage.refreshTokenIsValid()
+                val sessionResponse = sessionService.refreshTokens(
+                    RefreshTokenResponse(
+                        generateRefreshToken = needToRefreshToken,
+                        email = sessionStorage.getEmail(),
+                        accessToken = sessionStorage.getAccessToken(),
+                        refreshToken = sessionStorage.getRefreshToken()
+                    )
+                ).execute().body()
+                sessionResponse?.let {
+                    sessionStorage.refreshAccessToken(
+                        sessionResponse.accessToken,
+                        it.expireTimeAccessToken
+                    )
+                    sessionResponse.refreshToken?.let { it1 ->
+                        sessionResponse.expireTimeRefreshToken?.let { it2 ->
+                            sessionStorage.refreshRefreshToken(
+                                it1,
+                                it2
+                            )
+                        }
+                    }
+                }
+            }
+            return "$TOKEN_TYPE ${sessionStorage.getAccessToken()}"
+        }
     }
 }

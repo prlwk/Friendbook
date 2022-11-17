@@ -9,6 +9,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface BookService {
     @GET("${BOOK_SERVICE_BASE_URL}/book/by-author-id/{id}")
@@ -25,4 +26,16 @@ interface BookService {
 
     @GET("${BOOK_SERVICE_BASE_URL}/tag/all")
     suspend fun getAllTags(): Response<List<TagResponse>>
+
+    @GET("${BOOK_SERVICE_BASE_URL}/book/delete-saving-book")
+    suspend fun removeBookmark(
+        @Header("Authorization") token: String,
+        @Query("idBook") idBook: Long
+    ): Response<Unit>
+
+    @GET("${BOOK_SERVICE_BASE_URL}/book/save-book")
+    suspend fun addBookmark(
+        @Header("Authorization") token: String,
+        @Query("idBook") idBook: Long
+    ): Response<Unit>
 }

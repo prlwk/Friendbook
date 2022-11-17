@@ -9,6 +9,6 @@ data class BookList(
     val year: String,
     val authors: List<AuthorBook>?,
     val grade: Int?,
-    val isWantToRead: Boolean,
+    var isWantToRead: Boolean,
     val isAuth:Boolean
 )

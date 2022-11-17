@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
+import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.author.list_of_books.ListOfBooksState
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
@@ -23,6 +24,7 @@ class ListOfBooksViewModelTest {
     val rule = InstantTaskExecutorRule()
     private lateinit var listOfBooksViewModel: ListOfBooksViewModel
     private lateinit var getBooksByAuthorIdUseCase: GetBooksByAuthorIdUseCase
+    private lateinit var setBookmarkUseCase: SetBookmarkUseCase
     private val dispatcher = UnconfinedTestDispatcher()
     private lateinit var testModelsGenerator: TestModelsGenerator
 
@@ -30,8 +32,12 @@ class ListOfBooksViewModelTest {
     fun setUp() {
         Dispatchers.setMain(dispatcher = dispatcher)
         getBooksByAuthorIdUseCase = mockk()
+        setBookmarkUseCase = mockk()
         listOfBooksViewModel =
-            ListOfBooksViewModel(getBooksByAuthorIdUseCase = getBooksByAuthorIdUseCase)
+            ListOfBooksViewModel(
+                getBooksByAuthorIdUseCase = getBooksByAuthorIdUseCase,
+                setBookmarkUseCase = setBookmarkUseCase
+            )
         testModelsGenerator = TestModelsGenerator()
     }
 

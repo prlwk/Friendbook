@@ -14,8 +14,15 @@ import com.src.book.R
 import com.src.book.domain.model.BookList
 
 //TODO вызвать окно "чтобы оценить, нужно зарегестрироваться, когда человек не авторизирован
-//TODO повесить onCLickListener на буду читать и оценить
-class BookDialog(context: Context, private val book: BookList) : Dialog(context) {
+//TODO повесить onCLickListener на оценить
+class BookDialog(
+    context: Context,
+    private val book: BookList,
+    private val onCLickBookmark: (it: BookList) -> Unit
+) : Dialog(context) {
+    private var bookGrateVisible =false
+    private var bookBookmarkVisible =false
+
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,27 +38,8 @@ class BookDialog(context: Context, private val book: BookList) : Dialog(context)
             .into(ivBook)
         tvBookName.text = book.name
         if (book.isAuth) {
-            var bookGrateVisible = true
-            var bookBookmarkVisible = true
-            if (book.grade != null) {
-                clRating.visibility = View.GONE
-                bookGrateVisible = false
-            }
-            if (book.isWantToRead) {
-                clBookmark.visibility = View.GONE
-                bookBookmarkVisible = false
-            }
-            if (bookBookmarkVisible && !bookGrateVisible) {
-                clBookmark.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.transparent
-                    )
-                )
-            } else {
-                clBookmark.background =
-                    ContextCompat.getDrawable(context, R.drawable.book_dialog_item_background)
-            }
+            bookGrateVisible = book.grade != null
+            bookBookmarkVisible = book.isWantToRead
         }
         if (book.authors != null && book.authors.isNotEmpty()) {
             tvBookAuthor.text = book.authors.joinToString(", ") { it.name }
@@ -59,5 +47,32 @@ class BookDialog(context: Context, private val book: BookList) : Dialog(context)
             tvBookAuthor.visibility = View.GONE
         }
         tvBookYear.text = book.year
+        setColorForBookmark(findViewById(R.id.iv_bookmark))
+        clBookmark.setOnClickListener {
+            bookBookmarkVisible = !bookBookmarkVisible
+            if(book.isAuth) {
+                setColorForBookmark(findViewById(R.id.iv_bookmark))
+            }
+            onCLickBookmark(book)
+        }
+    }
+
+
+    private fun setColorForBookmark(ivBookmark: ImageView) {
+        if (bookBookmarkVisible) {
+            ivBookmark.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.basic_color
+                )
+            )
+        } else {
+            ivBookmark.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.color_accent
+                )
+            )
+        }
     }
 }

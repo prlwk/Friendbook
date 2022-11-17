@@ -6,6 +6,7 @@ import com.src.book.domain.model.user.Login
 import com.src.book.utils.AUTHOR_SERVICE_BASE_URL
 import com.src.book.utils.BASE_URL
 import com.src.book.utils.BOOK_SERVICE_BASE_URL
+import com.src.book.utils.USER_SERVICE_BASE_URL
 
 class TestModelsGenerator {
     //author
@@ -97,12 +98,12 @@ class TestModelsGenerator {
         name = NAME
     )
 
-    fun getFriendModel() = Friend(
+    fun generateFriendModel() = Friend(
         id= ID,
         countWantToReadBooks = 0,
         countReviews = 0,
         countRateBooks = 0,
-        image = IMAGE_URL,
+        image = "$BASE_URL${USER_SERVICE_BASE_URL}url",
         login = LOGIN,
         name = NAME
     )

@@ -5,6 +5,7 @@ import com.src.book.TestModelsGenerator
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.repository.BookRepositoryImpl
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.BookmarkState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -84,5 +85,41 @@ class BookRepositoryTest {
             tagsModel,
             bookRepository.getAllTags()
         )
+    }
+
+    @Test
+    fun testRemoveBookmarkSuccessful() = runTest {
+        coEvery { bookDataSource.removeBookmark(any()) } returns BookmarkState.SuccessState
+        Assert.assertTrue(bookDataSource.removeBookmark(ID) is BookmarkState.SuccessState)
+    }
+
+    @Test
+    fun testRemoveBookmarkError() = runTest {
+        coEvery { bookDataSource.removeBookmark(any()) } returns BookmarkState.ErrorState
+        Assert.assertTrue(bookDataSource.removeBookmark(ID) is BookmarkState.ErrorState)
+    }
+
+    @Test
+    fun testRemoveBookmarkNOtAuthorizedError() = runTest {
+        coEvery { bookDataSource.addBookmark(any()) } returns BookmarkState.NotAuthorizedState
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.NotAuthorizedState)
+    }
+
+    @Test
+    fun testAddBookmarkSuccessful() = runTest {
+        coEvery { bookDataSource.addBookmark(any()) } returns BookmarkState.SuccessState
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.SuccessState)
+    }
+
+    @Test
+    fun testAddBookmarkError() = runTest {
+        coEvery { bookDataSource.addBookmark(any()) } returns BookmarkState.ErrorState
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.ErrorState)
+    }
+
+    @Test
+    fun testAddBookmarkNOtAuthorizedError() = runTest {
+        coEvery { bookDataSource.addBookmark(any()) } returns BookmarkState.NotAuthorizedState
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.NotAuthorizedState)
     }
 }

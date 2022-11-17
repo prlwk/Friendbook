@@ -118,7 +118,7 @@ class TestModelsResponseGenerator {
         name = NAME
     )
 
-    fun getFriendResponse() = FriendResponse(
+    fun generateFriendResponse() = FriendResponse(
         id = ID,
         countWantToReadBooks = 0,
         countReviews = 0,

@@ -1,6 +1,7 @@
 package com.src.book.presentation.author.list_of_books.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,8 @@ import com.src.book.presentation.utils.RatingColor
 //TODO Если нет рейтинга что делать
 class ListOfBooksAdapter(
     private val onClickMore: (it: BookList) -> Unit,
-    private val onClickBook: (it: BookList) -> Unit
+    private val onClickBook: (it: BookList) -> Unit,
+    private val onCLickBookmark: (it: BookList) -> Unit
 ) :
     ListAdapter<BookList, ListOfBooksAdapter.DataViewHolder>(BookDiffCallback()) {
     private lateinit var binding: ViewHolderBookBinding
@@ -27,7 +29,8 @@ class ListOfBooksAdapter(
         @SuppressLint("SetTextI18n")
         fun onBind(
             book: BookList, onClickMore: (it: BookList) -> Unit,
-            onClickBook: (it: BookList) -> Unit
+            onClickBook: (it: BookList) -> Unit,
+            onCLickBookmark: (it: BookList) -> Unit
         ) {
             Glide.with(context)
                 .load(book.linkCover)
@@ -51,6 +54,13 @@ class ListOfBooksAdapter(
             itemView.setOnClickListener {
                 onClickBook(book)
             }
+            binding.ivBookmark.setOnClickListener {
+                onCLickBookmark(book)
+                if(book.isAuth) {
+                    setColorForBookMark(book, context)
+                }
+            }
+            setColorForBookMark(book, context)
             if (book.isAuth) {
                 if (book.grade != null) {
                     binding.tvRating.text = book.grade.toString()
@@ -61,25 +71,27 @@ class ListOfBooksAdapter(
                 } else {
                     binding.userRating.visibility = View.GONE
                 }
-                if (book.isWantToRead) {
-                    binding.ivBookmark.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.basic_color
-                        )
-                    )
-                } else {
-                    binding.ivBookmark.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.icon_nav_not_selected
-                        )
-                    )
-                }
 
             } else {
                 binding.userRating.visibility = View.GONE
-                binding.ivBookmark.visibility = View.GONE
+            }
+        }
+
+        private fun setColorForBookMark(book: BookList, context: Context) {
+            if (book.isWantToRead) {
+                binding.ivBookmark.setColorFilter(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.basic_color
+                    )
+                )
+            } else {
+                binding.ivBookmark.setColorFilter(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.icon_nav_not_selected
+                    )
+                )
             }
         }
 
@@ -97,7 +109,7 @@ class ListOfBooksAdapter(
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
-        holder.onBind(item, onClickMore, onClickBook)
+        holder.onBind(item, onClickMore, onClickBook, onCLickBookmark)
     }
 }
 

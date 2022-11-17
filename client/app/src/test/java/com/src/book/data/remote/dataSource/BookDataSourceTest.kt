@@ -14,6 +14,7 @@ import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.BookmarkState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -205,5 +206,71 @@ class BookDataSourceTest {
         Assert.assertNull(
             bookDataSource.loadAllTags()
         )
+    }
+
+    @Test
+    fun testRemoveBookmarkSuccessful() = runTest {
+        coEvery { bookService.removeBookmark(any(), any()) } returns Response.success(Unit)
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(bookDataSource.removeBookmark(ID) is BookmarkState.SuccessState)
+    }
+
+    @Test
+    fun testRemoveBookmarkError() = runTest {
+        coEvery { bookService.removeBookmark(any(), any()) } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(bookDataSource.removeBookmark(ID) is BookmarkState.ErrorState)
+    }
+
+    @Test
+    fun testRemoveBookmarkNotAuthorizedError() = runTest {
+        coEvery { bookService.removeBookmark(any(), any()) } returns Response.error(
+            403, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ""
+        Assert.assertTrue(bookDataSource.removeBookmark(ID) is BookmarkState.NotAuthorizedState)
+    }
+
+    @Test
+    fun testAddBookmarkSuccessful() = runTest {
+        coEvery { bookService.addBookmark(any(), any()) } returns Response.success(Unit)
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.SuccessState)
+    }
+
+    @Test
+    fun testAddBookmarkError() = runTest {
+        coEvery { bookService.addBookmark(any(), any()) } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.ErrorState)
+    }
+
+    @Test
+    fun testAddBookmarkNotAuthorizedError() = runTest {
+        coEvery { bookService.addBookmark(any(), any()) } returns Response.error(
+            403, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ""
+        Assert.assertTrue(bookDataSource.addBookmark(ID) is BookmarkState.NotAuthorizedState)
     }
 }
