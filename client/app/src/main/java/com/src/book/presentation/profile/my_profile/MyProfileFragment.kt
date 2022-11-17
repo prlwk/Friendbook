@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.FragmentMyProfileBinding
 import com.src.book.domain.model.BookList
@@ -107,6 +108,8 @@ class MyProfileFragment : Fragment() {
         Glide.with(requireContext())
             .load(userProfile.image)
             .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
             .into(binding.ivUserPhoto)
         binding.tvUserName.text = userProfile.name
         binding.userNickname.text = userProfile.login

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.databinding.FragmentEditProfileBinding
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.domain.utils.EditProfileState
@@ -76,6 +77,9 @@ class EditMyProfileFragment : Fragment() {
         if (image != null) {
             Glide.with(requireContext())
                 .load(image)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.ivPicture)
         }
     }
