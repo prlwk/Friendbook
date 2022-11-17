@@ -16,7 +16,7 @@ public interface UserBooksWantToReadRepository extends JpaRepository<UserBooksWa
     @Query("SELECT count(ubw)>0 FROM UserBooksWantToRead ubw WHERE ubw.userId=:userId AND ubw.book.id=:bookId AND ubw.del=false")
     boolean getSavingBookByBookIdAndUserId(Long bookId, Long userId);
 
-    Optional<UserBooksWantToRead> getUserBooksWantToReadByBookAndUserId(Book book, Long userId);
+    Optional<UserBooksWantToRead> getUserBooksWantToReadByBookAndUserIdAndDel(Book book, Long userId, Boolean del);
 
     @Query("SELECT ubw.book.id FROM UserBooksWantToRead ubw WHERE ubw.userId=:userId AND ubw.del=false")
     List<Long> getSavingBooksIdByUserId(Long userId);

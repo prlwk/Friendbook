@@ -124,13 +124,15 @@ public class AuthUserController {
         try {
             if (file != null) {
                 String oldLink = user.getLinkPhoto();
-                Scanner sc = new Scanner(oldLink);
-                sc.useDelimiter("\\.");
-                if (sc.hasNextInt()) {
-                    sc.nextInt();
-                    photoVersion = sc.nextInt();
+                if (oldLink != null) {
+                    Scanner sc = new Scanner(oldLink);
+                    sc.useDelimiter("\\.");
+                    if (sc.hasNextInt()) {
+                        sc.nextInt();
+                        photoVersion = sc.nextInt();
+                    }
+                    photoVersion++;
                 }
-                photoVersion++;
                 String path = new File("").getAbsolutePath();
                 File newFile = new File(path + user.getId() + "." + photoVersion + ".jpg");
                 file.transferTo(newFile);
