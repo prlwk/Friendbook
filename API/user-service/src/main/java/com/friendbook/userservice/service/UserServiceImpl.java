@@ -1,24 +1,13 @@
 package com.friendbook.userservice.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.DTO.RegisterBean;
@@ -26,6 +15,8 @@ import com.friendbook.userservice.DTO.UserPageWithoutEmail;
 import com.friendbook.userservice.DTO.UserProfile;
 import com.friendbook.userservice.model.User;
 import com.friendbook.userservice.repository.UserRepository;
+import com.friendbook.userservice.service.client.BookRestTemplateClient;
+import com.friendbook.userservice.service.client.ReviewRestTemplateClient;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +26,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public BookRestTemplateClient bookRestTemplateClient;
+
+    @Autowired
+    public ReviewRestTemplateClient reviewRestTemplateClient;
+
+    @Autowired
+    private FriendsService friendsService;
 
     @Override
     public User registerUser(RegisterBean register) {
@@ -141,6 +141,10 @@ public class UserServiceImpl implements UserService {
     public UserProfile getInfoForProfile(User user) {
         UserProfile userProfile = new UserProfile(user);
         userProfile.setImage("/user/image?id=" + user.getId());
+        userProfile.setRatedBooks(bookRestTemplateClient.getRatedBooks(user.getId()));
+        userProfile.setReviews(reviewRestTemplateClient.getReviews(user.getId()));
+        userProfile.setSavingBooks(bookRestTemplateClient.getSavingBooks(user.getId()));
+        userProfile.setCountFriends(friendsService.getFriends(user).size());
         return userProfile;
     }
 
@@ -148,26 +152,10 @@ public class UserServiceImpl implements UserService {
     public UserPageWithoutEmail getInfoForUserPageWithoutEmail(User user) {
         UserPageWithoutEmail userPageWithoutEmail = new UserPageWithoutEmail(user);
         userPageWithoutEmail.setImage("/user/image?id=" + user.getId());
+        userPageWithoutEmail.setRatedBooks(bookRestTemplateClient.getRatedBooks(user.getId()));
+        userPageWithoutEmail.setReviews(reviewRestTemplateClient.getReviews(user.getId()));
+        userPageWithoutEmail.setSavingBooks(bookRestTemplateClient.getSavingBooks(user.getId()));
+        userPageWithoutEmail.setCountFriends(friendsService.getFriends(user).size());
         return userPageWithoutEmail;
-    }
-
-    @Override
-    public MultipartFile getImageForUser(Long id) {
-        try {
-            User user = getUserById(id);
-            if (user.getLinkPhoto() == null) {
-                return null;
-            }
-            String path = new File("").getAbsolutePath();
-            File file = new File(path + user.getLinkPhoto());
-            FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false,
-                    file.getName(), (int) file.length(), file.getParentFile());
-            InputStream input = new FileInputStream(file);
-            OutputStream os = fileItem.getOutputStream();
-            IOUtils.copy(input, os);
-            return new CommonsMultipartFile(fileItem);
-        } catch (IOException e) {
-            return null;
-        }
     }
 }

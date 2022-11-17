@@ -14,15 +14,13 @@ import com.friendbook.userservice.model.Friends;
 @Repository
 public interface FriendsRepository extends JpaRepository<Friends, Long> {
     @Query("SELECT new com.friendbook.userservice.DTO.UserForFriends(f.recipient.id," +
-            " f.recipient.name, f.recipient.login, size(f.recipient.booksRate), size(f.recipient.review)," +
-            " size(f.recipient.booksWantToRead)) " +
+            " f.recipient.name, f.recipient.login) " +
             "FROM Friends f " +
             "WHERE f.sender.id=:id AND f.isAcceptedRequest = true ")
     List<UserForFriends> getFriendsWhereUserSender(Long id);
 
     @Query("SELECT new com.friendbook.userservice.DTO.UserForFriends(f.sender.id," +
-            " f.sender.name, f.sender.login, size(f.sender.booksRate), size(f.sender.review)," +
-            " size(f.sender.booksWantToRead)) " +
+            " f.sender.name, f.sender.login) " +
             "FROM Friends f " +
             "WHERE f.recipient.id=:id AND f.isAcceptedRequest = true")
     List<UserForFriends> getFriendsWhereUserRecipient(Long id);

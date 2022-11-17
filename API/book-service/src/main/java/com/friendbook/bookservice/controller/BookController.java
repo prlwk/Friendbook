@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -28,11 +29,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.friendbook.bookservice.DTO.AuthorForBook;
+import com.friendbook.bookservice.DTO.BookForSearch;
 import com.friendbook.bookservice.model.Book;
 import com.friendbook.bookservice.service.BookService;
+import com.friendbook.bookservice.service.UserBooksGradeService;
+import com.friendbook.bookservice.service.UserBooksWantToReadService;
 import com.friendbook.bookservice.service.client.AuthorRestTemplateClient;
+import com.friendbook.bookservice.service.client.ReviewRestTemplateClient;
 import com.friendbook.bookservice.service.client.UserRestTemplateClient;
 import com.friendbook.bookservice.utils.AppError;
 import com.friendbook.bookservice.utils.Sort;
@@ -48,7 +54,16 @@ public class BookController {
     private AuthorRestTemplateClient authorRestTemplateClient;
 
     @Autowired
+    private ReviewRestTemplateClient reviewRestTemplateClient;
+
+    @Autowired
     private UserRestTemplateClient userRestTemplateClient;
+
+    @Autowired
+    private UserBooksGradeService userBooksGradeService;
+
+    @Autowired
+    private UserBooksWantToReadService userBooksWantToReadService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBook(@PathVariable Long id) {
@@ -74,12 +89,21 @@ public class BookController {
 
     @GetMapping("/by-author-id/{id}")
     public ResponseEntity<?> getBooksByAuthorId(@PathVariable Long id, HttpServletRequest request) {
-        boolean isAuthUser = false;
-        if (userRestTemplateClient.checkToken(request)) {
-            isAuthUser = true;
+        Long userId = (long) -1;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden ignored) {
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
         }
         try {
-            return new ResponseEntity<>(bookService.getBooksByAuthorId(id, isAuthUser, request), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.getBooksByAuthorId(id, userId), HttpStatus.OK);
         } catch (EntityNotFoundException entityNotFoundException) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
@@ -88,7 +112,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> getBooksByAuthorId(
+    public ResponseEntity<?> getBooksBySearch(
             @RequestParam int numberPage,
             @RequestParam int sizePage,
             @RequestParam(required = false) String word,
@@ -178,6 +202,213 @@ public class BookController {
             }
         } catch (IOException | URISyntaxException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/set-grade-and-review", method = RequestMethod.GET)
+    public ResponseEntity<?> setGrade(@RequestParam(required = false) Integer grade, @RequestParam Long idBook, @RequestParam(required = false) String review, HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.FORBIDDEN.value(),
+                            "Only authorized user can set grade"), HttpStatus.FORBIDDEN);
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        }
+        Book book;
+        try {
+            book = bookService.getBookById(idBook);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "Book with id " + idBook + " does not exist."), HttpStatus.NOT_FOUND);
+        }
+        if (grade != null && (grade > 10 || grade < 1)) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.BAD_REQUEST.value(),
+                            "Grade must be more between 1 and 10"), HttpStatus.BAD_REQUEST);
+        }
+        try {
+            int gradeByBookAndUserId = userBooksGradeService.getGradeByBookIdAndUserId(idBook, userId);
+            bookService.updateCountMarksAndSumMarks(book, -1 * gradeByBookAndUserId);
+        } catch (EntityNotFoundException ignored) {
+        }
+        userBooksGradeService.setGrade(book, grade, userId);
+        try {
+            if (grade != null) {
+                bookService.updateCountMarksAndSumMarks(book, grade);
+                if (review != null) {
+                    reviewRestTemplateClient.setReview(review, grade, idBook, request);
+                } else {
+                    reviewRestTemplateClient.deleteReview(idBook, request);
+                }
+            } else {
+                reviewRestTemplateClient.deleteReview(idBook, request);
+            }
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with review service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.FORBIDDEN.value(),
+                            "Only authorized user can write review"), HttpStatus.FORBIDDEN);
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        } catch (HttpClientErrorException.BadRequest exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Error connecting to another book service instance"), HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/grade", method = RequestMethod.GET)
+    public ResponseEntity<?> getGrade(@RequestParam Long idBook, HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.FORBIDDEN.value(),
+                            "Only authorized user can set grade"), HttpStatus.FORBIDDEN);
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        } catch (HttpClientErrorException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        try {
+            Book book = bookService.getBookById(idBook);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "Book with id " + idBook + " does not exist."), HttpStatus.NOT_FOUND);
+        }
+        try {
+            userBooksGradeService.getGradeByBookIdAndUserId(idBook, userId);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/save-book", method = RequestMethod.GET)
+    public ResponseEntity<?> saveBook(@RequestParam Long idBook, HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.FORBIDDEN.value(),
+                            "Only authorized user can save book"), HttpStatus.FORBIDDEN);
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        } catch (HttpClientErrorException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        Book book;
+        try {
+            book = bookService.getBookById(idBook);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        userBooksWantToReadService.saveBook(book, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/delete-saving-book", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteSavingBook(@RequestParam Long idBook, HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (HttpClientErrorException.Forbidden exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.FORBIDDEN.value(),
+                            "Only authorized user can delete saving book"), HttpStatus.FORBIDDEN);
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        } catch (HttpClientErrorException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        Book book;
+        try {
+            book = bookService.getBookById(idBook);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        try {
+            userBooksWantToReadService.deleteSavingBook(book, userId);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/rated-books", method = RequestMethod.GET)
+    public ResponseEntity<?> getRatedBooks(@RequestParam Long userId) {
+        try {
+            Set<BookForSearch> set =
+                    bookService.getBooksByBooksId(userBooksGradeService.getRatedBooksIdByUserId(userId), userId);
+            return new ResponseEntity<>(set, HttpStatus.OK);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(path = "/saving-books", method = RequestMethod.GET)
+    public ResponseEntity<?> getSavingBooks(@RequestParam Long userId) {
+        try {
+            Set<BookForSearch> set =
+                    bookService.getBooksByBooksId(userBooksWantToReadService.getSavingBooksIdByUserId(userId), userId);
+            return new ResponseEntity<>(set, HttpStatus.OK);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            exception.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 }

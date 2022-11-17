@@ -64,4 +64,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                                          List<Long> tagList,
                                          Integer numberOfTags,
                                          Pageable pageable);
+
+    @Query("SELECT new com.friendbook.bookservice.DTO.BookForSearch(b) " +
+            "FROM Book b inner join b.authors a where b.id IN (:listId) " +
+            "ORDER BY COALESCE((b.sumMarks + 0.0) / (b.countMarks + 0.0), 0) DESC")
+    Set<BookForSearch> getBooksByBooksId(List<Long> listId);
 }

@@ -1,6 +1,5 @@
-package com.friendbook.userservice.model;
+package com.friendbook.bookservice.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,11 +24,12 @@ public class UserBooksGrade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "idBook", nullable = false)
-    private Long bookId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Book book;
 
-    private int grade;
+    private Long userId;
+
+    private Integer grade;
+
+    private boolean del;
 }

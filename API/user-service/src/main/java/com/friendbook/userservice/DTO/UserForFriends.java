@@ -18,12 +18,9 @@ public class UserForFriends {
     private int countWantToReadBooks = 0;
     private String image;
 
-    public UserForFriends(Long id, String name, String login, int countRateBooks, int countReviews, int countWantToReadBooks) {
+    public UserForFriends(Long id, String name, String login) {
         this.id = id;
         this.name = name;
         this.login = login;
-        this.countRateBooks = countRateBooks;
-        this.countReviews = countReviews;
-        this.countWantToReadBooks = countWantToReadBooks;
     }
 }

@@ -22,6 +22,8 @@ import com.friendbook.userservice.security.jwt.JwtService;
 import com.friendbook.userservice.service.FriendsService;
 import com.friendbook.userservice.service.UserService;
 import com.friendbook.userservice.service.UserTokenService;
+import com.friendbook.userservice.service.client.BookRestTemplateClient;
+import com.friendbook.userservice.service.client.ReviewRestTemplateClient;
 import com.friendbook.userservice.utils.AppError;
 
 @RestController
@@ -38,6 +40,13 @@ public class FriendsController {
 
     @Autowired
     private UserTokenService userTokenService;
+
+    @Autowired
+    private BookRestTemplateClient bookRestTemplateClient;
+
+    @Autowired
+    private ReviewRestTemplateClient reviewRestTemplateClient;
+
 
     @RequestMapping(path = "/send-friend-request", method = RequestMethod.GET)
     public ResponseEntity<?> sendFriendRequest(@RequestParam String login, HttpServletRequest request) {
@@ -105,6 +114,12 @@ public class FriendsController {
         }
         User user = (User) responseEntity.getBody();
         List<UserForFriends> list = friendsService.getFriends(user);
+        for (UserForFriends userForFriends : list) {
+            Long userId = userForFriends.getId();
+            userForFriends.setCountRateBooks(bookRestTemplateClient.getRatedBooks(userId).size());
+            userForFriends.setCountWantToReadBooks(bookRestTemplateClient.getSavingBooks(userId).size());
+            userForFriends.setCountReviews(reviewRestTemplateClient.getReviews(userId).size());
+        }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

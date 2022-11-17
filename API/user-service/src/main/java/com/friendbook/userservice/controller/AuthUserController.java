@@ -26,9 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.model.User;
 import com.friendbook.userservice.security.jwt.JwtService;
+import com.friendbook.userservice.service.FriendsService;
 import com.friendbook.userservice.service.RefreshTokenService;
-import com.friendbook.userservice.service.UserBooksGradeService;
-import com.friendbook.userservice.service.UserBooksWantToReadService;
 import com.friendbook.userservice.service.UserService;
 import com.friendbook.userservice.service.UserTokenService;
 import com.friendbook.userservice.utils.AppError;
@@ -48,12 +47,6 @@ public class AuthUserController {
 
     @Autowired
     private RefreshTokenService refreshTokenService;
-
-    @Autowired
-    private UserBooksGradeService userBooksGradeService;
-
-    @Autowired
-    private UserBooksWantToReadService userBooksWantToReadService;
 
     @RequestMapping(path = "/check-password", method = RequestMethod.GET)
     public ResponseEntity<?> checkPassword(@RequestParam String password, HttpServletRequest request) {
@@ -183,61 +176,6 @@ public class AuthUserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/grade", method = RequestMethod.GET)
-    public ResponseEntity<?> getGrade(@RequestParam Long idBook, HttpServletRequest request) {
-        ResponseEntity<?> responseEntity = getUserByRequest(request);
-        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            return responseEntity;
-        }
-        User user = (User) responseEntity.getBody();
-        try {
-            return new ResponseEntity<>(userBooksGradeService.getGradeByBookIdAndUser(idBook, user),
-                    HttpStatus.OK);
-        } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Grade not found"), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @RequestMapping(path = "/is-saving-book", method = RequestMethod.GET)
-    public ResponseEntity<?> isSavingBook(@RequestParam Long idBook, HttpServletRequest request) {
-        ResponseEntity<?> responseEntity = getUserByRequest(request);
-        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            return responseEntity;
-        }
-        User user = (User) responseEntity.getBody();
-        return new ResponseEntity<>(userBooksWantToReadService.isSavingBook(idBook, user), HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/save-book", method = RequestMethod.GET)
-    public ResponseEntity<?> saveBook(@RequestParam Long idBook, HttpServletRequest request) {
-        ResponseEntity<?> responseEntity = getUserByRequest(request);
-        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            return responseEntity;
-        }
-        User user = (User) responseEntity.getBody();
-        userBooksWantToReadService.saveBook(idBook, user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/delete-saving-book", method = RequestMethod.GET)
-    public ResponseEntity<?> deleteSavingBook(@RequestParam Long idBook, HttpServletRequest request) {
-        ResponseEntity<?> responseEntity = getUserByRequest(request);
-        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            return responseEntity;
-        }
-        User user = (User) responseEntity.getBody();
-        try {
-            userBooksWantToReadService.deleteSavingBook(idBook, user);
-        } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            exception.getMessage()), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @RequestMapping(path = "/check-token", method = RequestMethod.GET)
     public ResponseEntity<?> checkToken(HttpServletRequest request) {
         ResponseEntity<?> responseEntity = getUserByRequest(request);
@@ -245,6 +183,15 @@ public class AuthUserController {
             return responseEntity;
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/get-user-id", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserId(HttpServletRequest request) {
+        ResponseEntity<?> responseEntity = getUserByRequest(request);
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            return responseEntity;
+        }
+        return new ResponseEntity<>(((User) responseEntity.getBody()).getId(), HttpStatus.OK);
     }
 
 

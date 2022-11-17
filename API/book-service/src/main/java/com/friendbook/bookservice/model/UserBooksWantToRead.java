@@ -1,8 +1,9 @@
-package com.friendbook.userservice.model;
+package com.friendbook.bookservice.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,16 +14,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "user_books_want_to_read")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Review {
+public class UserBooksWantToRead {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Book book;
+
+    private Long userId;
+
+    private boolean del;
 }

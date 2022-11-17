@@ -68,5 +68,11 @@ public class Book {
     )
     private Set<Tag> tags;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserBooksGrade> userBooksGrades;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserBooksWantToRead> userBooksWantToReads;
+
     private Long countRequests;
 }

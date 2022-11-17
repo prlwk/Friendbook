@@ -1,12 +1,12 @@
 package com.friendbook.bookservice.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,6 @@ import com.friendbook.bookservice.DTO.BookForSearch;
 import com.friendbook.bookservice.model.Book;
 import com.friendbook.bookservice.repository.BookRepository;
 import com.friendbook.bookservice.service.client.AuthorRestTemplateClient;
-import com.friendbook.bookservice.service.client.UserRestTemplateClient;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -39,7 +38,10 @@ public class BookServiceImpl implements BookService {
     AuthorRestTemplateClient authorRestTemplateClient;
 
     @Autowired
-    UserRestTemplateClient userRestTemplateClient;
+    UserBooksGradeService userBooksGradeService;
+
+    @Autowired
+    UserBooksWantToReadService userBooksWantToReadService;
 
     @Override
     public Book getBookById(Long id) {
@@ -92,32 +94,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Set<BookForSearch> getBooksByAuthorId(Long authorId, Boolean isAuthUser, HttpServletRequest request) {
+    public Set<BookForSearch> getBooksByAuthorId(Long authorId, Long userId) {
         Set<BookForSearch> books = bookRepository.getBooksByAuthorId(authorId);
+        Set<BookForSearch> result = new HashSet<>();
         for (BookForSearch bookForSearch : books) {
-            if (bookForSearch.getAuthors() != null) {
-                for (int i = 0; i < bookForSearch.getAuthors().size(); i++) {
-                    AuthorForBook newAuthor = authorRestTemplateClient.getAuthorById(bookForSearch.getAuthors().get(i).getId());
-                    bookForSearch.getAuthors().set(i, newAuthor);
-                }
-            }
-            if (bookForSearch.getGenres() != null) {
-                for (int i = 0; i < bookForSearch.getGenres().size(); i++) {
-                    bookForSearch
-                            .getGenres()
-                            .set(i, genreService.getGenreById(bookForSearch.getGenres().get(i).getId()));
-                }
-            }
-            if (isAuthUser) {
-                bookForSearch.setGrade(userRestTemplateClient.getBookGrade(request, bookForSearch.getId()));
-                bookForSearch.setIsWantToRead(userRestTemplateClient.isSavingBook(request, bookForSearch.getId()));
-            } else {
-                bookForSearch.setGrade(null);
-                bookForSearch.setIsWantToRead(false);
-            }
+            result.add(setInfoByBookForSearch(bookForSearch, userId));
         }
-        if (!books.isEmpty()) {
-            return books;
+        if (!result.isEmpty()) {
+            return result;
         }
         throw new EntityNotFoundException("Books not found.");
     }
@@ -172,5 +156,57 @@ public class BookServiceImpl implements BookService {
             return books;
         }
         throw new EntityNotFoundException("Books not found.");
+    }
+
+    @Override
+    public void updateCountMarksAndSumMarks(Book book, int differenceSum) {
+        if (differenceSum > 0) {
+            book.setCountMarks(book.getCountMarks() + 1);
+        } else {
+            book.setCountMarks(book.getCountMarks() - 1);
+        }
+        book.setSumMarks(book.getSumMarks() + differenceSum);
+        bookRepository.save(book);
+    }
+
+    @Override
+    public Set<BookForSearch> getBooksByBooksId(List<Long> listId, Long userId) {
+        Set<BookForSearch> books = bookRepository.getBooksByBooksId(listId);
+        Set<BookForSearch> result = new HashSet<>();
+        for (BookForSearch bookForSearch : books) {
+            result.add(setInfoByBookForSearch(bookForSearch, userId));
+        }
+        if (!result.isEmpty()) {
+            return result;
+        }
+        throw new EntityNotFoundException("Books not found.");
+    }
+
+    BookForSearch setInfoByBookForSearch(BookForSearch bookForSearch, Long userId) {
+        if (bookForSearch.getAuthors() != null) {
+            for (int i = 0; i < bookForSearch.getAuthors().size(); i++) {
+                AuthorForBook newAuthor = authorRestTemplateClient.getAuthorById(bookForSearch.getAuthors().get(i).getId());
+                bookForSearch.getAuthors().set(i, newAuthor);
+            }
+        }
+        if (bookForSearch.getGenres() != null) {
+            for (int i = 0; i < bookForSearch.getGenres().size(); i++) {
+                bookForSearch
+                        .getGenres()
+                        .set(i, genreService.getGenreById(bookForSearch.getGenres().get(i).getId()));
+            }
+        }
+        if (userId > 0) {
+            try {
+                bookForSearch.setGrade(userBooksGradeService.getGradeByBookIdAndUserId(bookForSearch.getId(), userId));
+            } catch (EntityNotFoundException exception) {
+                bookForSearch.setGrade(null);
+            }
+            bookForSearch.setIsWantToRead(userBooksWantToReadService.isSavingBook(bookForSearch.getId(), userId));
+        } else {
+            bookForSearch.setGrade(null);
+            bookForSearch.setIsWantToRead(false);
+        }
+        return bookForSearch;
     }
 }

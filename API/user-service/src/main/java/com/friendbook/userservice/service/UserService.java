@@ -1,7 +1,5 @@
 package com.friendbook.userservice.service;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.friendbook.userservice.DTO.EditUserBean;
 import com.friendbook.userservice.DTO.RegisterBean;
 import com.friendbook.userservice.DTO.UserPageWithoutEmail;
@@ -38,6 +36,4 @@ public interface UserService {
     UserProfile getInfoForProfile(User user);
 
     UserPageWithoutEmail getInfoForUserPageWithoutEmail(User user);
-
-    MultipartFile getImageForUser(Long id);
 }

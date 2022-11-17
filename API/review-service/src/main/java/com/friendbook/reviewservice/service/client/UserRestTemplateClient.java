@@ -1,4 +1,4 @@
-package com.friendbook.bookservice.service.client;
+package com.friendbook.reviewservice.service.client;
 
 import javax.servlet.http.HttpServletRequest;
 

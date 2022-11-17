@@ -4,8 +4,6 @@ package com.friendbook.bookservice.service;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.friendbook.bookservice.DTO.BookForAuthor;
 import com.friendbook.bookservice.DTO.BookForBookPage;
 import com.friendbook.bookservice.DTO.BookForSearch;
@@ -18,7 +16,7 @@ public interface BookService {
 
     Set<BookForAuthor> getBooksByAuthorIdForAuthorPage(Long authorId);
 
-    Set<BookForSearch> getBooksByAuthorId(Long authorId, Boolean isAuthUser, HttpServletRequest request);
+    Set<BookForSearch> getBooksByAuthorId(Long authorId, Long userId);
 
     List<BookForSearch> getBooksBySearch(int numberPage,
                                          int sizePage,
@@ -29,4 +27,8 @@ public interface BookService {
                                          List<Long> listTags,
                                          List<Long> listGenres,
                                          List<Long> listId);
+
+    void updateCountMarksAndSumMarks(Book book, int differenceSum);
+
+    Set<BookForSearch> getBooksByBooksId(List<Long> listId, Long userId);
 }
