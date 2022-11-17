@@ -1,7 +1,6 @@
 package com.src.book.data.remote.service
 
-import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
-import com.src.book.domain.utils.BasicState
+import com.src.book.data.remote.model.user.userProfile.UserProfileResponse
 import com.src.book.utils.USER_SERVICE_BASE_URL
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -27,4 +26,7 @@ interface UserService {
         @Part("editUserBeanString") data: RequestBody,
         @Part file: MultipartBody.Part?
     ): Response<Unit>
+
+    @GET("$USER_SERVICE_BASE_URL/user/profile")
+    suspend fun getProfile(): Response<UserProfileResponse>
 }

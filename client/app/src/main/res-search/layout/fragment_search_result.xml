@@ -87,7 +87,7 @@
         tools:listitem="@layout/view_holder_book" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/sl_book"
+        android:id="@+id/sl_profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_8x"

@@ -29,4 +29,8 @@ class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepos
         withContext(Dispatchers.IO) {
             return@withContext userDataSource.editProfile(data, file)
         }
+
+    override suspend fun getProfile(): BasicState = withContext(Dispatchers.IO) {
+        return@withContext userDataSource.getProfile()
+    }
 }

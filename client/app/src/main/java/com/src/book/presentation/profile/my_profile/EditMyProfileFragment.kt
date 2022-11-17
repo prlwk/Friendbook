@@ -1,5 +1,6 @@
 package com.src.book.presentation.profile.my_profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -53,6 +54,30 @@ class EditMyProfileFragment : Fragment() {
             this::checkEditProfileState
         )
         viewModel.liveDataIsLoading.observe(this.viewLifecycleOwner, this::checkLoading)
+        setData()
+        setOnClickListenerForBackButton()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setData() {
+        val name = viewModel.getName()
+        if (name != null) {
+            binding.etName.setText(name)
+        } else {
+            //TOdo обработка ошибки (имени нет)
+        }
+        val login = viewModel.getLogin()
+        if (login != null) {
+            binding.etNickname.setText(login)
+        } else {
+            //TOdo обработка ошибки (логина нет)
+        }
+        val image = viewModel.getImageString()
+        if (image != null) {
+            Glide.with(requireContext())
+                .load(image)
+                .into(binding.ivPicture)
+        }
     }
 
     private fun pickFromGallery() {
@@ -139,10 +164,10 @@ class EditMyProfileFragment : Fragment() {
                     viewModel.setLogin(loginWithoutSpace)
                     viewModel.setName(nameWithoutSpace)
                     viewModel.editProfile()
+                    isClickNext = true
                 }
             }
         }
-        isClickNext = true
     }
 
     private fun checkLoading(isLoading: Boolean) {
@@ -153,19 +178,26 @@ class EditMyProfileFragment : Fragment() {
         }
     }
 
+    //TODO обработка ошибок
     private fun checkEditProfileState(state: EditProfileState) {
         if (isClickNext) {
             isClickNext = false
             when (state) {
                 is EditProfileState.SuccessState -> {
-                    println("success")
+                    viewModel.setEditProfileState()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 is EditProfileState.LoginAlreadyExistsState -> println("такой логин уже существует")
                 is EditProfileState.ErrorState -> println("ошибка сервера")
                 else -> {
-
                 }
             }
+        }
+    }
+
+    private fun setOnClickListenerForBackButton() {
+        binding.ivBackButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

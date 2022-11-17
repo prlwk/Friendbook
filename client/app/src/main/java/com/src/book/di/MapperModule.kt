@@ -11,6 +11,8 @@ import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookMapper
 import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.login.login.LoginMapper
+import com.src.book.data.remote.model.review.reviewUser.UserReviewMapper
+import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -96,5 +98,23 @@ class MapperModule {
     @Provides
     fun provideFriendMapper(): FriendMapper {
         return FriendMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserReviewMapper(authorBookMapper: AuthorBookMapper): UserReviewMapper {
+        return UserReviewMapper(authorBookMapper = authorBookMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserProfileMapper(
+        userReviewMapper: UserReviewMapper,
+        bookListMapper: BookListMapper
+    ): UserProfileMapper {
+        return UserProfileMapper(
+            userReviewMapper = userReviewMapper,
+            bookListMapper = bookListMapper
+        )
     }
 }

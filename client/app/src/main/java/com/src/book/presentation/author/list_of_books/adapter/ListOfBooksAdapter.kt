@@ -17,10 +17,11 @@ import com.src.book.presentation.utils.RatingColor
 
 //TODO Если нет рейтинга что делать
 class ListOfBooksAdapter(
-    private val onClickMore: (it: BookList) -> Unit,
+    private val onClickMore: ((it: BookList) -> Unit)? = null,
     private val onClickBook: (it: BookList) -> Unit,
-    private val onCLickBookmark: (it: BookList) -> Unit
-) :
+    private val onCLickBookmark: ((it: BookList) -> Unit)? = null,
+
+    ) :
     ListAdapter<BookList, ListOfBooksAdapter.DataViewHolder>(BookDiffCallback()) {
     private lateinit var binding: ViewHolderBookBinding
 
@@ -28,9 +29,9 @@ class ListOfBooksAdapter(
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun onBind(
-            book: BookList, onClickMore: (it: BookList) -> Unit,
+            book: BookList, onClickMore: ((it: BookList) -> Unit)?,
             onClickBook: (it: BookList) -> Unit,
-            onCLickBookmark: (it: BookList) -> Unit
+            onCLickBookmark: ((it: BookList) -> Unit)?
         ) {
             Glide.with(context)
                 .load(book.linkCover)
@@ -48,16 +49,22 @@ class ListOfBooksAdapter(
                 binding.tvBookYearGenre.text =
                     book.year
             }
-            binding.ivMore.setOnClickListener {
-                onClickMore(book)
+            if (onClickMore != null) {
+                binding.ivMore.setOnClickListener {
+                    onClickMore(book)
+                }
+            } else {
+                binding.ivMore.visibility = View.GONE
             }
             itemView.setOnClickListener {
                 onClickBook(book)
             }
-            binding.ivBookmark.setOnClickListener {
-                onCLickBookmark(book)
-                if(book.isAuth) {
-                    setColorForBookMark(book, context)
+            if (onCLickBookmark != null) {
+                binding.ivBookmark.setOnClickListener {
+                    onCLickBookmark(book)
+                    if (book.isAuth) {
+                        setColorForBookMark(book, context)
+                    }
                 }
             }
             setColorForBookMark(book, context)

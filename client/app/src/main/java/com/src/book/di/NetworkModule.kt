@@ -20,6 +20,7 @@ import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.login.login.LoginMapper
+import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.session.SessionStorageImpl
@@ -191,12 +192,14 @@ class NetworkModule {
     fun provideUserDataSource(
         userService: UserService,
         sessionStorage: SessionStorage,
-        sessionService: SessionService
+        sessionService: SessionService,
+        userProfileMapper: UserProfileMapper
     ): UserDataSource {
         return UserDataSourceImpl(
             userService = userService,
             sessionStorage = sessionStorage,
-            sessionService = sessionService
+            sessionService = sessionService,
+            userProfileMapper = userProfileMapper
         )
     }
 

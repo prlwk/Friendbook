@@ -1,6 +1,7 @@
 package com.src.book.data.remote.dataSource.user
 
 import com.src.book.data.remote.model.token.RefreshTokenResponse
+import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
@@ -16,7 +17,8 @@ import java.io.File
 class UserDataSourceImpl(
     private val userService: UserService,
     private val sessionService: SessionService,
-    private val sessionStorage: SessionStorage
+    private val sessionStorage: SessionStorage,
+    private val userProfileMapper: UserProfileMapper
 ) :
     UserDataSource {
     override suspend fun changePassword(
@@ -88,5 +90,19 @@ class UserDataSourceImpl(
             }
         }
         return EditProfileState.ErrorState
+    }
+
+    override suspend fun getProfile(): BasicState {
+        val response = userService.getProfile()
+        if (response.isSuccessful) {
+            if (response.body() != null) {
+                return BasicState.SuccessStateWithResources(
+                    userProfileMapper.mapFromResponseToModel(
+                        response.body()!!
+                    )
+                )
+            }
+        }
+        return BasicState.ErrorState
     }
 }

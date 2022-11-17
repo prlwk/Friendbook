@@ -13,6 +13,7 @@ import com.src.book.domain.usecase.user.LogoutUseCase
 import com.src.book.domain.usecase.friend.SendFriendRequestUseCase
 import com.src.book.domain.usecase.login.*
 import com.src.book.domain.usecase.user.EditProfileUseCase
+import com.src.book.domain.usecase.user.GetProfileUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -167,5 +168,11 @@ class DomainModule {
     @Provides
     fun provideSetBookmarkUseCase(bookRepository: BookRepository): SetBookmarkUseCase {
         return SetBookmarkUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetProfileUseCase(userRepository: UserRepository): GetProfileUseCase {
+        return GetProfileUseCase(userRepository = userRepository)
     }
 }
