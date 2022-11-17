@@ -24,16 +24,23 @@ public class UserBooksWantToReadServiceImpl implements UserBooksWantToReadServic
 
     @Override
     public void saveBook(Book book, Long userId) {
-        UserBooksWantToRead userBooksWantToRead = new UserBooksWantToRead();
-        userBooksWantToRead.setUserId(userId);
-        userBooksWantToRead.setBook(book);
-        userBooksWantToRead.setDel(false);
-        userBooksWantToReadRepository.save(userBooksWantToRead);
+        Optional<UserBooksWantToRead> userBooksWantToReadOptional = userBooksWantToReadRepository.getUserBooksWantToReadByBookAndUserIdAndDel(book, userId, true);
+        if (userBooksWantToReadOptional.isPresent()) {
+            UserBooksWantToRead userBooksWantToRead = userBooksWantToReadOptional.get();
+            userBooksWantToRead.setDel(false);
+            userBooksWantToReadRepository.save(userBooksWantToRead);
+        } else {
+            UserBooksWantToRead userBooksWantToRead = new UserBooksWantToRead();
+            userBooksWantToRead.setUserId(userId);
+            userBooksWantToRead.setBook(book);
+            userBooksWantToRead.setDel(false);
+            userBooksWantToReadRepository.save(userBooksWantToRead);
+        }
     }
 
     @Override
     public void deleteSavingBook(Book book, Long userId) {
-        Optional<UserBooksWantToRead> userBooksWantToReadOptional = userBooksWantToReadRepository.getUserBooksWantToReadByBookAndUserId(book, userId);
+        Optional<UserBooksWantToRead> userBooksWantToReadOptional = userBooksWantToReadRepository.getUserBooksWantToReadByBookAndUserIdAndDel(book, userId, false);
         if (userBooksWantToReadOptional.isPresent() && !userBooksWantToReadOptional.get().isDel()) {
             UserBooksWantToRead userBooksWantToRead = userBooksWantToReadOptional.get();
             userBooksWantToRead.setDel(true);
