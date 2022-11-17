@@ -54,6 +54,9 @@
     <color name="main_tint">#CC2C2C2C</color>
     <color name="pencil_background_color">#E9E9E9</color>
     <color name="pencil_color">#000000</color>
+    <color name="background_cong_color">#EFEAEA</color>
+    <color name="background_blackout_cong_color">#80000000</color>
+    <color name="text_cong_color">#CC505050</color>
 
     <!--    only dark theme-->
 

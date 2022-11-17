@@ -29,5 +29,9 @@
     <color name="basic_color_65_per_night_white">#E6FFFFFF</color>
     <color name="pencil_background_color">#26262A</color>
     <color name="pencil_color">#FFFFFF</color>
+    <color name="background_cong_color">#2C334F</color>
+    <color name="text_cong_color">#E6FFFFFF</color>
+
+
 
 </resources>

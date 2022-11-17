@@ -101,4 +101,6 @@
     <string name="write_your_review_here">Напишите свой отзыв здесь!</string>
     <string name="make_review">Оценить</string>
     <string name="save">Сохранить</string>
+    <string name="congratulations">Поздравляем!</string>
+    <string name="congratulation_deskription">Вы успешно зарегистрированы. Вы будете перенаправлены на главную страницу через несколько секунд.</string>
 </resources>

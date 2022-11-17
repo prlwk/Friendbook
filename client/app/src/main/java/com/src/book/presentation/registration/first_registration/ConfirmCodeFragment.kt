@@ -3,11 +3,12 @@ package com.src.book.presentation.registration.first_registration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import com.src.book.R
 import com.src.book.databinding.FragmentConfirmCodeBinding
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.domain.utils.BasicState
@@ -62,7 +63,11 @@ class ConfirmCodeFragment : Fragment() {
     private fun checkState(state: CodeState) {
         when (state) {
             is CodeState.SuccessState -> {
-                println("пароль правильный")
+                val fragment = CongratulationRegistrationFragment()
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragment_container, fragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
             }
             is CodeState.WrongCodeState -> {
                 viewModel.setDefaultValueForCodeState()
@@ -104,7 +109,6 @@ class ConfirmCodeFragment : Fragment() {
                 editTextList[0].text.toString()
                 viewModel.checkRecoveryCode(code = code)
             }
-
         })
     }
 
