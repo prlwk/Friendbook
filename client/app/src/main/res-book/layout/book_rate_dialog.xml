@@ -89,6 +89,34 @@
         app:layout_constraintTop_toBottomOf="@id/et_review_text">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button0"
+            android:layout_width="@dimen/rate_book_central_mark_size"
+            android:layout_height="@dimen/rate_book_central_mark_size"
+            android:layout_marginTop="@dimen/space_10x"
+            android:background="@drawable/neutral_rating_picker"
+            android:padding="@dimen/space_1x">
+
+            <TextView
+                android:id="@+id/tv_number_button_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="55sp"
+                app:autoSizeMinTextSize="21sp"
+                app:autoSizeStepGranularity="1dp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="1.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button1"
             android:layout_width="@dimen/rate_book_central_mark_size"
             android:layout_height="@dimen/rate_book_central_mark_size"

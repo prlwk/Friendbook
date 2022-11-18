@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="10dp"
-    android:background="@drawable/friend_card_background"
-    android:paddingBottom="@dimen/space_3x">
+    android:background="@drawable/friend_card_background">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -175,4 +174,9 @@
             android:textColor="@color/color_accent"
             android:textSize="11sp" />
     </LinearLayout>
+
+    <Space
+        app:layout_constraintTop_toBottomOf="@id/ll_books_read"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_3x"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
