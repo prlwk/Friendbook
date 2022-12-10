@@ -69,4 +69,4 @@ The prototype of the project can be viewed in [Figma](https://www.figma.com/file
 
 * [API](https://github.com/prlwk/Friendbook/tree/main/API)
 ## Unit tests
-## CI
+[Tests for android app](https://github.com/prlwk/Friendbook/tree/main/client/app/src/test/java/com/src/book)
