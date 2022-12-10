@@ -145,7 +145,6 @@ class EditMyProfileFragment : Fragment() {
             } else {
                 val nameWithoutSpace = binding.etName.text.toString()
                     .replace(REGEX_SPACE, " ")
-                    .lowercase(Locale.getDefault())
                     .trim()
                 val loginWithoutSpace =
                     binding.etNickname.text.toString().replace("\\s".toRegex(), "")

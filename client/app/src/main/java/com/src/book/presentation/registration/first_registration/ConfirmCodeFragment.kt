@@ -87,9 +87,10 @@ class ConfirmCodeFragment : Fragment() {
             is BasicState.SuccessState -> {
                 println("код отправлен")
             }
-            else -> {
+            is BasicState.ErrorState ->{
                 println("ошибка")
             }
+            else -> {}
         }
     }
 

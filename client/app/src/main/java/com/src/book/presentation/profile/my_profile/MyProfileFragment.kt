@@ -112,21 +112,27 @@ class MyProfileFragment : Fragment() {
             .skipMemoryCache(true)
             .into(binding.ivUserPhoto)
         binding.tvUserName.text = userProfile.name
-        binding.userNickname.text = userProfile.login
+        binding.userNickname.text = "@" + userProfile.login
         binding.tvFriendsNumber.text = "${userProfile.countFriends} "
         if (userProfile.savingBooks != null && userProfile.savingBooks.isNotEmpty()) {
+            binding.tvWantReadNumber.text = userProfile.savingBooks.size.toString()
             setAdapterForBooksWantReadRecyclerView(userProfile.savingBooks)
         } else {
             //TODO список пуст
+            binding.tvWantReadNumber.text = "0"
         }
         if (userProfile.ratedBooks != null && userProfile.ratedBooks.isNotEmpty()) {
+            binding.tvBooksReadNumber.text = userProfile.ratedBooks.size.toString()
             setAdapterForBooksReadRecyclerView(userProfile.ratedBooks)
         } else {
+            binding.tvBooksReadNumber.text = "0"
             //TODO список пуст
         }
         if (userProfile.reviews != null && userProfile.reviews.isNotEmpty()) {
+            binding.tvReviewsNumber.text = userProfile.reviews.size.toString()
             setAdapterForReviewsRecyclerView(userProfile.reviews)
         } else {
+            binding.tvReviewsNumber.text = "0"
             //TODO cписок пуст
         }
 
