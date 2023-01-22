@@ -31,4 +31,7 @@ interface FriendService {
 
     @GET("$USER_SERVICE_BASE_URL/count-incoming-requests")
     suspend fun getIncomingRequestsCount(): Response<Int>
+
+    @GET("$USER_SERVICE_BASE_URL/delete-friend")
+    suspend fun removeFriend(@Query("friendId") friendId: Long): Response<Unit>
 }

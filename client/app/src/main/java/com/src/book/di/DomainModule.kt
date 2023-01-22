@@ -175,4 +175,10 @@ class DomainModule {
     fun provideGetProfileUseCase(userRepository: UserRepository): GetProfileUseCase {
         return GetProfileUseCase(userRepository = userRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideRemoveFriendUseCase(friendRepository: FriendRepository): RemoveFriendUseCase {
+        return RemoveFriendUseCase(friendRepository = friendRepository)
+    }
 }

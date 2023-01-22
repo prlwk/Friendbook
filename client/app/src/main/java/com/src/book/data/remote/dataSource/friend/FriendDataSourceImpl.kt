@@ -97,4 +97,12 @@ class FriendDataSourceImpl(
         }
         return BasicState.ErrorState
     }
+
+    override suspend fun removeFriend(friendId: Long): BasicState {
+        val response = friendService.removeFriend(friendId)
+        if (response.isSuccessful) {
+            return BasicState.SuccessState
+        }
+        return BasicState.ErrorState
+    }
 }

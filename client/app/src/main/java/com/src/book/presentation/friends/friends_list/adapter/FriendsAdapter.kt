@@ -12,11 +12,14 @@ import com.src.book.domain.model.Friend
 
 //TODO добавить onClickListener
 //TODO добавить placeholder
-class FriendsAdapter :
+class FriendsAdapter(private val removeFriend: (friendId: Long, position: Int) -> Unit) :
     ListAdapter<Friend, FriendsAdapter.DataViewHolder>(FriendsListDiffCallback()) {
     private lateinit var binding: ViewHolderFriendsItemBinding
 
-    class DataViewHolder(private val binding: ViewHolderFriendsItemBinding) :
+    class DataViewHolder(
+        private val binding: ViewHolderFriendsItemBinding,
+        private val removeFriend: (friendId: Long, position: Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun onBind(
@@ -30,6 +33,10 @@ class FriendsAdapter :
             binding.tvReviewsNumber.text = friend.countReviews.toString()
             binding.tvBooksReadNumber.text = friend.countRateBooks.toString()
             binding.tvWantReadNumber.text = friend.countWantToReadBooks.toString()
+            binding.ivRemoveFriend.setOnClickListener {
+                removeFriend(friend.id, adapterPosition)
+
+            }
         }
 
         private val RecyclerView.ViewHolder.context get() = this.itemView.context
@@ -41,7 +48,7 @@ class FriendsAdapter :
             parent,
             false
         )
-        return DataViewHolder(binding)
+        return DataViewHolder(binding, removeFriend)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {

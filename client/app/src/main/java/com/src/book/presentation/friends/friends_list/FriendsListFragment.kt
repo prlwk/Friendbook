@@ -49,6 +49,9 @@ class FriendsListFragment : Fragment() {
         viewModel.liveDataIncomingRequestsCount.observe(
             this.viewLifecycleOwner, this::checkStateForIncomingRequests
         )
+        viewModel.liveDataRemoveFriend.observe(
+            this.viewLifecycleOwner, this::checkStateRemoveFriend
+        )
         viewModel.loadIncomingRequestsCount()
         viewModel.loadFriends()
         binding.ivAddPicture.setOnClickListener {
@@ -125,7 +128,7 @@ class FriendsListFragment : Fragment() {
     private fun setAdapterForFriendsRecyclerView(friends: List<Friend>) {
         friendsList = ArrayList(friends)
         fullFriendsList = ArrayList(friends)
-        val adapter = FriendsAdapter()
+        val adapter = FriendsAdapter { id, position -> removeFriend(id, position) }
         adapter.submitList(friendsList)
         val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         binding.rvFriends.layoutManager = layoutManager
@@ -152,5 +155,31 @@ class FriendsListFragment : Fragment() {
             is BasicState.ErrorState -> {}
             else -> {}
         }
+    }
+
+    //TODO обработка ошибки удаления друга
+    private fun checkStateRemoveFriend(state: BasicState) {
+        when (state) {
+            is BasicState.ErrorState -> {
+
+            }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun removeFriend(friendId: Long, position: Int) {
+        viewModel.removeFriend(friendId)
+        friendsList.removeAt(position)
+        if (friendsList.size == fullFriendsList.size) {
+            fullFriendsList.removeAt(position)
+        } else {
+            for (item in fullFriendsList) {
+                if (item.id == friendId) {
+                    fullFriendsList.remove(item)
+                    break
+                }
+            }
+        }
+        binding.rvFriends.adapter?.notifyDataSetChanged()
     }
 }

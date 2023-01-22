@@ -15,7 +15,7 @@ import com.src.book.domain.utils.CodeState
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModel
 import com.src.book.utils.BOOK_ID
-import com.src.book.utils.EMAIL
+import com.src.book.utils.BUNDLE_EMAIL
 
 class PasswordRecoveryCodeFragment : Fragment() {
     private lateinit var binding: FragmentConfirmCodeBinding
@@ -30,14 +30,14 @@ class PasswordRecoveryCodeFragment : Fragment() {
         val args = this.arguments
         //TODO обработка ошибки если имейл не получен
         if (args?.getLong(BOOK_ID) != null) {
-            email = args.getString(EMAIL) as String
+            email = args.getString(BUNDLE_EMAIL) as String
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentConfirmCodeBinding.inflate(inflater)
         bindingLoading = binding.loading
         return binding.root

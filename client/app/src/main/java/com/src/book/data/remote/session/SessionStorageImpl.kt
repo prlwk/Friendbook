@@ -1,7 +1,6 @@
 package com.src.book.data.remote.session
 
 import android.content.Context
-import com.src.book.utils.*
 
 class SessionStorageImpl(context: Context) : SessionStorage {
     private val sharedPreferences = context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE)
@@ -103,4 +102,17 @@ class SessionStorageImpl(context: Context) : SessionStorage {
         return sharedPreferences.getBoolean(IS_ACTIVE, false)
     }
 
+    companion object {
+        const val REFRESH_TOKEN = "refreshToken"
+        const val ACCESS_TOKEN = "accessToken"
+        const val EXPIRE_TIME_REFRESH_TOKEN = "expireTimeRefreshToken"
+        const val EXPIRE_TIME_ACCESS_TOKEN = "expireTimeAccessToken"
+        const val ID = "id"
+        const val EMAIL = "email"
+        const val USER_DATA = "user_data"
+        const val CURRENT_DATE_ACCESS_TOKEN = "current_date_access_token"
+        const val CURRENT_DATE_REFRESH_TOKEN = "current_date_refresh_token"
+        const val TOKEN_TYPE = "Bearer"
+        const val IS_ACTIVE = "isActive"
+    }
 }

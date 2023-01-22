@@ -8,10 +8,10 @@ import com.src.book.data.remote.model.token.RefreshTokenResponse
 import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.session.SessionStorage
+import com.src.book.data.remote.session.SessionStorageImpl
 import com.src.book.domain.model.*
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
-import com.src.book.utils.TOKEN_TYPE
 
 class BookDataSourceImpl(
     private val bookService: BookService,
@@ -113,7 +113,7 @@ class BookDataSourceImpl(
                     }
                 }
             }
-            return "$TOKEN_TYPE ${sessionStorage.getAccessToken()}"
+            return "${SessionStorageImpl.TOKEN_TYPE} ${sessionStorage.getAccessToken()}"
         }
     }
 }

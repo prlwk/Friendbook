@@ -42,4 +42,8 @@ class FriendRepositoryImpl(private val friendDataSource: FriendDataSource) : Fri
     override suspend fun getIncomingRequestsCount(): BasicState = withContext(Dispatchers.IO) {
         return@withContext friendDataSource.getIncomingRequestsCount()
     }
+
+    override suspend fun removeFriend(friendId: Long): BasicState = withContext(Dispatchers.IO) {
+        return@withContext friendDataSource.removeFriend(friendId)
+    }
 }

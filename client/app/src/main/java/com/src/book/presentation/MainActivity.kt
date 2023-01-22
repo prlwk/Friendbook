@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(MyProfileFragment())
+        replaceFragment(FriendsListFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
