@@ -1,0 +1,30 @@
+name: "book-service"
+
+on:
+  push:
+    paths:
+      - "API/book-service/**"
+      - ".github/workflows/book-service.yaml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: |-
+          cd API/book-service
+          mvn -B package --file pom.xml
+
+      - name: Run tests
+        run: |-
+          cd API/book-service
+          mvn -B test --file pom.xml

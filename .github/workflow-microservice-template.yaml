@@ -1,0 +1,30 @@
+name: "{{ROUTE}}"
+
+on:
+  push:
+    paths:
+      - "API/{{ROUTE}}/**"
+      - ".github/workflows/{{ROUTE}}.yaml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: |-
+          cd API/{{ROUTE}}
+          mvn -B package --file pom.xml
+
+      - name: Run tests
+        run: |-
+          cd API/{{ROUTE}}
+          mvn -B test --file pom.xml
