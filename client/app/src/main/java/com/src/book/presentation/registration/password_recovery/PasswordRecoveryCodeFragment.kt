@@ -14,8 +14,6 @@ import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.domain.utils.CodeState
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryCode.PasswordRecoveryCodeViewModel
-import com.src.book.utils.BOOK_ID
-import com.src.book.utils.BUNDLE_EMAIL
 
 class PasswordRecoveryCodeFragment : Fragment() {
     private lateinit var binding: FragmentConfirmCodeBinding
@@ -29,7 +27,7 @@ class PasswordRecoveryCodeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val args = this.arguments
         //TODO обработка ошибки если имейл не получен
-        if (args?.getLong(BOOK_ID) != null) {
+        if (args?.getString(BUNDLE_EMAIL) != null) {
             email = args.getString(BUNDLE_EMAIL) as String
         }
     }
@@ -153,5 +151,8 @@ class PasswordRecoveryCodeFragment : Fragment() {
                 println("ошибка")
             }
         }
+    }
+    companion object{
+        const val BUNDLE_EMAIL = "email"
     }
 }

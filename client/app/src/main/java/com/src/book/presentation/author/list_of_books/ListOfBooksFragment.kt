@@ -27,9 +27,6 @@ import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
-import com.src.book.utils.AUTHOR_ID
-import com.src.book.utils.BOOK_ID
-import com.src.book.utils.TITLE
 
 class ListOfBooksFragment : Fragment() {
     private lateinit var binding: FragmentListOfBooksBinding
@@ -147,7 +144,7 @@ class ListOfBooksFragment : Fragment() {
 
     private fun onClickBook(book: BookList) {
         val bundle = Bundle()
-        bundle.putLong(BOOK_ID, book.id)
+        bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()
@@ -192,5 +189,9 @@ class ListOfBooksFragment : Fragment() {
             else -> {}
 
         }
+    }
+    companion object{
+        const val AUTHOR_ID = "author_id"
+        const val TITLE = "title"
     }
 }

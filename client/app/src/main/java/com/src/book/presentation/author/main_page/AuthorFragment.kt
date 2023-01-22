@@ -38,10 +38,10 @@ class AuthorFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val args = this.arguments
         //TODO обработка ошибки если автор не получен
-        if (args?.getLong(AUTHOR_ID) != null) {
-            authorId = args.getLong(AUTHOR_ID)
+        authorId = if (args?.getLong(AUTHOR_ID) != null) {
+            args.getLong(AUTHOR_ID)
         } else {
-            authorId = 1
+            1
         }
     }
 
@@ -141,12 +141,12 @@ class AuthorFragment : Fragment() {
         }
         this.binding.ivAuthor.elevation = 39 * density
     }
-
+//TODO обрать хардкод строк
     private fun setOnClickListenerForBiography(author: Author) {
         this.binding.tvBiographyMore.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(DESCRIPTION, author.biography)
-            bundle.putString(TITLE, "Биография")
+            bundle.putString(DescriptionFragment.DESCRIPTION, author.biography)
+            bundle.putString(DescriptionFragment.TITLE, "Биография")
             val fragment = DescriptionFragment()
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
@@ -159,8 +159,8 @@ class AuthorFragment : Fragment() {
     private fun setOnClickListenerForBooks(author: Author) {
         this.binding.tvBookMore.setOnClickListener {
             val bundle = Bundle()
-            bundle.putLong(AUTHOR_ID, author.id)
-            bundle.putString(TITLE, author.name)
+            bundle.putLong(ListOfBooksFragment.AUTHOR_ID, author.id)
+            bundle.putString(ListOfBooksFragment.TITLE, author.name)
             val fragment = ListOfBooksFragment()
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
@@ -172,7 +172,7 @@ class AuthorFragment : Fragment() {
 
     private fun onClickBook(book: BookAuthor) {
         val bundle = Bundle()
-        bundle.putLong(BOOK_ID, book.id)
+        bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()
@@ -206,5 +206,9 @@ class AuthorFragment : Fragment() {
         binding.tvRatingTitle.visibility = visibility
         binding.clTemp.visibility = visibility
         binding.bottomSheet.visibility = visibility
+    }
+
+    companion object {
+        const val AUTHOR_ID = "author_id"
     }
 }

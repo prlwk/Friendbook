@@ -11,7 +11,6 @@ import com.src.book.databinding.FragmentPasswordRecoveryEmailBinding
 import com.src.book.domain.utils.CodeState
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecoveryEmail.PasswordRecoveryEmailViewModel
-import com.src.book.utils.BUNDLE_EMAIL
 import com.src.book.utils.REGEX_EMAIL
 import java.util.regex.Pattern
 
@@ -67,7 +66,7 @@ class PasswordRecoveryEmailFragment : Fragment() {
             when (state) {
                 is CodeState.SuccessState -> {
                     val bundle = Bundle()
-                    bundle.putString(BUNDLE_EMAIL, binding.etEmail.text.toString())
+                    bundle.putString(PasswordRecoveryCodeFragment.BUNDLE_EMAIL, binding.etEmail.text.toString())
                     val fragment = PasswordRecoveryCodeFragment()
                     fragment.arguments = bundle
                     activity?.supportFragmentManager?.beginTransaction()
@@ -86,6 +85,5 @@ class PasswordRecoveryEmailFragment : Fragment() {
                 }
             }
         }
-
     }
 }

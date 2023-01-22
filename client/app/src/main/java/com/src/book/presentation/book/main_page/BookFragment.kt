@@ -26,10 +26,6 @@ import com.src.book.presentation.book.main_page.adapter.TagAdapter
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.rate_dialog.RateBookDialog
 import com.src.book.presentation.utils.RatingColor
-import com.src.book.utils.AUTHOR_ID
-import com.src.book.utils.BOOK_ID
-import com.src.book.utils.DESCRIPTION
-import com.src.book.utils.TITLE
 
 
 class BookFragment : Fragment() {
@@ -42,15 +38,15 @@ class BookFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val args = this.arguments
         //TODO обработка ошибки если книга не получена
-        if (args?.getLong(BOOK_ID) != null) {
-            bookId = args.getLong(BOOK_ID) as Long
-        } else bookId = 1
+        bookId = if (args?.getLong(BOOK_ID) != null) {
+            args.getLong(BOOK_ID) as Long
+        } else 1
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         this.binding = FragmentBookBinding.inflate(inflater)
         this.bindingShimmer = binding.layoutShimmer
         viewModel = (activity as MainActivity).getBookViewModel()
@@ -171,7 +167,7 @@ class BookFragment : Fragment() {
 
     private fun onClickAuthor(author: AuthorBook) {
         val bundle = Bundle()
-        bundle.putLong(AUTHOR_ID, author.id)
+        bundle.putLong(AuthorFragment.AUTHOR_ID, author.id)
         val fragment = AuthorFragment()
         fragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()
@@ -196,8 +192,8 @@ class BookFragment : Fragment() {
     private fun setOnClickListenerForDescription(book: Book) {
         this.binding.tvDescriptionMore.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString(DESCRIPTION, book.description)
-            bundle.putString(TITLE, "Описание")
+            bundle.putString(DescriptionFragment.DESCRIPTION, book.description)
+            bundle.putString(DescriptionFragment.TITLE, "Описание")
             val fragment = DescriptionFragment()
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
@@ -228,5 +224,9 @@ class BookFragment : Fragment() {
         binding.clSaving.visibility = visibility
         binding.clTemp.visibility = visibility
         binding.bottomSheet.visibility = visibility
+    }
+
+    companion object {
+        const val BOOK_ID = "book_id"
     }
 }

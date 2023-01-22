@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.src.book.databinding.FragmentDescriptionBinding
-import com.src.book.utils.DESCRIPTION
-import com.src.book.utils.TITLE
 
 class DescriptionFragment : Fragment() {
     private lateinit var binding: FragmentDescriptionBinding
@@ -19,7 +17,7 @@ class DescriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ):
-            View? {
+            View {
         val args = this.arguments
         biography = args?.getString(DESCRIPTION).toString()
         title = args?.getString(TITLE).toString()
@@ -35,5 +33,9 @@ class DescriptionFragment : Fragment() {
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
+    companion object{
+        const val DESCRIPTION = "description"
+        const val TITLE = "title"
     }
 }

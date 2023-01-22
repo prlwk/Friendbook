@@ -23,7 +23,6 @@ import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModel
 import com.src.book.presentation.profile.settings.SettingsFragment
-import com.src.book.utils.BOOK_ID
 
 class MyProfileFragment : Fragment() {
 
@@ -191,7 +190,7 @@ class MyProfileFragment : Fragment() {
 
     private fun onClickBook(book: BookList) {
         val bundle = Bundle()
-        bundle.putLong(BOOK_ID, book.id)
+        bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
         requireActivity().supportFragmentManager.beginTransaction()
