@@ -7,9 +7,8 @@ on:
       - ".github/workflows/review-service.yaml"
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -23,8 +22,48 @@ jobs:
         run: |-
           cd API/review-service
           mvn -B -DargLine="-ACTIVE_PROFILE=default -CONFIG_URI=http://localhost:8088" package --file pom.xml -DskipTests
-
-      - name: Run tests
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      ACTIVE_PROFILE: default
+      CONFIG_URI: http://localhost:8088
+      SPRING_PROFILES_ACTIVE: native
+      EUREKA_HOSTNAME: localhost
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run serverconfig
+        env:
+          SERVER_PORT: 8088
+        run: |-
+          cd API/serverconfig
+          mvn spring-boot:run &
+      - name: Run eurekaserver
+        run: |-
+          cd API/eurekaserver
+          mvn spring-boot:run &
+      - name: Run gateway-server
+        run: |-
+          cd API/gateway-server
+          mvn spring-boot:run &
+      - name: Run tests for review-service
         run: |-
           cd API/review-service
-          mvn -B -DargLine="-ACTIVE_PROFILE=default -CONFIG_URI=http://localhost:8088" test --file pom.xml
+          mvn -B test --file pom.xml
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: review
+          MYSQL_ROOT_USER: root
+          MYSQL_ROOT_PASSWORD: somepassword
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3

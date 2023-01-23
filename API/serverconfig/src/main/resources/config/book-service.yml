@@ -3,7 +3,7 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/book
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: 28012003Nastia
+    password: somepassword
   jpa:
     properties:
       hibernate:
