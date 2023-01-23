@@ -3,6 +3,7 @@ package com.src.book.data.remote.dataSource
 import com.src.book.*
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
+import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
@@ -37,6 +38,9 @@ class UserDataSourceTest {
 
     @MockK
     private lateinit var sessionService: SessionService
+
+    @MockK
+    private lateinit var userProfileMapper: UserProfileMapper
     private lateinit var userDataSource: UserDataSource
 
     @Before
@@ -44,7 +48,8 @@ class UserDataSourceTest {
         userDataSource = UserDataSourceImpl(
             userService = userService,
             sessionStorage = sessionStorage,
-            sessionService = sessionService
+            sessionService = sessionService,
+            userProfileMapper = userProfileMapper
         )
     }
 

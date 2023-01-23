@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.usecase.friend.GetFriendsUseCase
 import com.src.book.domain.usecase.friend.GetIncomingRequestsCountUseCase
+import com.src.book.domain.usecase.friend.RemoveFriendUseCase
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.friends.friends_list.FriendsListState
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModel
@@ -27,6 +28,7 @@ class FriendsListViewModelTest {
     val rule = InstantTaskExecutorRule()
     private lateinit var getFriendsUseCase: GetFriendsUseCase
     private lateinit var getIncomingRequestsCountUseCase: GetIncomingRequestsCountUseCase
+    private lateinit var removeFriendUseCase: RemoveFriendUseCase
     private lateinit var friendsListViewModel: FriendsListViewModel
     private val dispatcher = UnconfinedTestDispatcher()
     private lateinit var testModelsGenerator: TestModelsGenerator
@@ -36,9 +38,11 @@ class FriendsListViewModelTest {
         Dispatchers.setMain(dispatcher = dispatcher)
         getFriendsUseCase = mockk()
         getIncomingRequestsCountUseCase = mockk()
+        removeFriendUseCase = mockk()
         friendsListViewModel = FriendsListViewModel(
             getFriendsUseCase = getFriendsUseCase,
-            getIncomingRequestsCountUseCase = getIncomingRequestsCountUseCase
+            getIncomingRequestsCountUseCase = getIncomingRequestsCountUseCase,
+            removeFriendUseCase = removeFriendUseCase
         )
         testModelsGenerator = TestModelsGenerator()
     }
