@@ -22,7 +22,6 @@ import com.src.book.utils.REGEX_SPACE
 import java.util.*
 import kotlin.collections.ArrayList
 
-//TODO добавить количество заявок
 class FriendsListFragment : Fragment() {
     private lateinit var binding: FragmentFriendsListBinding
     private lateinit var viewModel: FriendsListViewModel
@@ -41,7 +40,7 @@ class FriendsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.liveDataFriends.observe(
-            this.viewLifecycleOwner, this::checkState
+            this.viewLifecycleOwner, this::checkLoadFriendsState
         )
         viewModel.liveDataIsLoading.observe(
             this.viewLifecycleOwner, this::setView
@@ -99,11 +98,12 @@ class FriendsListFragment : Fragment() {
         })
     }
 
-    //TODO обработка ошибки загрузки друзей
-    private fun checkState(state: FriendsListState) {
+    private fun checkLoadFriendsState(state: FriendsListState) {
         when (state) {
             is FriendsListState.SuccessState -> loadData(state.friend)
-            is FriendsListState.ErrorState -> {}
+            is FriendsListState.ErrorState -> {
+                (activity as MainActivity).showSnackBar()
+            }
             else -> {}
         }
     }
@@ -139,32 +139,34 @@ class FriendsListFragment : Fragment() {
     private fun checkStateForIncomingRequests(state: BasicState) {
         when (state) {
             is BasicState.SuccessStateWithResources<*> -> {
+                binding.tvFriendsRequestsNumber.visibility = View.VISIBLE
                 val count = (state.data as Int)
                 if (count == 0) {
                     binding.tvFriendsRequestsNumber.visibility = View.INVISIBLE
                 } else {
                     binding.tvFriendsRequestsNumber.visibility = View.VISIBLE
                     val countString: String = if (count > 9) {
-                        "9+"
+                        getString(R.string.large_number_of_friends_requests)
                     } else {
                         count.toString()
                     }
                     binding.tvFriendsRequestsNumber.text = countString
                 }
             }
-            is BasicState.ErrorState -> {}
+            is BasicState.ErrorState -> {
+                (activity as MainActivity).showSnackBar()
+                binding.tvFriendsRequestsNumber.visibility = View.GONE
+            }
             else -> {}
         }
     }
 
-    //TODO обработка ошибки удаления друга
     private fun checkStateRemoveFriend(state: BasicState) {
-        when (state) {
-            is BasicState.ErrorState -> {
-
-            }
+        if (state is BasicState.ErrorState) {
+            (activity as MainActivity).showSnackBar()
         }
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun removeFriend(friendId: Long, position: Int) {

@@ -57,7 +57,7 @@
     <color name="background_cong_color">#EFEAEA</color>
     <color name="background_blackout_cong_color">#80000000</color>
     <color name="text_cong_color">#CC505050</color>
-
+    <color name="error_color">#FC4D4D</color>
     <!--    only dark theme-->
 
 

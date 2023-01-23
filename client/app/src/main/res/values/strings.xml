@@ -104,4 +104,6 @@
     <string name="congratulations">Поздравляем!</string>
     <string name="congratulation_deskription">Вы успешно зарегистрированы. Вы будете перенаправлены на главную страницу через несколько секунд.</string>
     <string name="remove_friend">Удалить друга</string>
+    <string name="toast_error_text">Ошибка. Попробуйте позже.</string>
+    <string name="large_number_of_friends_requests">9+</string>
 </resources>

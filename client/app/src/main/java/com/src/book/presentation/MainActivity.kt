@@ -1,42 +1,32 @@
 package com.src.book.presentation
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.src.book.R
 import com.src.book.app.App
 import com.src.book.databinding.ActivityMainBinding
-import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModelFactory
-import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModelFactory
-import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
-import com.src.book.presentation.friends.add_friends.AddFriendsFragment
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModel
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModelFactory
 import com.src.book.presentation.friends.friends_list.FriendsListFragment
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModel
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModelFactory
-import com.src.book.presentation.friends.friends_requests.RequestsFriendsFragment
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModelFactory
-import com.src.book.presentation.main.main_page.FilterFragment
-import com.src.book.presentation.profile.my_profile.EditMyProfileFragment
-import com.src.book.presentation.profile.my_profile.MyProfileFragment
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModel
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModelFactory
-import com.src.book.presentation.profile.settings.SettingsFragment
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModel
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModelFactory
-import com.src.book.presentation.registration.LoginActivity
-import com.src.book.presentation.registration.sign_in.SignInFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -120,4 +110,27 @@ class MainActivity : AppCompatActivity() {
 
     fun getMyProfileViewModel(): MyProfileViewModel =
         ViewModelProvider(this, myProfileViewModelFactory)[MyProfileViewModel::class.java]
+
+    @SuppressLint("ShowToast")
+    fun showSnackBar() {
+        val customView = layoutInflater.inflate(
+            R.layout.error_toast,
+            findViewById(R.id.cl_toast)
+        )
+        val snackBar = Snackbar.make(
+            findViewById(R.id.fragment_container),
+            "",
+            Snackbar.LENGTH_LONG
+        )
+        snackBar.view.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.transparent
+            )
+        )
+        val layout = snackBar.view as Snackbar.SnackbarLayout
+        snackBar.anchorView = findViewById(R.id.bottom_navigation)
+        layout.addView(customView)
+        snackBar.show()
+    }
 }
