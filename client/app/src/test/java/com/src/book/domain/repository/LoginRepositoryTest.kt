@@ -6,10 +6,7 @@ import com.src.book.TestModelsGenerator
 import com.src.book.data.local.LocalUserRepository
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.repository.LoginRepositoryImpl
-import com.src.book.domain.utils.BasicState
-import com.src.book.domain.utils.CodeState
-import com.src.book.domain.utils.LoginState
-import com.src.book.domain.utils.RegistrationState
+import com.src.book.domain.utils.*
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -85,21 +82,21 @@ class LoginRepositoryTest {
 
     @Test
     fun testCheckEmailExistsSuccessful() = runTest {
-        coEvery { loginDataSource.checkEmailExists(any()) } returns BasicState.SuccessStateWithResources(
+        coEvery { loginDataSource.checkEmailExists(any()) } returns BasicState.SuccessState(
             true
         )
         Assert.assertTrue(
-            loginRepository.checkEmailExists(EMAIL) is BasicState.SuccessStateWithResources<*>
+            loginRepository.checkEmailExists(EMAIL) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (loginRepository.checkEmailExists(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            (loginRepository.checkEmailExists(EMAIL) as BasicState.SuccessState<*>).data,
             true
         )
     }
 
     @Test
     fun testCheckEmailExistsError() = runTest {
-        coEvery { loginDataSource.checkEmailExists(any()) } returns BasicState.ErrorState
+        coEvery { loginDataSource.checkEmailExists(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(loginRepository.checkEmailExists(EMAIL) is BasicState.ErrorState)
     }
 
@@ -241,13 +238,13 @@ class LoginRepositoryTest {
 
     @Test
     fun testSendCodeForAccountConfirmationsSuccessful() = runTest {
-        coEvery { loginDataSource.sendCodeForAccountConfirmations() } returns BasicState.SuccessState
+        coEvery { loginDataSource.sendCodeForAccountConfirmations() } returns BasicState.SuccessState(Unit)
         Assert.assertTrue(loginRepository.sendCodeForAccountConfirmations() is BasicState.SuccessState)
     }
 
     @Test
     fun testSendCodeForAccountConfirmationsError() = runTest {
-        coEvery { loginDataSource.sendCodeForAccountConfirmations() } returns BasicState.ErrorState
+        coEvery { loginDataSource.sendCodeForAccountConfirmations() } returns BasicState.ErrorState()
         Assert.assertTrue(loginRepository.sendCodeForAccountConfirmations() is BasicState.ErrorState)
     }
 }

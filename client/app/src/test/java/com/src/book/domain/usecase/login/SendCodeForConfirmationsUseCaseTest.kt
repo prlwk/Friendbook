@@ -2,7 +2,6 @@ package com.src.book.domain.usecase.login
 
 import com.src.book.domain.repository.LoginRepository
 import com.src.book.domain.utils.BasicState
-import com.src.book.domain.utils.CodeState
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -37,13 +36,13 @@ class SendCodeForConfirmationsUseCaseTest {
 
     @Test
     fun executeSuccessful() = runTest {
-        coEvery { loginRepository.sendCodeForAccountConfirmations() } returns BasicState.SuccessState
+        coEvery { loginRepository.sendCodeForAccountConfirmations() } returns BasicState.SuccessState(Unit)
         Assert.assertTrue(sendCodeForConfirmationsUseCase.execute() is BasicState.SuccessState)
     }
 
     @Test
     fun executeError() = runTest {
-        coEvery { loginRepository.sendCodeForAccountConfirmations() } returns BasicState.ErrorState
+        coEvery { loginRepository.sendCodeForAccountConfirmations() } returns BasicState.ErrorState()
         Assert.assertTrue(sendCodeForConfirmationsUseCase.execute() is BasicState.ErrorState)
     }
 }

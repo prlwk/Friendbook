@@ -18,7 +18,7 @@ class MyProfileViewModel(
     private val _mutableLiveDataIsLoading = MutableLiveData(false)
     private val _mutableLiveDataEditProfileState =
         MutableLiveData<EditProfileState>(EditProfileState.DefaultState)
-    private val _mutableLiveDataProfileState = MutableLiveData<BasicState>(BasicState.DefaultState)
+    private val _mutableLiveDataProfileState = MutableLiveData<BasicState<UserProfile>>(BasicState.DefaultState())
 
     private val _mutableLiveDataName = MutableLiveData<String?>(null)
     private val _mutableLiveDataLogin = MutableLiveData<String?>(null)
@@ -62,11 +62,10 @@ class MyProfileViewModel(
     fun setProfile() {
         viewModelScope.launch {
             _mutableLiveDataIsLoading.value = true
-            _mutableLiveDataProfileState.value = BasicState.DefaultState
+            _mutableLiveDataProfileState.value = BasicState.DefaultState()
             _mutableLiveDataProfileState.value = getProfileUseCase.execute()
-            if (_mutableLiveDataProfileState.value is BasicState.SuccessStateWithResources<*>) {
-                val profile =
-                    (_mutableLiveDataProfileState.value as BasicState.SuccessStateWithResources<*>).data as UserProfile
+            if(_mutableLiveDataProfileState.value is BasicState.SuccessState<*>){
+                val profile = (_mutableLiveDataProfileState.value as BasicState.SuccessState<*>).data as UserProfile
                 _mutableLiveDataName.value = profile.name
                 _mutableLiveDataLogin.value = profile.login
                 _mutableLiveDataPhotoString.value = profile.image

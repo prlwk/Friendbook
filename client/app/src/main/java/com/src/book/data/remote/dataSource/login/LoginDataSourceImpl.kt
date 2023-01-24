@@ -6,10 +6,7 @@ import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.*
 import com.src.book.domain.model.user.Login
-import com.src.book.domain.utils.BasicState
-import com.src.book.domain.utils.CodeState
-import com.src.book.domain.utils.LoginState
-import com.src.book.domain.utils.RegistrationState
+import com.src.book.domain.utils.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -53,13 +50,16 @@ class LoginDataSourceImpl(
         }
     }
 
-    override suspend fun checkEmailExists(email: String): BasicState {
+    override suspend fun checkEmailExists(email: String): BasicState<Boolean> {
         val response = loginService.checkEmailExists(email)
         if (response.isSuccessful) {
-            return BasicState
-                .SuccessStateWithResources(response.body()?.exists)
+            val body = response.body()?.exists
+            if (body != null) {
+                return BasicState
+                    .SuccessState(body)
+            }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 
     override suspend fun checkRecoveryCode(code: String, email: String): CodeState {
@@ -150,14 +150,14 @@ class LoginDataSourceImpl(
         return CodeState.ErrorState
     }
 
-    override suspend fun sendCodeForAccountConfirmations(): BasicState {
+    override suspend fun sendCodeForAccountConfirmations(): BasicState<Unit> {
         val id = sessionStorage.getId()
         if (id.isNotEmpty()) {
             val response = loginService.sendCodeForAccountConfirmations(id.toLong())
             if (response.isSuccessful) {
-                return BasicState.SuccessState
+                return BasicState.SuccessState(Unit)
             }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 }

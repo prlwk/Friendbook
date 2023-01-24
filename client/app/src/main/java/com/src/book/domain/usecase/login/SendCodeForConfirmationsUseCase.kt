@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class SendCodeForConfirmationsUseCase(private val loginRepository: LoginRepository) {
-    suspend fun execute(): BasicState = withContext(Dispatchers.IO) {
+    suspend fun execute(): BasicState<Unit> = withContext(Dispatchers.IO) {
         return@withContext loginRepository.sendCodeForAccountConfirmations()
     }
 }

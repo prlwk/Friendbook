@@ -60,12 +60,12 @@ class RegistrationFragment : Fragment() {
         setOnClickListenerForSignInButton()
     }
 
-    private fun checkEmailExists(state: BasicState) {
+    private fun checkEmailExists(state: BasicState<Boolean>) {
         if (onClickNext) {
             onClickNext = false
             Log.d("onClickNext", "onClick")
-            if (state is BasicState.SuccessStateWithResources<*>) {
-                val isExists = (state as BasicState.SuccessStateWithResources<Boolean>).data
+            if (state is BasicState.SuccessState<*>) {
+                val isExists = state.data as Boolean
                 if (isExists) {
                     binding.tilEmail.error = "Такой email уже существует"
                     binding.tilEmail.errorIconDrawable = null

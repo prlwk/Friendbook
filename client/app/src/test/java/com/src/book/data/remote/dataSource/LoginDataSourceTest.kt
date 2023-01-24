@@ -8,10 +8,7 @@ import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.EMAIL_ALREADY_IN_USE
 import com.src.book.data.remote.utils.INVALID_CODE
-import com.src.book.domain.utils.BasicState
-import com.src.book.domain.utils.CodeState
-import com.src.book.domain.utils.LoginState
-import com.src.book.domain.utils.RegistrationState
+import com.src.book.domain.utils.*
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -143,10 +140,10 @@ class LoginDataSourceTest {
             testModelsResponseGenerator.generateEmailExistsTrueResponse()
         )
         Assert.assertTrue(
-            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessStateWithResources<*>
+            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessState<*>).data,
             true
         )
     }
@@ -157,10 +154,10 @@ class LoginDataSourceTest {
             testModelsResponseGenerator.generateEmailExistsFalseResponse()
         )
         Assert.assertTrue(
-            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessStateWithResources<*>
+            loginDataSource.checkEmailExists(EMAIL) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            (loginDataSource.checkEmailExists(EMAIL) as BasicState.SuccessState<*>).data,
             false
         )
     }

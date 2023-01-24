@@ -89,9 +89,9 @@ class MyProfileFragment : Fragment() {
         }
     }
 
-    private fun checkProfileState(state: BasicState) {
+    private fun checkProfileState(state: BasicState<UserProfile>) {
         when (state) {
-            is BasicState.SuccessStateWithResources<*> -> {
+            is BasicState.SuccessState<*> -> {
                 loadData(state.data as UserProfile)
             }
             //TODO обработка ошибки загрузки

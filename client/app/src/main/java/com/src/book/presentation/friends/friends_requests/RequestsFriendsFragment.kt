@@ -14,7 +14,6 @@ import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.friends.add_friends.AddFriendsFragment
-import com.src.book.presentation.friends.friends_requests.viewModel.FriendRequestsState
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import com.src.book.presentation.friends.friends_requests.viewModel.adapter.IncomingRequestsAdapter
 import com.src.book.presentation.friends.friends_requests.viewModel.adapter.OutgoingRequestsAdapter
@@ -86,31 +85,31 @@ class RequestsFriendsFragment : Fragment() {
     }
 
     //TODO eсли произошла ошибка когда принимали заявку в друзья
-    private fun checkStateForSubmitFriendRequest(state: BasicState) {
+    private fun checkStateForSubmitFriendRequest(state: BasicState<Unit>) {
         if (state is BasicState.ErrorState) {
 
         }
     }
 
     //TODO eсли произошла ошибка когда отклонили заявку в друзья
-    private fun checkStateForIncomingRejectFriendRequest(state: BasicState) {
+    private fun checkStateForIncomingRejectFriendRequest(state: BasicState<Unit>) {
         if (state is BasicState.ErrorState) {
 
         }
     }
 
     //TODO eсли произошла ошибка когда отклонили заявку в друзья
-    private fun checkStateForOutgoingRejectFriendRequest(state: BasicState) {
+    private fun checkStateForOutgoingRejectFriendRequest(state: BasicState<Unit>) {
         if (state is BasicState.ErrorState) {
 
         }
     }
 
-    private fun checkStateForIncomingRequest(state: FriendRequestsState) {
+    private fun checkStateForIncomingRequest(state: BasicState<List<FriendRequest>>) {
         when (state) {
-            is FriendRequestsState.DefaultState -> {
-                if (state.friendsRequest.isNotEmpty()) {
-                    loadIncomingRequest(state.friendsRequest)
+            is BasicState.SuccessState -> {
+                if (state.data.isNotEmpty()) {
+                    loadIncomingRequest(state.data)
                 } else {
                     //TODO нет заявок
                 }
@@ -121,11 +120,11 @@ class RequestsFriendsFragment : Fragment() {
         }
     }
 
-    private fun checkStateForOutgoingRequest(state: FriendRequestsState) {
+    private fun checkStateForOutgoingRequest(state: BasicState<List<FriendRequest>>) {
         when (state) {
-            is FriendRequestsState.DefaultState -> {
-                if (state.friendsRequest.isNotEmpty()) {
-                    loadOutgoingRequest(state.friendsRequest)
+            is BasicState.SuccessState -> {
+                if (state.data.isNotEmpty()) {
+                    loadOutgoingRequest(state.data)
                 } else {
                     //TODO нет заявок
                 }

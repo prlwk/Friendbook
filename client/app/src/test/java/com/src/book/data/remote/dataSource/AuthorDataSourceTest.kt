@@ -53,10 +53,10 @@ class AuthorDataSourceTest {
         coEvery { authorService.getAuthorById(any()) } returns Response.success(authorResponseModel)
         coEvery { authorMapper.mapFromResponseToModel(any()) } returns authorModel
         Assert.assertTrue(
-            authorDataSource.loadAuthorById(ID) is BasicState.SuccessStateWithResources<*>
+            authorDataSource.loadAuthorById(ID) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (authorDataSource.loadAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            (authorDataSource.loadAuthorById(ID) as BasicState.SuccessState<*>).data,
             authorModel
         )
     }

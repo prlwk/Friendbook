@@ -3,10 +3,10 @@ package com.src.book.presentation.author
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.ID
 import com.src.book.TestModelsGenerator
+import com.src.book.domain.model.BookList
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.utils.BasicState
-import com.src.book.presentation.author.list_of_books.ListOfBooksState
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -48,25 +48,35 @@ class ListOfBooksViewModelTest {
 
     @Test
     fun testLoadBooksByAuthorIdSuccessful() = runTest {
-        val booksModel = listOf(testModelsGenerator.generateBookModel())
-        val state = BasicState.SuccessStateWithResources(booksModel)
+        val booksModel = listOf(testModelsGenerator.generateBookListModel(true))
+        val state = BasicState.SuccessState(booksModel)
         coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns state
         listOfBooksViewModel.loadBooksByAuthorId(ID)
         Assert.assertTrue(
-            listOfBooksViewModel.liveDataBooks.value is ListOfBooksState.SuccessState
+            listOfBooksViewModel.liveDataBooks.value is BasicState.SuccessState
         )
         Assert.assertEquals(
-            (listOfBooksViewModel.liveDataBooks.value as ListOfBooksState.SuccessState).books,
+            (listOfBooksViewModel.liveDataBooks.value as BasicState.SuccessState).data,
             booksModel
         )
     }
 
     @Test
-    fun testLoadBooksByAuthorIdError() = runTest {
-        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns BasicState.ErrorState
+    fun testLoadBooksByAuthorIdEmptyList() = runTest {
+        val state = BasicState.EmptyState<List<BookList>>()
+        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns state
         listOfBooksViewModel.loadBooksByAuthorId(ID)
         Assert.assertTrue(
-            listOfBooksViewModel.liveDataBooks.value is ListOfBooksState.ErrorState
+            listOfBooksViewModel.liveDataBooks.value is BasicState.EmptyState
+        )
+    }
+
+    @Test
+    fun testLoadBooksByAuthorIdError() = runTest {
+        coEvery { getBooksByAuthorIdUseCase.execute(any()) } returns BasicState.ErrorState()
+        listOfBooksViewModel.loadBooksByAuthorId(ID)
+        Assert.assertTrue(
+            listOfBooksViewModel.liveDataBooks.value is BasicState.ErrorState
         )
     }
 }

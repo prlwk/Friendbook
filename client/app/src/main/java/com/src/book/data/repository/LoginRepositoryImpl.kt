@@ -11,14 +11,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class LoginRepositoryImpl(private val loginDataSource: LoginDataSource, private val userLocalRepository: LocalUserRepository) : LoginRepository {
+class LoginRepositoryImpl(
+    private val loginDataSource: LoginDataSource,
+    private val userLocalRepository: LocalUserRepository
+) : LoginRepository {
     override suspend fun signIn(data: Login) = withContext(Dispatchers.IO) {
         return@withContext loginDataSource.signIn(data)
     }
 
-    override suspend fun checkEmailExists(email: String): BasicState = withContext(Dispatchers.IO) {
-        return@withContext loginDataSource.checkEmailExists(email)
-    }
+    override suspend fun checkEmailExists(email: String): BasicState<Boolean> =
+        withContext(Dispatchers.IO) {
+            return@withContext loginDataSource.checkEmailExists(email)
+        }
 
     override suspend fun checkRecoveryCode(code: String, email: String): CodeState =
         withContext(Dispatchers.IO) {
@@ -42,12 +46,12 @@ class LoginRepositoryImpl(private val loginDataSource: LoginDataSource, private 
         return@withContext loginDataSource.checkRecoveryCodeForAccountConfirmations(code, email)
     }
 
-    override suspend fun sendCodeForAccountConfirmations(): BasicState =
+    override suspend fun sendCodeForAccountConfirmations(): BasicState<Unit> =
         withContext(Dispatchers.IO) {
             return@withContext loginDataSource.sendCodeForAccountConfirmations()
         }
 
-    override suspend fun setIsActiveAndClearSession()= withContext(Dispatchers.IO) {
+    override suspend fun setIsActiveAndClearSession() = withContext(Dispatchers.IO) {
         userLocalRepository.setIsActiveAndClearSession()
     }
 }

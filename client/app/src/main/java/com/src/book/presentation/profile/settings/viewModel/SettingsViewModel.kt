@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val logoutUseCase: LogoutUseCase) : ViewModel() {
     private val _mutableLiveDataIsLoading = MutableLiveData<Boolean>(false)
-    private val _mutableBasicState = MutableLiveData<BasicState>(BasicState.SuccessState)
+    private val _mutableBasicState = MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
 
     val liveDataBasicState get() = _mutableBasicState
     val liveDataIsLoading get() = _mutableLiveDataIsLoading

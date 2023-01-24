@@ -108,9 +108,7 @@ class UserDataSourceTest {
         coEvery { sessionStorage.getRefreshToken() } returns REFRESH_TOKEN
         coEvery { userService.logout(any()) } returns Response.success(Unit)
         coEvery { sessionStorage.clearSession() } returns Unit
-        Assert.assertEquals(
-            BasicState.SuccessState,
-            userDataSource.logout()
+        Assert.assertTrue(userDataSource.logout() is BasicState.SuccessState
         )
     }
 
@@ -121,10 +119,7 @@ class UserDataSourceTest {
             404, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
-        Assert.assertEquals(
-            BasicState.ErrorState,
-            userDataSource.logout()
-        )
+        Assert.assertTrue( userDataSource.logout() is BasicState.ErrorState)
     }
 
     @Test

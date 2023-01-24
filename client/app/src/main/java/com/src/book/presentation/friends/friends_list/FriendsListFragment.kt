@@ -98,10 +98,10 @@ class FriendsListFragment : Fragment() {
         })
     }
 
-    private fun checkLoadFriendsState(state: FriendsListState) {
+    private fun checkLoadFriendsState(state: BasicState<List<Friend>>) {
         when (state) {
-            is FriendsListState.SuccessState -> loadData(state.friend)
-            is FriendsListState.ErrorState -> {
+            is BasicState.SuccessState -> loadData(state.data)
+            is BasicState.ErrorState -> {
                 (activity as MainActivity).showSnackBar()
             }
             else -> {}
@@ -136,9 +136,9 @@ class FriendsListFragment : Fragment() {
     }
 
     //TODO обработать ошибку получения количества реквестов
-    private fun checkStateForIncomingRequests(state: BasicState) {
+    private fun checkStateForIncomingRequests(state: BasicState<Int>) {
         when (state) {
-            is BasicState.SuccessStateWithResources<*> -> {
+            is BasicState.SuccessState<*> -> {
                 binding.tvFriendsRequestsNumber.visibility = View.VISIBLE
                 val count = (state.data as Int)
                 if (count == 0) {
@@ -161,7 +161,7 @@ class FriendsListFragment : Fragment() {
         }
     }
 
-    private fun checkStateRemoveFriend(state: BasicState) {
+    private fun checkStateRemoveFriend(state: BasicState<Unit>) {
         if (state is BasicState.ErrorState) {
             (activity as MainActivity).showSnackBar()
         }

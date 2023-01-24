@@ -36,20 +36,20 @@ class GetIncomingRequestsCountUseCaseTest {
 
     @Test
     fun testExecuteSuccessful() = runTest {
-        coEvery { friendRepository.getIncomingRequestsCount() } returns BasicState.SuccessStateWithResources(
+        coEvery { friendRepository.getIncomingRequestsCount() } returns BasicState.SuccessState(
             3
         )
-        Assert.assertTrue(getIncomingRequestsCountUseCase.execute() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(getIncomingRequestsCountUseCase.execute() is BasicState.SuccessState<*>)
 
         Assert.assertEquals(
-            (getIncomingRequestsCountUseCase.execute() as BasicState.SuccessStateWithResources<*>).data,
+            (getIncomingRequestsCountUseCase.execute() as BasicState.SuccessState<*>).data,
             3
         )
     }
 
     @Test
     fun testExecuteError() = runTest {
-        coEvery { friendRepository.getIncomingRequestsCount() } returns BasicState.ErrorState
+        coEvery { friendRepository.getIncomingRequestsCount() } returns BasicState.ErrorState()
         Assert.assertTrue(getIncomingRequestsCountUseCase.execute() is BasicState.ErrorState)
     }
 }

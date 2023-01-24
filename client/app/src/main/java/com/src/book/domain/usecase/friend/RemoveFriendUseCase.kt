@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RemoveFriendUseCase(private val friendRepository: FriendRepository) {
-    suspend fun execute(friendId: Long): BasicState = withContext(Dispatchers.IO) {
+    suspend fun execute(friendId: Long): BasicState<Unit> = withContext(Dispatchers.IO) {
         return@withContext friendRepository.removeFriend(friendId)
     }
 }

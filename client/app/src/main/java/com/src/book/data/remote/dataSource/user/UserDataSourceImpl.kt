@@ -5,6 +5,7 @@ import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.service.UserService
 import com.src.book.data.remote.session.SessionStorage
+import com.src.book.domain.model.user.UserProfile
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
 import com.src.book.domain.utils.EditProfileState
@@ -63,14 +64,14 @@ class UserDataSourceImpl(
         return ChangePasswordState.ErrorState
     }
 
-    override suspend fun logout(): BasicState {
+    override suspend fun logout(): BasicState<Unit> {
         val refreshToken = sessionStorage.getRefreshToken()
         val response = userService.logout(refreshToken)
         return if (response.isSuccessful) {
             sessionStorage.clearSession()
-            BasicState.SuccessState
+            BasicState.SuccessState(Unit)
         } else {
-            BasicState.ErrorState
+            BasicState.ErrorState()
         }
     }
 
@@ -92,17 +93,17 @@ class UserDataSourceImpl(
         return EditProfileState.ErrorState
     }
 
-    override suspend fun getProfile(): BasicState {
+    override suspend fun getProfile(): BasicState<UserProfile> {
         val response = userService.getProfile()
         if (response.isSuccessful) {
             if (response.body() != null) {
-                return BasicState.SuccessStateWithResources(
-                    userProfileMapper.mapFromResponseToModel(
-                        response.body()!!
-                    )
-                )
+                val body = response.body()
+                if (body != null) {
+                    val profile = userProfileMapper.mapFromResponseToModel(body)
+                    return BasicState.SuccessState(profile)
+                }
             }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 }

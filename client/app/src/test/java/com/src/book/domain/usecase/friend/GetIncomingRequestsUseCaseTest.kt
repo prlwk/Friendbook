@@ -1,6 +1,7 @@
 package com.src.book.domain.usecase.friend
 
 import com.src.book.TestModelsGenerator
+import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.repository.FriendRepository
 import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
@@ -39,15 +40,14 @@ class GetIncomingRequestsUseCaseTest {
     @Test
     fun testExecuteSuccessful() = runTest {
         val state =
-            BasicState.SuccessStateWithResources(listOf(testModelsGenerator.generateFriendRequestModel()))
+            BasicState.SuccessState(listOf(testModelsGenerator.generateFriendRequestModel()))
         coEvery { friendRepository.getIncomingRequests() } returns state
         Assert.assertEquals(state, getIncomingRequestsUseCase.execute())
     }
 
     @Test
     fun testExecuteError() = runTest {
-        val state =
-            BasicState.ErrorState
+        val state = BasicState.ErrorState<List<FriendRequest>>()
         coEvery { friendRepository.getIncomingRequests() } returns state
         Assert.assertEquals(state, getIncomingRequestsUseCase.execute())
     }

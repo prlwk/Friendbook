@@ -37,21 +37,21 @@ class CheckEmailExistsUseCaseTest {
 
     @Test
     fun testCheckEmailExistsUseCaseSuccessful() = runTest {
-        coEvery { loginRepository.checkEmailExists(any()) } returns BasicState.SuccessStateWithResources(
+        coEvery { loginRepository.checkEmailExists(any()) } returns BasicState.SuccessState(
             false
         )
         Assert.assertTrue(
-            checkEmailExistsUseCase.execute(EMAIL) is BasicState.SuccessStateWithResources<*>
+            checkEmailExistsUseCase.execute(EMAIL) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (checkEmailExistsUseCase.execute(EMAIL) as BasicState.SuccessStateWithResources<*>).data,
+            (checkEmailExistsUseCase.execute(EMAIL) as BasicState.SuccessState<*>).data,
             false
         )
     }
 
     @Test
     fun testCheckEmailExistsUseCaseError() = runTest {
-        coEvery { loginRepository.checkEmailExists(any()) } returns BasicState.ErrorState
+        coEvery { loginRepository.checkEmailExists(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(
             checkEmailExistsUseCase.execute(EMAIL) is BasicState.ErrorState
         )

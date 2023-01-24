@@ -2,6 +2,7 @@ package com.src.book.domain.usecase.book
 
 import com.src.book.ID
 import com.src.book.TestModelsGenerator
+import com.src.book.domain.model.BookList
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
@@ -35,18 +36,26 @@ class GetBookByAuthorIdUseCaseTest {
 
     @Test
     fun testGetBookByIdUseCaseSuccessful() = runTest {
-        val booksModel = testModelsGenerator.generateListOfBooksModel()
-        val state = BasicState.SuccessStateWithResources(booksModel)
+        val booksModel = testModelsGenerator.generateListOfBookListModel()
+        val state = BasicState.SuccessState(booksModel)
         coEvery { bookRepository.getBooksByAuthorId(any()) } returns state
-        Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (getBookByAuthorIdUseCase.execute(ID) as BasicState.SuccessStateWithResources<*>).data,
-        booksModel)
+            (getBookByAuthorIdUseCase.execute(ID) as BasicState.SuccessState<*>).data,
+            booksModel
+        )
+    }
+
+    @Test
+    fun testGetBookByIdUseCaseEmptyList() = runTest {
+        val state = BasicState.EmptyState<List<BookList>>()
+        coEvery { bookRepository.getBooksByAuthorId(any()) } returns state
+        Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.EmptyState)
     }
 
     @Test
     fun testGetBookByIdUseCaseError() = runTest {
-        coEvery { bookRepository.getBooksByAuthorId(any()) } returns BasicState.ErrorState
+        coEvery { bookRepository.getBooksByAuthorId(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(getBookByAuthorIdUseCase.execute(ID) is BasicState.ErrorState)
     }
 }

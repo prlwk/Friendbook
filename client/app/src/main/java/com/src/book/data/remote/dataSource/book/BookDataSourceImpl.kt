@@ -22,16 +22,21 @@ class BookDataSourceImpl(
     private val sessionService: SessionService,
     private val sessionStorage: SessionStorage
 ) : BookDataSource {
-    override suspend fun loadBooksByAuthorId(id: Long): BasicState {
+    override suspend fun loadBooksByAuthorId(id: Long): BasicState<List<BookList>> {
         val token = getToken()
         val booksResponse = bookService.getAllBooksByAuthorId(id, token)
         if (booksResponse.isSuccessful) {
             val isAuth = token != null
-            return BasicState.SuccessStateWithResources(
-                booksResponse.body()
-                    ?.map { bookListMapper.mapFromResponseToModel(it, isAuth = isAuth) })
+            val books = booksResponse.body()
+                ?.map { bookListMapper.mapFromResponseToModel(it, isAuth = isAuth) }
+            if (books != null) {
+                return BasicState.SuccessState(books)
+            }
         }
-        return BasicState.ErrorState
+        if (booksResponse.code() == 404) {
+            return BasicState.EmptyState()
+        }
+        return BasicState.ErrorState()
     }
 
     override suspend fun loadBookById(id: Long): Book? {

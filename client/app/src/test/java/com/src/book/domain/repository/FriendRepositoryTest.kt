@@ -5,6 +5,7 @@ import com.src.book.LOGIN
 import com.src.book.TestModelsGenerator
 import com.src.book.data.remote.dataSource.friend.FriendDataSource
 import com.src.book.data.repository.FriendRepositoryImpl
+import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.SendFriendRequestState
 import io.mockk.coEvery
@@ -75,14 +76,14 @@ class FriendRepositoryTest {
     @Test
     fun testGetIncomingRequestSuccessful() = runTest {
         val models = listOf(testModelsGenerator.generateFriendRequestModel())
-        val successState = BasicState.SuccessStateWithResources(models)
+        val successState = BasicState.SuccessState(models)
         coEvery { friendDataSource.getIncomingRequests() } returns successState
         Assert.assertEquals(friendRepository.getIncomingRequests(), successState)
     }
 
     @Test
     fun testGetIncomingRequestError() = runTest {
-        val state = BasicState.ErrorState
+        val state = BasicState.ErrorState<List<FriendRequest>>()
         coEvery { friendDataSource.getIncomingRequests() } returns state
         Assert.assertEquals(friendRepository.getIncomingRequests(), state)
     }
@@ -90,88 +91,92 @@ class FriendRepositoryTest {
     @Test
     fun testGetOutgoingRequestSuccessful() = runTest {
         val models = listOf(testModelsGenerator.generateFriendRequestModel())
-        val successState = BasicState.SuccessStateWithResources(models)
+        val successState = BasicState.SuccessState(models)
         coEvery { friendDataSource.getOutgoingRequests() } returns successState
         Assert.assertEquals(friendRepository.getOutgoingRequests(), successState)
     }
 
     @Test
     fun testGetOutgoingRequestError() = runTest {
-        val state = BasicState.ErrorState
+        val state = BasicState.ErrorState<List<FriendRequest>>()
         coEvery { friendDataSource.getOutgoingRequests() } returns state
         Assert.assertEquals(friendRepository.getOutgoingRequests(), state)
     }
 
     @Test
     fun testSubmitFriendRequestSuccessful() = runTest {
-        coEvery { friendDataSource.submitFriendRequest(any()) } returns BasicState.SuccessState
+        coEvery { friendDataSource.submitFriendRequest(any()) } returns BasicState.SuccessState(
+            Unit
+        )
         Assert.assertTrue(friendRepository.submitFriendRequest(ID) is BasicState.SuccessState)
     }
 
     @Test
     fun testSubmitFriendRequestError() = runTest {
-        coEvery { friendDataSource.submitFriendRequest(any()) } returns BasicState.ErrorState
+        coEvery { friendDataSource.submitFriendRequest(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(friendRepository.submitFriendRequest(ID) is BasicState.ErrorState)
     }
 
     @Test
     fun testRejectIncomingFriendRequestSuccessful() = runTest {
-        coEvery { friendDataSource.rejectIncomingFriendRequest(any()) } returns BasicState.SuccessState
+        coEvery { friendDataSource.rejectIncomingFriendRequest(any()) } returns BasicState.SuccessState(
+            Unit
+        )
         Assert.assertTrue(friendRepository.rejectIncomingFriendRequest(ID) is BasicState.SuccessState)
     }
 
     @Test
     fun testRejectIncomingFriendRequestError() = runTest {
-        coEvery { friendDataSource.rejectIncomingFriendRequest(any()) } returns BasicState.ErrorState
+        coEvery { friendDataSource.rejectIncomingFriendRequest(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(friendRepository.rejectIncomingFriendRequest(ID) is BasicState.ErrorState)
     }
 
     @Test
     fun testRejectOutgoingFriendRequestSuccessful() = runTest {
-        coEvery { friendDataSource.rejectOutgoingFriendRequest(any()) } returns BasicState.SuccessState
+        coEvery { friendDataSource.rejectOutgoingFriendRequest(any()) } returns BasicState.SuccessState(Unit)
         Assert.assertTrue(friendRepository.rejectOutgoingFriendRequest(ID) is BasicState.SuccessState)
     }
 
     @Test
     fun testRejectOutgoingFriendRequestError() = runTest {
-        coEvery { friendDataSource.rejectOutgoingFriendRequest(any()) } returns BasicState.ErrorState
+        coEvery { friendDataSource.rejectOutgoingFriendRequest(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(friendRepository.rejectOutgoingFriendRequest(ID) is BasicState.ErrorState)
     }
 
     @Test
     fun testGetFriendsSuccessful() = runTest {
         val friendsModel = listOf(testModelsGenerator.generateFriendModel())
-        coEvery { friendDataSource.getFriends() } returns BasicState.SuccessStateWithResources(
+        coEvery { friendDataSource.getFriends() } returns BasicState.SuccessState(
             friendsModel
         )
-        Assert.assertTrue(friendRepository.getFriends() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(friendRepository.getFriends() is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (friendRepository.getFriends() as BasicState.SuccessStateWithResources<*>).data,
+            (friendRepository.getFriends() as BasicState.SuccessState<*>).data,
             friendsModel
         )
     }
 
     @Test
     fun testGetFriendsError() = runTest {
-        coEvery { friendDataSource.getFriends() } returns BasicState.ErrorState
+        coEvery { friendDataSource.getFriends() } returns BasicState.ErrorState()
         Assert.assertTrue(friendRepository.getFriends() is BasicState.ErrorState)
     }
 
     @Test
     fun testGetIncomingRequestsCountSuccessful() = runTest {
-        coEvery { friendDataSource.getIncomingRequestsCount() } returns BasicState.SuccessStateWithResources(
+        coEvery { friendDataSource.getIncomingRequestsCount() } returns BasicState.SuccessState(
             3
         )
-        Assert.assertTrue(friendRepository.getIncomingRequestsCount() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(friendRepository.getIncomingRequestsCount() is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (friendRepository.getIncomingRequestsCount() as BasicState.SuccessStateWithResources<*>).data,
+            (friendRepository.getIncomingRequestsCount() as BasicState.SuccessState<*>).data,
             3
         )
     }
 
     @Test
     fun testGetIncomingRequestsCountError() = runTest {
-        coEvery { friendDataSource.getIncomingRequestsCount() } returns BasicState.ErrorState
+        coEvery { friendDataSource.getIncomingRequestsCount() } returns BasicState.ErrorState()
         Assert.assertTrue(friendRepository.getIncomingRequestsCount() is BasicState.ErrorState)
     }
 }

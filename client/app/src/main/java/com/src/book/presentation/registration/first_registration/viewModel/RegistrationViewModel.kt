@@ -17,7 +17,8 @@ class RegistrationViewModel(
     private val sendCodeForConfirmationsUseCase: SendCodeForConfirmationsUseCase,
     private val loginAsGuestUseCase: LoginAsGuestUseCase
 ) : ViewModel() {
-    private val _mutableEmailExists = MutableLiveData<BasicState>(BasicState.DefaultState)
+    private val _mutableEmailExists =
+        MutableLiveData<BasicState<Boolean>>(BasicState.DefaultState())
     private val _mutableLiveDataIsLoading = MutableLiveData(false)
     private val _mutableLiveDataRegistration =
         MutableLiveData<RegistrationState>(RegistrationState.DefaultState)
@@ -30,7 +31,7 @@ class RegistrationViewModel(
 
     private val _mutableLiveDataCodeState = MutableLiveData<CodeState>(CodeState.DefaultState)
     private val _mutableLiveDataRepeatingCodeState =
-        MutableLiveData<BasicState>(BasicState.DefaultState)
+        MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
 
     val liveDataIsLoading get() = _mutableLiveDataIsLoading
     val liveDataEmailExists get() = _mutableEmailExists
@@ -57,7 +58,7 @@ class RegistrationViewModel(
         viewModelScope.launch {
             _mutableLiveDataIsLoading.value = true
             _mutableLiveDataRegistration.value = RegistrationState.DefaultState
-            if (_mutableLiveDataEmail.value != null && _mutableLiveDataPassword.value != null && _mutableLiveDataLogin.value != null && _mutableLiveDataName.value!=null ) {
+            if (_mutableLiveDataEmail.value != null && _mutableLiveDataPassword.value != null && _mutableLiveDataLogin.value != null && _mutableLiveDataName.value != null) {
                 _mutableLiveDataRegistration.value = registrationUseCase.execute(
                     email = _mutableLiveDataEmail.value!!,
                     password = _mutableLiveDataPassword.value!!,
@@ -65,8 +66,7 @@ class RegistrationViewModel(
                     name = _mutableLiveDataName.value!!,
                     uri = uri
                 )
-            }
-            else{
+            } else {
                 _mutableLiveDataRegistration.value = RegistrationState.ErrorState
             }
             _mutableLiveDataIsLoading.value = false
@@ -111,14 +111,14 @@ class RegistrationViewModel(
 
     fun sendRepeatingCode() {
         viewModelScope.launch {
-            _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState
+            _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState()
             _mutableLiveDataRepeatingCodeState.value =
                 sendCodeForConfirmationsUseCase.execute()
         }
     }
 
     fun setDefaultValueForCodeState() {
-        _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState
+        _mutableLiveDataRepeatingCodeState.value = BasicState.DefaultState()
     }
 
     fun loginAsGuest() {

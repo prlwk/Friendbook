@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class GetIncomingRequestsCountUseCase (private val friendRepository: FriendRepository) {
-    suspend fun execute():BasicState = withContext(Dispatchers.IO){
+    suspend fun execute():BasicState<Int> = withContext(Dispatchers.IO){
         return@withContext friendRepository.getIncomingRequestsCount()
     }
 }

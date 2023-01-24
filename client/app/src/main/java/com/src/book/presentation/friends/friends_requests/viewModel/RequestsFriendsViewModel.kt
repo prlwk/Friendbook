@@ -17,16 +17,16 @@ class RequestsFriendsViewModel(
 ) :
     ViewModel() {
     private val _mutableLiveDataIncomingRequests =
-        MutableLiveData<FriendRequestsState>(FriendRequestsState.EmptyState)
+        MutableLiveData<BasicState<List<FriendRequest>>>(BasicState.DefaultState())
     private val _mutableLiveDataOutgoingRequests =
-        MutableLiveData<FriendRequestsState>(FriendRequestsState.EmptyState)
+        MutableLiveData<BasicState<List<FriendRequest>>>(BasicState.DefaultState())
     private val _mutableLiveDataIncomingIsLoading = MutableLiveData<Boolean>(false)
     private val _mutableLiveDataSubmitFriendState =
-        MutableLiveData<BasicState>(BasicState.SuccessState)
+        MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
     private val _mutableLiveDataIncomingRejectFriendState =
-        MutableLiveData<BasicState>(BasicState.SuccessState)
+        MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
     private val _mutableLiveDataOutgoingRejectFriendState =
-        MutableLiveData<BasicState>(BasicState.SuccessState)
+        MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
 
     val liveDataIncomingRequests get() = _mutableLiveDataIncomingRequests
     val liveDataOutgoingRequests get() = _mutableLiveDataOutgoingRequests
@@ -38,13 +38,7 @@ class RequestsFriendsViewModel(
     fun loadIncomingRequests() {
         viewModelScope.launch {
             _mutableLiveDataIncomingIsLoading.value = true
-            val incomingRequests = getIncomingRequestsUseCase.execute()
-            if (incomingRequests is BasicState.SuccessStateWithResources<*>) {
-                _mutableLiveDataIncomingRequests.value =
-                    FriendRequestsState.DefaultState(incomingRequests.data as List<FriendRequest>)
-            } else {
-                _mutableLiveDataIncomingRequests.value = FriendRequestsState.ErrorState
-            }
+            _mutableLiveDataIncomingRequests.value = getIncomingRequestsUseCase.execute()
             _mutableLiveDataIncomingIsLoading.value = false
         }
     }
@@ -52,13 +46,7 @@ class RequestsFriendsViewModel(
     fun loadOutgoingRequests() {
         viewModelScope.launch {
             _mutableLiveDataIncomingIsLoading.value = true
-            val outgoingRequests = getOutgoingRequestUseCase.execute()
-            if (outgoingRequests is BasicState.SuccessStateWithResources<*>) {
-                _mutableLiveDataOutgoingRequests.value =
-                    FriendRequestsState.DefaultState(outgoingRequests.data as List<FriendRequest>)
-            } else {
-                _mutableLiveDataOutgoingRequests.value = FriendRequestsState.ErrorState
-            }
+            _mutableLiveDataOutgoingRequests.value = getOutgoingRequestUseCase.execute()
             _mutableLiveDataIncomingIsLoading.value = false
         }
     }

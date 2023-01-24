@@ -5,6 +5,8 @@ import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.service.FriendService
 import com.src.book.data.remote.utils.ALREADY_FRIENDS
 import com.src.book.data.remote.utils.ErrorMessage
+import com.src.book.domain.model.Friend
+import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.SendFriendRequestState
 
@@ -13,48 +15,53 @@ class FriendDataSourceImpl(
     private val friendRequestMapper: FriendRequestMapper,
     private val friendMapper: FriendMapper
 ) : FriendDataSource {
-    override suspend fun getIncomingRequests(): BasicState {
+    override suspend fun getIncomingRequests(): BasicState<List<FriendRequest>> {
         val response = friendService.getIncomingRequests()
         if (response.isSuccessful) {
-            return BasicState.SuccessStateWithResources(
-                response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
+            val friendRequests =
+                response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) }
+            if (friendRequests != null) {
+                return BasicState.SuccessState(friendRequests)
+            }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 
-    override suspend fun submitFriendRequest(id: Long): BasicState {
+    override suspend fun submitFriendRequest(id: Long): BasicState<Unit> {
         val response = friendService.submitFriendRequest(id)
         return if (response.isSuccessful) {
-            BasicState.SuccessState
+            BasicState.SuccessState(Unit)
         } else {
-            BasicState.ErrorState
+            BasicState.ErrorState()
         }
     }
 
-    override suspend fun rejectIncomingFriendRequest(id: Long): BasicState {
+    override suspend fun rejectIncomingFriendRequest(id: Long): BasicState<Unit> {
         val response = friendService.rejectIncomingFriendRequest(id)
         return if (response.isSuccessful) {
-            BasicState.SuccessState
+            BasicState.SuccessState(Unit)
         } else {
-            BasicState.ErrorState
+            BasicState.ErrorState()
         }
     }
 
-    override suspend fun getOutgoingRequests(): BasicState {
+    override suspend fun getOutgoingRequests(): BasicState<List<FriendRequest>> {
         val response = friendService.getOutgoingRequests()
         if (response.isSuccessful) {
-            return BasicState.SuccessStateWithResources(
-                response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) })
+            val requests = response.body()?.map { friendRequestMapper.mapFromResponseToModel(it) }
+            if (requests != null) {
+                return BasicState.SuccessState(requests)
+            }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 
-    override suspend fun rejectOutgoingFriendRequest(id: Long): BasicState {
+    override suspend fun rejectOutgoingFriendRequest(id: Long): BasicState<Unit> {
         val response = friendService.rejectOutgoingFriendRequest(id)
         return if (response.isSuccessful) {
-            BasicState.SuccessState
+            BasicState.SuccessState(Unit)
         } else {
-            BasicState.ErrorState
+            BasicState.ErrorState()
         }
     }
 
@@ -79,30 +86,35 @@ class FriendDataSourceImpl(
         return SendFriendRequestState.ErrorState
     }
 
-    override suspend fun getFriends(): BasicState {
+    override suspend fun getFriends(): BasicState<List<Friend>> {
         val response = friendService.getFriends()
         if (response.isSuccessful) {
-            return BasicState.SuccessStateWithResources(
-                response.body()!!.map { friendMapper.mapFromResponseToModel(it) })
+            val friends = response.body()?.map { friendMapper.mapFromResponseToModel(it) }
+            if (friends != null) {
+                return BasicState.SuccessState(friends)
+            }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 
-    override suspend fun getIncomingRequestsCount(): BasicState {
+    override suspend fun getIncomingRequestsCount(): BasicState<Int> {
         val response = friendService.getIncomingRequestsCount()
         if (response.isSuccessful) {
             if (response.body() != null) {
-                return BasicState.SuccessStateWithResources(response.body()!!)
+                val count = response.body()
+                if (count != null) {
+                    return BasicState.SuccessState(count)
+                }
             }
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 
-    override suspend fun removeFriend(friendId: Long): BasicState {
+    override suspend fun removeFriend(friendId: Long): BasicState<Unit> {
         val response = friendService.removeFriend(friendId)
         if (response.isSuccessful) {
-            return BasicState.SuccessState
+            return BasicState.SuccessState(Unit)
         }
-        return BasicState.ErrorState
+        return BasicState.ErrorState()
     }
 }

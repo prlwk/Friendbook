@@ -18,15 +18,14 @@ import com.src.book.databinding.FragmentAuthorBinding
 import com.src.book.databinding.FragmentAuthorShimmerBinding
 import com.src.book.domain.model.Author
 import com.src.book.domain.model.BookAuthor
+import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
-import com.src.book.presentation.author.AuthorState
 import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
 import com.src.book.presentation.utils.*
-import com.src.book.utils.*
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
@@ -72,10 +71,10 @@ class AuthorFragment : Fragment() {
 
 
     //TODO обработка ошибки загрузки автора
-    private fun setState(state: AuthorState) {
+    private fun setState(state: BasicState<Author>) {
         when (state) {
-            is AuthorState.SuccessState -> state.author?.let { loadData(it) }
-            is AuthorState.ErrorState -> Toast.makeText(
+            is BasicState.SuccessState -> loadData(state.data)
+            is BasicState.ErrorState -> Toast.makeText(
                 requireContext(),
                 "Author loading error",
                 Toast.LENGTH_LONG
@@ -141,7 +140,8 @@ class AuthorFragment : Fragment() {
         }
         this.binding.ivAuthor.elevation = 39 * density
     }
-//TODO обрать хардкод строк
+
+    //TODO обрать хардкод строк
     private fun setOnClickListenerForBiography(author: Author) {
         this.binding.tvBiographyMore.setOnClickListener {
             val bundle = Bundle()

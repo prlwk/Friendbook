@@ -8,7 +8,6 @@ import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
-import com.src.book.presentation.author.list_of_books.ListOfBooksState
 import kotlinx.coroutines.launch
 
 class ListOfBooksViewModel(
@@ -17,7 +16,7 @@ class ListOfBooksViewModel(
 ) :
     ViewModel() {
     private val _mutableLiveDataBooks =
-        MutableLiveData<ListOfBooksState>(ListOfBooksState.DefaultState)
+        MutableLiveData<BasicState<List<BookList>>>(BasicState.DefaultState())
     private val _mutableLiveDataIsLoading = MutableLiveData<Boolean>(false)
     private val _mutableLiveDataSetBookmarkState =
         MutableLiveData<BookmarkState>(BookmarkState.DefaultState)
@@ -28,14 +27,8 @@ class ListOfBooksViewModel(
     fun loadBooksByAuthorId(id: Long) {
         viewModelScope.launch {
             _mutableLiveDataIsLoading.value = true
-            _mutableLiveDataBooks.value = ListOfBooksState.DefaultState
-            val state = getBooksByAuthorIdUseCase.execute(id)
-            if (state is BasicState.ErrorState) {
-                _mutableLiveDataBooks.value = ListOfBooksState.ErrorState
-            } else {
-                _mutableLiveDataBooks.value =
-                    ListOfBooksState.SuccessState((state as BasicState.SuccessStateWithResources<List<BookList>>).data)
-            }
+            _mutableLiveDataBooks.value = BasicState.DefaultState()
+            _mutableLiveDataBooks.value = getBooksByAuthorIdUseCase.execute(id)
             _mutableLiveDataIsLoading.value = false
         }
     }

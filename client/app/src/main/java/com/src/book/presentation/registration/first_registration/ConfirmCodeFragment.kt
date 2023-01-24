@@ -82,7 +82,7 @@ class ConfirmCodeFragment : Fragment() {
     }
 
     //TODO обработать ошибки (повторная отправка кода)
-    private fun checkSendRepeatingCodeState(state: BasicState) {
+    private fun checkSendRepeatingCodeState(state: BasicState<Unit>) {
         when (state) {
             is BasicState.SuccessState -> {
                 println("код отправлен")

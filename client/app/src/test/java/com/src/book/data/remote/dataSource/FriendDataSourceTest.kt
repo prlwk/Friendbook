@@ -148,10 +148,10 @@ class FriendDataSourceTest {
         )
         coEvery { friendRequestMapper.mapFromResponseToModel(any()) } returns friendRequestModel
         Assert.assertTrue(
-            friendDataSource.getIncomingRequests() is BasicState.SuccessStateWithResources<*>
+            friendDataSource.getIncomingRequests() is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (friendDataSource.getIncomingRequests() as BasicState.SuccessStateWithResources<*>).data,
+            (friendDataSource.getIncomingRequests() as BasicState.SuccessState<*>).data,
             listOf(friendRequestModel)
         )
     }
@@ -179,10 +179,10 @@ class FriendDataSourceTest {
         )
         coEvery { friendRequestMapper.mapFromResponseToModel(any()) } returns friendRequestModel
         Assert.assertTrue(
-            friendDataSource.getOutgoingRequests() is BasicState.SuccessStateWithResources<*>
+            friendDataSource.getOutgoingRequests() is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (friendDataSource.getOutgoingRequests() as BasicState.SuccessStateWithResources<*>).data,
+            (friendDataSource.getOutgoingRequests() as BasicState.SuccessState<*>).data,
             listOf(friendRequestModel)
         )
     }
@@ -257,9 +257,9 @@ class FriendDataSourceTest {
         val response = listOf(testModelsResponseGenerator.generateFriendResponse())
         coEvery { friendService.getFriends() } returns Response.success(response)
         coEvery { friendMapper.mapFromResponseToModel(any()) } returns friendModel
-        Assert.assertTrue(friendDataSource.getFriends() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(friendDataSource.getFriends() is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (friendDataSource.getFriends() as BasicState.SuccessStateWithResources<*>).data,
+            (friendDataSource.getFriends() as BasicState.SuccessState<*>).data,
             listOf(friendModel)
         )
     }
@@ -278,9 +278,9 @@ class FriendDataSourceTest {
     @Test
     fun testGetIncomingRequestsCountSuccessful() = runTest {
         coEvery { friendService.getIncomingRequestsCount() } returns Response.success(3)
-        Assert.assertTrue(friendDataSource.getIncomingRequestsCount() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(friendDataSource.getIncomingRequestsCount() is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (friendDataSource.getIncomingRequestsCount() as BasicState.SuccessStateWithResources<*>).data,
+            (friendDataSource.getIncomingRequestsCount() as BasicState.SuccessState<*>).data,
             3
         )
     }

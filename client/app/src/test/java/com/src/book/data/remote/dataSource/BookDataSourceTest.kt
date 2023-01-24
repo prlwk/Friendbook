@@ -113,10 +113,10 @@ class BookDataSourceTest {
         coEvery { sessionStorage.refreshTokenIsValid() } returns true
         coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
         Assert.assertTrue(
-            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessStateWithResources<*>
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessStateWithResources<*>).data,
+            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessState<*>).data,
             listOf(bookListModel)
         )
     }
@@ -134,11 +134,26 @@ class BookDataSourceTest {
         coEvery { sessionStorage.refreshTokenIsValid() } returns true
         coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
         Assert.assertTrue(
-            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessStateWithResources<*>
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessStateWithResources<*>).data,
+            (bookDataSource.loadBooksByAuthorId(ID) as BasicState.SuccessState<*>).data,
             listOf(bookListModel)
+        )
+    }
+    @Test
+    fun testGetBooksByAuthorIdEmptyList() = runTest {
+        val bookListModel = testModelsGenerator.generateBookListModel(false)
+        coEvery { bookService.getAllBooksByAuthorId(any(), any()) } returns Response.error(
+            404, "error"
+                .toResponseBody("application/json".toMediaTypeOrNull())
+        )
+        coEvery { sessionStorage.refreshTokenIsValid() } returns true
+        coEvery { sessionStorage.accessTokenIsValid() } returns true
+        coEvery { sessionStorage.getAccessToken() } returns ACCESS_TOKEN
+        coEvery { bookListMapper.mapFromResponseToModel(any(), any()) } returns bookListModel
+        Assert.assertTrue(
+            bookDataSource.loadBooksByAuthorId(ID) is BasicState.EmptyState
         )
     }
 
@@ -146,7 +161,7 @@ class BookDataSourceTest {
     fun testGetBooksByAuthorIdFailed() = runTest {
         val bookListModel = testModelsGenerator.generateBookListModel(false)
         coEvery { bookService.getAllBooksByAuthorId(any(), any()) } returns Response.error(
-            404, "error"
+            403, "error"
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { sessionStorage.refreshTokenIsValid() } returns true

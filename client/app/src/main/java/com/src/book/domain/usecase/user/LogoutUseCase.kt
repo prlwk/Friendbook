@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LogoutUseCase(private val userRepository: UserRepository) {
-    suspend fun execute(): BasicState = withContext(Dispatchers.IO) {
+    suspend fun execute(): BasicState<Unit> = withContext(Dispatchers.IO) {
         return@withContext userRepository.logout()
     }
 }

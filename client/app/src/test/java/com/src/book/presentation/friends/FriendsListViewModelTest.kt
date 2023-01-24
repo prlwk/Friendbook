@@ -6,7 +6,6 @@ import com.src.book.domain.usecase.friend.GetFriendsUseCase
 import com.src.book.domain.usecase.friend.GetIncomingRequestsCountUseCase
 import com.src.book.domain.usecase.friend.RemoveFriendUseCase
 import com.src.book.domain.utils.BasicState
-import com.src.book.presentation.friends.friends_list.FriendsListState
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -55,40 +54,40 @@ class FriendsListViewModelTest {
     @Test
     fun testGetFriendsSuccessful() = runTest {
         val friendsModel = listOf(testModelsGenerator.generateFriendModel())
-        coEvery { getFriendsUseCase.execute() } returns BasicState.SuccessStateWithResources(
+        coEvery { getFriendsUseCase.execute() } returns BasicState.SuccessState(
             friendsModel
         )
         friendsListViewModel.loadFriends()
-        Assert.assertTrue(friendsListViewModel.liveDataFriends.value is FriendsListState.SuccessState)
+        Assert.assertTrue(friendsListViewModel.liveDataFriends.value is BasicState.SuccessState)
         Assert.assertEquals(
-            (friendsListViewModel.liveDataFriends.value as FriendsListState.SuccessState).friend,
+            (friendsListViewModel.liveDataFriends.value as BasicState.SuccessState).data,
             friendsModel
         )
     }
 
     @Test
     fun testGetFriendsError() = runTest {
-        coEvery { getFriendsUseCase.execute() } returns BasicState.ErrorState
+        coEvery { getFriendsUseCase.execute() } returns BasicState.ErrorState()
         friendsListViewModel.loadFriends()
-        Assert.assertTrue(friendsListViewModel.liveDataFriends.value is FriendsListState.ErrorState)
+        Assert.assertTrue(friendsListViewModel.liveDataFriends.value is BasicState.ErrorState)
     }
 
     @Test
     fun testGetIncomingRequestsCountSuccessful() = runTest {
-        coEvery { getIncomingRequestsCountUseCase.execute() } returns BasicState.SuccessStateWithResources(
+        coEvery { getIncomingRequestsCountUseCase.execute() } returns BasicState.SuccessState(
             3
         )
         friendsListViewModel.loadIncomingRequestsCount()
-        Assert.assertTrue(friendsListViewModel.liveDataIncomingRequestsCount.value is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(friendsListViewModel.liveDataIncomingRequestsCount.value is BasicState.SuccessState)
         Assert.assertEquals(
-            (friendsListViewModel.liveDataIncomingRequestsCount.value as BasicState.SuccessStateWithResources<*>).data,
+            (friendsListViewModel.liveDataIncomingRequestsCount.value as BasicState.SuccessState<*>).data,
             3
         )
     }
 
     @Test
     fun testGetIncomingRequestsCountError() = runTest {
-        coEvery { getIncomingRequestsCountUseCase.execute() } returns BasicState.ErrorState
+        coEvery { getIncomingRequestsCountUseCase.execute() } returns BasicState.ErrorState()
         friendsListViewModel.loadIncomingRequestsCount()
         Assert.assertTrue(friendsListViewModel.liveDataIncomingRequestsCount.value is BasicState.ErrorState)
     }

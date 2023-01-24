@@ -5,7 +5,6 @@ import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.usecase.friend.*
 import com.src.book.domain.utils.BasicState
-import com.src.book.presentation.friends.friends_requests.viewModel.FriendRequestsState
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -57,56 +56,56 @@ class RequestFriendsViewModelTest {
     @Test
     fun testLoadIncomingRequestsSuccessful() = runTest {
         val models = listOf(testModelsGenerator.generateFriendRequestModel())
-        coEvery { getIncomingRequestsUseCase.execute() } returns BasicState.SuccessStateWithResources(
+        coEvery { getIncomingRequestsUseCase.execute() } returns BasicState.SuccessState(
             models
         )
         requestsFriendsViewModel.loadIncomingRequests()
         Assert.assertTrue(
-            requestsFriendsViewModel.liveDataIncomingRequests.value is FriendRequestsState.DefaultState
+            requestsFriendsViewModel.liveDataIncomingRequests.value is BasicState.SuccessState
         )
         Assert.assertEquals(
             models,
-            (requestsFriendsViewModel.liveDataIncomingRequests.value as FriendRequestsState.DefaultState).friendsRequest
+            (requestsFriendsViewModel.liveDataIncomingRequests.value as BasicState.SuccessState).data
         )
     }
 
     @Test
     fun testLoadIncomingRequestsError() = runTest {
-        coEvery { getIncomingRequestsUseCase.execute() } returns BasicState.ErrorState
+        coEvery { getIncomingRequestsUseCase.execute() } returns BasicState.ErrorState()
         requestsFriendsViewModel.loadIncomingRequests()
         Assert.assertTrue(
-            requestsFriendsViewModel.liveDataIncomingRequests.value is FriendRequestsState.ErrorState
+            requestsFriendsViewModel.liveDataIncomingRequests.value is BasicState.ErrorState
         )
     }
 
     @Test
     fun testLoadOutgoingRequestsSuccessful() = runTest {
         val models = listOf(testModelsGenerator.generateFriendRequestModel())
-        coEvery { getOutgoingRequestUseCase.execute() } returns BasicState.SuccessStateWithResources(
+        coEvery { getOutgoingRequestUseCase.execute() } returns BasicState.SuccessState(
             models
         )
         requestsFriendsViewModel.loadOutgoingRequests()
         Assert.assertTrue(
-            requestsFriendsViewModel.liveDataOutgoingRequests.value is FriendRequestsState.DefaultState
+            requestsFriendsViewModel.liveDataOutgoingRequests.value is BasicState.SuccessState
         )
         Assert.assertEquals(
             models,
-            (requestsFriendsViewModel.liveDataOutgoingRequests.value as FriendRequestsState.DefaultState).friendsRequest
+            (requestsFriendsViewModel.liveDataOutgoingRequests.value as BasicState.SuccessState).data
         )
     }
 
     @Test
     fun testLoadOutgoingRequestsError() = runTest {
-        coEvery { getOutgoingRequestUseCase.execute() } returns BasicState.ErrorState
+        coEvery { getOutgoingRequestUseCase.execute() } returns BasicState.ErrorState()
         requestsFriendsViewModel.loadOutgoingRequests()
         Assert.assertTrue(
-            requestsFriendsViewModel.liveDataOutgoingRequests.value is FriendRequestsState.ErrorState
+            requestsFriendsViewModel.liveDataOutgoingRequests.value is BasicState.ErrorState
         )
     }
 
     @Test
     fun testSubmitFriendRequestSuccessful() = runTest {
-        coEvery { submitFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState
+        coEvery { submitFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState(Unit)
         requestsFriendsViewModel.submitFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataSubmitFriendState.value is BasicState.SuccessState
@@ -115,7 +114,7 @@ class RequestFriendsViewModelTest {
 
     @Test
     fun testSubmitFriendRequestError() = runTest {
-        coEvery { submitFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState
+        coEvery { submitFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState()
         requestsFriendsViewModel.submitFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataSubmitFriendState.value is BasicState.ErrorState
@@ -124,7 +123,7 @@ class RequestFriendsViewModelTest {
 
     @Test
     fun testRejectIncomingFriendRequestSuccessful() = runTest {
-        coEvery { rejectIncomingFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState
+        coEvery { rejectIncomingFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState(Unit)
         requestsFriendsViewModel.rejectIncomingFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataIncomingRejectFriendState.value is BasicState.SuccessState
@@ -133,7 +132,7 @@ class RequestFriendsViewModelTest {
 
     @Test
     fun testRejectIncomingFriendRequestError() = runTest {
-        coEvery { rejectIncomingFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState
+        coEvery { rejectIncomingFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState()
         requestsFriendsViewModel.rejectIncomingFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataIncomingRejectFriendState.value is BasicState.ErrorState
@@ -142,7 +141,7 @@ class RequestFriendsViewModelTest {
 
     @Test
     fun testRejectOutgoingFriendRequestSuccessful() = runTest {
-        coEvery { rejectOutgoingFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState
+        coEvery { rejectOutgoingFriendRequestUseCase.execute(any()) } returns BasicState.SuccessState(Unit)
         requestsFriendsViewModel.rejectOutgoingFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataOutgoingRejectFriendState.value is BasicState.SuccessState
@@ -151,7 +150,7 @@ class RequestFriendsViewModelTest {
 
     @Test
     fun testRejectOutgoingFriendRequestError() = runTest {
-        coEvery { rejectOutgoingFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState
+        coEvery { rejectOutgoingFriendRequestUseCase.execute(any()) } returns BasicState.ErrorState()
         requestsFriendsViewModel.rejectOutgoingFriendRequest(ID)
         Assert.assertTrue(
             requestsFriendsViewModel.liveDataOutgoingRejectFriendState.value is BasicState.ErrorState

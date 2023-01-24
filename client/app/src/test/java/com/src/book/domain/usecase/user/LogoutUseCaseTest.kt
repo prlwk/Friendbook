@@ -31,13 +31,15 @@ class LogoutUseCaseTest {
 
     @Test
     fun testLogoutSuccessful() = runTest {
-        coEvery { userRepository.logout() } returns BasicState.SuccessState
-        Assert.assertEquals(BasicState.SuccessState, logoutUseCase.execute())
+        coEvery { userRepository.logout() } returns BasicState.SuccessState(
+            Unit
+        )
+        Assert.assertTrue(logoutUseCase.execute() is BasicState.SuccessState)
     }
 
     @Test
     fun testLogoutError() = runTest {
-        coEvery { userRepository.logout() } returns BasicState.ErrorState
-        Assert.assertEquals(BasicState.ErrorState, logoutUseCase.execute())
+        coEvery { userRepository.logout() } returns BasicState.ErrorState()
+        Assert.assertTrue(logoutUseCase.execute() is BasicState.ErrorState)
     }
 }

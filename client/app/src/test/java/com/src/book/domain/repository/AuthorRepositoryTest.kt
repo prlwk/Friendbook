@@ -37,20 +37,20 @@ class AuthorRepositoryTest {
     @Test
     fun testGetAuthorByIdSuccessful() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
-        val state = BasicState.SuccessStateWithResources(authorModel)
+        val state = BasicState.SuccessState(authorModel)
         coEvery { authorDataSource.loadAuthorById(any()) } returns state
         Assert.assertTrue(
-            authorRepository.getAuthorById(ID) is BasicState.SuccessStateWithResources<*>
+            authorRepository.getAuthorById(ID) is BasicState.SuccessState<*>
         )
         Assert.assertEquals(
-            (authorRepository.getAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            (authorRepository.getAuthorById(ID) as BasicState.SuccessState<*>).data,
             authorModel
         )
     }
 
     @Test
     fun testGetAuthorByIdError() = runTest {
-        coEvery { authorDataSource.loadAuthorById(any()) } returns BasicState.ErrorState
+        coEvery { authorDataSource.loadAuthorById(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(
             authorRepository.getAuthorById(ID) is BasicState.ErrorState
         )

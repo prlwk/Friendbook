@@ -1,7 +1,6 @@
 package com.src.book.domain.usecase.friend
 
 import com.src.book.ID
-import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.FriendRepository
 import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
@@ -33,15 +32,14 @@ class RejectOutgoingRequestUseCaseTest {
 
     @Test
     fun testExecuteSuccessful() = runTest {
-        val state = BasicState.SuccessState
+        val state = BasicState.SuccessState(Unit)
         coEvery { friendRepository.rejectOutgoingFriendRequest(any()) } returns state
         Assert.assertEquals(state, rejectOutgoingRequestUseCase.execute(ID))
     }
 
     @Test
     fun testExecuteError() = runTest {
-        val state =
-            BasicState.ErrorState
+        val state = BasicState.ErrorState<Unit>()
         coEvery { friendRepository.rejectOutgoingFriendRequest(any()) } returns state
         Assert.assertEquals(state, rejectOutgoingRequestUseCase.execute(ID))
     }

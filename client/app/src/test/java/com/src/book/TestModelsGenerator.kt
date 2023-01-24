@@ -62,6 +62,8 @@ class TestModelsGenerator {
 
     fun generateListOfBooksModel() = listOf(generateBookModel())
 
+    fun generateListOfBookListModel() = listOf(generateBookListModel(true))
+
     //review
     fun generateReviewModel() = Review(
         id = ID,
@@ -99,7 +101,7 @@ class TestModelsGenerator {
     )
 
     fun generateFriendModel() = Friend(
-        id= ID,
+        id = ID,
         countWantToReadBooks = 0,
         countReviews = 0,
         countRateBooks = 0,

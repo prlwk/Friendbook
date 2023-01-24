@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
 import com.src.book.domain.model.BookList
+import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
@@ -67,10 +68,12 @@ class ListOfBooksFragment : Fragment() {
     }
 
     //TODO обработка ошибки загрузки книг
-    private fun setState(state: ListOfBooksState) {
+    //TODO если у автора книг нет
+    private fun setState(state: BasicState<List<BookList>>) {
         when (state) {
-            is ListOfBooksState.SuccessState -> loadData(state.books)
-            is ListOfBooksState.ErrorState -> Toast.makeText(
+            is BasicState.SuccessState<List<BookList>> -> loadData(state.data)
+            is BasicState.EmptyState<List<BookList>>->{}
+            is BasicState.ErrorState<List<BookList>> -> Toast.makeText(
                 requireContext(),
                 "Books loading error",
                 Toast.LENGTH_LONG
@@ -190,7 +193,8 @@ class ListOfBooksFragment : Fragment() {
 
         }
     }
-    companion object{
+
+    companion object {
         const val AUTHOR_ID = "author_id"
         const val TITLE = "title"
     }

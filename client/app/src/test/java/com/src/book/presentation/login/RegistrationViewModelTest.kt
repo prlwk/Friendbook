@@ -56,20 +56,20 @@ class RegistrationViewModelTest {
 
     @Test
     fun testCheckEmailExistsSuccessful() = runTest {
-        coEvery { checkEmailExistsUseCase.execute(any()) } returns BasicState.SuccessStateWithResources(
+        coEvery { checkEmailExistsUseCase.execute(any()) } returns BasicState.SuccessState(
             true
         )
         registrationViewModel.checkEmailExists(EMAIL)
-        Assert.assertTrue(registrationViewModel.liveDataEmailExists.value is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(registrationViewModel.liveDataEmailExists.value is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (registrationViewModel.liveDataEmailExists.value as BasicState.SuccessStateWithResources<*>).data,
+            (registrationViewModel.liveDataEmailExists.value as BasicState.SuccessState<*>).data,
             true
         )
     }
 
     @Test
     fun testCheckEmailExistsError() = runTest {
-        coEvery { checkEmailExistsUseCase.execute(any()) } returns BasicState.ErrorState
+        coEvery { checkEmailExistsUseCase.execute(any()) } returns BasicState.ErrorState()
         registrationViewModel.checkEmailExists(EMAIL)
         Assert.assertTrue(registrationViewModel.liveDataEmailExists.value is BasicState.ErrorState)
     }
@@ -176,14 +176,14 @@ class RegistrationViewModelTest {
 
     @Test
     fun testSendRepeatingCodeSuccessful() = runTest {
-        coEvery { sendCodeForConfirmationsUseCase.execute() } returns BasicState.SuccessState
+        coEvery { sendCodeForConfirmationsUseCase.execute() } returns BasicState.SuccessState(Unit)
         registrationViewModel.sendRepeatingCode()
         Assert.assertTrue(registrationViewModel.liveDataRepeatingCodeState.value is BasicState.SuccessState)
     }
 
     @Test
     fun testSendRepeatingCodeError() = runTest {
-        coEvery { sendCodeForConfirmationsUseCase.execute() } returns BasicState.ErrorState
+        coEvery { sendCodeForConfirmationsUseCase.execute() } returns BasicState.ErrorState()
         registrationViewModel.sendRepeatingCode()
         Assert.assertTrue(registrationViewModel.liveDataRepeatingCodeState.value is BasicState.ErrorState)
     }

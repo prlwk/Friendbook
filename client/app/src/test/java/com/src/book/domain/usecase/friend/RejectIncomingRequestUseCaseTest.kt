@@ -32,15 +32,14 @@ class RejectIncomingRequestUseCaseTest {
 
     @Test
     fun testExecuteSuccessful() = runTest {
-        val state = BasicState.SuccessState
+        val state = BasicState.SuccessState(Unit)
         coEvery { friendRepository.rejectIncomingFriendRequest(any()) } returns state
         Assert.assertEquals(state, rejectIncomingFriendRequestUseCase.execute(ID))
     }
 
     @Test
     fun testExecuteError() = runTest {
-        val state =
-            BasicState.ErrorState
+        val state = BasicState.ErrorState<Unit>()
         coEvery { friendRepository.rejectIncomingFriendRequest(any()) } returns state
         Assert.assertEquals(state, rejectIncomingFriendRequestUseCase.execute(ID))
     }

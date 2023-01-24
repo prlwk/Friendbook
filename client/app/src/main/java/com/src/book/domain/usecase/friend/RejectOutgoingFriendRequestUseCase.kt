@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RejectOutgoingFriendRequestUseCase(private val friendRepository: FriendRepository) {
-    suspend fun execute(id: Long): BasicState = withContext(Dispatchers.IO) {
+    suspend fun execute(id: Long): BasicState<Unit> = withContext(Dispatchers.IO) {
         return@withContext friendRepository.rejectOutgoingFriendRequest(id)
     }
 }

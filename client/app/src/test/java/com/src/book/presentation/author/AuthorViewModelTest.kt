@@ -41,28 +41,24 @@ class AuthorViewModelTest {
     @Test
     fun testLoadAuthorByIdSuccessful() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
-        val state = BasicState.SuccessStateWithResources(authorModel)
+        val state = BasicState.SuccessState(authorModel)
         coEvery { getAuthorUseCase.execute(any()) } returns state
         authorViewModel.loadAuthorById(ID)
         Assert.assertTrue(
-            authorViewModel.liveDataAuthor.value is AuthorState.SuccessState
+            authorViewModel.liveDataAuthor.value is BasicState.SuccessState
         )
         Assert.assertEquals(
-            (authorViewModel.liveDataAuthor.value as AuthorState.SuccessState).author,
+            (authorViewModel.liveDataAuthor.value as BasicState.SuccessState).data,
             authorModel
         )
     }
 
     @Test
     fun testLoadAuthorByIdError() = runTest {
-        coEvery { getAuthorUseCase.execute(any()) } returns BasicState.ErrorState
+        coEvery { getAuthorUseCase.execute(any()) } returns BasicState.ErrorState()
         authorViewModel.loadAuthorById(ID)
         Assert.assertTrue(
-            authorViewModel.liveDataAuthor.value is AuthorState.ErrorState
-        )
-        Assert.assertEquals(
-            (authorViewModel.liveDataAuthor.value as AuthorState.ErrorState).author,
-            null
+            authorViewModel.liveDataAuthor.value is BasicState.ErrorState
         )
     }
 }

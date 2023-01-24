@@ -42,18 +42,18 @@ class GetAuthorUseCaseTest {
     @Test
     fun testGetAuthorUseCaseSuccessful() = runTest {
         val authorModel = testModelsGenerator.generateAuthorModel()
-        val state = BasicState.SuccessStateWithResources(authorModel)
+        val state = BasicState.SuccessState(authorModel)
         coEvery { authorRepository.getAuthorById(any()) } returns state
-        Assert.assertTrue(authorRepository.getAuthorById(ID) is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(authorRepository.getAuthorById(ID) is BasicState.SuccessState<*>)
         assertEquals(
-            (authorRepository.getAuthorById(ID) as BasicState.SuccessStateWithResources<*>).data,
+            (authorRepository.getAuthorById(ID) as BasicState.SuccessState<*>).data,
             authorModel
         )
     }
 
     @Test
     fun testGetAuthorUseCaseError() = runTest {
-        coEvery { authorRepository.getAuthorById(any()) } returns BasicState.ErrorState
+        coEvery { authorRepository.getAuthorById(any()) } returns BasicState.ErrorState()
         Assert.assertTrue(authorRepository.getAuthorById(ID) is BasicState.ErrorState)
     }
 }

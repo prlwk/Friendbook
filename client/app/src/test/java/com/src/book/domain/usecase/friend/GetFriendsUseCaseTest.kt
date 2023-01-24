@@ -39,19 +39,19 @@ class GetFriendsUseCaseTest {
     @Test
     fun testGetFriendsSuccessful() = runTest {
         val friendsModel = listOf(testModelsGenerator.generateFriendModel())
-        coEvery { friendRepository.getFriends() } returns BasicState.SuccessStateWithResources(
+        coEvery { friendRepository.getFriends() } returns BasicState.SuccessState(
             friendsModel
         )
-        Assert.assertTrue(getFriendsUseCase.execute() is BasicState.SuccessStateWithResources<*>)
+        Assert.assertTrue(getFriendsUseCase.execute() is BasicState.SuccessState<*>)
         Assert.assertEquals(
-            (getFriendsUseCase.execute() as BasicState.SuccessStateWithResources<*>).data,
+            (getFriendsUseCase.execute() as BasicState.SuccessState<*>).data,
             friendsModel
         )
     }
 
     @Test
     fun testGetFriendsError() = runTest {
-        coEvery { friendRepository.getFriends() } returns BasicState.ErrorState
+        coEvery { friendRepository.getFriends() } returns BasicState.ErrorState()
         Assert.assertTrue(getFriendsUseCase.execute() is BasicState.ErrorState)
     }
 }

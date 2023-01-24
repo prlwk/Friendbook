@@ -1,6 +1,7 @@
 package com.src.book.data.repository
 
 import com.src.book.data.remote.dataSource.user.UserDataSource
+import com.src.book.domain.model.user.UserProfile
 import com.src.book.domain.repository.UserRepository
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.ChangePasswordState
@@ -21,7 +22,7 @@ class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepos
             )
         }
 
-    override suspend fun logout(): BasicState = withContext(Dispatchers.IO) {
+    override suspend fun logout(): BasicState<Unit> = withContext(Dispatchers.IO) {
         return@withContext userDataSource.logout()
     }
 
@@ -30,7 +31,8 @@ class UserRepositoryImpl(private val userDataSource: UserDataSource) : UserRepos
             return@withContext userDataSource.editProfile(data, file)
         }
 
-    override suspend fun getProfile(): BasicState = withContext(Dispatchers.IO) {
-        return@withContext userDataSource.getProfile()
-    }
+    override suspend fun getProfile(): BasicState<UserProfile> =
+        withContext(Dispatchers.IO) {
+            return@withContext userDataSource.getProfile()
+        }
 }

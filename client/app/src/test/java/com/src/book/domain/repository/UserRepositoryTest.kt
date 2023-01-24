@@ -81,14 +81,14 @@ class UserRepositoryTest {
 
     @Test
     fun testLogoutSuccessful() = runTest {
-        coEvery { userDataSource.logout() } returns BasicState.SuccessState
-        Assert.assertEquals(BasicState.SuccessState, userRepository.logout())
+        coEvery { userDataSource.logout() } returns BasicState.SuccessState(Unit)
+        Assert.assertTrue( userRepository.logout() is BasicState.SuccessState)
     }
 
     @Test
     fun testLogoutError() = runTest {
-        coEvery { userDataSource.logout() } returns BasicState.ErrorState
-        Assert.assertEquals(BasicState.ErrorState, userRepository.logout())
+        coEvery { userDataSource.logout() } returns BasicState.ErrorState()
+        Assert.assertTrue( userRepository.logout() is BasicState.ErrorState)
     }
 
     @Test

@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 class CheckEmailExistsUseCase(private val loginRepository: LoginRepository) {
-    suspend fun execute(email: String):BasicState = withContext(Dispatchers.IO) {
+    suspend fun execute(email: String):BasicState<Boolean> = withContext(Dispatchers.IO) {
         return@withContext loginRepository.checkEmailExists(email.lowercase(Locale.getDefault()))
     }
 }
