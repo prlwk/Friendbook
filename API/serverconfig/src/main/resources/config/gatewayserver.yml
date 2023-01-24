@@ -8,7 +8,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: ${EUREKA_HOST:http://{EUREKA_HOSTNAME}:8080/eureka/}
+      defaultZone: ${EUREKA_HOST:http://localhost:8080/eureka/}
 
 spring:
   cloud:
@@ -16,3 +16,20 @@ spring:
       discovery.locator:
         enabled: true
         lowerCaseServiceId: true
+      routes:
+        - id: book-service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/book-service/**
+        - id: author-service
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/author-service/**
+        - id: review-service
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/review-service/**
+        - id: user-service
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/user-service/**
