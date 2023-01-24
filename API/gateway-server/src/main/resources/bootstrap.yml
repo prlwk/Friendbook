@@ -2,7 +2,7 @@ spring:
   application:
     name: gatewayserver
     profiles:
-        active: default
+        active: ${ACTIVE_PROFILE}
   cloud:
     config:
-       uri: http://configserver:8080
+       uri: ${CONFIG_URI}
