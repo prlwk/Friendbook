@@ -40,21 +40,19 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     void updateCountRequestsById(Long id);
 
     @Query(value = "SELECT new com.friendbook.bookservice.DTO.BookForSearch(b) " +
-            "FROM Book b join b.genres g join b.tags t " +
+            "FROM Book b left join b.genres g left join b.tags t " +
             "WHERE COALESCE((b.sumMarks + 0.0) / (b.countMarks + 0.0), 0) BETWEEN :ratingStart and :ratingFinish " +
-            "and (:numberOfGenres=0 or g.id in (:genreList)) " +
-            "and (:numberOfTags=0 or t.id in (:tagList)) " +
+            "and (:numberOfGenres=0 or g.id in :genreList) " +
+            "and (:numberOfTags=0 or t.id in :tagList) " +
             "and (:word IS NULL or LOWER(b.name) LIKE CONCAT('%',LOWER(:word),'%') or b.id in :idList) " +
-            "GROUP BY b.id " +
-            "HAVING count(b.id) = :numberOfTags * :numberOfGenres or :numberOfTags + :numberOfGenres = 0",
+            "GROUP BY b.id",
             countQuery = "SELECT count(b) " +
-                    "FROM Book b join b.genres g join b.tags t " +
+                    "FROM Book b left join b.genres g left join b.tags t " +
                     "WHERE (b.sumMarks + 0.0) / (b.countMarks + 0.0) BETWEEN :ratingStart and :ratingFinish " +
                     "and (:numberOfGenres=0 or g.id in (:genreList)) " +
                     "and (:numberOfTags=0 or t.id in (:tagList)) " +
                     "and (:word IS NULL or LOWER(b.name) LIKE CONCAT('%',LOWER(:word),'%') or b.id in :idList)" +
-                    "GROUP BY b.id " +
-                    "HAVING count(b.id) = :numberOfTags * :numberOfGenres or :numberOfTags + :numberOfGenres = 0")
+                    "GROUP BY b.id ")
     Page<BookForSearch> getBooksBySearch(double ratingStart,
                                          double ratingFinish,
                                          String word,

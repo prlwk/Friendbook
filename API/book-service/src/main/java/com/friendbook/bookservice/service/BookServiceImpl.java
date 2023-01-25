@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.bookservice.DTO.AuthorForBook;
@@ -125,7 +126,7 @@ public class BookServiceImpl implements BookService {
         } else if (sort == com.friendbook.bookservice.utils.Sort.Rating) {
             page = bookRepository.getBooksBySearch(
                     startRating, finishRating, word, listId, listGenres, countOfGenres, listTags, countOfTags,
-                    PageRequest.of(numberPage, sizePage, Sort.by("rating").descending()));
+                    PageRequest.of(numberPage, sizePage, JpaSort.unsafe(Sort.Direction.DESC, "(b.sumMarks + 0.0) / (b.countMarks + 0.0)")));
         } else {
             page = bookRepository.getBooksBySearch(
                     startRating, finishRating, word, listId, listGenres, countOfGenres, listTags, countOfTags,
