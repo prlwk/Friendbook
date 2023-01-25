@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 
-import com.friendbook.DTO.AuthorForBook;
 import com.friendbook.model.Author;
 import com.friendbook.repository.AuthorRepository;
 
@@ -38,28 +37,28 @@ public class AuthorJPATests {
 
     @Test
     public void findAuthorWhenEnterPartOfName() {
-        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName("Erich", "", "");
-        assertEquals(authorForBookList.size(), 1);
-        assertEquals(authorForBookList.get(0).getName(), author.getName());
+        List<Author> authorList = authorRepository.getAuthorByName("Erich", "", "");
+        assertEquals(authorList.size(), 1);
+        assertEquals(authorList.get(0).getName(), author.getName());
     }
 
     @Test
     public void findAuthorWhenEnterIncompleteWordOfName() {
-        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName("Eri", "", "");
-        assertEquals(authorForBookList.size(), 1);
-        assertEquals(authorForBookList.get(0).getName(), author.getName());
+        List<Author> authorList = authorRepository.getAuthorByName("Eri", "", "");
+        assertEquals(authorList.size(), 1);
+        assertEquals(authorList.get(0).getName(), author.getName());
     }
 
     @Test
     public void findAuthorWhenEnterNameByLowerCase() {
-        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName("erich", "Maria", "remarque");
-        assertEquals(authorForBookList.size(), 1);
-        assertEquals(authorForBookList.get(0).getName(), author.getName());
+        List<Author> authorList = authorRepository.getAuthorByName("erich", "Maria", "remarque");
+        assertEquals(authorList.size(), 1);
+        assertEquals(authorList.get(0).getName(), author.getName());
     }
 
     @Test
     public void findAuthorWhenEnterIncorrectPartOfName() {
-        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName("erich", "Maria", "Pushkin");
-        assertEquals(authorForBookList.size(), 0);
+        List<Author> authorList = authorRepository.getAuthorByName("erich", "Maria", "Pushkin");
+        assertEquals(authorList.size(), 0);
     }
 }

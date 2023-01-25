@@ -1,4 +1,4 @@
-package com.friendbook.DTO;
+package com.friendbook.bookservice.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorForBook {
+public class AuthorForSearch {
     private Long id;
 
     private String name;
+
+    private String photoSrc;
+
+    private Double rating;
 }

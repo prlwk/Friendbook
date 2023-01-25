@@ -9,8 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorForBook {
+public class AuthorForSearch {
     private Long id;
 
     private String name;
+
+    private String photoSrc;
+
+    private Double rating;
 }

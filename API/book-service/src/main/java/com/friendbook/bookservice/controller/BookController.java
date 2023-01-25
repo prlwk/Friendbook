@@ -8,7 +8,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.friendbook.bookservice.DTO.AuthorForBook;
+import com.friendbook.bookservice.DTO.AuthorForSearch;
 import com.friendbook.bookservice.DTO.BookForSearch;
 import com.friendbook.bookservice.model.Book;
 import com.friendbook.bookservice.service.BookService;
@@ -92,11 +94,7 @@ public class BookController {
         Long userId = (long) -1;
         try {
             userId = userRestTemplateClient.getUserId(request);
-        } catch (IllegalStateException exception) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            "Lost connection with user service"), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (HttpClientErrorException.Forbidden ignored) {
+        } catch (IllegalStateException | HttpClientErrorException.Forbidden exception) {
         } catch (HttpClientErrorException.Unauthorized exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.UNAUTHORIZED.value(),
@@ -121,6 +119,16 @@ public class BookController {
             @RequestParam(required = false, defaultValue = "10") Integer finishRating,
             @RequestParam(required = false) String tags,
             @RequestParam(required = false) String genres, HttpServletRequest request) {
+        Long userId = (long) -1;
+        try {
+            userId = userRestTemplateClient.getUserId(request);
+        } catch (IllegalStateException | HttpClientErrorException.Forbidden exception) {
+        } catch (HttpClientErrorException.Unauthorized exception) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.UNAUTHORIZED.value(),
+                            "Access token is expired"), HttpStatus.UNAUTHORIZED);
+        }
+        Map<String, List> result = new HashMap<>();
         Sort sortType = Sort.Nothing;
         if (sort != null) {
             if (sort.equals("popularity")) {
@@ -148,32 +156,34 @@ public class BookController {
         }
         scanner.close();
 
-        List<Long> listId = new ArrayList<>();
+        List<Long> listAuthorId;
+        List<Long> listBookId = new ArrayList<>();
         if (word != null) {
-            List<AuthorForBook> authorForBookList = authorRestTemplateClient.getAuthorsByName(word);
+            List<AuthorForSearch> authorForBookList = authorRestTemplateClient.getAuthorsByName(word);
             if (authorForBookList != null) {
-                listId = authorRestTemplateClient.getAuthorsByName(word)
-                        .stream().map(AuthorForBook::getId).collect(Collectors.toList());
+                listAuthorId = authorForBookList.stream().map(AuthorForSearch::getId).collect(Collectors.toList());
+                for (Long authorId : listAuthorId) {
+                    try {
+                        bookService.getBooksByAuthorIdForAuthorPage(authorId)
+                                .forEach(x -> listBookId.add(x.getId()));
+                    } catch (EntityNotFoundException ignored) {
+                    }
+                }
+                result.put("authors", authorForBookList);
             }
         }
         try {
-            return new ResponseEntity<>(
-                    bookService.getBooksBySearch(
-                            numberPage,
-                            sizePage,
-                            sortType,
-                            word,
-                            startRating,
-                            finishRating,
-                            listTags,
-                            listGenres,
-                            listId), HttpStatus.OK);
-        } catch (
-                EntityNotFoundException entityNotFoundException) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "There are no such books."), HttpStatus.NOT_FOUND);
+            System.out.println(listBookId.size());
+            result.put("books", bookService.getBooksBySearch(numberPage, sizePage, sortType, word, startRating,
+                    finishRating, listTags, listGenres, listBookId, userId));
+        } catch (EntityNotFoundException entityNotFoundException) {
+            if (!result.containsKey("authors")) {
+                return new ResponseEntity<>(
+                        new AppError(HttpStatus.NOT_FOUND.value(),
+                                "There are no such results."), HttpStatus.NOT_FOUND);
+            }
         }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
@@ -296,7 +306,7 @@ public class BookController {
                             exception.getMessage()), HttpStatus.NOT_FOUND);
         }
         try {
-            Book book = bookService.getBookById(idBook);
+            bookService.getBookById(idBook);
         } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),

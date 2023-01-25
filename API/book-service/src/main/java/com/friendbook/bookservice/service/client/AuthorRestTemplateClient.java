@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.friendbook.bookservice.DTO.AuthorForBook;
+import com.friendbook.bookservice.DTO.AuthorForSearch;
 
 @Component
 public class AuthorRestTemplateClient {
@@ -31,7 +32,7 @@ public class AuthorRestTemplateClient {
         }
     }
 
-    public List<AuthorForBook> getAuthorsByName(String name) {
+    public List<AuthorForSearch> getAuthorsByName(String name) {
         try {
             ResponseEntity<List> restExchange =
                     restTemplate.exchange(
@@ -39,9 +40,9 @@ public class AuthorRestTemplateClient {
                             HttpMethod.GET,
                             null, List.class, name);
             ObjectMapper mapper = new ObjectMapper();
-            List<AuthorForBook> list = new ArrayList<>();
+            List<AuthorForSearch> list = new ArrayList<>();
             for (int i = 0; i < restExchange.getBody().size(); i++) {
-                list.add(mapper.convertValue(restExchange.getBody().get(i), AuthorForBook.class));
+                list.add(mapper.convertValue(restExchange.getBody().get(i), AuthorForSearch.class));
             }
             return list;
         } catch (HttpClientErrorException.NotFound | IllegalStateException exception) {

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.DTO.AuthorForBook;
+import com.friendbook.DTO.AuthorForSearch;
 import com.friendbook.DTO.AuthorWithBooks;
 import com.friendbook.DTO.Book;
 import com.friendbook.model.Author;
@@ -74,7 +75,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorForBook> getAuthorsByAuthorName(String name) {
+    public List<AuthorForSearch> getAuthorsByAuthorName(String name) {
         Scanner scanner = new Scanner("");
         List<String> listName = new ArrayList<>();
         if (name != null) {
@@ -96,10 +97,25 @@ public class AuthorServiceImpl implements AuthorService {
                 list.set(i, listName.get(i));
             }
         }
-        List<AuthorForBook> authorForBookList = authorRepository.getAuthorByName(list.get(0), list.get(1), list.get(2));
-        if (authorForBookList != null && !authorForBookList.isEmpty()) {
-            return authorForBookList;
+        List<Author> authorList = authorRepository.getAuthorByName(list.get(0), list.get(1), list.get(2));
+        if (authorList != null && !authorList.isEmpty()) {
+            List<AuthorForSearch> authorForSearchList = new ArrayList<>();
+            for (Author author : authorList) {
+                AuthorForSearch authorForSearch = new AuthorForSearch();
+                Set<Book> books = bookRestTemplateClient.getBooksWithAuthorId(author.getId());
+                authorForSearch.setId(author.getId());
+                authorForSearch.setName(author.getName());
+                authorForSearch.setPhotoSrc("/author/image?id=" + author.getId());
+                double rating = 0;
+                if (books != null) {
+                    rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+                    rating /= books.size();
+                }
+                authorForSearch.setRating(rating);
+                authorForSearchList.add(authorForSearch);
+            }
+            return authorForSearchList;
         }
-        throw new EntityNotFoundException("Author not found.");
+        throw new EntityNotFoundException("Authors not found.");
     }
 }

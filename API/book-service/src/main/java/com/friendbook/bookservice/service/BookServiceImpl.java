@@ -115,7 +115,7 @@ public class BookServiceImpl implements BookService {
                                                 int startRating,
                                                 int finishRating,
                                                 List<Long> listTags,
-                                                List<Long> listGenres, List<Long> listId) {
+                                                List<Long> listGenres, List<Long> listId, Long userId) {
         Page<BookForSearch> page;
         Integer countOfTags = listTags == null || listTags.isEmpty() ? 0 : listTags.size();
         Integer countOfGenres = listGenres == null || listGenres.isEmpty() ? 0 : listGenres.size();
@@ -153,8 +153,12 @@ public class BookServiceImpl implements BookService {
                 }
             }
         }
-        if (!books.isEmpty()) {
-            return books;
+        List<BookForSearch> result = new ArrayList<>();
+        for (BookForSearch bookForSearch : books) {
+            result.add(setInfoByBookForSearch(bookForSearch, userId));
+        }
+        if (!result.isEmpty()) {
+            return result;
         }
         throw new EntityNotFoundException("Books not found.");
     }

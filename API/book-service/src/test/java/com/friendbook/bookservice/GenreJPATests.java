@@ -2,7 +2,6 @@ package com.friendbook.bookservice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 
-import com.friendbook.bookservice.DTO.BookForAuthor;
 import com.friendbook.bookservice.DTO.GenreForBook;
 import com.friendbook.bookservice.repository.GenreRepository;
 

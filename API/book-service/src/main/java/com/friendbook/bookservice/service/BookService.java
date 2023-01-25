@@ -26,7 +26,8 @@ public interface BookService {
                                          int finishRating,
                                          List<Long> listTags,
                                          List<Long> listGenres,
-                                         List<Long> listId);
+                                         List<Long> listId,
+                                         Long userId);
 
     void updateCountMarksAndSumMarks(Book book, int differenceSum);
 
