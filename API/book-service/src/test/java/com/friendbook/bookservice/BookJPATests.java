@@ -94,7 +94,7 @@ public class BookJPATests {
                 .executeUpdate();
     }
 
-    @AfterEach
+    /*  @AfterEach
     public void clearData() {
         String queryForAuthorsAnbBooksTable = "DELETE FROM book_author";
         String queryForAuthorsTable = "DELETE FROM authors";
@@ -102,7 +102,7 @@ public class BookJPATests {
         entityManager.getEntityManager().createNativeQuery(queryForAuthorsAnbBooksTable).executeUpdate();
         entityManager.getEntityManager().createNativeQuery(queryForAuthorsTable).executeUpdate();
         entityManager.getEntityManager().createNativeQuery(queryForBooksTable).executeUpdate();
-    }
+    }*/
 
     @Test
     public void getBooksByAuthorIdForAuthorPage() {

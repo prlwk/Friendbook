@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.friendbook.model.Author;
 import com.friendbook.service.AuthorService;
 import com.friendbook.utils.AppError;
+import com.friendbook.utils.Sort;
 
 @RestController
 @RequestMapping("/author")
@@ -69,6 +70,31 @@ public class AuthorController {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
                             "Authors with name:" + name + " not found."), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam int numberPage,
+                                    @RequestParam int sizePage,
+                                    @RequestParam(required = false) String word,
+                                    @RequestParam(required = false) String sort,
+                                    @RequestParam(required = false, defaultValue = "0") Integer startRating,
+                                    @RequestParam(required = false, defaultValue = "10") Integer finishRating) {
+        Sort sortType = Sort.Nothing;
+        if (sort != null) {
+            if (sort.equals("popularity")) {
+                sortType = Sort.Popularity;
+            } else if (sort.equals("rating")) {
+                sortType = Sort.Rating;
+            }
+        }
+        try {
+            return new ResponseEntity<>(authorService.search(numberPage, sizePage, sortType, word,
+                    startRating, finishRating), HttpStatus.OK);
+        } catch (EntityNotFoundException entityNotFoundException) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "Authors with name:" + word + " not found."), HttpStatus.NOT_FOUND);
         }
     }
 

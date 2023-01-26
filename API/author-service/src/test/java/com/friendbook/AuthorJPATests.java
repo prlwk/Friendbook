@@ -23,7 +23,7 @@ public class AuthorJPATests {
     @Autowired
     AuthorRepository authorRepository;
 
-    private final Author author = new Author(1L, "Erich Maria Remarque", "1898-1970", "1.jpg", "Biography");
+    private final Author author = new Author(1L, "Erich Maria Remarque", "1898-1970", "1.jpg", "Biography", 0L);
 
     @BeforeEach
     void initData() {

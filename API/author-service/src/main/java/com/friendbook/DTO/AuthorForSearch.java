@@ -1,5 +1,7 @@
 package com.friendbook.DTO;
 
+import com.friendbook.model.Author;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +19,13 @@ public class AuthorForSearch {
     private String photoSrc;
 
     private Double rating;
+
+    private String yearsLife;
+
+    public AuthorForSearch(Author author) {
+        this.id = author.getId();
+        this.name = author.getName();
+        this.photoSrc = author.getPhotoSrc();
+        this.yearsLife = author.getYearsLife();
+    }
 }

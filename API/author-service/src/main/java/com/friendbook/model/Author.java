@@ -32,4 +32,6 @@ public class Author {
 
     @Column(columnDefinition = "text")
     private String biography;
+
+    private Long countRequests;
 }

@@ -2,10 +2,15 @@ package com.friendbook.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.friendbook.DTO.AuthorForSearch;
 import com.friendbook.model.Author;
 
 @Repository
@@ -16,4 +21,29 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
             "and LOWER (a.name) LIKE CONCAT('%',LOWER(:name2),'%')" +
             "and LOWER (a.name) LIKE CONCAT('%',LOWER(:name3),'%')")
     List<Author> getAuthorByName(String name1, String name2, String name3);
+
+    @Query(value = "SELECT new com.friendbook.DTO.AuthorForSearch(a) " +
+            "FROM Author a " +
+            "WHERE :word IS NULL or a.id in :listId " +
+            "GROUP BY a.id",
+            countQuery = "SELECT count(a) " +
+                    "FROM Author a " +
+                    "WHERE :word IS NULL or a.id in :listId " +
+                    "GROUP BY a.id")
+    Page<AuthorForSearch> search(String word, List<Long> listId, Pageable pageable);
+
+    @Query(value = "SELECT new com.friendbook.DTO.AuthorForSearch(a) " +
+            "FROM Author a " +
+            "WHERE :word IS NULL or a.id in :listId " +
+            "GROUP BY a.id ORDER BY find_in_set(a.id, :stringListId) ASC",
+            countQuery = "SELECT count(a) " +
+                    "FROM Author a " +
+                    "WHERE :word IS NULL or a.id in :listId " +
+                    "GROUP BY a.id")
+    Page<AuthorForSearch> searchSortingPopularity(String word, List<Long> listId, String stringListId, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Author a SET a.countRequests = a.countRequests + 1 WHERE a.id = :id")
+    void updateCountRequestsById(Long id);
 }

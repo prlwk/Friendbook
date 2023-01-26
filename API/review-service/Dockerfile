@@ -15,6 +15,9 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 #Same Java runtime
 FROM openjdk:17.0-slim
 
+ENV ACTIVE_PROFILE dev
+ENV CONFIG_URI http://configserver:8080
+
 #Add volume pointing to /tmp
 VOLUME /tmp
 

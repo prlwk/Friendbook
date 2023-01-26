@@ -15,6 +15,9 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 #Same Java runtime
 FROM openjdk:17.0-slim
 
+ENV CONFIG_URI http://configserver:8080
+ENV EUREKA_HOSTNAME eurekaserver
+
 #Add volume pointing to /tmp
 VOLUME /tmp
 

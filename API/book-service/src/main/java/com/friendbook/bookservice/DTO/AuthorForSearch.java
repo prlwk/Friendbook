@@ -17,4 +17,6 @@ public class AuthorForSearch {
     private String photoSrc;
 
     private Double rating;
+
+    private String yearsLife;
 }

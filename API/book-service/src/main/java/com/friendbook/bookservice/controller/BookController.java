@@ -8,9 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -94,7 +92,7 @@ public class BookController {
         Long userId = (long) -1;
         try {
             userId = userRestTemplateClient.getUserId(request);
-        } catch (IllegalStateException | HttpClientErrorException.Forbidden exception) {
+        } catch (IllegalStateException | HttpClientErrorException.Forbidden ignored) {
         } catch (HttpClientErrorException.Unauthorized exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.UNAUTHORIZED.value(),
@@ -122,13 +120,12 @@ public class BookController {
         Long userId = (long) -1;
         try {
             userId = userRestTemplateClient.getUserId(request);
-        } catch (IllegalStateException | HttpClientErrorException.Forbidden exception) {
+        } catch (IllegalStateException | HttpClientErrorException.Forbidden ignored) {
         } catch (HttpClientErrorException.Unauthorized exception) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.UNAUTHORIZED.value(),
                             "Access token is expired"), HttpStatus.UNAUTHORIZED);
         }
-        Map<String, List> result = new HashMap<>();
         Sort sortType = Sort.Nothing;
         if (sort != null) {
             if (sort.equals("popularity")) {
@@ -169,21 +166,16 @@ public class BookController {
                     } catch (EntityNotFoundException ignored) {
                     }
                 }
-                result.put("authors", authorForBookList);
             }
         }
         try {
-            System.out.println(listBookId.size());
-            result.put("books", bookService.getBooksBySearch(numberPage, sizePage, sortType, word, startRating,
-                    finishRating, listTags, listGenres, listBookId, userId));
+            return new ResponseEntity<>(bookService.getBooksBySearch(numberPage, sizePage, sortType, word, startRating,
+                    finishRating, listTags, listGenres, listBookId, userId), HttpStatus.OK);
         } catch (EntityNotFoundException entityNotFoundException) {
-            if (!result.containsKey("authors")) {
                 return new ResponseEntity<>(
                         new AppError(HttpStatus.NOT_FOUND.value(),
                                 "There are no such results."), HttpStatus.NOT_FOUND);
-            }
         }
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
