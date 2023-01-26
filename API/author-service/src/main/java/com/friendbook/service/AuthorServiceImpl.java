@@ -62,7 +62,7 @@ public class AuthorServiceImpl implements AuthorService {
                 rating /= books.size();
             }
             authorWithBooks.setRating(rating);
-            authorRepository.updateCountRequestsById(authorId);
+            authorRepository.updateCountRequestsByAuthorId(authorId);
             return authorWithBooks;
         }
         throw new EntityNotFoundException("Author not found.");
@@ -104,7 +104,7 @@ public class AuthorServiceImpl implements AuthorService {
                 list.set(i, listName.get(i));
             }
         }
-        List<Author> authorList = authorRepository.getAuthorByName(list.get(0), list.get(1), list.get(2));
+        List<Author> authorList = authorRepository.getAuthorsByName(list.get(0), list.get(1), list.get(2));
         List<AuthorForSearch> authorForSearchList = convertAuthorListToAuthorForSearchList(authorList);
         if (authorForSearchList != null) {
             return authorForSearchList;
@@ -172,15 +172,14 @@ public class AuthorServiceImpl implements AuthorService {
         for (AuthorForSearch author : authorForSearchList) {
             listIdAuthor.add(author.getId());
         }
-        String listString = listIdAuthor.stream().map(x -> x.toString() + "L").collect(Collectors.joining(", "));
         if (sort == Sort.Popularity) {
-            page = authorRepository.search(word, listIdAuthor, PageRequest.of(numberPage, sizePage,
+            page = authorRepository.search(listIdAuthor, PageRequest.of(numberPage, sizePage,
                     org.springframework.data.domain.Sort.by("countRequests").descending()));
         } else if (sort == Sort.Rating) {
-            page = authorRepository.searchSortingPopularity(word, listIdAuthor, listString,
-                    PageRequest.of(numberPage, sizePage, JpaSort.unsafe(org.springframework.data.domain.Sort.Direction.ASC, "FIND_IN_SET(a.id, :stringListId)")));
+            page = authorRepository.search(listIdAuthor,
+                    PageRequest.of(numberPage, sizePage, JpaSort.unsafe("FIELD(a.id, :listId)")));
         } else {
-            page = authorRepository.search(word, listIdAuthor, PageRequest.of(numberPage, sizePage));
+            page = authorRepository.search(listIdAuthor, PageRequest.of(numberPage, sizePage));
         }
         List<AuthorForSearch> result = page.get().toList();
         for (int i = 0; i < result.size(); i++) {
