@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -131,10 +130,14 @@ public class AuthorServiceImpl implements AuthorService {
                 authorForSearch.setId(author.getId());
                 authorForSearch.setName(author.getName());
                 authorForSearch.setPhotoSrc("/author/image?id=" + author.getId());
-                double rating = 0;
+                Double rating = null;
                 if (books != null) {
-                    rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
-                    rating /= books.size();
+                    if (books.isEmpty()) {
+                        rating = 0.0;
+                    } else {
+                        rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+                        rating /= books.size();
+                    }
                 }
                 authorForSearch.setRating(rating);
                 authorForSearchList.add(authorForSearch);
@@ -145,29 +148,46 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<AuthorForSearch> search(int numberPage, int sizePage, Sort sort, String word,
-                                        int startRating, int finishRating) {
+    public Page<AuthorForSearch> search(int numberPage, int sizePage, Sort sort, String word, int startRating,
+                                        int finishRating) {
         Page<AuthorForSearch> page;
         List<AuthorForSearch> authorForSearchList = new ArrayList<>();
+        List<AuthorForSearch> authorForSearchListWithNullRating = new ArrayList<>();
         List<AuthorForSearch> list;
         if (word != null) {
             list = getAuthorsByAuthorName(word);
         } else {
             list = getAllAuthorsForSearch();
         }
+
         for (AuthorForSearch x : list) {
-            double rating = 0;
+            Double rating = null;
             Set<Book> books = bookRestTemplateClient.getBooksWithAuthorId(x.getId());
             if (books != null) {
-                rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
-                rating /= books.size();
-            }
-            if (rating >= startRating && rating <= finishRating) {
-                authorForSearchList.add(new AuthorForSearch(x.getId(), x.getName(), x.getPhotoSrc(),
+                if (books.isEmpty()) {
+                    rating = 0.0;
+                } else {
+                    rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
+                    rating /= books.size();
+                }
+                if (rating >= startRating && rating <= finishRating) {
+                    authorForSearchList.add(new AuthorForSearch(x.getId(), x.getName(), x.getPhotoSrc(),
+                            rating, x.getYearsLife()));
+                }
+            } else {
+                authorForSearchListWithNullRating.add(new AuthorForSearch(x.getId(), x.getName(), x.getPhotoSrc(),
                         rating, x.getYearsLife()));
             }
         }
-        authorForSearchList.sort(Comparator.comparing(AuthorForSearch::getRating).reversed());
+        if (sort == Sort.Rating) {
+            authorForSearchList.sort(Comparator.comparing(AuthorForSearch::getRating).reversed());
+        } else {
+            authorForSearchList.sort(Comparator.comparingLong(x ->
+                    authorRepository.findById(((AuthorForSearch) x).getId())
+                            .get()
+                            .getCountRequests()).reversed());
+        }
+        authorForSearchList.addAll(authorForSearchListWithNullRating);
         List<Long> listIdAuthor = new ArrayList<>();
         for (AuthorForSearch author : authorForSearchList) {
             listIdAuthor.add(author.getId());

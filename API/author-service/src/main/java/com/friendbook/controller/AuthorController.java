@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.friendbook.DTO.AuthorForSearch;
 import com.friendbook.model.Author;
 import com.friendbook.service.AuthorService;
 import com.friendbook.utils.AppError;
@@ -89,8 +91,15 @@ public class AuthorController {
             }
         }
         try {
-            return new ResponseEntity<>(authorService.search(numberPage, sizePage, sortType, word,
-                    startRating, finishRating), HttpStatus.OK);
+            Page<AuthorForSearch> authorForSearchPage = authorService.search(numberPage, sizePage, sortType, word,
+                    startRating, finishRating);
+            if (authorForSearchPage.get().anyMatch(x -> x.getRating() == null) && sort.equals("rating")) {
+                return new ResponseEntity<>(
+                        new AppError(HttpStatus.SERVICE_UNAVAILABLE.value(),
+                                "Impossible to sort by rating, because BookService is unavailable"),
+                        HttpStatus.SERVICE_UNAVAILABLE);
+            }
+            return new ResponseEntity<>(authorForSearchPage, HttpStatus.OK);
         } catch (EntityNotFoundException entityNotFoundException) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),

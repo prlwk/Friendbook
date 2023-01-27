@@ -1,5 +1,7 @@
 package com.friendbook.service.client;
 
+import java.io.IOError;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,9 @@ public class BookRestTemplateClient {
                             HttpMethod.GET,
                             null, typeReference, authorId);
             return restExchange.getBody();
-        } catch (HttpClientErrorException.NotFound | IllegalStateException exception) {
+        } catch (HttpClientErrorException.NotFound exception) {
+            return new HashSet<>();
+        } catch (IOError | IllegalStateException exception) {
             return null;
         }
     }
