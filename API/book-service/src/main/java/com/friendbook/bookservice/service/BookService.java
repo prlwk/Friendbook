@@ -4,6 +4,8 @@ package com.friendbook.bookservice.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+
 import com.friendbook.bookservice.DTO.BookForAuthor;
 import com.friendbook.bookservice.DTO.BookForBookPage;
 import com.friendbook.bookservice.DTO.BookForSearch;
@@ -18,7 +20,7 @@ public interface BookService {
 
     Set<BookForSearch> getBooksByAuthorId(Long authorId, Long userId);
 
-    List<BookForSearch> getBooksBySearch(int numberPage,
+    Page<BookForSearch> getBooksBySearch(int numberPage,
                                          int sizePage,
                                          com.friendbook.bookservice.utils.Sort sort,
                                          String word,

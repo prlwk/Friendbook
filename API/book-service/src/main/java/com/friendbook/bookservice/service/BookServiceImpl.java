@@ -108,7 +108,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookForSearch> getBooksBySearch(int numberPage,
+    public Page<BookForSearch> getBooksBySearch(int numberPage,
                                                 int sizePage,
                                                 com.friendbook.bookservice.utils.Sort sort,
                                                 String word,
@@ -153,12 +153,11 @@ public class BookServiceImpl implements BookService {
                 }
             }
         }
-        List<BookForSearch> result = new ArrayList<>();
         for (BookForSearch bookForSearch : books) {
-            result.add(setInfoByBookForSearch(bookForSearch, userId));
+            bookForSearch = setInfoByBookForSearch(bookForSearch, userId);
         }
-        if (!result.isEmpty()) {
-            return result;
+        if(books!=null){
+            return page;
         }
         throw new EntityNotFoundException("Books not found.");
     }
