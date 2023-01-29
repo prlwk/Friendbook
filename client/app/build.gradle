@@ -110,4 +110,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.blankj:utilcodex:1.30.6'
 
+    def paging_version = "3.1.0" //current version at the time
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
 }
