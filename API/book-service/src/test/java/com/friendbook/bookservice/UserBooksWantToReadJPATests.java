@@ -13,21 +13,22 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 
-import com.friendbook.bookservice.model.UserBooksGrade;
+import com.friendbook.bookservice.model.UserBooksWantToRead;
 import com.friendbook.bookservice.repository.BookRepository;
-import com.friendbook.bookservice.repository.UserBooksGradeRepository;
+import com.friendbook.bookservice.repository.UserBooksWantToReadRepository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserBooksGradeJPATests {
+public class UserBooksWantToReadJPATests {
     @Autowired
-    UserBooksGradeRepository userBooksGradeRepository;
+    UserBooksWantToReadRepository userBooksWantToReadRepository;
 
     @Autowired
     BookRepository bookRepository;
@@ -38,8 +39,9 @@ public class UserBooksGradeJPATests {
     private final Long idFirstBook = 1L;
     private final Long idSecondBook = 2L;
     private final Long idThirdBook = 3L;
-    private UserBooksGrade userBooksGrade1;
-    private UserBooksGrade userBooksGrade2;
+    private UserBooksWantToRead userBooksWantToRead1;
+    private UserBooksWantToRead userBooksWantToRead2;
+
 
     @BeforeEach
     void initData() {
@@ -66,44 +68,47 @@ public class UserBooksGradeJPATests {
                 .setParameter("4", 3)
                 .setParameter("5", 0)
                 .executeUpdate();
-        userBooksGrade1 = new UserBooksGrade(1L, bookRepository.findById(idFirstBook).get(), 1L, 10, false);
-        userBooksGrade2 = new UserBooksGrade(2L, bookRepository.findById(idThirdBook).get(), 1L, 7, false);
-        userBooksGradeRepository.save(userBooksGrade1);
-        userBooksGradeRepository.save(userBooksGrade2);
+        userBooksWantToRead1 = new UserBooksWantToRead(1L, bookRepository.findById(idFirstBook).get(), 1L, false);
+        userBooksWantToRead2 = new UserBooksWantToRead(2L, bookRepository.findById(idThirdBook).get(), 1L, false);
+        userBooksWantToReadRepository.save(userBooksWantToRead1);
+        userBooksWantToReadRepository.save(userBooksWantToRead2);
     }
 
     @AfterEach
     public void clearData() {
         String queryForBooksTable = "DELETE FROM books";
-        String queryForUserBooksTable = "DELETE FROM user_books_grade";
+        String queryForUserBooksTable = "DELETE FROM user_books_want_to_read";
         entityManager.getEntityManager().createNativeQuery(queryForBooksTable).executeUpdate();
         entityManager.getEntityManager().createNativeQuery(queryForUserBooksTable).executeUpdate();
     }
 
     @Test
-    public void getRatedBooksIdByUserId() {
-        List<Long> listBookId = userBooksGradeRepository.getRatedBooksIdByUserId(1L);
-        assertEquals(2, listBookId.size());
-        assertThat(listBookId, hasItem(idFirstBook));
-        assertThat(listBookId, hasItem(idThirdBook));
+    public void getSavingBookByBookIdAndUserId() {
+        boolean isSavingBookWithId1 = userBooksWantToReadRepository.getSavingBookByBookIdAndUserId(idFirstBook, 1L);
+        assertTrue(isSavingBookWithId1);
+        boolean isSavingBookWithId2 = userBooksWantToReadRepository.getSavingBookByBookIdAndUserId(idSecondBook, 1L);
+        assertFalse(isSavingBookWithId2);
     }
 
     @Test
-    public void getGradeByBookIdAndUserId() {
-        Optional<Integer> grade = userBooksGradeRepository.getGradeByBookIdAndUserId(idFirstBook, 1L);
-        assertEquals(10, grade.get());
-        grade = userBooksGradeRepository.getGradeByBookIdAndUserId(idSecondBook, 1L);
-        assertTrue(grade.isEmpty());
+    public void getUserBooksWantToReadByBookAndUserIdAndDel() {
+        Optional<UserBooksWantToRead> optionalUserBooksWantToRead = userBooksWantToReadRepository
+                .getUserBooksWantToReadByBookAndUserIdAndDel(bookRepository.findById(idFirstBook).get(),
+                        1L, false);
+        assertTrue(optionalUserBooksWantToRead.isPresent());
+        optionalUserBooksWantToRead = userBooksWantToReadRepository
+                .getUserBooksWantToReadByBookAndUserIdAndDel(bookRepository.findById(idSecondBook).get(),
+                        1L, false);
+        assertFalse(optionalUserBooksWantToRead.isPresent());
     }
 
     @Test
-    public void getUserBooksGradeByBookIdAndUserId() {
-        Optional<UserBooksGrade> userBooksGrade
-                = userBooksGradeRepository.getUserBooksGradeByBookIdAndUserId(idThirdBook, 1L);
-        assertEquals(1, userBooksGrade.get().getUserId());
-        assertEquals(7, userBooksGrade.get().getGrade());
-        assertEquals(idThirdBook, userBooksGrade.get().getBook().getId());
-        userBooksGrade = userBooksGradeRepository.getUserBooksGradeByBookIdAndUserId(idSecondBook, 1L);
-        assertTrue(userBooksGrade.isEmpty());
+    public void getSavingBooksIdByUserId() {
+        List<Long> bookIdList = userBooksWantToReadRepository.getSavingBooksIdByUserId(1L);
+        assertEquals(2, bookIdList.size());
+        assertThat(bookIdList, hasItem(idFirstBook));
+        assertThat(bookIdList, hasItem(idThirdBook));
+        bookIdList = userBooksWantToReadRepository.getSavingBooksIdByUserId(2L);
+        assertEquals(0, bookIdList.size());
     }
 }

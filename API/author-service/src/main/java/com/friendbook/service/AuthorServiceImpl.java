@@ -204,6 +204,7 @@ public class AuthorServiceImpl implements AuthorService {
         List<AuthorForSearch> result = page.get().toList();
         for (int i = 0; i < result.size(); i++) {
             result.get(i).setRating(authorForSearchList.get(i).getRating());
+            result.get(i).setPhotoSrc("/author/image?id=" + result.get(i).getId());
         }
         return page;
     }
