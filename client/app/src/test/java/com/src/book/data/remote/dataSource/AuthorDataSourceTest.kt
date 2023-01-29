@@ -6,6 +6,7 @@ import com.src.book.TestModelsResponseGenerator
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.author.AuthorDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
+import com.src.book.data.remote.model.author.authorList.AuthorListMapper
 import com.src.book.data.remote.service.AuthorService
 import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
@@ -31,12 +32,15 @@ class AuthorDataSourceTest {
 
     @MockK
     private lateinit var authorMapper: AuthorMapper
+
+    @MockK
+    private lateinit var authorListMapper: AuthorListMapper
     private lateinit var authorDataSource: AuthorDataSource
 
 
     @Before
     fun setUp() {
-        authorDataSource = AuthorDataSourceImpl(authorService, authorMapper)
+        authorDataSource = AuthorDataSourceImpl(authorService, authorMapper, authorListMapper)
         testModelsResponseGenerator = TestModelsResponseGenerator()
         testModelsGenerator = TestModelsGenerator()
     }
