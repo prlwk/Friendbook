@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.FragmentMyProfileBinding
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.user.UserProfile
 import com.src.book.domain.model.userReview.UserReview
 import com.src.book.domain.utils.BasicState

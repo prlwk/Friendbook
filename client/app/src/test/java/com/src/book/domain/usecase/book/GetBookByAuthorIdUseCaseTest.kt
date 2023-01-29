@@ -2,7 +2,7 @@ package com.src.book.domain.usecase.book
 
 import com.src.book.ID
 import com.src.book.TestModelsGenerator
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery

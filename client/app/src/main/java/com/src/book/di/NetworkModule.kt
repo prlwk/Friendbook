@@ -13,6 +13,7 @@ import com.src.book.data.remote.dataSource.login.LoginDataSourceImpl
 import com.src.book.data.remote.dataSource.user.UserDataSource
 import com.src.book.data.remote.dataSource.user.UserDataSourceImpl
 import com.src.book.data.remote.model.author.author.AuthorMapper
+import com.src.book.data.remote.model.author.authorList.AuthorListMapper
 import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.model.book.bookList.BookListMapper
 import com.src.book.data.remote.model.friend.friend.FriendMapper
@@ -55,8 +56,8 @@ class NetworkModule {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             )
             .addNetworkInterceptor(networkInterceptor)
-            .connectTimeout(5,TimeUnit.MINUTES)
-            .readTimeout(5,TimeUnit.MINUTES)
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(5, TimeUnit.MINUTES)
             .build()
 
     @Singleton
@@ -140,9 +141,14 @@ class NetworkModule {
     @Provides
     fun provideAuthorDataSource(
         authorService: AuthorService,
-        authorMapper: AuthorMapper
+        authorMapper: AuthorMapper,
+        authorListMapper: AuthorListMapper
     ): AuthorDataSource {
-        return AuthorDataSourceImpl(authorService = authorService, authorMapper)
+        return AuthorDataSourceImpl(
+            authorService = authorService,
+            authorMapper = authorMapper,
+            authorListMapper = authorListMapper
+        )
     }
 
     @Singleton

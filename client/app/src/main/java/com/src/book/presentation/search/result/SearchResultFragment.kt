@@ -5,18 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.src.book.R
+import com.src.book.databinding.FragmentSearchResultBinding
+import com.src.book.presentation.MainActivity
+import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
+import com.src.book.presentation.search.result.adapter.DefaultLoadStateAdapter
 
 class SearchResultFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private lateinit var binding: FragmentSearchResultBinding
+    private lateinit var viewModel: MainPageViewModel
+    private lateinit var viewHolder: DefaultLoadStateAdapter.Holder
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search_result, container, false)
+    ): View {
+        binding = FragmentSearchResultBinding.inflate(inflater)
+        viewModel = (activity as MainActivity).getMainPageViewModel()
+        return binding.root
     }
 }

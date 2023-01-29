@@ -3,7 +3,7 @@ package com.src.book.presentation.author.list_of_books.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.utils.BasicState

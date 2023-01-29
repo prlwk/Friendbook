@@ -1,4 +1,4 @@
-package com.src.book.domain.model
+package com.src.book.domain.author
 
 data class AuthorBook(
     val id: Long,

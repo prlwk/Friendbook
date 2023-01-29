@@ -102,8 +102,17 @@
     <string name="make_review">Оценить</string>
     <string name="save">Сохранить</string>
     <string name="congratulations">Поздравляем!</string>
-    <string name="congratulation_deskription">Вы успешно зарегистрированы. Вы будете перенаправлены на главную страницу через несколько секунд.</string>
+    <string name="congratulation_description">Вы успешно зарегистрированы. Вы будете перенаправлены на главную страницу через несколько секунд.</string>
     <string name="remove_friend">Удалить друга</string>
     <string name="toast_error_text">Ошибка. Попробуйте позже.</string>
     <string name="large_number_of_friends_requests">9+</string>
+    <string name="all">Все</string>
+    <string name="popular">Популярные</string>
+    <string name="update">Обновить</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="categories">Категории</string>
+    <string name="recommendations">Рекомендации для Вас</string>
+    <string name="best_authors">Лучшие авторы</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_4x">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_author"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_global_rating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ten_global_rating"
+        android:textColor="@color/positive_rating"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cv_author" />
+
+    <TextView
+        android:id="@+id/tv_author_name"
+        style="@style/basic_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_3x"
+        android:layout_marginEnd="@dimen/space_2x"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_global_rating"
+        app:layout_constraintStart_toEndOf="@id/cv_author"
+        app:layout_constraintTop_toTopOf="@id/cv_author"
+        tools:text="@string/temp_string" />
+
+    <TextView
+        android:id="@+id/tv_author_year"
+        style="@style/basic_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_3x"
+        android:layout_marginTop="@dimen/space_1x"
+        android:layout_marginEnd="@dimen/space_2x"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_global_rating"
+        app:layout_constraintStart_toEndOf="@id/cv_author"
+        app:layout_constraintTop_toBottomOf="@id/tv_author_name"
+        tools:text="@string/temp_string" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

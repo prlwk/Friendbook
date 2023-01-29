@@ -1,6 +1,6 @@
 package com.src.book.domain.model.user
 
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.userReview.UserReview
 
 data class UserProfile(

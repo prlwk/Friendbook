@@ -2,7 +2,7 @@ package com.src.book.data.remote.model.author.author
 
 import com.src.book.data.remote.Mapper
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorMapper
-import com.src.book.domain.model.Author
+import com.src.book.domain.author.Author
 import com.src.book.utils.AUTHOR_SERVICE_BASE_URL
 import com.src.book.utils.BASE_URL
 

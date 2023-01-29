@@ -5,7 +5,7 @@ import com.src.book.data.remote.model.author.authorBook.AuthorBookMapper
 import com.src.book.data.remote.model.genre.GenreMapper
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookMapper
 import com.src.book.data.remote.model.tag.TagMapper
-import com.src.book.domain.model.Book
+import com.src.book.domain.model.book.Book
 import com.src.book.utils.BASE_URL
 import com.src.book.utils.BOOK_SERVICE_BASE_URL
 

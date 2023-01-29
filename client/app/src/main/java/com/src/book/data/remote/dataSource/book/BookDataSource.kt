@@ -1,11 +1,13 @@
 package com.src.book.data.remote.dataSource.book
 
-import com.src.book.domain.model.Book
-import com.src.book.domain.model.BookList
+import androidx.paging.PagingData
+import com.src.book.domain.model.book.Book
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
+import kotlinx.coroutines.flow.Flow
 
 interface BookDataSource {
     suspend fun loadBooksByAuthorId(id: Long): BasicState<List<BookList>>
@@ -14,4 +16,24 @@ interface BookDataSource {
     suspend fun loadAllTags(): List<Tag>?
     suspend fun removeBookmark(bookId: Long): BookmarkState
     suspend fun addBookmark(bookId: Long): BookmarkState
+    suspend fun searchBooks(
+        numberPage: Int,
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?,
+        tags: String?,
+        genres: String?
+    ): BasicState<List<BookList>>
+
+   fun searchBooksWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?,
+        tags: String?,
+        genres: String?
+    ): Flow<PagingData<BookList>>
 }

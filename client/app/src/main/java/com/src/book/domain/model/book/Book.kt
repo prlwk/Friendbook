@@ -1,4 +1,9 @@
-package com.src.book.domain.model
+package com.src.book.domain.model.book
+
+import com.src.book.domain.author.AuthorBook
+import com.src.book.domain.model.Genre
+import com.src.book.domain.model.Review
+import com.src.book.domain.model.Tag
 
 data class Book(
     val id: Long,

@@ -16,8 +16,8 @@ import com.bumptech.glide.Glide
 import com.src.book.R
 import com.src.book.databinding.FragmentAuthorBinding
 import com.src.book.databinding.FragmentAuthorShimmerBinding
-import com.src.book.domain.model.Author
-import com.src.book.domain.model.BookAuthor
+import com.src.book.domain.author.Author
+import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.main.description.DescriptionFragment

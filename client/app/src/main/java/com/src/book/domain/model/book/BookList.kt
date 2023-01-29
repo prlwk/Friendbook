@@ -1,4 +1,7 @@
-package com.src.book.domain.model
+package com.src.book.domain.model.book
+
+import com.src.book.domain.author.AuthorBook
+import com.src.book.domain.model.Genre
 
 data class BookList(
     val id: Long,

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
-    tools:ignore="MissingConstraints"
-    tools:context=".presentation.main.main_page.MainPageFragment">
+    tools:context=".presentation.main.main_page.MainPageFragment"
+    tools:ignore="MissingConstraints">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -46,18 +46,21 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:src="@drawable/ic_search_24"
-            app:tint="@color/light_gray" />
+            app:tint="@color/light_gray"
+            tools:ignore="ContentDescription" />
 
         <EditText
-            android:layout_marginStart="@dimen/space_1x"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_accent"
-            android:textColorHint="@color/tv_hint"
+            android:layout_marginStart="@dimen/space_1x"
             android:background="#00000000"
             android:hint="@string/search_title"
+            android:inputType="text"
             android:lines="1"
-            android:textSize="14sp" />
+            android:textColor="@color/color_accent"
+            android:textColorHint="@color/tv_hint"
+            android:textSize="14sp"
+            tools:ignore="Autofill" />
     </LinearLayout>
 
     <ImageView
@@ -68,133 +71,240 @@
         app:layout_constraintBottom_toBottomOf="@id/ll_search_bar"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintTop_toTopOf="@id/gl_top"
-        app:tint="@color/light_gray" />
+        app:tint="@color/light_gray"
+        tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/tv_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
-        android:text="Популярные"
-        android:textColor="@color/color_accent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/ll_search_bar" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:src="@drawable/more"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_popular"
-        app:tint="@color/basic_color" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_popular_books"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
-        android:isScrollContainer="true"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_popular"
-        tools:itemCount="1"
-        tools:listitem="@layout/view_holder_simple_book" />
+        app:layout_constraintTop_toBottomOf="@id/ll_search_bar"
+        tools:ignore="ScrollViewCount">
 
-    <TextView
-        android:id="@+id/tv_categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
-        android:text="Категории"
-        android:textColor="@color/color_accent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/rv_popular_books" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:src="@drawable/more"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_categories"
-        app:tint="@color/basic_color" />
+            <TextView
+                android:id="@+id/tv_popular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/popular"
+                android:textColor="@color/color_accent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_categories"
-        app:spanCount="3"
-        tools:itemCount="9"
-        tools:listitem="@layout/view_holder_category" />
+            <TextView
+                android:id="@+id/tv_more_books"
+                style="@style/all_items_text_main_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_popular" />
 
-    <TextView
-        android:id="@+id/tv_recommendations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
-        android:text="Рекомендации для Вас"
-        android:textColor="@color/color_accent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/rv_category" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_books"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:isScrollContainer="true"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular"
+                tools:itemCount="1"
+                tools:listitem="@layout/view_holder_simple_book_and_author" />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:src="@drawable/more"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_recommendations"
-        app:tint="@color/basic_color" />
+            <LinearLayout
+                android:id="@+id/ll_popular_book_error"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recommended_books"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
-        android:isScrollContainer="true"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_recommendations"
-        tools:itemCount="1"
-        tools:listitem="@layout/view_holder_simple_book" />
+                <include
+                    android:id="@+id/layout_popular_book_error"
+                    layout="@layout/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_best_authors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4x"
-        android:text="Лучшие авторы"
-        android:textColor="@color/color_accent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/rv_recommended_books" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_popular_book"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="@dimen/space_3x"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:src="@drawable/more"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_best_authors"
-        app:tint="@color/basic_color" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shimmer_rectangle" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_best_authors"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
-        android:isScrollContainer="true"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_best_authors"
-        tools:itemCount="1"
-        tools:listitem="@layout/view_holder_simple_book" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_popular_books"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="ll_popular_book_error,rv_popular_books,shimmer_popular_book"
+                tools:layout_editor_absoluteX="20dp" />
+
+            <TextView
+                android:id="@+id/tv_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/categories"
+                android:textColor="@color/color_accent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_popular_books" />
+
+            <TextView
+                style="@style/all_items_text_main_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_categories" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_categories"
+                app:spanCount="3"
+                tools:itemCount="9"
+                tools:listitem="@layout/view_holder_category" />
+
+            <TextView
+                android:id="@+id/tv_recommendations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/recommendations"
+                android:textColor="@color/color_accent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_category" />
+
+            <TextView
+                style="@style/all_items_text_main_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_recommendations" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommended_books"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:isScrollContainer="true"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_recommendations"
+                tools:itemCount="1"
+                tools:listitem="@layout/view_holder_simple_book_and_author" />
+
+            <TextView
+                android:id="@+id/tv_best_authors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/best_authors"
+                android:textColor="@color/color_accent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_recommended_books" />
+
+            <TextView
+                android:id="@+id/tv_more_authors"
+                style="@style/all_items_text_main_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_best_authors" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_best_authors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:isScrollContainer="true"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_best_authors"
+                tools:itemCount="1"
+                tools:listitem="@layout/view_holder_simple_book_and_author" />
+
+            <LinearLayout
+                android:id="@+id/ll_best_author_error"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_best_authors">
+
+                <include
+                    android:id="@+id/layout_best_author_error"
+                    layout="@layout/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_best_authors"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="@dimen/space_3x"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_best_authors">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shimmer_rectangle" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_best_authors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="shimmer_best_authors, ll_best_author_error, rv_best_authors" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_4x"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_best_authors" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

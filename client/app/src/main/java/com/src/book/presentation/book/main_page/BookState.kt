@@ -1,6 +1,6 @@
 package com.src.book.presentation.book.main_page
 
-import com.src.book.domain.model.Book
+import com.src.book.domain.model.book.Book
 
 sealed class BookState {
     class DefaultState(val book: Book?) : BookState()

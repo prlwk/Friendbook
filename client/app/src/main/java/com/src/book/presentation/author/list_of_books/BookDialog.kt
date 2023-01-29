@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.src.book.R
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 
 //TODO вызвать окно "чтобы оценить, нужно зарегестрироваться, когда человек не авторизирован
 //TODO повесить onCLickListener на оценить

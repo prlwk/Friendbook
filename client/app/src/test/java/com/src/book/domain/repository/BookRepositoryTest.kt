@@ -4,7 +4,7 @@ import com.src.book.ID
 import com.src.book.TestModelsGenerator
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.repository.BookRepositoryImpl
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
 import io.mockk.coEvery

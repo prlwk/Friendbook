@@ -1,6 +1,6 @@
 package com.src.book.domain.model.userReview
 
-import com.src.book.domain.model.AuthorBook
+import com.src.book.domain.author.AuthorBook
 
 data class UserReview(
     val text: String,

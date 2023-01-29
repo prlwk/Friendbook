@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
 import com.src.book.databinding.FragmentListOfBooksBinding
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
 import com.src.book.presentation.MainActivity

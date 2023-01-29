@@ -1,9 +1,7 @@
 package com.src.book.di
 
 import com.src.book.domain.repository.BookRepository
-import com.src.book.domain.usecase.book.GetBookByIdUseCase
-import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
-import com.src.book.domain.usecase.book.SetBookmarkUseCase
+import com.src.book.domain.usecase.book.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -26,5 +24,17 @@ class DomainBookModule {
     @Provides
     fun provideSetBookmarkUseCase(bookRepository: BookRepository): SetBookmarkUseCase {
         return SetBookmarkUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchBooksUseCase(bookRepository: BookRepository): SearchBooksUseCase {
+        return SearchBooksUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchBooksWithPaginationUseCase(bookRepository: BookRepository): SearchBooksWithPaginationUseCase {
+        return SearchBooksWithPaginationUseCase(bookRepository = bookRepository)
     }
 }

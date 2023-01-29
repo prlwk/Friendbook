@@ -2,6 +2,7 @@ package com.src.book.di
 
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.author.authorBook.AuthorBookMapper
+import com.src.book.data.remote.model.author.authorList.AuthorListMapper
 import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorMapper
 import com.src.book.data.remote.model.book.bookList.BookListMapper
@@ -116,5 +117,11 @@ class MapperModule {
             userReviewMapper = userReviewMapper,
             bookListMapper = bookListMapper
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthorListMapper(): AuthorListMapper {
+        return AuthorListMapper()
     }
 }

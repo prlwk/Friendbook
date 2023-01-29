@@ -9,29 +9,33 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.src.book.R
-import com.src.book.databinding.ViewHolderSimpleBookBinding
-import com.src.book.domain.model.BookAuthor
+import com.src.book.databinding.ViewHolderSimpleBookAndAuthorBinding
+import com.src.book.domain.model.book.BookAuthor
 import com.src.book.presentation.utils.RatingColor
-import com.src.book.utils.BASE_URL
-import com.src.book.utils.BOOK_SERVICE_BASE_URL
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 
 class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :
     ListAdapter<BookAuthor, BookListAdapter.DataViewHolder>(BookAuthorDiffCallback()) {
-    private lateinit var binding: ViewHolderSimpleBookBinding
+    private lateinit var binding: ViewHolderSimpleBookAndAuthorBinding
 
-    class DataViewHolder(private val binding: ViewHolderSimpleBookBinding) :
+    class DataViewHolder(private val binding: ViewHolderSimpleBookAndAuthorBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(bookAuthor: BookAuthor, onClickBook: (item: BookAuthor) -> Unit) {
             //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
             Glide.with(context)
                 .load(bookAuthor.linkCover)
-                .into(binding.ivBook)
+                .into(binding.ivPhoto)
+            val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
+            decimalFormatSymbols.decimalSeparator = '.'
             if (bookAuthor.rating == 0.0) {
                 binding.tvGlobalRating.text = context.resources.getText(R.string.no_rating)
             } else {
-                binding.tvGlobalRating.text = bookAuthor.rating.toString()
+                binding.tvGlobalRating.text =
+                    DecimalFormat("#0.0", decimalFormatSymbols).format(bookAuthor.rating)
             }
             binding.llGlobalRating.background =
                 ContextCompat.getDrawable(context, RatingColor.getBackground(bookAuthor.rating))
@@ -45,7 +49,7 @@ class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        binding = ViewHolderSimpleBookBinding.inflate(
+        binding = ViewHolderSimpleBookAndAuthorBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.src.book.R
 import com.src.book.databinding.ViewHolderBookBinding
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.presentation.utils.RatingColor
 
 //TODO Если нет рейтинга что делать

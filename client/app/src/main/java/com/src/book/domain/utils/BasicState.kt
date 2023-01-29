@@ -5,4 +5,5 @@ sealed class BasicState<out T : Any> {
     class EmptyState<out T : Any>() : BasicState<T>()
     class ErrorState<out T : Any> : BasicState<T>()
     class DefaultState<out T : Any> : BasicState<T>()
+    class LoadingState<out T : Any> : BasicState<T>()
 }

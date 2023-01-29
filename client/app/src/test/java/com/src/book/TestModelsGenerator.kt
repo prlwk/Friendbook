@@ -1,6 +1,11 @@
 package com.src.book
 
+import com.src.book.domain.author.Author
+import com.src.book.domain.author.AuthorBook
 import com.src.book.domain.model.*
+import com.src.book.domain.model.book.Book
+import com.src.book.domain.model.book.BookAuthor
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.model.user.Login
 import com.src.book.utils.AUTHOR_SERVICE_BASE_URL

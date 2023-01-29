@@ -3,7 +3,7 @@ package com.src.book.presentation.author
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.src.book.ID
 import com.src.book.TestModelsGenerator
-import com.src.book.domain.model.BookList
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.usecase.book.GetBooksByAuthorIdUseCase
 import com.src.book.domain.usecase.book.SetBookmarkUseCase
 import com.src.book.domain.utils.BasicState

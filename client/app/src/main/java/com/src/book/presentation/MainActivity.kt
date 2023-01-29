@@ -18,11 +18,13 @@ import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.main_page.viewModel.BookViewModelFactory
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModel
 import com.src.book.presentation.friends.add_friends.viewModel.AddFriendsViewModelFactory
-import com.src.book.presentation.friends.friends_list.FriendsListFragment
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModel
 import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewModelFactory
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModel
 import com.src.book.presentation.friends.friends_requests.viewModel.RequestsFriendsViewModelFactory
+import com.src.book.presentation.main.main_page.MainPageFragment
+import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
+import com.src.book.presentation.main.main_page.viewModel.MainPageViewModelFactory
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModel
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModelFactory
 import com.src.book.presentation.profile.settings.viewModel.SettingsViewModel
@@ -57,6 +59,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var myProfileViewModelFactory: MyProfileViewModelFactory
 
+    @Inject
+    lateinit var mainPageViewModelFactory: MainPageViewModelFactory
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         //TODO
-        replaceFragment(FriendsListFragment())
+        replaceFragment(MainPageFragment())
         //TODO
         binding.bottomNavigation.setOnItemReselectedListener {
 //            when (it.itemId) {
@@ -77,11 +82,15 @@ class MainActivity : AppCompatActivity() {
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    fun popBackStack() {
+        supportFragmentManager.popBackStack()
     }
 
     fun getAuthorViewModel(): AuthorViewModel =
@@ -110,6 +119,9 @@ class MainActivity : AppCompatActivity() {
 
     fun getMyProfileViewModel(): MyProfileViewModel =
         ViewModelProvider(this, myProfileViewModelFactory)[MyProfileViewModel::class.java]
+
+    fun getMainPageViewModel(): MainPageViewModel =
+        ViewModelProvider(this, mainPageViewModelFactory)[MainPageViewModel::class.java]
 
     @SuppressLint("ShowToast")
     fun showSnackBar() {
