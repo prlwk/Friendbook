@@ -52,4 +52,10 @@ interface BookService {
         @Query("tags") tags: String?,
         @Query("genres") genres: String?
     ): Response<BookSearchResultResponse>
+
+    @GET("$BOOK_SERVICE_BASE_URL/genre/popular")
+    suspend fun getPopularGenres(): Response<List<GenreResponse>>
+
+    @GET("$BOOK_SERVICE_BASE_URL/tag/popular")
+    suspend fun getPopularTags(): Response<List<TagResponse>>
 }

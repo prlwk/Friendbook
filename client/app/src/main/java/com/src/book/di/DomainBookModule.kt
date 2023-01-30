@@ -37,4 +37,16 @@ class DomainBookModule {
     fun provideSearchBooksWithPaginationUseCase(bookRepository: BookRepository): SearchBooksWithPaginationUseCase {
         return SearchBooksWithPaginationUseCase(bookRepository = bookRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetPopularGenresUseCase(bookRepository: BookRepository): GetPopularGenresUseCase {
+        return GetPopularGenresUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetPopularTagsUseCase(bookRepository: BookRepository): GetPopularTagsUseCase {
+        return GetPopularTagsUseCase(bookRepository = bookRepository)
+    }
 }

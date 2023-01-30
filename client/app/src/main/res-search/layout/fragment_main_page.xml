@@ -197,6 +197,47 @@
                 tools:itemCount="9"
                 tools:listitem="@layout/view_holder_category" />
 
+            <LinearLayout
+                android:id="@+id/ll_category_error"
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:gravity="center"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_categories">
+
+                <include
+                    android:id="@+id/layout_category_error"
+                    layout="@layout/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_category"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="@dimen/space_3x"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_categories">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shimmer_rectangle" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="shimmer_category,ll_category_error,rv_category" />
+
             <TextView
                 android:id="@+id/tv_recommendations"
                 android:layout_width="wrap_content"
@@ -206,7 +247,7 @@
                 android:textColor="@color/color_accent"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_category" />
+                app:layout_constraintTop_toBottomOf="@id/barrier_category" />
 
             <TextView
                 style="@style/all_items_text_main_page"

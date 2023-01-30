@@ -11,6 +11,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.src.book.R
 import com.src.book.databinding.FragmentMainPageBinding
 import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.Genre
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.book.BookMapper
@@ -19,6 +20,8 @@ import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.main.main_page.adapter.AuthorListAdapter
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
+import com.src.book.presentation.main.main_page.adapter.CategoryItemDecoration
+import com.src.book.presentation.main.main_page.adapter.GenreListAdapter
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
 import com.src.book.presentation.search.result.SearchResultWithTitleFragment
 
@@ -45,10 +48,15 @@ class MainPageFragment : Fragment() {
             this.viewLifecycleOwner,
             this::checkBestAuthorsState
         )
+        viewModel.liveDataPopularGenres.observe(
+            this.viewLifecycleOwner,
+            this::checkGenresState
+        )
         setAdapters()
         setOnClickListeners()
         viewModel.getPopularBooks()
         viewModel.getBestAuthors()
+        viewModel.getPopularGenres()
         binding.llPopularBookError.visibility = View.GONE
         binding.llBestAuthorError.visibility = View.GONE
     }
@@ -56,6 +64,7 @@ class MainPageFragment : Fragment() {
     private fun setAdapters() {
         setAdapterForPopularBooksRecyclerView()
         setAdapterForBestAuthorsRecyclerView()
+        setAdapterForGenresRecyclerView()
     }
 
     private fun setOnClickListeners() {
@@ -216,5 +225,51 @@ class MainPageFragment : Fragment() {
             fragment.arguments = bundle
             (activity as MainActivity).replaceFragment(fragment)
         }
+    }
+
+    private fun checkGenresState(state: BasicState<List<Genre>>) {
+        when (state) {
+            is BasicState.SuccessState -> {
+                setDataForGenres(state.data)
+            }
+            is BasicState.LoadingState -> {
+                setVisibilityForShimmerLayout(View.VISIBLE, binding.shimmerCategory)
+                binding.llCategoryError.visibility = View.GONE
+                binding.rvCategory.visibility = View.GONE
+            }
+            is BasicState.ErrorState -> {
+                showErrorGenres()
+            }
+            else -> {}
+        }
+    }
+
+    //Genres
+    private fun setAdapterForGenresRecyclerView() {
+        val adapter = GenreListAdapter { onClickGenre(it) }
+        val layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.HORIZONTAL, false)
+        binding.rvCategory.layoutManager = layoutManager
+        binding.rvCategory.adapter = adapter
+    }
+
+    private fun showErrorGenres() {
+        binding.shimmerCategory.stopShimmer()
+        binding.rvCategory.visibility = View.GONE
+        binding.llCategoryError.visibility = View.VISIBLE
+        setVisibilityForShimmerLayout(View.GONE, binding.shimmerCategory)
+    }
+
+    private fun setDataForGenres(genres: List<Genre>) {
+        val adapter = binding.rvCategory.adapter as GenreListAdapter
+        adapter.submitList(genres)
+        binding.rvCategory.addItemDecoration(CategoryItemDecoration())
+        binding.llCategoryError.visibility = View.GONE
+        binding.rvCategory.visibility = View.VISIBLE
+        setVisibilityForShimmerLayout(View.GONE, binding.shimmerCategory)
+    }
+
+    //TODO перейти на страницу с жанрами
+    private fun onClickGenre(genre: Genre) {
+
     }
 }

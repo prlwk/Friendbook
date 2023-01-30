@@ -36,4 +36,7 @@ interface BookRepository {
         tags: String?,
         genres: String?
     ): Flow<PagingData<BookList>>
+
+    suspend fun getPopularGenres(): BasicState<List<Genre>>
+    suspend fun getPopularTags(): BasicState<List<Tag>>
 }

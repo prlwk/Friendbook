@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
+import com.src.book.domain.usecase.book.GetPopularGenresUseCase
 import com.src.book.domain.usecase.book.SearchBooksUseCase
 import com.src.book.domain.usecase.book.SearchBooksWithPaginationUseCase
 import javax.inject.Inject
@@ -12,7 +13,8 @@ class MainPageViewModelFactory @Inject constructor(
     private val searchBooksUseCase: SearchBooksUseCase,
     private val searchAuthorsUseCase: SearchAuthorsUseCase,
     private val searchAuthorsWithPaginationUseCase: SearchAuthorsWithPaginationUseCase,
-    private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase
+    private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase,
+    private val getPopularGenresUseCase: GetPopularGenresUseCase
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -20,7 +22,8 @@ class MainPageViewModelFactory @Inject constructor(
             searchBooksUseCase = searchBooksUseCase,
             searchAuthorsUseCase = searchAuthorsUseCase,
             searchAuthorsWithPaginationUseCase = searchAuthorsWithPaginationUseCase,
-            searchBooksWithPaginationUseCase = searchBooksWithPaginationUseCase
+            searchBooksWithPaginationUseCase = searchBooksWithPaginationUseCase,
+            getPopularGenresUseCase = getPopularGenresUseCase
         ) as T
     }
 }

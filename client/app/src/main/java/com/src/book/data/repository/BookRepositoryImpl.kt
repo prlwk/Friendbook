@@ -61,7 +61,7 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
         )
     }
 
-    override  fun searchBooksWithPagination(
+    override fun searchBooksWithPagination(
         sizePage: Int,
         word: String?,
         sort: String?,
@@ -79,5 +79,13 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
             tags = tags,
             genres = genres
         )
+    }
+
+    override suspend fun getPopularGenres(): BasicState<List<Genre>> = withContext(Dispatchers.IO) {
+        return@withContext bookDataSource.getPopularGenres()
+    }
+
+    override suspend fun getPopularTags(): BasicState<List<Tag>> = withContext(Dispatchers.IO) {
+       return@withContext bookDataSource.getPopularTags()
     }
 }

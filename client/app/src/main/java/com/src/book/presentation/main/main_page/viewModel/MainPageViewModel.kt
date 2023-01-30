@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.Genre
 import com.src.book.domain.model.book.BookList
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
+import com.src.book.domain.usecase.book.GetPopularGenresUseCase
 import com.src.book.domain.usecase.book.SearchBooksUseCase
 import com.src.book.domain.usecase.book.SearchBooksWithPaginationUseCase
 import com.src.book.domain.utils.BasicState
@@ -19,14 +21,18 @@ class MainPageViewModel(
     private val searchBooksUseCase: SearchBooksUseCase,
     private val searchAuthorsUseCase: SearchAuthorsUseCase,
     private val searchAuthorsWithPaginationUseCase: SearchAuthorsWithPaginationUseCase,
-    private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase
+    private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase,
+    private val getPopularGenresUseCase: GetPopularGenresUseCase
 ) : ViewModel() {
     private val _mutableLiveDataBookPopularity =
         MutableLiveData<BasicState<List<BookList>>>(BasicState.DefaultState())
     private val _mutableLiveDataTheBestAuthors =
         MutableLiveData<BasicState<List<AuthorList>>>(BasicState.DefaultState())
+    private val _mutableLivDataPopularGenres =
+        MutableLiveData<BasicState<List<Genre>>>(BasicState.DefaultState())
     val liveDataBookPopularity get() = _mutableLiveDataBookPopularity
     val liveDataTheBestAuthors get() = _mutableLiveDataTheBestAuthors
+    val liveDataPopularGenres get() = _mutableLivDataPopularGenres
 
     fun getPopularBooks() {
         viewModelScope.launch {
@@ -101,8 +107,14 @@ class MainPageViewModel(
         ).cachedIn(viewModelScope)
     }
 
+    fun getPopularGenres() {
+        viewModelScope.launch {
+            _mutableLivDataPopularGenres.value = BasicState.LoadingState()
+            _mutableLivDataPopularGenres.value = getPopularGenresUseCase.execute()
+        }
+    }
 
-   companion object {
+    companion object {
         const val SIZE_PAGE = 5
         const val SORT_POPULARITY = "popularity"
         const val SORT_RATING = "rating"

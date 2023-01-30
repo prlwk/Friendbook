@@ -164,6 +164,28 @@ class BookDataSourceImpl(
         ).flow
     }
 
+    override suspend fun getPopularGenres(): BasicState<List<Genre>> {
+        val response = bookService.getPopularGenres()
+        if (response.isSuccessful) {
+            val genres = response.body()?.map { genreMapper.mapFromResponseToModel(it) }
+            if (genres != null) {
+                return BasicState.SuccessState(genres)
+            }
+        }
+        return BasicState.ErrorState()
+    }
+
+    override suspend fun getPopularTags(): BasicState<List<Tag>> {
+        val response = bookService.getPopularTags()
+        if (response.isSuccessful) {
+            val tags = response.body()?.map { tagMapper.mapFromResponseToModel(it) }
+            if (tags != null) {
+                return BasicState.SuccessState(tags)
+            }
+        }
+        return BasicState.ErrorState()
+    }
+
     private fun getToken(): String? {
         if (sessionStorage.getAccessToken().isEmpty()) {
             return null
