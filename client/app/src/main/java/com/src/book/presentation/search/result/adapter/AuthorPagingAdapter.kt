@@ -1,11 +1,13 @@
 package com.src.book.presentation.search.result.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.ViewHolderAuthorSearchingResultBinding
 import com.src.book.domain.author.AuthorList
@@ -20,10 +22,13 @@ class AuthorPagingAdapter(private val onClickAuthor: (item: AuthorList) -> Unit)
 
     class DataViewHolder(private val binding: ViewHolderAuthorSearchingResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("UseCompatLoadingForDrawables")
         fun onBind(authorList: AuthorList, onClickAuthor: (item: AuthorList) -> Unit) {
-            //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
             Glide.with(context)
                 .load(authorList.photoSrc)
+                .placeholder(context.getDrawable(R.drawable.empty_photo_book_author))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.ivAuthor)
             val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
             binding.tvAuthorName.text = authorList.name

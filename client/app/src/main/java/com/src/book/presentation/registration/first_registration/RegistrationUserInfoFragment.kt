@@ -134,7 +134,6 @@ class RegistrationUserInfoFragment : Fragment() {
         }
     }
 
-    //TODO достать login, name из полей
     private fun setOnClickListenerForNextButton() {
         binding.tvButtonNext.setOnClickListener {
             if (binding.etNickname.text.toString().contains(" ")) {

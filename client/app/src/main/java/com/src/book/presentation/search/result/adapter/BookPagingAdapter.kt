@@ -10,6 +10,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.ViewHolderBookBinding
 import com.src.book.domain.model.book.BookList
@@ -25,15 +26,17 @@ class BookPagingAdapter(
 
     class DataViewHolder(private val binding: ViewHolderBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
+        @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
         fun onBind(
             book: BookList, onClickMore: ((it: BookList) -> Unit)?,
             onClickBook: (it: BookList) -> Unit,
             onCLickBookmark: ((it: BookList) -> Unit)?
         ) {
-            //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
             Glide.with(context)
                 .load(book.linkCover)
+                .placeholder(context.getDrawable(R.drawable.empty_photo_book_author))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.ivBook)
             binding.tvBookName.text = book.name
             binding.tvBookAuthor.text = book.authors?.joinToString(", ") { it.name }

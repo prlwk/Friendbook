@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.ViewHolderSimpleBookAndAuthorBinding
 import com.src.book.domain.model.book.BookAuthor
@@ -24,10 +25,13 @@ class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :
     class DataViewHolder(private val binding: ViewHolderSimpleBookAndAuthorBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         fun onBind(bookAuthor: BookAuthor, onClickBook: (item: BookAuthor) -> Unit) {
-            //TODO добавить placeholder (картинка, которая будет, если не загружается сама картинка с ссылки)
             Glide.with(context)
                 .load(bookAuthor.linkCover)
+                .placeholder(context.getDrawable(R.drawable.empty_photo_book_author))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.ivPhoto)
             val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
             decimalFormatSymbols.decimalSeparator = '.'

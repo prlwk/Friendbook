@@ -31,7 +31,6 @@
     <color name="pencil_color">#FFFFFF</color>
     <color name="background_cong_color">#2C334F</color>
     <color name="text_cong_color">#E6FFFFFF</color>
-
-
-
+    <color name="item_card_start_color">#26262A</color>
+    <color name="item_card_end_color">#CC26262A</color>
 </resources>

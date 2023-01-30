@@ -58,6 +58,8 @@
     <color name="background_blackout_cong_color">#80000000</color>
     <color name="text_cong_color">#CC505050</color>
     <color name="error_color">#FC4D4D</color>
+    <color name="item_card_start_color">#ACACAC</color>
+    <color name="item_card_end_color">#80ACACAC</color>
     <!--    only dark theme-->
 
 
