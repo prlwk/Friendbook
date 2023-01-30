@@ -1,6 +1,7 @@
 package com.friendbook.bookservice.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     @Query("SELECT new com.friendbook.bookservice.DTO.GenreForBook(g.id, g.name)" +
             " FROM Genre g")
     List<GenreForBook> getAll();
+
+    Optional<Genre> getByName(String name);
 }

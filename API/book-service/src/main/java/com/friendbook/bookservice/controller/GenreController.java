@@ -31,7 +31,18 @@ public class GenreController {
         } catch (EntityNotFoundException entityNotFoundException) {
             return new ResponseEntity<>(
                     new AppError(HttpStatus.NOT_FOUND.value(),
-                            "There are no tags."), HttpStatus.NOT_FOUND);
+                            "There are no genres."), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<?> getPopularGenres() {
+        try {
+            return new ResponseEntity<>(genreService.getPopularGenres(), HttpStatus.OK);
+        } catch (EntityNotFoundException entityNotFoundException) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "There are no popular genres."), HttpStatus.NOT_FOUND);
         }
     }
 }

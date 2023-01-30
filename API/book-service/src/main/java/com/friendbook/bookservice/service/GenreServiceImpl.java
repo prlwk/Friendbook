@@ -1,5 +1,6 @@
 package com.friendbook.bookservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +34,32 @@ public class GenreServiceImpl implements GenreService {
             return genres;
         }
         throw new EntityNotFoundException("Tags not found.");
+    }
+
+    @Override
+    public Genre getGenreByName(String name) {
+        Optional<Genre> genreOptional = genreRepository.getByName(name);
+        if (genreOptional.isPresent()) {
+            return genreOptional.get();
+        }
+        throw new EntityNotFoundException("Genre not found.");
+    }
+
+    @Override
+    public List<GenreForBook> getPopularGenres() throws EntityNotFoundException{
+        List<GenreForBook> list = new ArrayList<>();
+        Genre genre = getGenreByName("Фантастика");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        genre = getGenreByName("Детектив");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        genre = getGenreByName("Приключения");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        genre = getGenreByName("Роман");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        genre = getGenreByName("Триллер");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        genre = getGenreByName("Психология");
+        list.add(new GenreForBook(genre.getId(), genre.getName()));
+        return list;
     }
 }

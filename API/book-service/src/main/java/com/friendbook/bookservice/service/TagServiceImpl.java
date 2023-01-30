@@ -1,5 +1,6 @@
 package com.friendbook.bookservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,5 +35,32 @@ public class TagServiceImpl implements TagService {
             return tags;
         }
         throw new EntityNotFoundException("Tags not found.");
+    }
+
+    @Override
+    public Tag getTagByName(String name) {
+        Optional<Tag> tagOptional = tagRepository.getByName(name);
+        if (tagOptional.isPresent()) {
+            return tagOptional.get();
+        }
+        throw new EntityNotFoundException("Tag not found.");
+    }
+
+    @Override
+    public List<TagForBook> getPopularTags() throws EntityNotFoundException{
+        List<TagForBook> list = new ArrayList<>();
+        Tag tag = getTagByName("Любовная история");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        tag = getTagByName("Магия");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        tag = getTagByName("Юмор");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        tag = getTagByName("В поисках счастья");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        tag = getTagByName("Путешествие");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        tag = getTagByName("Война");
+        list.add(new TagForBook(tag.getId(), tag.getName()));
+        return list;
     }
 }

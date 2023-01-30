@@ -33,4 +33,15 @@ public class TagController {
                             "There are no tags."), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<?> getPopularTags() {
+        try {
+            return new ResponseEntity<>(tagService.getPopularTags(), HttpStatus.OK);
+        } catch (EntityNotFoundException entityNotFoundException) {
+            return new ResponseEntity<>(
+                    new AppError(HttpStatus.NOT_FOUND.value(),
+                            "There are no popular tags."), HttpStatus.NOT_FOUND);
+        }
+    }
 }
