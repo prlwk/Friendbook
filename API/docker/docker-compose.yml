@@ -15,8 +15,8 @@ services:
           - "database"
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      timeout: 20s
-      retries: 10
+      timeout: 60s
+      retries: 20
   configserver:
     image: prlwk/serverconfig:0.0.1-SNAPSHOT
     ports:
