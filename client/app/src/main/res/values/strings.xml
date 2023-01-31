@@ -114,4 +114,6 @@
     <string name="recommendations">Рекомендации для Вас</string>
     <string name="best_authors">Лучшие авторы</string>
     <string name="category">category</string>
+    <string name="cancel_search">Отмена</string>
+    <string name="genre_tag">Жанр, тег</string>
 </resources>

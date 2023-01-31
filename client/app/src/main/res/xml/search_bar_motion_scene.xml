@@ -1,0 +1,57 @@
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/with_cancel_button"
+        motion:constraintSetStart="@+id/no_cancel_button"
+        motion:duration="125">
+    </Transition>
+
+    <Transition
+        motion:constraintSetEnd="@+id/no_cancel_button"
+        motion:constraintSetStart="@+id/with_cancel_button"
+        motion:duration="125">
+    </Transition>
+
+    <ConstraintSet android:id="@+id/no_cancel_button">
+        <Constraint
+            android:id="@+id/ll_search_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="@id/gl_end2"
+            motion:layout_constraintStart_toStartOf="@id/gl_start2"
+            motion:layout_constraintTop_toTopOf="@id/gl_top2" />
+        <Constraint
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginStart="@dimen/space_2x"
+            motion:layout_constraintStart_toEndOf="@id/ll_search_bar"
+            motion:layout_constraintBottom_toBottomOf="@id/ll_search_bar"
+            motion:layout_constraintTop_toTopOf="@id/ll_search_bar"
+            />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/with_cancel_button">
+        <Constraint
+            android:id="@+id/ll_search_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_2x"
+            motion:layout_constraintEnd_toStartOf="@id/cancel_button"
+            motion:layout_constraintStart_toStartOf="@id/gl_start2"
+            motion:layout_constraintTop_toTopOf="@id/gl_top2"
+            />
+        <Constraint
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintEnd_toEndOf="@id/gl_end2"
+            motion:layout_constraintBottom_toBottomOf="@id/ll_search_bar"
+            motion:layout_constraintTop_toTopOf="@id/ll_search_bar"
+            />
+    </ConstraintSet>
+
+</MotionScene>
