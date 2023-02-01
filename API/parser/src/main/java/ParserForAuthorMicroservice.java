@@ -65,12 +65,12 @@ public class ParserForAuthorMicroservice {
                         out.write(resultImageResponse.bodyAsBytes());
                         out.close();
                         writer.write("INSERT INTO authors(id, biography, name,"
-                                + " photo_src, years_life, count_requests) VALUES (" + counterId + ", '" + biography
-                                + "', '" + name + "', '" + counterId + ".jpg', '" + yearsLife + "', " + 0 + ");\n ");
+                                + " photo_src, years_life, count_requests, rating) VALUES (" + counterId + ", '" + biography
+                                + "', '" + name + "', '" + counterId + ".jpg', '" + yearsLife + "', " + 0 + ", " + 0 +");\n ");
                     } else {
                         writer.write("INSERT INTO authors(id, biography, name,"
-                                + " years_life, count_requests) VALUES (" + counterId + ", '" + biography
-                                + "', '" + name + "', '" + yearsLife + "', " + 0 + ");\n ");
+                                + " years_life, count_requests, rating) VALUES (" + counterId + ", '" + biography
+                                + "', '" + name + "', '" + yearsLife + "', " + 0 + ", " + 0 +");\n ");
                     }
                     counterId++;
                 }

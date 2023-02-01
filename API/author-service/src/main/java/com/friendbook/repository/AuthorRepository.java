@@ -30,7 +30,13 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
             countQuery = "SELECT count(a) " +
                     "FROM Author a " +
                     "WHERE a.id in :listId")
-    Page<AuthorForSearch> search(@NotNull List<Long> listId, Pageable pageable);
+    Page<AuthorForSearch> searchWithWord(@NotNull List<Long> listId, Pageable pageable);
+
+    @Query(value = "SELECT new com.friendbook.DTO.AuthorForSearch(a) " +
+            "FROM Author a ",
+            countQuery = "SELECT count(a) " +
+                    "FROM Author a ")
+    Page<AuthorForSearch> search(Pageable pageable);
 
     @Transactional
     @Modifying

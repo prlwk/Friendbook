@@ -1,7 +1,6 @@
 package com.friendbook.service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -151,60 +150,32 @@ public class AuthorServiceImpl implements AuthorService {
     public Page<AuthorForSearch> search(int numberPage, int sizePage, Sort sort, String word, int startRating,
                                         int finishRating) {
         Page<AuthorForSearch> page;
-        List<AuthorForSearch> authorForSearchList = new ArrayList<>();
-        List<AuthorForSearch> authorForSearchListWithNullRating = new ArrayList<>();
         List<AuthorForSearch> list;
         if (word != null) {
             list = getAuthorsByAuthorName(word);
-        } else {
-            list = getAllAuthorsForSearch();
-        }
-
-        for (AuthorForSearch x : list) {
-            Double rating = null;
-            Set<Book> books = bookRestTemplateClient.getBooksWithAuthorId(x.getId());
-            if (books != null) {
-                if (books.isEmpty()) {
-                    rating = 0.0;
-                } else {
-                    rating = books.stream().map(Book::getRating).mapToDouble(i -> i).sum();
-                    rating /= books.size();
-                }
-                if (rating >= startRating && rating <= finishRating) {
-                    authorForSearchList.add(new AuthorForSearch(x.getId(), x.getName(), x.getPhotoSrc(),
-                            rating, x.getYearsLife()));
-                }
-            } else {
-                authorForSearchListWithNullRating.add(new AuthorForSearch(x.getId(), x.getName(), x.getPhotoSrc(),
-                        rating, x.getYearsLife()));
+            List<Long> listIdAuthor = new ArrayList<>();
+            for (AuthorForSearch author : list) {
+                listIdAuthor.add(author.getId());
             }
-        }
-        if (sort == Sort.Rating) {
-            authorForSearchList.sort(Comparator.comparing(AuthorForSearch::getRating).reversed());
+            if (sort == Sort.Popularity) {
+                page = authorRepository.searchWithWord(listIdAuthor, PageRequest.of(numberPage, sizePage,
+                        org.springframework.data.domain.Sort.by("countRequests").descending()));
+            } else if (sort == Sort.Rating) {
+                page = authorRepository.searchWithWord(listIdAuthor,
+                        PageRequest.of(numberPage, sizePage, org.springframework.data.domain.Sort.by("rating").descending()));
+            } else {
+                page = authorRepository.searchWithWord(listIdAuthor, PageRequest.of(numberPage, sizePage));
+            }
         } else {
-            authorForSearchList.sort(Comparator.comparingLong(x ->
-                    authorRepository.findById(((AuthorForSearch) x).getId())
-                            .get()
-                            .getCountRequests()).reversed());
-        }
-        authorForSearchList.addAll(authorForSearchListWithNullRating);
-        List<Long> listIdAuthor = new ArrayList<>();
-        for (AuthorForSearch author : authorForSearchList) {
-            listIdAuthor.add(author.getId());
-        }
-        if (sort == Sort.Popularity) {
-            page = authorRepository.search(listIdAuthor, PageRequest.of(numberPage, sizePage,
-                    org.springframework.data.domain.Sort.by("countRequests").descending()));
-        } else if (sort == Sort.Rating) {
-            page = authorRepository.search(listIdAuthor,
-                    PageRequest.of(numberPage, sizePage, JpaSort.unsafe("FIELD(a.id, :listId)")));
-        } else {
-            page = authorRepository.search(listIdAuthor, PageRequest.of(numberPage, sizePage));
-        }
-        List<AuthorForSearch> result = page.get().toList();
-        for (int i = 0; i < result.size(); i++) {
-            result.get(i).setRating(authorForSearchList.get(i).getRating());
-            result.get(i).setPhotoSrc("/author/image?id=" + result.get(i).getId());
+            if (sort == Sort.Popularity) {
+                page = authorRepository.search(PageRequest.of(numberPage, sizePage,
+                        org.springframework.data.domain.Sort.by("countRequests").descending()));
+            } else if (sort == Sort.Rating) {
+                page = authorRepository.search(PageRequest.of(numberPage, sizePage,
+                        org.springframework.data.domain.Sort.by("rating").descending()));
+            } else {
+                page = authorRepository.search(PageRequest.of(numberPage, sizePage));
+            }
         }
         return page;
     }
