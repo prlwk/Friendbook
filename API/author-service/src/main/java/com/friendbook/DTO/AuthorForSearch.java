@@ -25,7 +25,9 @@ public class AuthorForSearch {
     public AuthorForSearch(Author author) {
         this.id = author.getId();
         this.name = author.getName();
-        this.photoSrc = "/author/image?id=" + author.getId();
+        if (author.getPhotoSrc() != null) {
+            this.photoSrc = "https://disk.yandex.ru/d/oXLF4pVFC2tzlw/" + author.getPhotoSrc();
+        }
         this.yearsLife = author.getYearsLife();
         this.rating = author.getRating();
     }

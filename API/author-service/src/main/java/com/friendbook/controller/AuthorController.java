@@ -97,33 +97,4 @@ public class AuthorController {
                             "Authors with name:" + word + " not found."), HttpStatus.NOT_FOUND);
         }
     }
-
-    @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public ResponseEntity<?> getAuthorImage(@RequestParam Long id) {
-        Author author;
-        try {
-            author = authorService.getAuthor(id);
-        } catch (EntityNotFoundException exception) {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Author with id " + id + " does not exist."), httpHeaders, HttpStatus.NOT_FOUND);
-        }
-
-        try {
-            URL res = getClass().getClassLoader().getResource("images/" + author.getPhotoSrc());
-            File file;
-            if (res != null) {
-                file = Paths.get(res.toURI()).toFile();
-                InputStream input = new FileInputStream(file);
-                return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException | URISyntaxException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
 }
