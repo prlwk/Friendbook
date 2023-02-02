@@ -1,4 +1,4 @@
-package com.src.book.presentation.main.main_page.adapter
+package com.src.book.presentation.main.main_page.adapter.itemDecoration
 
 import android.graphics.Rect
 import android.view.View

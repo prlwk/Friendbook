@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.src.book.databinding.ViewHolderTagBinding
+import com.src.book.databinding.ViewHolderCategoryBinding
 import com.src.book.domain.model.Tag
 
 //TODO сделать кликабебельным
 class TagAdapter :
     ListAdapter<Tag, TagAdapter.DataViewHolder>(TagDiffCallBack()) {
-    private lateinit var binding: ViewHolderTagBinding
+    private lateinit var binding: ViewHolderCategoryBinding
 
-    class DataViewHolder(binding: ViewHolderTagBinding) :
+    class DataViewHolder(binding: ViewHolderCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val tag = binding.tvTag
+        private val tag = binding.tvName
         fun onBind(tag: Tag) {
             this.tag.text = tag.name
         }
@@ -25,7 +25,7 @@ class TagAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        binding = ViewHolderTagBinding.inflate(
+        binding = ViewHolderCategoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

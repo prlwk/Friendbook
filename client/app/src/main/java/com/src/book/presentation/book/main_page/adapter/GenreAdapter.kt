@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.src.book.databinding.ViewHolderTagBinding
+import com.src.book.databinding.ViewHolderCategoryBinding
 import com.src.book.domain.model.Genre
 
 //TODO сделать кликабельным
 class GenreAdapter : ListAdapter<Genre, GenreAdapter.DataViewHolder>(GenreDiffCallBack()) {
-    private lateinit var binding: ViewHolderTagBinding
+    private lateinit var binding: ViewHolderCategoryBinding
 
-    class DataViewHolder(binding: ViewHolderTagBinding) :
+    class DataViewHolder(binding: ViewHolderCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val tag = binding.tvTag
+        private val tag = binding.tvName
         fun onBind(genre: Genre) {
             this.tag.text = genre.name
         }
@@ -24,7 +24,7 @@ class GenreAdapter : ListAdapter<Genre, GenreAdapter.DataViewHolder>(GenreDiffCa
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        binding = ViewHolderTagBinding.inflate(
+        binding = ViewHolderCategoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

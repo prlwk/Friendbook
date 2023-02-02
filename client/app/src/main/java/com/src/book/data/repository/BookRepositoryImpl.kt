@@ -23,11 +23,11 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
         return@withContext bookDataSource.loadBookById(id)
     }
 
-    override suspend fun getAllTags(): List<Tag>? = withContext(Dispatchers.IO) {
+    override suspend fun getAllTags(): BasicState<List<Tag>> = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadAllTags()
     }
 
-    override suspend fun getAllGenres(): List<Genre>? = withContext(Dispatchers.IO) {
+    override suspend fun getAllGenres(): BasicState<List<Genre>> = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadAllGenres()
     }
 
@@ -86,6 +86,6 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
     }
 
     override suspend fun getPopularTags(): BasicState<List<Tag>> = withContext(Dispatchers.IO) {
-       return@withContext bookDataSource.getPopularTags()
+        return@withContext bookDataSource.getPopularTags()
     }
 }

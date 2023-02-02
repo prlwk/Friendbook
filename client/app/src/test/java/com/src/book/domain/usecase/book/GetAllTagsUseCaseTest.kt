@@ -1,7 +1,9 @@
-package com.src.book.domain.usecase.search
+package com.src.book.domain.usecase.book
 
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.BookRepository
+import com.src.book.domain.usecase.search.GetAllTagsUseCase
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
@@ -33,7 +35,17 @@ class GetAllTagsUseCaseTest {
     @Test
     fun testGetAllTagsUseCaseSuccessful() = runTest {
         val tagsModel = listOf(testModelsGenerator.generateTagModel())
-        coEvery { bookRepository.getAllTags() } returns tagsModel
-        Assert.assertEquals(tagsModel, getAllTagsUseCase.execute())
+        coEvery { bookRepository.getAllTags() } returns BasicState.SuccessState(tagsModel)
+        Assert.assertTrue(getAllTagsUseCase.execute() is BasicState.SuccessState)
+        Assert.assertEquals(
+            tagsModel,
+            (getAllTagsUseCase.execute() as BasicState.SuccessState).data
+        )
+    }
+
+    @Test
+    fun testGetAllTagsUseCaseError() = runTest {
+        coEvery { bookRepository.getAllTags() } returns BasicState.ErrorState()
+        Assert.assertTrue(getAllTagsUseCase.execute() is BasicState.ErrorState)
     }
 }

@@ -54,20 +54,26 @@ class BookDataSourceImpl(
         return null
     }
 
-    override suspend fun loadAllGenres(): List<Genre>? {
+    override suspend fun loadAllGenres(): BasicState<List<Genre>> {
         val genresResponse = bookService.getAllGenres()
         if (genresResponse.isSuccessful) {
-            return genresResponse.body()?.map { genreMapper.mapFromResponseToModel(it) }
+            val genres = genresResponse.body()?.map { genreMapper.mapFromResponseToModel(it) }
+            if (genres != null) {
+                return BasicState.SuccessState(genres)
+            }
         }
-        return null
+        return BasicState.ErrorState()
     }
 
-    override suspend fun loadAllTags(): List<Tag>? {
+    override suspend fun loadAllTags(): BasicState<List<Tag>> {
         val tagsResponse = bookService.getAllTags()
         if (tagsResponse.isSuccessful) {
-            return tagsResponse.body()?.map { tagMapper.mapFromResponseToModel(it) }
+            val tags = tagsResponse.body()?.map { tagMapper.mapFromResponseToModel(it) }
+            if (tags != null) {
+                return BasicState.SuccessState(tags)
+            }
         }
-        return null
+        return BasicState.ErrorState()
     }
 
     override suspend fun removeBookmark(bookId: Long): BookmarkState {

@@ -1,4 +1,4 @@
-package com.src.book.domain.usecase.search
+package com.src.book.domain.usecase.book
 
 import com.src.book.domain.model.Genre
 import com.src.book.domain.repository.BookRepository

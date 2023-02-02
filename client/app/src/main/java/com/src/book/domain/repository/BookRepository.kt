@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 interface BookRepository {
     suspend fun getBooksByAuthorId(id: Long): BasicState<List<BookList>>
     suspend fun getBookById(id: Long): Book?
-    suspend fun getAllTags(): List<Tag>?
-    suspend fun getAllGenres(): List<Genre>?
+    suspend fun getAllTags(): BasicState<List<Tag>>
+    suspend fun getAllGenres(): BasicState<List<Genre>>
     suspend fun addBookmark(bookId: Long): BookmarkState
     suspend fun removeBookmark(bookId: Long): BookmarkState
     suspend fun searchBooks(

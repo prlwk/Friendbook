@@ -1,7 +1,9 @@
-package com.src.book.domain.usecase.search
+package com.src.book.domain.usecase.book
 
 import com.src.book.TestModelsGenerator
 import com.src.book.domain.repository.BookRepository
+import com.src.book.domain.usecase.search.GetAllGenresUseCase
+import com.src.book.domain.utils.BasicState
 import io.mockk.coEvery
 import io.mockk.junit4.MockKRule
 import io.mockk.mockk
@@ -37,7 +39,17 @@ class GetAllGenresUseCaseTest {
     @Test
     fun testGetAllGenresUseCaseSuccessful() = runTest {
         val genresModel = listOf(testModelsGenerator.generateGenreModel())
-        coEvery { bookRepository.getAllGenres() } returns genresModel
-        Assert.assertEquals(genresModel, getAllGenresUseCase.execute())
+        coEvery { bookRepository.getAllGenres() } returns BasicState.SuccessState(genresModel)
+        Assert.assertTrue(getAllGenresUseCase.execute() is BasicState.SuccessState)
+        Assert.assertEquals(
+            genresModel,
+            (getAllGenresUseCase.execute() as BasicState.SuccessState).data
+        )
+    }
+
+    @Test
+    fun testGetAllGenresUseCaseError() = runTest {
+        coEvery { bookRepository.getAllGenres() } returns BasicState.ErrorState()
+        Assert.assertTrue(getAllGenresUseCase.execute() is BasicState.ErrorState)
     }
 }

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_tag"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_name"
     style="@style/basic_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/space_3x"
-    android:background="@drawable/tag_background"
+    android:background="@drawable/category_filter_background"
     android:paddingStart="@dimen/space_3x"
     android:paddingTop="@dimen/space_1x"
     android:paddingEnd="@dimen/space_3x"
     android:paddingBottom="@dimen/space_1x"
-    android:text="@string/tag"
+    tools:text="@string/tag"
     android:textSize="14sp" />
