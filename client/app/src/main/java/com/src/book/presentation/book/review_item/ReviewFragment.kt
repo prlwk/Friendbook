@@ -1,10 +1,10 @@
 package com.src.book.presentation.book.review_item
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.src.book.R
 
 class ReviewFragment : Fragment() {

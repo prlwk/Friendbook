@@ -11,7 +11,6 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
 import com.friendbook.DTO.AuthorForBook;
@@ -25,6 +24,8 @@ import com.friendbook.utils.Sort;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
+
+    private final String BASE_URL_FOR_IMAGES = "https://disk.yandex.ru/d/oXLF4pVFC2tzlw/";
 
     @Autowired
     AuthorRepository authorRepository;
@@ -52,7 +53,9 @@ public class AuthorServiceImpl implements AuthorService {
             authorWithBooks.setId(author.getId());
             authorWithBooks.setBiography(author.getBiography());
             authorWithBooks.setName(author.getName());
-            authorWithBooks.setPhotoSrc("/author/image?id=" + author.getId());
+            if (author.getPhotoSrc() != null) {
+                authorWithBooks.setPhotoSrc(BASE_URL_FOR_IMAGES + author.getPhotoSrc());
+            }
             authorWithBooks.setYearsLife(author.getYearsLife());
             double rating = 0;
             if (books != null) {
@@ -128,7 +131,9 @@ public class AuthorServiceImpl implements AuthorService {
                 Set<Book> books = bookRestTemplateClient.getBooksWithAuthorId(author.getId());
                 authorForSearch.setId(author.getId());
                 authorForSearch.setName(author.getName());
-                authorForSearch.setPhotoSrc("/author/image?id=" + author.getId());
+                if (author.getPhotoSrc() != null) {
+                    authorForSearch.setPhotoSrc(BASE_URL_FOR_IMAGES + author.getPhotoSrc());
+                }
                 Double rating = null;
                 if (books != null) {
                     if (books.isEmpty()) {

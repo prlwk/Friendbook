@@ -1,10 +1,10 @@
 package com.src.book.presentation.search.result
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.src.book.databinding.FragmentSearchResultBinding
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel

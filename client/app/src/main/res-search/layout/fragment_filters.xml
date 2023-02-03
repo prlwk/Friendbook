@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
-    tools:context=".presentation.main.main_page.FilterFragment">
+    tools:context=".presentation.main.main_page.filter.FilterFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top"
@@ -99,14 +99,13 @@
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_sort_rating" />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:contentDescription="@string/more_details"
-        android:src="@drawable/more"
+    <TextView
+        android:id="@+id/tv_more_genres"
+        style="@style/all_items_text_main_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_genre_title"
-        app:tint="@color/basic_color" />
+        app:layout_constraintTop_toTopOf="@id/tv_genre_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genre"
@@ -117,9 +116,9 @@
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_genre_title"
-        app:spanCount="3"
-        tools:itemCount="9"
-        tools:listitem="@layout/view_holder_tag" />
+        app:spanCount="1"
+        tools:itemCount="1"
+        tools:listitem="@layout/view_holder_category_filter" />
 
     <TextView
         android:id="@+id/tv_tag_title"
@@ -133,14 +132,13 @@
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/rv_genre" />
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-        android:contentDescription="@string/more_details"
-        android:src="@drawable/more"
+    <TextView
+        android:id="@+id/tv_more_tags"
+        style="@style/all_items_text_main_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/gl_end"
-        app:layout_constraintTop_toTopOf="@id/tv_tag_title"
-        app:tint="@color/basic_color" />
+        app:layout_constraintTop_toTopOf="@id/tv_tag_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tag"
@@ -151,9 +149,9 @@
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_tag_title"
-        app:spanCount="3"
-        tools:itemCount="9"
-        tools:listitem="@layout/view_holder_tag" />
+        app:spanCount="1"
+        tools:itemCount="1"
+        tools:listitem="@layout/view_holder_category_filter" />
 
     <TextView
         android:id="@+id/tv_rating_title"
@@ -215,6 +213,7 @@
         app:trackTint="@color/transparent" />
 
     <TextView
+        android:id="@+id/tv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -230,4 +229,82 @@
         app:layout_constraintEnd_toEndOf="@id/gl_end"
         app:layout_constraintStart_toStartOf="@id/gl_start"
         app:layout_constraintTop_toBottomOf="@id/tv_hide_read" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sl_filter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_4x"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:layout_weight="1"
+                android:background="@drawable/shimmer_rectangle" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

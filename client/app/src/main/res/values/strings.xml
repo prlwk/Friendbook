@@ -9,7 +9,7 @@
     <string name="description">Описание</string>
     <string name="biography">Биография</string>
     <string name="more_details">Подробее</string>
-    <string name="tags">Тэги</string>
+    <string name="tags">Тeги</string>
     <string name="reviews">Рецензии</string>
     <string name="view_all">Посмотреть все</string>
     <string name="user">user</string>
@@ -116,4 +116,12 @@
     <string name="category">category</string>
     <string name="cancel_search">Отмена</string>
     <string name="genre_tag">Жанр, тег</string>
+    <string name="search_type_title">Искать</string>
+    <string name="search_authors">Авторов</string>
+    <string name="search_books">Книги</string>
+    <string name="all_tags">Все теги</string>
+    <string name="reset">Сбросить</string>
+    <string name="genres">Жанры</string>
+    <string name="enter_name">Введите название</string>
+    <string name="empty_friends_list">Добавьте человека в друзья, чтобы этот раздел не пустовал</string>
 </resources>

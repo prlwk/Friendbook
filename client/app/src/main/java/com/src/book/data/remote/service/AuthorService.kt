@@ -1,7 +1,6 @@
 package com.src.book.data.remote.service
 
 import com.src.book.data.remote.model.author.author.AuthorResponse
-import com.src.book.data.remote.model.author.authorList.AuthorListResponse
 import com.src.book.data.remote.model.author.authorSearchResult.AuthorSearchResultResponse
 import com.src.book.utils.AUTHOR_SERVICE_BASE_URL
 import retrofit2.Response

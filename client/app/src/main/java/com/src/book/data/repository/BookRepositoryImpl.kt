@@ -2,10 +2,10 @@ package com.src.book.data.repository
 
 import androidx.paging.PagingData
 import com.src.book.data.remote.dataSource.book.BookDataSource
-import com.src.book.domain.model.book.Book
-import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
+import com.src.book.domain.model.book.Book
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
@@ -23,11 +23,11 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
         return@withContext bookDataSource.loadBookById(id)
     }
 
-    override suspend fun getAllTags(): List<Tag>? = withContext(Dispatchers.IO) {
+    override suspend fun getAllTags(): BasicState<List<Tag>> = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadAllTags()
     }
 
-    override suspend fun getAllGenres(): List<Genre>? = withContext(Dispatchers.IO) {
+    override suspend fun getAllGenres(): BasicState<List<Genre>> = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.loadAllGenres()
     }
 
@@ -86,6 +86,6 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
     }
 
     override suspend fun getPopularTags(): BasicState<List<Tag>> = withContext(Dispatchers.IO) {
-       return@withContext bookDataSource.getPopularTags()
+        return@withContext bookDataSource.getPopularTags()
     }
 }

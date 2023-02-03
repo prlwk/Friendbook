@@ -1,7 +1,7 @@
 package com.src.book.data.remote.service
 
-import com.src.book.data.remote.model.book.book.bookSearchResult.BookSearchResultResponse
 import com.src.book.data.remote.model.book.book.BookResponse
+import com.src.book.data.remote.model.book.book.bookSearchResult.BookSearchResultResponse
 import com.src.book.data.remote.model.book.bookList.BookListResponse
 import com.src.book.data.remote.model.genre.GenreResponse
 import com.src.book.data.remote.model.tag.TagResponse

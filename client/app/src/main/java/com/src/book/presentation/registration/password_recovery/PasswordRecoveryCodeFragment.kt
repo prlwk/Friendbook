@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.src.book.R
 import com.src.book.databinding.FragmentConfirmCodeBinding
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.domain.utils.CodeState
@@ -124,20 +123,17 @@ class PasswordRecoveryCodeFragment : Fragment() {
     private fun checkState(state: CodeState) {
         when (state) {
             is CodeState.SuccessState -> {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragment_container, PasswordRecoveryFragment())
-                    ?.addToBackStack(null)
-                    ?.commit()
+                (activity as LoginActivity).replaceFragment(PasswordRecoveryFragment())
             }
             is CodeState.WrongCodeState -> {
                 viewModel.setDefaultValueForCodeState()
                 println("wrong code")
             }
-            is CodeState.ErrorState ->{
+            is CodeState.ErrorState -> {
                 viewModel.setDefaultValueForCodeState()
                 println("error")
             }
-            else ->{}
+            else -> {}
         }
     }
 
@@ -152,7 +148,8 @@ class PasswordRecoveryCodeFragment : Fragment() {
             }
         }
     }
-    companion object{
+
+    companion object {
         const val BUNDLE_EMAIL = "email"
     }
 }

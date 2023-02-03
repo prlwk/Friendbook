@@ -49,4 +49,16 @@ class DomainBookModule {
     fun provideGetPopularTagsUseCase(bookRepository: BookRepository): GetPopularTagsUseCase {
         return GetPopularTagsUseCase(bookRepository = bookRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetAllGenresUseCase(bookRepository: BookRepository): GetAllGenresUseCase {
+        return GetAllGenresUseCase(bookRepository = bookRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllTagsUseCase(bookRepository: BookRepository): GetAllTagsUseCase {
+        return GetAllTagsUseCase(bookRepository = bookRepository)
+    }
 }

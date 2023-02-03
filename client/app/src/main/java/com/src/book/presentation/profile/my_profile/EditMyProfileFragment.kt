@@ -22,7 +22,6 @@ import com.src.book.presentation.utils.PhotoCompression
 import com.src.book.utils.REGEX_SPACE
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import java.util.*
 
 class EditMyProfileFragment : Fragment() {
 

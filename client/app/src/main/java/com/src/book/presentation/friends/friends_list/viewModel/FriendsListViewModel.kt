@@ -17,22 +17,18 @@ class FriendsListViewModel(
 ) : ViewModel() {
     private val _mutableLiveDataFriends =
         MutableLiveData<BasicState<List<Friend>>>(BasicState.DefaultState())
-    private val _mutableLiveDataIsLoading = MutableLiveData(false)
     private val _mutableLiveDataIncomingRequestsCount =
         MutableLiveData<BasicState<Int>>(BasicState.DefaultState())
     private val _mutableLiveDataRemoveFriend =
         MutableLiveData<BasicState<Unit>>(BasicState.DefaultState())
 
     val liveDataFriends get() = _mutableLiveDataFriends
-    val liveDataIsLoading get() = _mutableLiveDataIsLoading
     val liveDataIncomingRequestsCount get() = _mutableLiveDataIncomingRequestsCount
     val liveDataRemoveFriend get() = _mutableLiveDataRemoveFriend
     fun loadFriends() {
         viewModelScope.launch {
-            _mutableLiveDataIsLoading.value = true
-            _mutableLiveDataFriends.value = BasicState.DefaultState()
+            _mutableLiveDataFriends.value = BasicState.LoadingState()
             _mutableLiveDataFriends.value = getFriendsUseCase.execute()
-            _mutableLiveDataIsLoading.value = false
         }
     }
 

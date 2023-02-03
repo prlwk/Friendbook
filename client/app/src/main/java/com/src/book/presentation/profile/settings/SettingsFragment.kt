@@ -1,10 +1,10 @@
 package com.src.book.presentation.profile.settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.src.book.R
 import com.src.book.databinding.FragmentLoadingBinding

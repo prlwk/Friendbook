@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.src.book.R
 import com.src.book.databinding.FragmentConfirmCodeBinding
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.domain.utils.BasicState
@@ -64,10 +63,7 @@ class ConfirmCodeFragment : Fragment() {
         when (state) {
             is CodeState.SuccessState -> {
                 val fragment = CongratulationRegistrationFragment()
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragment_container, fragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+                (activity as LoginActivity).replaceFragment(fragment)
             }
             is CodeState.WrongCodeState -> {
                 viewModel.setDefaultValueForCodeState()
@@ -77,7 +73,7 @@ class ConfirmCodeFragment : Fragment() {
                 viewModel.setDefaultValueForCodeState()
                 println("error")
             }
-            else ->{}
+            else -> {}
         }
     }
 
@@ -87,7 +83,7 @@ class ConfirmCodeFragment : Fragment() {
             is BasicState.SuccessState -> {
                 println("код отправлен")
             }
-            is BasicState.ErrorState ->{
+            is BasicState.ErrorState -> {
                 println("ошибка")
             }
             else -> {}

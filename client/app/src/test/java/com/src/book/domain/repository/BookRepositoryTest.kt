@@ -59,6 +59,7 @@ class BookRepositoryTest {
             booksModel
         )
     }
+
     @Test
     fun testGetBooksByAuthorByIdEmptyList() = runTest {
         val state = BasicState.EmptyState<List<BookList>>()
@@ -67,6 +68,7 @@ class BookRepositoryTest {
             bookRepository.getBooksByAuthorId(ID) is BasicState.EmptyState
         )
     }
+
     @Test
     fun testGetBooksByAuthorByIdError() = runTest {
         coEvery { bookDataSource.loadBooksByAuthorId(any()) } returns BasicState.ErrorState()
@@ -78,21 +80,35 @@ class BookRepositoryTest {
     @Test
     fun testGetAllGenresSuccessful() = runTest {
         val genresModel = listOf(testModelsGenerator.generateGenreModel())
-        coEvery { bookDataSource.loadAllGenres() } returns genresModel
+        coEvery { bookDataSource.loadAllGenres() } returns BasicState.SuccessState(genresModel)
+        Assert.assertTrue(bookRepository.getAllGenres() is BasicState.SuccessState)
         Assert.assertEquals(
             genresModel,
-            bookRepository.getAllGenres()
+            (bookRepository.getAllGenres() as BasicState.SuccessState).data
         )
+    }
+
+    @Test
+    fun testGetAllGenresError() = runTest {
+        coEvery { bookDataSource.loadAllGenres() } returns BasicState.ErrorState()
+        Assert.assertTrue(bookRepository.getAllGenres() is BasicState.ErrorState)
     }
 
     @Test
     fun testGetAllTagsSuccessful() = runTest {
         val tagsModel = listOf(testModelsGenerator.generateTagModel())
-        coEvery { bookDataSource.loadAllTags() } returns tagsModel
+        coEvery { bookDataSource.loadAllTags() } returns BasicState.SuccessState(tagsModel)
+        Assert.assertTrue(bookRepository.getAllTags() is BasicState.SuccessState)
         Assert.assertEquals(
             tagsModel,
-            bookRepository.getAllTags()
+            (bookRepository.getAllTags() as BasicState.SuccessState).data
         )
+    }
+
+    @Test
+    fun testGetAllTagsError() = runTest {
+        coEvery { bookDataSource.loadAllTags() } returns BasicState.ErrorState()
+        Assert.assertTrue(bookRepository.getAllTags() is BasicState.ErrorState)
     }
 
     @Test

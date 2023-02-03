@@ -3,10 +3,10 @@ package com.src.book.data.remote.utils
 import com.src.book.data.remote.model.token.RefreshTokenResponse
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.session.SessionStorage
-import javax.inject.Inject
-import javax.inject.Provider
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Provider
 
 class TokenInterceptor @Inject constructor(
     private val sessionServiceProvider: Provider<SessionService>,

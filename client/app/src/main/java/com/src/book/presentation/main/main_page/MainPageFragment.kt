@@ -1,10 +1,10 @@
 package com.src.book.presentation.main.main_page
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -20,8 +20,9 @@ import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.main.main_page.adapter.AuthorListAdapter
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
-import com.src.book.presentation.main.main_page.adapter.CategoryItemDecoration
 import com.src.book.presentation.main.main_page.adapter.GenreListAdapter
+import com.src.book.presentation.main.main_page.adapter.itemDecoration.CategoryItemDecoration
+import com.src.book.presentation.main.main_page.filter.FilterFragment
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
 import com.src.book.presentation.search.result.SearchResultWithTitleFragment
 
@@ -73,6 +74,8 @@ class MainPageFragment : Fragment() {
 
         setOnClickListenerForMoreAuthors()
         setOnClickListenerForMoreBooks()
+
+        setOnClickListenerForFilter()
     }
 
     //Popular books
@@ -126,10 +129,7 @@ class MainPageFragment : Fragment() {
         bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     //The best Authors
@@ -172,7 +172,6 @@ class MainPageFragment : Fragment() {
         setVisibilityForShimmerLayout(View.GONE, binding.shimmerBestAuthors)
     }
 
-    //
     private fun setOnClickListenerForUpdateBestAuthorsButton() {
         binding.layoutBestAuthorError.tvUpdate.setOnClickListener {
             viewModel.getBestAuthors()
@@ -271,5 +270,11 @@ class MainPageFragment : Fragment() {
     //TODO перейти на страницу с жанрами
     private fun onClickGenre(genre: Genre) {
 
+    }
+
+    private fun setOnClickListenerForFilter() {
+        binding.ivFilterButton.setOnClickListener {
+            (activity as MainActivity).replaceFragment(FilterFragment())
+        }
     }
 }

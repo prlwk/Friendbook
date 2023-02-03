@@ -17,16 +17,17 @@ import com.src.book.R
 import com.src.book.databinding.FragmentBookBinding
 import com.src.book.databinding.FragmentBookShimmerBinding
 import com.src.book.domain.author.AuthorBook
-import com.src.book.domain.model.*
+import com.src.book.domain.model.Genre
+import com.src.book.domain.model.Tag
 import com.src.book.domain.model.book.Book
 import com.src.book.presentation.MainActivity
-import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.author.main_page.AuthorFragment
 import com.src.book.presentation.book.main_page.adapter.AuthorNameAdapter
 import com.src.book.presentation.book.main_page.adapter.GenreAdapter
 import com.src.book.presentation.book.main_page.adapter.TagAdapter
 import com.src.book.presentation.book.main_page.viewModel.BookViewModel
 import com.src.book.presentation.book.rate_dialog.RateBookDialog
+import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.utils.RatingColor
 
 
@@ -172,10 +173,7 @@ class BookFragment : Fragment() {
         bundle.putLong(AuthorFragment.AUTHOR_ID, author.id)
         val fragment = AuthorFragment()
         fragment.arguments = bundle
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     private fun setOnClickListenerForBackButton() {
@@ -198,10 +196,7 @@ class BookFragment : Fragment() {
             bundle.putString(DescriptionFragment.TITLE, "Описание")
             val fragment = DescriptionFragment()
             fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(fragment)
         }
     }
 

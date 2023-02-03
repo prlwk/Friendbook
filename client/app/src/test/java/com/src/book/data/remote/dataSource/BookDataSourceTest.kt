@@ -141,6 +141,7 @@ class BookDataSourceTest {
             listOf(bookListModel)
         )
     }
+
     @Test
     fun testGetBooksByAuthorIdEmptyList() = runTest {
         val bookListModel = testModelsGenerator.generateBookListModel(false)
@@ -179,9 +180,10 @@ class BookDataSourceTest {
         val genresResponseModel = listOf(testModelsResponseGenerator.generateGenreResponseModel())
         coEvery { bookService.getAllGenres() } returns Response.success(genresResponseModel)
         coEvery { genreMapper.mapFromResponseToModel(any()) } returns genreModel
+        Assert.assertTrue(bookDataSource.loadAllGenres() is BasicState.SuccessState)
         Assert.assertEquals(
             listOf(genreModel),
-            bookDataSource.loadAllGenres()
+            (bookDataSource.loadAllGenres() as BasicState.SuccessState).data
         )
     }
 
@@ -193,9 +195,7 @@ class BookDataSourceTest {
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { genreMapper.mapFromResponseToModel(any()) } returns genreModel
-        Assert.assertNull(
-            bookDataSource.loadAllGenres()
-        )
+        Assert.assertTrue(bookDataSource.loadAllGenres() is BasicState.ErrorState)
     }
 
     @Test
@@ -204,9 +204,10 @@ class BookDataSourceTest {
         val tagsResponseModel = listOf(testModelsResponseGenerator.generateTagResponseModel())
         coEvery { bookService.getAllTags() } returns Response.success(tagsResponseModel)
         coEvery { tagMapper.mapFromResponseToModel(any()) } returns tagModel
+        Assert.assertTrue(bookDataSource.loadAllTags() is BasicState.SuccessState)
         Assert.assertEquals(
             listOf(tagModel),
-            bookDataSource.loadAllTags()
+            (bookDataSource.loadAllTags() as BasicState.SuccessState).data
         )
     }
 
@@ -218,9 +219,7 @@ class BookDataSourceTest {
                 .toResponseBody("application/json".toMediaTypeOrNull())
         )
         coEvery { tagMapper.mapFromResponseToModel(any()) } returns tagModel
-        Assert.assertNull(
-            bookDataSource.loadAllTags()
-        )
+        Assert.assertTrue(bookDataSource.loadAllTags() is BasicState.ErrorState)
     }
 
     @Test

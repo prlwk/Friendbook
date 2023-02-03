@@ -1,10 +1,10 @@
 package com.src.book.data.remote.model.book.book
 
 import com.google.gson.annotations.SerializedName
+import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 import com.src.book.data.remote.model.genre.GenreResponse
 import com.src.book.data.remote.model.review.reviewBook.ReviewBookResponse
 import com.src.book.data.remote.model.tag.TagResponse
-import com.src.book.data.remote.model.author.authorBook.AuthorBookResponse
 
 @kotlinx.serialization.Serializable
 class BookResponse(

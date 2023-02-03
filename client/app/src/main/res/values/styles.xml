@@ -43,7 +43,7 @@
     </style>
 
     <style name="tag_text_view">
-        <item name="android:background">@drawable/tag_background</item>
+        <item name="android:background">@drawable/category_filter_background</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/space_2x</item>
         <item name="android:paddingRight">@dimen/space_2x</item>

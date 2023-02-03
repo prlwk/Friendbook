@@ -1,7 +1,10 @@
 package com.src.book.data.remote.dataSource.login
 
 import com.src.book.domain.model.user.Login
-import com.src.book.domain.utils.*
+import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.CodeState
+import com.src.book.domain.utils.LoginState
+import com.src.book.domain.utils.RegistrationState
 import java.io.File
 
 interface LoginDataSource {

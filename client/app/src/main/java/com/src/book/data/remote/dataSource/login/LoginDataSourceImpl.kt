@@ -1,12 +1,15 @@
 package com.src.book.data.remote.dataSource.login
 
-import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.model.login.login.LoginMapper
+import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.service.LoginService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.utils.*
 import com.src.book.domain.model.user.Login
-import com.src.book.domain.utils.*
+import com.src.book.domain.utils.BasicState
+import com.src.book.domain.utils.CodeState
+import com.src.book.domain.utils.LoginState
+import com.src.book.domain.utils.RegistrationState
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
