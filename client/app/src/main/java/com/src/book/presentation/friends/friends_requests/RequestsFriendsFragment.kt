@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.src.book.R
 import com.src.book.databinding.FragmentRequestsFriendsBinding
 import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.utils.BasicState
@@ -77,10 +76,7 @@ class RequestsFriendsFragment : Fragment() {
 
     private fun setOnClickListenerForAddFriend() {
         binding.btAddFriend.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AddFriendsFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(AddFriendsFragment())
         }
     }
 

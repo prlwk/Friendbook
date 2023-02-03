@@ -9,14 +9,10 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.Gravity
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
@@ -25,9 +21,9 @@ import com.src.book.domain.model.book.BookList
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState
 import com.src.book.presentation.MainActivity
-import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.author.list_of_books.viewModel.ListOfBooksViewModel
+import com.src.book.presentation.book.main_page.BookFragment
 
 class ListOfBooksFragment : Fragment() {
     private lateinit var binding: FragmentListOfBooksBinding
@@ -150,10 +146,7 @@ class ListOfBooksFragment : Fragment() {
         bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     @SuppressLint("NotifyDataSetChanged")

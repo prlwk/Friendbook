@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.R
@@ -20,7 +20,6 @@ import com.src.book.presentation.friends.friends_list.viewModel.FriendsListViewM
 import com.src.book.presentation.friends.friends_requests.RequestsFriendsFragment
 import com.src.book.utils.REGEX_SPACE
 import java.util.*
-import kotlin.collections.ArrayList
 
 class FriendsListFragment : Fragment() {
     private lateinit var binding: FragmentFriendsListBinding
@@ -42,9 +41,6 @@ class FriendsListFragment : Fragment() {
         viewModel.liveDataFriends.observe(
             this.viewLifecycleOwner, this::checkLoadFriendsState
         )
-        viewModel.liveDataIsLoading.observe(
-            this.viewLifecycleOwner, this::setView
-        )
         viewModel.liveDataIncomingRequestsCount.observe(
             this.viewLifecycleOwner, this::checkStateForIncomingRequests
         )
@@ -54,13 +50,10 @@ class FriendsListFragment : Fragment() {
         viewModel.loadIncomingRequestsCount()
         viewModel.loadFriends()
         binding.ivAddPicture.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, RequestsFriendsFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(RequestsFriendsFragment())
         }
         setTextChangeListenerForSearch()
-
+        setOnClickListenerForTryAgainButton()
     }
 
     private fun setTextChangeListenerForSearch() {
@@ -100,28 +93,43 @@ class FriendsListFragment : Fragment() {
 
     private fun checkLoadFriendsState(state: BasicState<List<Friend>>) {
         when (state) {
-            is BasicState.SuccessState -> loadData(state.data)
+            is BasicState.SuccessState -> {
+                setVisibilityForShimmer(View.INVISIBLE)
+                loadData(state.data)
+            }
+            is BasicState.LoadingState -> {
+                setVisibilityForShimmer(View.VISIBLE)
+            }
             is BasicState.ErrorState -> {
-                (activity as MainActivity).showSnackBar()
+                binding.llError.visibility = View.VISIBLE
+                binding.rvFriends.visibility = View.GONE
+                binding.tvEmptyListFriend.visibility = View.GONE
+                setVisibilityForShimmer(View.INVISIBLE)
             }
             else -> {}
         }
     }
 
-    private fun setView(isLoading: Boolean) {
-        if (isLoading) {
-            binding.rvFriends.visibility = View.GONE
+    private fun setVisibilityForShimmer(visibility: Int) {
+        if (visibility == View.VISIBLE) {
             binding.slFriends.startShimmer()
         } else {
-            binding.rvFriends.visibility = View.VISIBLE
             binding.slFriends.stopShimmer()
-            binding.slFriends.visibility = View.GONE
+            binding.slFriends.visibility = visibility
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun loadData(friends: List<Friend>) {
-        setAdapterForFriendsRecyclerView(friends)
+        binding.llError.visibility = View.GONE
+        if (friends.isEmpty()) {
+            binding.rvFriends.visibility = View.GONE
+            binding.tvEmptyListFriend.visibility = View.VISIBLE
+        } else {
+            binding.rvFriends.visibility = View.VISIBLE
+            binding.tvEmptyListFriend.visibility = View.GONE
+            setAdapterForFriendsRecyclerView(friends)
+        }
         binding.tvTitle.text = "${getString(R.string.friends_with_holder)} (${friends.size})"
     }
 
@@ -135,7 +143,6 @@ class FriendsListFragment : Fragment() {
         binding.rvFriends.adapter = adapter
     }
 
-    //TODO обработать ошибку получения количества реквестов
     private fun checkStateForIncomingRequests(state: BasicState<Int>) {
         when (state) {
             is BasicState.SuccessState<*> -> {
@@ -183,5 +190,11 @@ class FriendsListFragment : Fragment() {
             }
         }
         binding.rvFriends.adapter?.notifyDataSetChanged()
+    }
+
+    private fun setOnClickListenerForTryAgainButton() {
+        binding.layoutError.tvUpdate.setOnClickListener {
+            viewModel.loadFriends()
+        }
     }
 }

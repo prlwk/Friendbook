@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.src.book.R
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentPassswordRecoveryBinding
 import com.src.book.domain.utils.ChangePasswordState
-import com.src.book.domain.utils.CodeState
 import com.src.book.presentation.registration.LoginActivity
 import com.src.book.presentation.registration.password_recovery.viewModel.passwordRecovery.PasswordRecoveryViewModel
 

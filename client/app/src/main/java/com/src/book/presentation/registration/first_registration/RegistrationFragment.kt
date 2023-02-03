@@ -2,11 +2,10 @@ package com.src.book.presentation.registration.first_registration
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.src.book.R
+import androidx.fragment.app.Fragment
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentRegistrationBinding
 import com.src.book.domain.utils.BasicState
@@ -84,10 +83,7 @@ class RegistrationFragment : Fragment() {
                     }
                     if (password1 != null && password2 != null && password1.isNotEmpty() && password2.isNotEmpty() && password1 == password2) {
                         viewModel.setPassword(password1)
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, RegistrationUserInfoFragment())
-                            .addToBackStack(null)
-                            .commit()
+                        (activity as LoginActivity).replaceFragment(RegistrationUserInfoFragment())
                     }
                 }
             } else {
@@ -113,10 +109,7 @@ class RegistrationFragment : Fragment() {
 
     private fun setOnClickListenerForSignInButton() {
         binding.tvSignin.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SignInFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as LoginActivity).replaceFragment(SignInFragment())
         }
     }
 

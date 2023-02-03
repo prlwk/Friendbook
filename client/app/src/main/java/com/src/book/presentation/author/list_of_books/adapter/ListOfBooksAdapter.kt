@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -116,6 +117,8 @@ class ListOfBooksAdapter(
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
         holder.onBind(item, onClickMore, onClickBook, onCLickBookmark)
     }
 }

@@ -1,19 +1,13 @@
 package com.src.book.data.remote.service
 
 import com.src.book.data.remote.model.login.emailExists.EmailExistsResponse
-import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.data.remote.model.login.login.LoginResponse
+import com.src.book.data.remote.model.login.loginAnswer.LoginAnswerResponse
 import com.src.book.utils.USER_SERVICE_BASE_URL
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface LoginService {
     @Headers("Accept: application/json")

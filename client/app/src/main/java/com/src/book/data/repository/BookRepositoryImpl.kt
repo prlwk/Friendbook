@@ -2,10 +2,10 @@ package com.src.book.data.repository
 
 import androidx.paging.PagingData
 import com.src.book.data.remote.dataSource.book.BookDataSource
-import com.src.book.domain.model.book.Book
-import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
+import com.src.book.domain.model.book.Book
+import com.src.book.domain.model.book.BookList
 import com.src.book.domain.repository.BookRepository
 import com.src.book.domain.utils.BasicState
 import com.src.book.domain.utils.BookmarkState

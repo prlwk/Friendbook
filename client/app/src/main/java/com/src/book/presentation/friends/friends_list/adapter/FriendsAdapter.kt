@@ -3,10 +3,12 @@ package com.src.book.presentation.friends.friends_list.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.src.book.R
 import com.src.book.databinding.ViewHolderFriendsItemBinding
 import com.src.book.domain.model.Friend
 
@@ -53,6 +55,8 @@ class FriendsAdapter(private val removeFriend: (friendId: Long, position: Int) -
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
         holder.onBind(item)
     }
 }

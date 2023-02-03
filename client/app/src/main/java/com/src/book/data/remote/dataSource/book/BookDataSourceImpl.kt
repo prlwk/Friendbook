@@ -13,7 +13,8 @@ import com.src.book.data.remote.service.BookService
 import com.src.book.data.remote.service.SessionService
 import com.src.book.data.remote.session.SessionStorage
 import com.src.book.data.remote.session.SessionStorageImpl
-import com.src.book.domain.model.*
+import com.src.book.domain.model.Genre
+import com.src.book.domain.model.Tag
 import com.src.book.domain.model.book.Book
 import com.src.book.domain.model.book.BookList
 import com.src.book.domain.utils.BasicState

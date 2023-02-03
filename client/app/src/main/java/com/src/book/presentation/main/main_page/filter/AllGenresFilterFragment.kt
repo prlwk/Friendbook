@@ -25,7 +25,6 @@ import com.src.book.presentation.main.main_page.adapter.TagGenreFilterItemDecora
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
 import com.src.book.utils.REGEX_SPACE
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AllGenresFilterFragment : Fragment() {
     private lateinit var binding: FragmentAllCategoryFilterBinding

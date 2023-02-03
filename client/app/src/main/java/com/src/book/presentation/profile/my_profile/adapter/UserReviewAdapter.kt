@@ -1,11 +1,13 @@
-package com.src.book.presentation.profile.my_profile
+package com.src.book.presentation.profile.my_profile.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.src.book.R
 import com.src.book.databinding.ViewHolderProfileReviewBinding
 import com.src.book.domain.model.userReview.UserReview
 import com.src.book.presentation.utils.RatingColor
@@ -39,11 +41,13 @@ class UserReviewAdapter :
             parent,
             false
         )
-        return UserReviewAdapter.DataViewHolder(binding)
+        return DataViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
         holder.onBind(item)
     }
 }

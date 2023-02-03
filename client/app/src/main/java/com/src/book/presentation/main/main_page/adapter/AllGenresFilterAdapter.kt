@@ -3,10 +3,12 @@ package com.src.book.presentation.main.main_page.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.src.book.R
 import com.src.book.databinding.ViewHolderFilterItemBinding
 import com.src.book.databinding.ViewHolderTitleBinding
 import com.src.book.domain.model.book.genre.GenreWithTitle
@@ -88,6 +90,8 @@ class AllGenreFilterAdapter(private val onClickGenre: (item: GenreWithTitle.Genr
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
         holder.onBind(item, onClickGenre)
     }
 

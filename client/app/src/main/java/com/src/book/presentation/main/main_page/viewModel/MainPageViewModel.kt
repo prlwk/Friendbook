@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.src.book.domain.model.book.tag.TagWithTitle
 import com.src.book.domain.author.AuthorList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
@@ -13,6 +12,7 @@ import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.book.genre.GenreWithCheck
 import com.src.book.domain.model.book.genre.GenreWithTitle
 import com.src.book.domain.model.book.tag.TagWithCheck
+import com.src.book.domain.model.book.tag.TagWithTitle
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.book.*

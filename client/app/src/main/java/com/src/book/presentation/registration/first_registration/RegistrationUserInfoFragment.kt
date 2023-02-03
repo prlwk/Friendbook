@@ -9,10 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.src.book.R
 import com.src.book.databinding.FragmentLoadingBinding
 import com.src.book.databinding.FragmentRegistrationUserInformationBinding
 import com.src.book.domain.utils.RegistrationState
@@ -22,7 +20,6 @@ import com.src.book.presentation.utils.PhotoCompression
 import com.src.book.utils.REGEX_SPACE
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import org.json.JSONObject
 import java.util.*
 
 class RegistrationUserInfoFragment : Fragment() {
@@ -119,10 +116,7 @@ class RegistrationUserInfoFragment : Fragment() {
             isClickNext = false
             when (state) {
                 is RegistrationState.SuccessState -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, ConfirmCodeFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    (activity as LoginActivity).replaceFragment(ConfirmCodeFragment())
                 }
                 is RegistrationState.EmailAlreadyExistsState -> println("такая почта уже существует")
                 is RegistrationState.LoginAlreadyExistsState -> println("такой логин уже существует")

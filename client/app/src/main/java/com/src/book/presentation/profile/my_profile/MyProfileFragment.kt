@@ -21,6 +21,7 @@ import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.author.list_of_books.adapter.ListOfBooksAdapter
 import com.src.book.presentation.book.main_page.BookFragment
+import com.src.book.presentation.profile.my_profile.adapter.UserReviewAdapter
 import com.src.book.presentation.profile.my_profile.viewModel.MyProfileViewModel
 import com.src.book.presentation.profile.settings.SettingsFragment
 
@@ -193,27 +194,19 @@ class MyProfileFragment : Fragment() {
         bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     private fun setOnClickListenerForEditProfileButton() {
         binding.tvEditProfileButton.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, EditMyProfileFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(EditMyProfileFragment())
         }
     }
 
     private fun setOnClickListenerForSettingsButton() {
         binding.ivSettings.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SettingsFragment())
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(SettingsFragment())
+
         }
     }
 }

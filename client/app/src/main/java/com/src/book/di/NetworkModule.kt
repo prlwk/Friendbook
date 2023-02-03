@@ -19,8 +19,8 @@ import com.src.book.data.remote.model.book.bookList.BookListMapper
 import com.src.book.data.remote.model.friend.friend.FriendMapper
 import com.src.book.data.remote.model.friend.request.FriendRequestMapper
 import com.src.book.data.remote.model.genre.GenreMapper
-import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.login.login.LoginMapper
+import com.src.book.data.remote.model.tag.TagMapper
 import com.src.book.data.remote.model.user.userProfile.UserProfileMapper
 import com.src.book.data.remote.service.*
 import com.src.book.data.remote.session.SessionStorage

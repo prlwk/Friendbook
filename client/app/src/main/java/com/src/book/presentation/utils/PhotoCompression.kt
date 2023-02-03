@@ -6,7 +6,8 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
 
 class PhotoCompression {
     private val MAX_FILE_SIZE = 0.8

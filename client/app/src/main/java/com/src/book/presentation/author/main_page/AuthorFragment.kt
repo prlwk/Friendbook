@@ -3,13 +3,13 @@ package com.src.book.presentation.author.main_page
 import android.content.res.Resources
 import android.graphics.Outline
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,12 +20,12 @@ import com.src.book.domain.author.Author
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
-import com.src.book.presentation.main.description.DescriptionFragment
+import com.src.book.presentation.author.list_of_books.ListOfBooksFragment
 import com.src.book.presentation.author.main_page.viewModel.AuthorViewModel
 import com.src.book.presentation.book.main_page.BookFragment
-import com.src.book.presentation.author.list_of_books.ListOfBooksFragment
+import com.src.book.presentation.main.description.DescriptionFragment
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
-import com.src.book.presentation.utils.*
+import com.src.book.presentation.utils.RatingColor
 
 class AuthorFragment : Fragment() {
     private lateinit var binding: FragmentAuthorBinding
@@ -149,10 +149,7 @@ class AuthorFragment : Fragment() {
             bundle.putString(DescriptionFragment.TITLE, "Биография")
             val fragment = DescriptionFragment()
             fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(fragment)
         }
     }
 
@@ -163,10 +160,7 @@ class AuthorFragment : Fragment() {
             bundle.putString(ListOfBooksFragment.TITLE, author.name)
             val fragment = ListOfBooksFragment()
             fragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            (activity as MainActivity).replaceFragment(fragment)
         }
     }
 
@@ -175,10 +169,7 @@ class AuthorFragment : Fragment() {
         bundle.putLong(BookFragment.BOOK_ID, book.id)
         val fragment = BookFragment()
         fragment.arguments = bundle
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     private fun setOnClickListenerForBackButton() {
