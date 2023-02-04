@@ -40,7 +40,7 @@ public class Book {
     )
     private Set<Author> authors;
 
-    private Long year;
+    private String year;
 
     private long sumMarks;
 
@@ -58,8 +58,6 @@ public class Book {
     )
     private Set<Genre> genres;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Review> reviews;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_tag",

@@ -23,6 +23,6 @@ public class BookForAuthor {
         } else {
             this.rating = 0;
         }
-        this.linkCover = "/book/image?id=" + book.getId();
+        this.linkCover = "https://disk.yandex.ru/d/bgISdzmB8PYa1A/" + book.getLinkCover();
     }
 }

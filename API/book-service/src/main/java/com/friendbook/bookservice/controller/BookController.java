@@ -178,35 +178,6 @@ public class BookController {
         }
     }
 
-    @RequestMapping(path = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public ResponseEntity<?> getBookImage(@RequestParam Long id) {
-        Book book;
-        try {
-            book = bookService.getBookById(id);
-        } catch (EntityNotFoundException exception) {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(),
-                            "Book with id " + id + " does not exist."), httpHeaders, HttpStatus.NOT_FOUND);
-        }
-
-        try {
-            URL res = getClass().getClassLoader().getResource("images/" + book.getLinkCover());
-            File file;
-            if (res != null) {
-                file = Paths.get(res.toURI()).toFile();
-                InputStream input = new FileInputStream(file);
-                return new ResponseEntity<>(IOUtils.toByteArray(input), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException | URISyntaxException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
-
     @RequestMapping(path = "/set-grade-and-review", method = RequestMethod.GET)
     public ResponseEntity<?> setGrade(@RequestParam(required = false) Integer grade, @RequestParam Long idBook, @RequestParam(required = false) String review, HttpServletRequest request) {
         Long userId;

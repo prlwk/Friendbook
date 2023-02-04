@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.friendbook.bookservice.model.Book;
-import com.friendbook.bookservice.model.Review;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class BookForBookPage {
 
     private List<AuthorForBook> authors;
 
-    private Long year;
+    private String year;
 
     private double rating;
 
@@ -31,8 +30,6 @@ public class BookForBookPage {
     private String description;
 
     private List<GenreForBook> genres;
-
-    private List<Review> reviews;
 
     private List<TagForBook> tags;
 
@@ -51,7 +48,7 @@ public class BookForBookPage {
         } else {
             this.rating = 0;
         }
-        this.linkCover = "/book/image?id=" + book.getId();
+        this.linkCover = "https://disk.yandex.ru/d/bgISdzmB8PYa1A/" + book.getLinkCover();
         this.description = book.getDescription();
     }
 }
