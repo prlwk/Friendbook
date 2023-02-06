@@ -8,7 +8,7 @@ import com.src.book.data.remote.service.BookService
 import com.src.book.domain.model.book.BookList
 import java.io.IOException
 
-class BookPagingSource(
+class TopBookPagingSource(
     private val bookService: BookService,
     private val sizePage: Int,
     private val token: String?,
@@ -48,10 +48,15 @@ class BookPagingSource(
                         bookListMapper.mapFromResponseToModel(it, isAuth)
                     }
                     if (result != null) {
+                        val nextKey =
+                            if ((nextPageNumber >= response.body()?.totalPages!!)
+                                || ((nextPageNumber + 1) * sizePage >= MAX_COUNT_OF_BOOKS)
+                            ) null else nextPageNumber + 1
+
                         return LoadResult.Page(
                             data = result,
                             prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-                            nextKey = if (nextPageNumber < response.body()?.totalPages!!) nextPageNumber + 1 else null
+                            nextKey = nextKey
                         )
                     }
                 }
@@ -63,9 +68,14 @@ class BookPagingSource(
                     nextKey = if (nextPageNumber < response.body()?.totalPages!!) nextPageNumber + 1 else null
                 )
             }
+
         } catch (e: IOException) {
             return LoadResult.Error(e)
         }
         return LoadResult.Error(ErrorLoadingException("Error loading Books"))
+    }
+
+    private companion object {
+        private const val MAX_COUNT_OF_BOOKS = 100
     }
 }

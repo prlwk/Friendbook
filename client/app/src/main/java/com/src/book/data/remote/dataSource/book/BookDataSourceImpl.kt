@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.src.book.data.paging.book.BookPagingSource
+import com.src.book.data.paging.book.TopBookPagingSource
 import com.src.book.data.remote.model.book.book.BookMapper
 import com.src.book.data.remote.model.book.bookList.BookListMapper
 import com.src.book.data.remote.model.genre.GenreMapper
@@ -156,6 +157,37 @@ class BookDataSourceImpl(
             ),
             pagingSourceFactory = {
                 BookPagingSource(
+                    bookService = bookService,
+                    sizePage = sizePage,
+                    word = word,
+                    sort = sort,
+                    startRating = startRating,
+                    finishRating = finishRating,
+                    genres = genres,
+                    tags = tags,
+                    token = getToken(),
+                    bookListMapper = bookListMapper,
+                )
+            }
+        ).flow
+    }
+
+    override fun searchTopBooksWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?,
+        tags: String?,
+        genres: String?
+    ): Flow<PagingData<BookList>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = sizePage,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                TopBookPagingSource(
                     bookService = bookService,
                     sizePage = sizePage,
                     word = word,

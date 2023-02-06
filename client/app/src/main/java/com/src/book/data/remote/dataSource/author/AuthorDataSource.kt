@@ -17,7 +17,15 @@ interface AuthorDataSource {
         finishRating: Int?
     ): BasicState<List<AuthorList>>
 
-     fun searchAuthorsWithPagination(
+    fun searchAuthorsWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?
+    ): Flow<PagingData<AuthorList>>
+
+    fun searchTopAuthorsWithPagination(
         sizePage: Int,
         word: String?,
         sort: String?,

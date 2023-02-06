@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
+import com.src.book.domain.usecase.author.SearchTopAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.book.*
 import javax.inject.Inject
 
@@ -11,7 +12,9 @@ class MainPageViewModelFactory @Inject constructor(
     private val searchBooksUseCase: SearchBooksUseCase,
     private val searchAuthorsUseCase: SearchAuthorsUseCase,
     private val searchAuthorsWithPaginationUseCase: SearchAuthorsWithPaginationUseCase,
+    private val searchTopAuthorsWithPaginationUseCase: SearchTopAuthorsWithPaginationUseCase,
     private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase,
+    private val searchTopBooksWithPaginationUseCase: SearchTopBooksWithPaginationUseCase,
     private val getPopularGenresUseCase: GetPopularGenresUseCase,
     private val getPopularTagsUseCase: GetPopularTagsUseCase,
     private val getAllTagsUseCase: GetAllTagsUseCase,
@@ -23,7 +26,9 @@ class MainPageViewModelFactory @Inject constructor(
             searchBooksUseCase = searchBooksUseCase,
             searchAuthorsUseCase = searchAuthorsUseCase,
             searchAuthorsWithPaginationUseCase = searchAuthorsWithPaginationUseCase,
+            searchTopAuthorsWithPaginationUseCase = searchTopAuthorsWithPaginationUseCase,
             searchBooksWithPaginationUseCase = searchBooksWithPaginationUseCase,
+            searchTopBooksWithPaginationUseCase = searchTopBooksWithPaginationUseCase,
             getPopularGenresUseCase = getPopularGenresUseCase,
             getPopularTagsUseCase = getPopularTagsUseCase,
             getAllTagsUseCase = getAllTagsUseCase,

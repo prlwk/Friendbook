@@ -51,31 +51,14 @@ class SearchResultWithTitleFragment : Fragment() {
         setOnClickListenerForBackButton()
         binding.tvTitle.text = title
         if (showParameter == SHOW_ONLY_AUTHOR) {
-            setAuthorAdapterForRecyclerView(
-                word = null,
-                sort = MainPageViewModel.SORT_RATING,
-                startRating = null,
-                finishRating = null
-            )
+            setAuthorAdapterForRecyclerView()
         } else if (showParameter == SHOW_ONLY_BOOKS) {
-            setBookAdapterForRecyclerView(
-                word = null,
-                sort = MainPageViewModel.SORT_POPULARITY,
-                startRating = null,
-                finishRating = null,
-                tags = null,
-                genres = null
-            )
+            setBookAdapterForRecyclerView()
         }
     }
 
     //AUTHOR
-    private fun setAuthorAdapterForRecyclerView(
-        word: String?,
-        sort: String?,
-        startRating: Int?,
-        finishRating: Int?
-    ) {
+    private fun setAuthorAdapterForRecyclerView() {
         val adapter = AuthorPagingAdapter { onClickAuthor(it) }
         val loadStateAdapter = DefaultLoadStateAdapter { clickTryAgain() }
         val adapterWithLoadState = adapter.withLoadStateFooter(loadStateAdapter)
@@ -85,8 +68,7 @@ class SearchResultWithTitleFragment : Fragment() {
         viewHolder = DefaultLoadStateAdapter.Holder(
             binding.layoutLoadView
         ) { clickTryAgain() }
-        //TODO передать
-        observeAuthors(adapter, word, sort, startRating, finishRating)
+        observeAuthors(adapter)
         observeLoadStateAuthorList(adapter)
         handleAuthorListScrollingToTopWhenSearching(adapter)
         handleAuthorListVisibility(adapter)
@@ -104,14 +86,10 @@ class SearchResultWithTitleFragment : Fragment() {
 
     //TODO show "ничего не найдено"
     private fun observeAuthors(
-        adapter: AuthorPagingAdapter,
-        word: String?,
-        sort: String?,
-        startRating: Int?,
-        finishRating: Int?
+        adapter: AuthorPagingAdapter
     ) {
         lifecycleScope.launch {
-            viewModel.getAuthorResult(word, sort, startRating, finishRating)
+            viewModel.getTopAuthorsResult()
                 .collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
@@ -157,14 +135,7 @@ class SearchResultWithTitleFragment : Fragment() {
 
 
     //BOOK
-    private fun setBookAdapterForRecyclerView(
-        word: String?,
-        sort: String?,
-        startRating: Int?,
-        finishRating: Int?,
-        tags: String?,
-        genres: String?
-    ) {
+    private fun setBookAdapterForRecyclerView() {
         val adapter = BookPagingAdapter(onClickBook = { onClickBook(it) },
             onClickMore = { onCLickMore(it) },
             onCLickBookmark = { onClickBookmark(it) })
@@ -177,7 +148,7 @@ class SearchResultWithTitleFragment : Fragment() {
             binding.layoutLoadView
         ) { clickTryAgain() }
         //TODO передать
-        observeBooks(adapter, word, sort, startRating, finishRating, tags, genres)
+        observeBooks(adapter)
         observeLoadStateBookList(adapter)
         handleBookListScrollingToTopWhenSearching(adapter)
         handleBookListVisibility(adapter)
@@ -195,19 +166,13 @@ class SearchResultWithTitleFragment : Fragment() {
     private fun onClickBook(book: BookList) {
 
     }
-
+//TODO
     private fun observeBooks(
-        adapter: BookPagingAdapter,
-        word: String?,
-        sort: String?,
-        startRating: Int?,
-        finishRating: Int?,
-        tags: String?,
-        genres: String?
+        adapter: BookPagingAdapter
 
     ) {
         lifecycleScope.launch {
-            viewModel.getBookResult(word, sort, startRating, finishRating, tags, genres)
+            viewModel.getPopularBooksResult()
                 .collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }

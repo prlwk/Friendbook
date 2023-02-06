@@ -15,6 +15,7 @@ import com.src.book.domain.model.book.tag.TagWithCheck
 import com.src.book.domain.model.book.tag.TagWithTitle
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
+import com.src.book.domain.usecase.author.SearchTopAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.book.*
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +25,9 @@ class MainPageViewModel(
     private val searchBooksUseCase: SearchBooksUseCase,
     private val searchAuthorsUseCase: SearchAuthorsUseCase,
     private val searchAuthorsWithPaginationUseCase: SearchAuthorsWithPaginationUseCase,
+    private val searchTopAuthorsWithPaginationUseCase: SearchTopAuthorsWithPaginationUseCase,
     private val searchBooksWithPaginationUseCase: SearchBooksWithPaginationUseCase,
+    private val searchTopBooksWithPaginationUseCase: SearchTopBooksWithPaginationUseCase,
     private val getPopularGenresUseCase: GetPopularGenresUseCase,
     private val getPopularTagsUseCase: GetPopularTagsUseCase,
     private val getAllTagsUseCase: GetAllTagsUseCase,
@@ -122,6 +125,16 @@ class MainPageViewModel(
             .cachedIn(viewModelScope)
     }
 
+    fun getTopAuthorsResult(): Flow<PagingData<AuthorList>> {
+        return searchTopAuthorsWithPaginationUseCase.execute(
+            sizePage = SIZE_PAGE,
+            word = null,
+            sort = SORT_POPULARITY,
+            startRating = null,
+            finishRating = null,
+        ).cachedIn(viewModelScope)
+    }
+
     fun getBookResult(
         word: String?,
         sort: String?,
@@ -138,6 +151,18 @@ class MainPageViewModel(
             finishRating = finishRating,
             genres = genres,
             tags = tags
+        ).cachedIn(viewModelScope)
+    }
+
+    fun getPopularBooksResult(): Flow<PagingData<BookList>> {
+        return searchTopBooksWithPaginationUseCase.execute(
+            sizePage = SIZE_PAGE,
+            word = null,
+            sort = SORT_POPULARITY,
+            startRating = null,
+            finishRating = null,
+            genres = null,
+            tags = null
         ).cachedIn(viewModelScope)
     }
 

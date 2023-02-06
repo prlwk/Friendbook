@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.src.book.data.paging.author.AuthorPagingSource
+import com.src.book.data.paging.author.TopAuthorPagingSource
 import com.src.book.data.remote.model.author.author.AuthorMapper
 import com.src.book.data.remote.model.author.authorList.AuthorListMapper
 import com.src.book.data.remote.service.AuthorService
@@ -74,6 +75,31 @@ class AuthorDataSourceImpl(
             ),
             pagingSourceFactory = {
                 AuthorPagingSource(
+                    authorService = authorService,
+                    sizePage = sizePage,
+                    word = word,
+                    sort = sort,
+                    startRating = startRating,
+                    finishRating = finishRating
+                )
+            }
+        ).flow
+    }
+
+    override fun searchTopAuthorsWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?
+    ): Flow<PagingData<AuthorList>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = sizePage,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                TopAuthorPagingSource(
                     authorService = authorService,
                     sizePage = sizePage,
                     word = word,

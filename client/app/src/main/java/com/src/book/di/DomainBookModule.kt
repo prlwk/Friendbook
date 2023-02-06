@@ -61,4 +61,10 @@ class DomainBookModule {
     fun provideGetAllTagsUseCase(bookRepository: BookRepository): GetAllTagsUseCase {
         return GetAllTagsUseCase(bookRepository = bookRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideSearchTopBooksWithPaginationUseCase(bookRepository: BookRepository): SearchTopBooksWithPaginationUseCase {
+        return SearchTopBooksWithPaginationUseCase(bookRepository = bookRepository)
+    }
 }

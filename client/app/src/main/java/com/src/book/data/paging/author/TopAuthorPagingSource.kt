@@ -1,57 +1,53 @@
-package com.src.book.data.paging.book
+package com.src.book.data.paging.author
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.src.book.data.paging.ErrorLoadingException
-import com.src.book.data.remote.model.book.bookList.BookListMapper
-import com.src.book.data.remote.service.BookService
-import com.src.book.domain.model.book.BookList
+import com.src.book.data.remote.model.author.authorList.AuthorListMapper
+import com.src.book.data.remote.service.AuthorService
+import com.src.book.domain.author.AuthorList
 import java.io.IOException
 
-class BookPagingSource(
-    private val bookService: BookService,
+class TopAuthorPagingSource(
+    private val authorService: AuthorService,
     private val sizePage: Int,
-    private val token: String?,
     private val word: String?,
     private val sort: String?,
     private val startRating: Int?,
-    private val finishRating: Int?,
-    private val tags: String?,
-    private val genres: String?,
-    private val bookListMapper: BookListMapper
-) : PagingSource<Int, BookList>() {
-    override fun getRefreshKey(state: PagingState<Int, BookList>): Int? {
+    private val finishRating: Int?
+) : PagingSource<Int, AuthorList>() {
+    override fun getRefreshKey(state: PagingState<Int, AuthorList>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BookList> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AuthorList> {
         try {
             val nextPageNumber = params.key ?: 0
-            val response = bookService.searchBooks(
-                token = token,
+            val response = authorService.searchAuthors(
                 numberPage = nextPageNumber,
                 sizePage = sizePage,
                 word = word,
                 sort = sort,
                 startRating = startRating,
-                finishRating = finishRating,
-                tags = tags,
-                genres = genres
+                finishRating = finishRating
             )
             if (response.isSuccessful) {
                 if (response.body() != null) {
-                    val isAuth = token != null
-                    val result = response.body()?.listOfBooks?.map {
-                        bookListMapper.mapFromResponseToModel(it, isAuth)
+                    val result: List<AuthorList>? = response.body()?.listOfAuthors?.map {
+                        AuthorListMapper().mapFromResponseToModel(it)
                     }
                     if (result != null) {
+                        val nextKey =
+                            if ((nextPageNumber >= response.body()?.totalPages!!)
+                                || ((nextPageNumber + 1) * sizePage >= MAX_COUNT_OF_AUTHORS)
+                            ) null else nextPageNumber + 1
                         return LoadResult.Page(
                             data = result,
                             prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-                            nextKey = if (nextPageNumber < response.body()?.totalPages!!) nextPageNumber + 1 else null
+                            nextKey = nextKey
                         )
                     }
                 }
@@ -66,6 +62,10 @@ class BookPagingSource(
         } catch (e: IOException) {
             return LoadResult.Error(e)
         }
-        return LoadResult.Error(ErrorLoadingException("Error loading Books"))
+        return LoadResult.Error(ErrorLoadingException("Error loading Authors"))
+    }
+
+    private companion object {
+        private const val MAX_COUNT_OF_AUTHORS = 100
     }
 }

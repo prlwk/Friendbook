@@ -49,4 +49,20 @@ class AuthorRepositoryImpl(private val authorDataSource: AuthorDataSource) : Aut
             finishRating = finishRating
         )
     }
+
+    override fun searchTopAuthorsWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?
+    ): Flow<PagingData<AuthorList>> {
+        return authorDataSource.searchTopAuthorsWithPagination(
+            sizePage = sizePage,
+            word = word,
+            sort = sort,
+            startRating = startRating,
+            finishRating = finishRating
+        )
+    }
 }

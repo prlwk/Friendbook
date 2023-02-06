@@ -81,6 +81,26 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
         )
     }
 
+    override fun searchTopBooksWithPagination(
+        sizePage: Int,
+        word: String?,
+        sort: String?,
+        startRating: Int?,
+        finishRating: Int?,
+        tags: String?,
+        genres: String?
+    ): Flow<PagingData<BookList>> {
+        return bookDataSource.searchTopBooksWithPagination(
+            sizePage = sizePage,
+            word = word,
+            sort = sort,
+            startRating = startRating,
+            finishRating = finishRating,
+            tags = tags,
+            genres = genres
+        )
+    }
+
     override suspend fun getPopularGenres(): BasicState<List<Genre>> = withContext(Dispatchers.IO) {
         return@withContext bookDataSource.getPopularGenres()
     }
