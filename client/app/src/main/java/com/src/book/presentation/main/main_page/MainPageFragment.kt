@@ -1,9 +1,12 @@
 package com.src.book.presentation.main.main_page
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,6 +58,7 @@ class MainPageFragment : Fragment() {
         )
         setAdapters()
         setOnClickListeners()
+        setListeners()
         viewModel.getPopularBooks()
         viewModel.getBestAuthors()
         viewModel.getPopularGenres()
@@ -76,6 +80,48 @@ class MainPageFragment : Fragment() {
         setOnClickListenerForMoreBooks()
 
         setOnClickListenerForFilter()
+    }
+
+    private fun setListeners() {
+        binding.etSearch.setOnClickListener {
+            if (binding.mlSearchBar.currentState != R.id.with_cancel_button) {
+                binding.mlSearchBar.transitionToState(R.id.with_cancel_button)
+                binding.etSearch.isCursorVisible = true
+            }
+        }
+
+        binding.etSearch.setOnFocusChangeListener { _, _ ->
+            if (binding.mlSearchBar.currentState != R.id.with_cancel_button) {
+                binding.mlSearchBar.transitionToState(R.id.with_cancel_button)
+                binding.etSearch.isCursorVisible = true
+            }
+        }
+        binding.cancelButton.setOnClickListener {
+            hideKeyboard()
+            if (binding.mlSearchBar.currentState != R.id.no_cancel_button) {
+                setTransactionToStateNoCancelButton()
+            }
+        }
+    }
+
+    private fun setTransactionToStateNoCancelButton() {
+        binding.mlSearchBar.transitionToState(R.id.no_cancel_button)
+        binding.etSearch.isCursorVisible = false
+        binding.etSearch.setText("")
+    }
+
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    private fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     //Popular books
