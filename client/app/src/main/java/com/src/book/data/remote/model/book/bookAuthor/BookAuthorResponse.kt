@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 class BookAuthorResponse(
     @SerializedName("id") val id: Long,
-    @SerializedName("rating") val rating: Double,
+    @SerializedName("rating") val rating: Double?,
     @SerializedName("linkCover") val linkCover: String?
 )

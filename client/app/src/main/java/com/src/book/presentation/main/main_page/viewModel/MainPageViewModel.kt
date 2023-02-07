@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
 import com.src.book.domain.model.book.BookList

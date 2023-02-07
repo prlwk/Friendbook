@@ -36,11 +36,15 @@ class BookListAdapter(private val onClickBook: (item: BookAuthor) -> Unit) :
                 .into(binding.ivPhoto)
             val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
             decimalFormatSymbols.decimalSeparator = '.'
-            if (bookAuthor.rating == 0.0) {
+            if (bookAuthor.rating == null || bookAuthor.rating == 0.0) {
                 binding.tvGlobalRating.text = context.resources.getText(R.string.no_rating)
             } else {
-                binding.tvGlobalRating.text =
-                    DecimalFormat("#0.0", decimalFormatSymbols).format(bookAuthor.rating)
+                if (bookAuthor.rating == null) {
+                    binding.tvGlobalRating.text = context.resources.getText(R.string.no_rating)
+                } else {
+                    binding.tvGlobalRating.text =
+                        DecimalFormat("#0.0", decimalFormatSymbols).format(bookAuthor.rating)
+                }
             }
             binding.llGlobalRating.background =
                 ContextCompat.getDrawable(context, RatingColor.getBackground(bookAuthor.rating))

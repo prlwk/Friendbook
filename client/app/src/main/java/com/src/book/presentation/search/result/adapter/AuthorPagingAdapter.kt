@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.src.book.R
 import com.src.book.databinding.ViewHolderAuthorSearchingResultBinding
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.presentation.utils.RatingColor
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -32,9 +32,10 @@ class AuthorPagingAdapter(private val onClickAuthor: (item: AuthorList) -> Unit)
                 .into(binding.ivAuthor)
             val decimalFormatSymbols = DecimalFormatSymbols(Locale.getDefault())
             binding.tvAuthorName.text = authorList.name
-            binding.tvAuthorYear.text = authorList.yearsLife
+            //TODO проверить на null год
+//            binding.tvAuthorYear.text = authorList.yearsLife
             decimalFormatSymbols.decimalSeparator = '.'
-            if (authorList.rating == 0.0) {
+            if (authorList.rating == null || authorList.rating == 0.0) {
                 binding.tvGlobalRating.text = context.resources.getText(R.string.no_rating)
             } else {
                 binding.tvGlobalRating.text =

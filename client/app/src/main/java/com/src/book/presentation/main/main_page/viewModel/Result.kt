@@ -1,7 +1,7 @@
 package com.src.book.presentation.main.main_page.viewModel
 
 import androidx.paging.PagingData
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.model.book.BookList
 import kotlinx.coroutines.flow.Flow
 

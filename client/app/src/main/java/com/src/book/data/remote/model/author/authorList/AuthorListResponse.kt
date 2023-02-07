@@ -7,6 +7,6 @@ data class AuthorListResponse(
     @SerializedName("id") val id: Long,
     @SerializedName("name") val name: String,
     @SerializedName("photoSrc") val photoSrc: String?,
-    @SerializedName("rating") val rating: Double,
-    @SerializedName("yearsLife") val yearsLife: String
+    @SerializedName("rating") val rating: Double?,
+    @SerializedName("yearsLife") val yearsLife: String?
 )

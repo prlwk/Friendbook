@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.src.book.R
 import com.src.book.databinding.FragmentAuthorBinding
 import com.src.book.databinding.FragmentAuthorShimmerBinding
-import com.src.book.domain.author.Author
+import com.src.book.domain.model.author.Author
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
@@ -93,7 +93,8 @@ class AuthorFragment : Fragment() {
             .load(author.photoSrc)
             .into(this.binding.ivAuthor)
         this.binding.tvAuthorName.text = author.name
-        this.binding.tvYear.text = author.yearsLife
+        //TODO проверить год на null
+//        this.binding.tvYear.text = author.yearsLife
         if (author.biography != null) {
             this.binding.tvBiography.text = author.biography
         } else {
@@ -103,7 +104,7 @@ class AuthorFragment : Fragment() {
         with(this.binding.tvGlobalRating) {
             val color = RatingColor.getColor(author.rating)
             setTextColor(ContextCompat.getColor(requireContext(), color))
-            text = if (author.rating == 0.0) {
+            text = if (author.rating == null || author.rating == 0.0) {
                 resources.getText(R.string.no_rating)
             } else {
                 author.rating.toString()

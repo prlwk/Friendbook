@@ -1,8 +1,8 @@
 package com.src.book.data.remote.dataSource.author
 
 import androidx.paging.PagingData
-import com.src.book.domain.author.Author
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.Author
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.flow.Flow
 

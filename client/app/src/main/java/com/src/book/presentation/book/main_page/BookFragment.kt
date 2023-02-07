@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.src.book.R
 import com.src.book.databinding.FragmentBookBinding
 import com.src.book.databinding.FragmentBookShimmerBinding
-import com.src.book.domain.author.AuthorBook
+import com.src.book.domain.model.author.AuthorBook
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.Tag
 import com.src.book.domain.model.book.Book
@@ -92,7 +92,7 @@ class BookFragment : Fragment() {
         with(this.binding.tvGlobalRating) {
             val color = RatingColor.getColor(book.rating)
             setTextColor(ContextCompat.getColor(requireContext(), color))
-            text = if (book.rating == 0.0) {
+            text = if (book.rating == null || book.rating == 0.0) {
                 resources.getText(R.string.no_rating)
             } else {
                 book.rating.toString()

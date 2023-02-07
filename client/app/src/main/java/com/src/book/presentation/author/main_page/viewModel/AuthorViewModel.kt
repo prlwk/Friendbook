@@ -3,7 +3,7 @@ package com.src.book.presentation.author.main_page.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.src.book.domain.author.Author
+import com.src.book.domain.model.author.Author
 import com.src.book.domain.usecase.author.GetAuthorUseCase
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.src.book.domain.usecase.author
 
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.repository.AuthorRepository
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.Dispatchers

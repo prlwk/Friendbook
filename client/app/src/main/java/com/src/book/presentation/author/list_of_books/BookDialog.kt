@@ -46,6 +46,7 @@ class BookDialog(
         } else {
             tvBookAuthor.visibility = View.GONE
         }
+        //TODO если нет года что делать
         tvBookYear.text = book.year
         setColorForBookmark(findViewById(R.id.iv_bookmark))
         clBookmark.setOnClickListener {

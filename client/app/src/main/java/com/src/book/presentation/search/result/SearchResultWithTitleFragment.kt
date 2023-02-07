@@ -11,7 +11,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.FragmentSearchResultWithTitleBinding
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.model.book.BookList
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel

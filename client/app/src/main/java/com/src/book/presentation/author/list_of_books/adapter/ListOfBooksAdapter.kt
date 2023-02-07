@@ -40,16 +40,21 @@ class ListOfBooksAdapter(
             binding.tvBookName.text = book.name
             binding.tvBookAuthor.text = book.authors?.joinToString(", ") { it.name }
             with(binding.tvGlobalRating) {
-                text = book.rating.toString()
+                text = if (book.rating == null) {
+                    context.resources.getText(R.string.no_rating)
+                } else {
+                    book.rating.toString()
+                }
                 setTextColor(ContextCompat.getColor(context, RatingColor.getColor(book.rating)))
             }
-            if (book.genres != null && book.genres.isNotEmpty()) {
-                binding.tvBookYearGenre.text =
-                    "${book.year}, " + book.genres.joinToString(", ") { it.name }
-            } else {
-                binding.tvBookYearGenre.text =
-                    book.year
-            }
+            //TODO проверить год на null
+//            if (book.genres != null && book.genres.isNotEmpty()) {
+////                binding.tvBookYearGenre.text =
+////                    "${book.year}, " + book.genres.joinToString(", ") { it.name }
+//            } else {
+//                binding.tvBookYearGenre.text =
+//                    book.year
+//            }
             if (onClickMore != null) {
                 binding.ivMore.setOnClickListener {
                     onClickMore(book)

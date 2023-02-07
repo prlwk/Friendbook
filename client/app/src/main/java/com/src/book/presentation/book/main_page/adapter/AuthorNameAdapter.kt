@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.src.book.databinding.ViewHolderAuthorNameBinding
-import com.src.book.domain.author.AuthorBook
+import com.src.book.domain.model.author.AuthorBook
 
 //TODO кликабельное имя
 class AuthorNameAdapter(

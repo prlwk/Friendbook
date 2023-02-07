@@ -1,16 +1,14 @@
 package com.src.book
 
-import com.src.book.domain.author.Author
-import com.src.book.domain.author.AuthorBook
+import com.src.book.domain.model.author.Author
+import com.src.book.domain.model.author.AuthorBook
 import com.src.book.domain.model.*
 import com.src.book.domain.model.book.Book
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.friend.FriendRequest.FriendRequest
 import com.src.book.domain.model.user.Login
-import com.src.book.utils.AUTHOR_SERVICE_BASE_URL
 import com.src.book.utils.BASE_URL
-import com.src.book.utils.BOOK_SERVICE_BASE_URL
 import com.src.book.utils.USER_SERVICE_BASE_URL
 
 class TestModelsGenerator {
@@ -20,7 +18,7 @@ class TestModelsGenerator {
         name = AUTHOR_NAME,
         yearsLife = AUTHOR_YEARS_LIFE,
         rating = RATING,
-        photoSrc = "$BASE_URL${AUTHOR_SERVICE_BASE_URL}null",
+        photoSrc = null,
         biography = AUTHOR_BIOGRAPHY,
         books = listOf(generateBookAuthorModel())
     )
@@ -35,7 +33,7 @@ class TestModelsGenerator {
         id = ID,
         name = BOOK_NAME,
         rating = RATING,
-        linkCover = "$BASE_URL${BOOK_SERVICE_BASE_URL}null",
+        linkCover = null,
         year = BOOK_YEAR,
         genres = listOf(generateGenreModel()),
         authors = listOf(generateAuthorBookModel()),
@@ -50,7 +48,7 @@ class TestModelsGenerator {
         id = ID,
         name = BOOK_NAME,
         rating = RATING,
-        linkCover = "$BASE_URL${BOOK_SERVICE_BASE_URL}null",
+        linkCover = null,
         year = BOOK_YEAR,
         genres = listOf(generateGenreModel()),
         authors = listOf(generateAuthorBookModel()),
@@ -62,7 +60,7 @@ class TestModelsGenerator {
     fun generateBookAuthorModel() = BookAuthor(
         id = ID,
         rating = RATING,
-        linkCover = "$BASE_URL${BOOK_SERVICE_BASE_URL}null"
+        linkCover = null
     )
 
     fun generateListOfBooksModel() = listOf(generateBookModel())
@@ -110,7 +108,7 @@ class TestModelsGenerator {
         countWantToReadBooks = 0,
         countReviews = 0,
         countRateBooks = 0,
-        image = "$BASE_URL${USER_SERVICE_BASE_URL}url",
+        image =  "$BASE_URL${USER_SERVICE_BASE_URL}url",
         login = LOGIN,
         name = NAME
     )

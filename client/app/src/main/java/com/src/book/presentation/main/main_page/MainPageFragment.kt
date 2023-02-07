@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.src.book.R
 import com.src.book.databinding.FragmentMainPageBinding
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import com.src.book.domain.model.Genre
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.model.book.BookList

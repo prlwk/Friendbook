@@ -2,9 +2,7 @@ package com.src.book.data.remote.model.author.author
 
 import com.src.book.data.remote.Mapper
 import com.src.book.data.remote.model.book.bookAuthor.BookAuthorMapper
-import com.src.book.domain.author.Author
-import com.src.book.utils.AUTHOR_SERVICE_BASE_URL
-import com.src.book.utils.BASE_URL
+import com.src.book.domain.model.author.Author
 
 class AuthorMapper(private val bookAuthorMapper: BookAuthorMapper) :
     Mapper<Author, AuthorResponse> {
@@ -15,9 +13,9 @@ class AuthorMapper(private val bookAuthorMapper: BookAuthorMapper) :
             name = data.name,
             yearsLife = data.yearsLife,
             rating = data.rating,
-            photoSrc = "$BASE_URL$AUTHOR_SERVICE_BASE_URL${data.photoSrc}",
+            photoSrc = data.photoSrc,
             biography = data.biography,
-            books = data.books?.map {
+            books = data.books.map {
                 bookAuthorMapper.mapFromResponseToModel(it)
             }
         )

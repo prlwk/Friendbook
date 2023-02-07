@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.src.book.data.paging.ErrorLoadingException
 import com.src.book.data.remote.model.author.authorList.AuthorListMapper
 import com.src.book.data.remote.service.AuthorService
-import com.src.book.domain.author.AuthorList
+import com.src.book.domain.model.author.AuthorList
 import java.io.IOException
 
 class TopAuthorPagingSource(
