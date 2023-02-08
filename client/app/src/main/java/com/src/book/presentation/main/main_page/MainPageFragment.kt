@@ -3,11 +3,15 @@ package com.src.book.presentation.main.main_page
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -18,20 +22,28 @@ import com.src.book.domain.model.Genre
 import com.src.book.domain.model.book.BookAuthor
 import com.src.book.domain.model.book.BookList
 import com.src.book.domain.model.book.BookMapper
+import com.src.book.domain.model.search.SearchItem
 import com.src.book.domain.utils.BasicState
 import com.src.book.presentation.MainActivity
 import com.src.book.presentation.book.main_page.BookFragment
 import com.src.book.presentation.main.main_page.adapter.AuthorListAdapter
 import com.src.book.presentation.main.main_page.adapter.BookListAdapter
 import com.src.book.presentation.main.main_page.adapter.GenreListAdapter
+import com.src.book.presentation.main.main_page.adapter.SearchItemAdapter
 import com.src.book.presentation.main.main_page.adapter.itemDecoration.CategoryItemDecoration
 import com.src.book.presentation.main.main_page.filter.FilterFragment
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
 import com.src.book.presentation.search.result.SearchResultWithTitleFragment
+import com.src.book.utils.REGEX_SPACE
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainPageFragment : Fragment() {
     private lateinit var binding: FragmentMainPageBinding
     private lateinit var viewModel: MainPageViewModel
+    private val searchItemsList: ArrayList<SearchItem> = ArrayList(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +82,7 @@ class MainPageFragment : Fragment() {
         setAdapterForPopularBooksRecyclerView()
         setAdapterForBestAuthorsRecyclerView()
         setAdapterForGenresRecyclerView()
+        setAdapterForSearchItem()
     }
 
     private fun setOnClickListeners() {
@@ -87,6 +100,7 @@ class MainPageFragment : Fragment() {
             if (binding.mlSearchBar.currentState != R.id.with_cancel_button) {
                 binding.mlSearchBar.transitionToState(R.id.with_cancel_button)
                 binding.etSearch.isCursorVisible = true
+                setVisibilityForSearchItem(View.VISIBLE)
             }
         }
 
@@ -94,12 +108,55 @@ class MainPageFragment : Fragment() {
             if (binding.mlSearchBar.currentState != R.id.with_cancel_button) {
                 binding.mlSearchBar.transitionToState(R.id.with_cancel_button)
                 binding.etSearch.isCursorVisible = true
+                setVisibilityForSearchItem(View.VISIBLE)
             }
         }
         binding.cancelButton.setOnClickListener {
             hideKeyboard()
             if (binding.mlSearchBar.currentState != R.id.no_cancel_button) {
                 setTransactionToStateNoCancelButton()
+                setVisibilityForSearchItem(View.GONE)
+            }
+        }
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val text = binding.etSearch.text.toString()
+                    .replace(REGEX_SPACE, " ")
+                    .lowercase(Locale.getDefault())
+                    .trim()
+                if (text.isEmpty()) {
+                    binding.rvSearchItem.visibility = View.VISIBLE
+                } else {
+                    binding.rvSearchItem.visibility = View.GONE
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+        //TODO перейти на результат поиска
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                setVisibilityForSearchItem(View.GONE)
+                val name = binding.etSearch.text.toString()
+                    .replace(REGEX_SPACE, " ")
+                    .lowercase(Locale.getDefault())
+                    .trim()
+                if (name.isNotEmpty()) {
+                    viewModel.addSearchItem(name)
+                }
+                binding.etSearch.clearFocus()
+                binding.etSearch.setText("")
+                if (binding.mlSearchBar.currentState != R.id.no_cancel_button) {
+                    setTransactionToStateNoCancelButton()
+                }
+                return@setOnEditorActionListener false
+            } else {
+                return@setOnEditorActionListener true
             }
         }
     }
@@ -315,6 +372,54 @@ class MainPageFragment : Fragment() {
 
     //TODO перейти на страницу с жанрами
     private fun onClickGenre(genre: Genre) {
+
+    }
+
+    private fun setAdapterForSearchItem() {
+        val adapter = SearchItemAdapter(onClickDelete = { id, poistion ->
+            onCLickSearchItemDelete(
+                id = id,
+                adapterPosition = poistion
+            )
+        },
+            onClickSearchItem = { onCLickSearchItem(it) })
+        val layoutManager = GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
+        binding.rvSearchItem.layoutManager = layoutManager
+        binding.rvSearchItem.adapter = adapter
+        observeSearchItems(adapter)
+    }
+
+    private fun onCLickSearchItemDelete(id: Long, adapterPosition: Int) {
+        viewModel.deleteSearchItem(id)
+        val adapter = binding.rvSearchItem.adapter as SearchItemAdapter
+        searchItemsList.removeAt(adapterPosition)
+        adapter.notifyItemRemoved(adapterPosition)
+        adapter.notifyItemRangeChanged(adapterPosition, searchItemsList.size)
+    }
+
+    //TODO
+    private fun onCLickSearchItem(name: String) {
+
+    }
+
+    //Search items
+    private fun observeSearchItems(adapter: SearchItemAdapter) {
+        lifecycleScope.launch {
+
+            viewModel.getAllSearchItems().collectLatest {
+                searchItemsList.addAll(it)
+                adapter.submitList(searchItemsList)
+            }
+        }
+    }
+
+    private fun setVisibilityForSearchItem(visibility: Int) {
+        binding.rvSearchItem.visibility = visibility
+        if (visibility == View.VISIBLE) {
+            binding.svMainContent.visibility = View.GONE
+        } else {
+            binding.svMainContent.visibility = View.VISIBLE
+        }
 
     }
 

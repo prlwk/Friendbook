@@ -1,4 +1,4 @@
-package com.src.book.data.local
+package com.src.book.data.local.repository
 
 interface LocalUserRepository {
     suspend fun setIsActiveAndClearSession()

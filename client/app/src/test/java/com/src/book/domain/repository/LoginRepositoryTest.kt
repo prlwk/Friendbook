@@ -3,7 +3,7 @@ package com.src.book.domain.repository
 import com.src.book.CODE
 import com.src.book.EMAIL
 import com.src.book.TestModelsGenerator
-import com.src.book.data.local.LocalUserRepository
+import com.src.book.data.local.repository.LocalUserRepository
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.data.repository.LoginRepositoryImpl
 import com.src.book.domain.utils.*

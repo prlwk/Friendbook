@@ -35,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_5x"
         app:layoutDescription="@xml/search_bar_motion_scene"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.Guideline
@@ -85,13 +85,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_1x"
                 android:background="#00000000"
+                android:hint="@string/enter_name"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
-                android:imeOptions="actionDone"
                 android:textColor="@color/color_accent"
                 android:textColorHint="@color/tv_hint"
                 android:textSize="14sp"
-                android:hint="@string/enter_name"
                 tools:ignore="Autofill" />
         </LinearLayout>
 
@@ -117,7 +117,21 @@
         app:tint="@color/light_gray"
         tools:ignore="ContentDescription" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gl_end"
+        app:layout_constraintStart_toEndOf="@id/gl_start"
+        app:layout_constraintTop_toBottomOf="@id/ml_search_bar"
+        tools:itemCount="3"
+        tools:listitem="@layout/view_holder_search_item"
+        tools:visibility="visible" />
+
     <ScrollView
+        android:id="@+id/sv_main_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"

@@ -1,6 +1,6 @@
 package com.src.book.data.repository
 
-import com.src.book.data.local.LocalUserRepository
+import com.src.book.data.local.repository.LocalUserRepository
 import com.src.book.data.remote.dataSource.login.LoginDataSource
 import com.src.book.domain.model.user.Login
 import com.src.book.domain.repository.LoginRepository

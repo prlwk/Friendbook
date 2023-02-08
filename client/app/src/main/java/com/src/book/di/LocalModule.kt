@@ -1,7 +1,7 @@
 package com.src.book.di
 
-import com.src.book.data.local.LocalUserRepository
-import com.src.book.data.local.LocalUserRepositoryImpl
+import com.src.book.data.local.repository.LocalUserRepository
+import com.src.book.data.local.repository.LocalUserRepositoryImpl
 import com.src.book.data.remote.session.SessionStorage
 import dagger.Module
 import dagger.Provides

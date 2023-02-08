@@ -8,9 +8,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [AppModule::class, MapperModule::class, NetworkModule::class,
-        LocalModule::class, DataModule::class, DomainAuthorModule::class,
-        DomainBookModule::class, DomainFriendModule::class, DomainLoginModule::class,
-        DomainSearchModule::class, DomainUserModule::class]
+        RoomModule::class, LocalModule::class, DataModule::class,
+        DomainAuthorModule::class, DomainBookModule::class, DomainFriendModule::class,
+        DomainLoginModule::class, DomainSearchModule::class, DomainUserModule::class]
 )
 interface AppComponent {
     fun inject(mainActivity: MainActivity)

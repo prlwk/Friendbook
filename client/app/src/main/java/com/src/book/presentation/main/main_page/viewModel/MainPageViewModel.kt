@@ -13,10 +13,14 @@ import com.src.book.domain.model.book.genre.GenreWithCheck
 import com.src.book.domain.model.book.genre.GenreWithTitle
 import com.src.book.domain.model.book.tag.TagWithCheck
 import com.src.book.domain.model.book.tag.TagWithTitle
+import com.src.book.domain.model.search.SearchItem
 import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.author.SearchTopAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.book.*
+import com.src.book.domain.usecase.search.AddSearchItemUseCase
+import com.src.book.domain.usecase.search.DeleteSearchItemByIdUseCase
+import com.src.book.domain.usecase.search.GetAllSearchItemsUseCase
 import com.src.book.domain.utils.BasicState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -32,6 +36,9 @@ class MainPageViewModel(
     private val getPopularTagsUseCase: GetPopularTagsUseCase,
     private val getAllTagsUseCase: GetAllTagsUseCase,
     private val getAllGenresUseCase: GetAllGenresUseCase,
+    private val getAllSearchItemsUseCase: GetAllSearchItemsUseCase,
+    private val addSearchItemUseCase: AddSearchItemUseCase,
+    private val deleteSearchItemByIdUseCase: DeleteSearchItemByIdUseCase
 ) : ViewModel() {
     private val _mutableLiveDataBookPopularity =
         MutableLiveData<BasicState<List<BookList>>>(BasicState.DefaultState())
@@ -421,6 +428,23 @@ class MainPageViewModel(
             } else {
                 _mutableLiveDataAllGenresFilter.value = BasicState.ErrorState()
             }
+        }
+    }
+
+    //Search items
+    fun getAllSearchItems(): Flow<List<SearchItem>> {
+        return getAllSearchItemsUseCase.execute()
+    }
+
+    fun addSearchItem(name: String) {
+        viewModelScope.launch {
+            addSearchItemUseCase.execute(name)
+        }
+    }
+
+    fun deleteSearchItem(id: Long) {
+        viewModelScope.launch {
+            deleteSearchItemByIdUseCase.execute(id)
         }
     }
 

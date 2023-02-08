@@ -6,6 +6,9 @@ import com.src.book.domain.usecase.author.SearchAuthorsUseCase
 import com.src.book.domain.usecase.author.SearchAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.author.SearchTopAuthorsWithPaginationUseCase
 import com.src.book.domain.usecase.book.*
+import com.src.book.domain.usecase.search.AddSearchItemUseCase
+import com.src.book.domain.usecase.search.DeleteSearchItemByIdUseCase
+import com.src.book.domain.usecase.search.GetAllSearchItemsUseCase
 import javax.inject.Inject
 
 class MainPageViewModelFactory @Inject constructor(
@@ -18,7 +21,10 @@ class MainPageViewModelFactory @Inject constructor(
     private val getPopularGenresUseCase: GetPopularGenresUseCase,
     private val getPopularTagsUseCase: GetPopularTagsUseCase,
     private val getAllTagsUseCase: GetAllTagsUseCase,
-    private val getAllGenresUseCase: GetAllGenresUseCase
+    private val getAllGenresUseCase: GetAllGenresUseCase,
+    private val getAllSearchItemsUseCase: GetAllSearchItemsUseCase,
+    private val addSearchItemUseCase: AddSearchItemUseCase,
+    private val deleteSearchItemByIdUseCase: DeleteSearchItemByIdUseCase
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -32,7 +38,10 @@ class MainPageViewModelFactory @Inject constructor(
             getPopularGenresUseCase = getPopularGenresUseCase,
             getPopularTagsUseCase = getPopularTagsUseCase,
             getAllTagsUseCase = getAllTagsUseCase,
-            getAllGenresUseCase = getAllGenresUseCase
+            getAllGenresUseCase = getAllGenresUseCase,
+            getAllSearchItemsUseCase = getAllSearchItemsUseCase,
+            addSearchItemUseCase = addSearchItemUseCase,
+            deleteSearchItemByIdUseCase = deleteSearchItemByIdUseCase
         ) as T
     }
 }

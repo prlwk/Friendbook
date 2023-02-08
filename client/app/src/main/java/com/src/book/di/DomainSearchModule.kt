@@ -1,8 +1,7 @@
 package com.src.book.di
 
-import com.src.book.domain.repository.BookRepository
-import com.src.book.domain.usecase.search.GetAllGenresUseCase
-import com.src.book.domain.usecase.search.GetAllTagsUseCase
+import com.src.book.domain.repository.SearchRepository
+import com.src.book.domain.usecase.search.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,13 +10,19 @@ import javax.inject.Singleton
 class DomainSearchModule {
     @Singleton
     @Provides
-    fun provideGetAllGenresUseCase(bookRepository: BookRepository): GetAllGenresUseCase {
-        return GetAllGenresUseCase(bookRepository = bookRepository)
+    fun provideAddSearchItemBUseCase(searchRepository: SearchRepository): AddSearchItemUseCase {
+        return AddSearchItemUseCase(searchRepository = searchRepository)
     }
 
     @Singleton
     @Provides
-    fun provideGetAllTagsUseCase(bookRepository: BookRepository): GetAllTagsUseCase {
-        return GetAllTagsUseCase(bookRepository = bookRepository)
+    fun provideDeleteSearchItemByIdUseCase(searchRepository: SearchRepository): DeleteSearchItemByIdUseCase {
+        return DeleteSearchItemByIdUseCase(searchRepository = searchRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllSearchItemsUseCase(searchRepository: SearchRepository): GetAllSearchItemsUseCase {
+        return GetAllSearchItemsUseCase(searchRepository = searchRepository)
     }
 }

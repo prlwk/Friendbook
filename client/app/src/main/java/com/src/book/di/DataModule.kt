@@ -1,6 +1,7 @@
 package com.src.book.di
 
-import com.src.book.data.local.LocalUserRepository
+import com.src.book.data.local.dataSource.SearchLocalDataSource
+import com.src.book.data.local.repository.LocalUserRepository
 import com.src.book.data.remote.dataSource.author.AuthorDataSource
 import com.src.book.data.remote.dataSource.book.BookDataSource
 import com.src.book.data.remote.dataSource.friend.FriendDataSource
@@ -39,5 +40,10 @@ class DataModule {
     @Provides
     fun provideFriendRepository(friendDataSource: FriendDataSource): FriendRepository {
         return FriendRepositoryImpl(friendDataSource)
+    }
+
+    @Provides
+    fun provideSearchRepository(searchLocalDataSource: SearchLocalDataSource): SearchRepository {
+        return SearchRepositoryImpl(searchLocalDataSource = searchLocalDataSource)
     }
 }
