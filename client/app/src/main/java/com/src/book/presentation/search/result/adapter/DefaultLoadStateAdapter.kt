@@ -1,6 +1,5 @@
 package com.src.book.presentation.search.result.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -22,13 +21,9 @@ class DefaultLoadStateAdapter(private val onClickTryAgain: () -> Unit) :
         }
 
         fun bind(loadState: LoadState) = with(binding) {
-            Log.d(
-                "DefaultLoadState",
-                "error ${loadState is LoadState.Error}, loading ${loadState is LoadState.Loading} "
-            )
+            binding.pbLoading.isVisible = loadState is LoadState.Loading
             binding.layoutError.tvError.isVisible = loadState is LoadState.Error
             binding.layoutError.tvUpdate.isVisible = loadState is LoadState.Error
-            binding.pbLoading.isVisible = loadState is LoadState.Loading
         }
     }
 

@@ -33,6 +33,7 @@ import com.src.book.presentation.main.main_page.adapter.SearchItemAdapter
 import com.src.book.presentation.main.main_page.adapter.itemDecoration.CategoryItemDecoration
 import com.src.book.presentation.main.main_page.filter.FilterFragment
 import com.src.book.presentation.main.main_page.viewModel.MainPageViewModel
+import com.src.book.presentation.search.result.SearchResultAuthorBookFragment
 import com.src.book.presentation.search.result.SearchResultWithTitleFragment
 import com.src.book.utils.REGEX_SPACE
 import kotlinx.coroutines.flow.collectLatest
@@ -76,6 +77,7 @@ class MainPageFragment : Fragment() {
         viewModel.getPopularGenres()
         binding.llPopularBookError.visibility = View.GONE
         binding.llBestAuthorError.visibility = View.GONE
+        setVisibilityForSearchItem(View.GONE)
     }
 
     private fun setAdapters() {
@@ -123,14 +125,16 @@ class MainPageFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val text = binding.etSearch.text.toString()
-                    .replace(REGEX_SPACE, " ")
-                    .lowercase(Locale.getDefault())
-                    .trim()
-                if (text.isEmpty()) {
-                    binding.rvSearchItem.visibility = View.VISIBLE
-                } else {
-                    binding.rvSearchItem.visibility = View.GONE
+                if(binding.etSearch.hasFocus()) {
+                    val text = binding.etSearch.text.toString()
+                        .replace(REGEX_SPACE, " ")
+                        .lowercase(Locale.getDefault())
+                        .trim()
+                    if (text.isEmpty()) {
+                        binding.rvSearchItem.visibility = View.VISIBLE
+                    } else {
+                        binding.rvSearchItem.visibility = View.GONE
+                    }
                 }
             }
 
@@ -146,19 +150,29 @@ class MainPageFragment : Fragment() {
                     .replace(REGEX_SPACE, " ")
                     .lowercase(Locale.getDefault())
                     .trim()
-                if (name.isNotEmpty()) {
-                    viewModel.addSearchItem(name)
-                }
                 binding.etSearch.clearFocus()
                 binding.etSearch.setText("")
                 if (binding.mlSearchBar.currentState != R.id.no_cancel_button) {
                     setTransactionToStateNoCancelButton()
+                }
+                if (name.isNotEmpty()) {
+                    viewModel.addSearchItem(name)
+                    navigateToSearchResultAuthorBookFragment(name)
                 }
                 return@setOnEditorActionListener false
             } else {
                 return@setOnEditorActionListener true
             }
         }
+    }
+
+    private fun navigateToSearchResultAuthorBookFragment(name: String) {
+        binding.rvSearchItem.visibility = View.GONE
+        val bundle = Bundle()
+        bundle.putString(SearchResultAuthorBookFragment.TITLE, name)
+        val fragment = SearchResultAuthorBookFragment()
+        fragment.arguments = bundle
+        (activity as MainActivity).replaceFragment(fragment)
     }
 
     private fun setTransactionToStateNoCancelButton() {
@@ -397,9 +411,8 @@ class MainPageFragment : Fragment() {
         adapter.notifyItemRangeChanged(adapterPosition, searchItemsList.size)
     }
 
-    //TODO
     private fun onCLickSearchItem(name: String) {
-
+        navigateToSearchResultAuthorBookFragment(name)
     }
 
     //Search items

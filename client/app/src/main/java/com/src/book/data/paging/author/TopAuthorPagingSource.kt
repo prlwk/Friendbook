@@ -56,7 +56,7 @@ class TopAuthorPagingSource(
                 return LoadResult.Page(
                     data = listOf(),
                     prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-                    nextKey = if (nextPageNumber < response.body()?.totalPages!!) nextPageNumber + 1 else null
+                    nextKey = null
                 )
             }
         } catch (e: IOException) {

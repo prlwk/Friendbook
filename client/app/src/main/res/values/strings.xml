@@ -124,4 +124,5 @@
     <string name="genres">Жанры</string>
     <string name="enter_name">Введите название</string>
     <string name="empty_friends_list">Добавьте человека в друзья, чтобы этот раздел не пустовал</string>
+    <string name="authors">Авторы</string>
 </resources>

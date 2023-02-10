@@ -14,7 +14,6 @@
         android:gravity="center"
         android:text="@string/something_went_wrong"
         android:textSize="12sp"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +29,6 @@
         android:text="@string/update"
         android:textSize="12sp"
         android:textStyle="normal"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_error" />

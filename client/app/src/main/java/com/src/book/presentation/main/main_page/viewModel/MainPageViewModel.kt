@@ -66,6 +66,9 @@ class MainPageViewModel(
     private val _mutableLiveDataTagsForMainFilter =
         MutableLiveData<BasicState<List<TagWithCheck>>>(BasicState.DefaultState())
 
+    private val _mutableLiveDataBooksIsLoaded = MutableLiveData(false)
+    private val _mutableLiveDataAuthorsIsLoaded = MutableLiveData(false)
+
     val liveDataBookPopularity get() = _mutableLiveDataBookPopularity
     val liveDataTheBestAuthors get() = _mutableLiveDataTheBestAuthors
 

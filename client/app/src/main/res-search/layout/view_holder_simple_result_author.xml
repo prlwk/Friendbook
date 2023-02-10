@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_marginEnd="@dimen/space_4x"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/space_4x">
 
     <ImageView
         android:id="@+id/iv_photo"
-        android:layout_width="90dp"
-        android:layout_height="140dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginStart="10dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/positive_rating_background"
         android:paddingHorizontal="@dimen/space_1x"
-        android:paddingVertical="2dp"
+        android:paddingVertical="1dp"
         app:layout_constraintStart_toStartOf="@id/iv_photo"
         app:layout_constraintTop_toTopOf="@id/iv_photo">
 
@@ -34,9 +34,26 @@
             android:id="@+id/tv_global_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="10.0"
             android:textColor="@color/block_night_white"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            android:textSize="9sp"
+            android:textStyle="bold"
+            tools:ignore="SmallSp"
+            tools:text="10.0" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/basic_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_05x"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_photo"
+        app:layout_constraintTop_toBottomOf="@id/iv_photo"
+        tools:ignore="SmallSp"
+        tools:text="@string/name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

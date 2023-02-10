@@ -49,13 +49,23 @@ class BookPagingAdapter(
                 setTextColor(ContextCompat.getColor(context, RatingColor.getColor(book.rating)))
             }
             //TODO проверить год на null
-//            if (book.genres != null && book.genres.isNotEmpty()) {
-//                binding.tvBookYearGenre.text =
-//                    "${book.year}, " + book.genres.joinToString(", ") { it.name }
-//            } else {
-//                binding.tvBookYearGenre.text =
-//                    book.year
-//            }
+            var yearGenreText = ""
+            if (book.year != null) {
+                yearGenreText =
+                    "${book.year}, "
+            }
+            if (book.genres.isNotEmpty()) {
+                binding.tvBookYearGenre.text =
+                    yearGenreText + book.genres.joinToString(", ") { it.name }
+
+            } else {
+                if (yearGenreText.isEmpty()) {
+                    binding.tvBookYearGenre.visibility = View.GONE
+                } else {
+                    binding.tvBookYearGenre.text =
+                        book.year
+                }
+            }
             if (onClickMore != null) {
                 binding.ivMore.setOnClickListener {
                     onClickMore(book)

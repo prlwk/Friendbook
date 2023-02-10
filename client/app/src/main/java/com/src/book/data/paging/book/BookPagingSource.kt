@@ -58,9 +58,9 @@ class BookPagingSource(
             }
             if (response.code() == 404) {
                 return LoadResult.Page(
-                    data = listOf(),
+                    data = emptyList(),
                     prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-                    nextKey = if (nextPageNumber < response.body()?.totalPages!!) nextPageNumber + 1 else null
+                    nextKey = null
                 )
             }
         } catch (e: IOException) {
